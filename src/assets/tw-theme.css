@@ -1,0 +1,5 @@
+@theme {
+  --color-error: var(--pl-error-color);
+  --color-success: var(--pl-success-color);
+  --color-warning: var(--pl-warning-color);
+}

@@ -1,0 +1,79 @@
+.svgIcon {
+  display: inline-block;
+  vertical-align: -3px;
+}
+
+.svgIconLeftMargin {
+  margin-left: 4px;
+}
+
+.spacer {
+  display: inline-block;
+  text-decoration: none;
+}
+
+@mixin iconSize($size, $extraMargin: 0px) {
+  width: $size;
+  height: $size;
+  // If the icon is after the text, add negative margin and transform to move the icon to the left
+  // so that it will stick to the last word of the text. Non-breaking space doesn't work with SVGs.
+  // And using `nowrap` requires the text to be in a single line, which is not always the case.
+  &.after {
+    margin-left: calc(#{-$size} - $extraMargin);
+    transform: translateX(calc(#{$size} + $extraMargin));
+    // Also add a spacer after the SVG so it takes up the space of the icon.
+    // This is important for say buttons so that padding is applied correctly.
+    // Without the spacer, this worked for what we wanted in the header
+    // but it didn't work for say buttons, with this it works for both.
+    & + .spacer {
+      width: $size;
+    }
+  }
+  // Same thing but in reverse.
+  &.before {
+    margin-right: calc(#{-$size} - $extraMargin);
+    transform: translateX(calc(#{-$size} - $extraMargin));
+
+    // Use the `:has` selector to target the spacer before the icon.
+    .spacer:has(+ &) {
+      width: $size;
+    }
+  }
+}
+
+.xxs {
+  @include iconSize(12px);
+}
+
+.xs {
+  @include iconSize(16px);
+}
+
+.s {
+  @include iconSize(20px);
+}
+
+.sm {
+  @include iconSize(24px);
+}
+
+// This is for certain links in the header because there is extra margin after the text.
+.sm-plus-12 {
+  @include iconSize(24px, var(--spacing-spacing-12));
+}
+
+.md {
+  @include iconSize(32px);
+}
+
+.lg {
+  @include iconSize(48px);
+}
+
+.xl {
+  @include iconSize(56px);
+}
+
+.em {
+  @include iconSize(1em);
+}

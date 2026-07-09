@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`GmiButton Snapshots matches snapshot with children 1`] = `
+<div>
+  <button
+    class="cta brand filled base"
+    id="buttonId"
+    title="Button Title"
+    type="button"
+  >
+    <span>
+      Child Content
+    </span>
+  </button>
+</div>
+`;
+
+exports[`GmiButton Snapshots matches snapshot with custom className 1`] = `
+<div>
+  <button
+    class="cta custom-class brand filled base"
+    id="buttonId"
+    title="Button Title"
+    type="button"
+  >
+    Button Text
+  </button>
+</div>
+`;
+
+exports[`GmiButton Snapshots matches snapshot with default props 1`] = `
+<div>
+  <button
+    class="cta brand filled base"
+    id="buttonId"
+    title="Button Title"
+    type="button"
+  >
+    Button Text
+  </button>
+</div>
+`;
+
+exports[`GmiButton Snapshots matches snapshot with disabled state 1`] = `
+<div>
+  <button
+    class="cta brand filled base"
+    disabled=""
+    id="buttonId"
+    title="Button Title"
+    type="button"
+  >
+    Button Text
+  </button>
+</div>
+`;
+
+exports[`GmiButton Snapshots matches snapshot with inverse variant 1`] = `
+<div>
+  <button
+    class="cta inverse filled base"
+    id="buttonId"
+    title="Button Title"
+    type="button"
+  >
+    Button Text
+  </button>
+</div>
+`;
+
+exports[`GmiButton Snapshots matches snapshot with outline style 1`] = `
+<div>
+  <button
+    class="cta brand outline base"
+    id="buttonId"
+    title="Button Title"
+    type="button"
+  >
+    Button Text
+  </button>
+</div>
+`;

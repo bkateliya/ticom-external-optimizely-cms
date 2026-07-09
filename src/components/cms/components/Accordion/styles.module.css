@@ -1,0 +1,74 @@
+/* TAILWIND_VARIANTS slot: base */
+.base {
+}
+
+/* TAILWIND_VARIANTS slot: container */
+.panelsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-spacing-8);
+}
+
+/* TAILWIND_VARIANTS slot: controls */
+.controls {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--spacing-spacing-24);
+}
+
+/* TAILWIND_VARIANTS slot: expandCollapseBtn */
+.expandCollapseBtn {
+  font-family: var(--typography-body-font-family);
+  font-size: var(--typography-body-medium-font-size);
+  line-height: var(--typography-body-medium-line-height);
+  padding: 0 var(--spacing-spacing-8);
+  border: none;
+  transition: color 150ms ease-in-out;
+  cursor: pointer;
+  border-radius: var(--border-radius-accordion);
+}
+
+.expandCollapseBtn:hover {
+  text-decoration: underline;
+}
+
+.expandCollapseBtn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.75),
+    0 0 0 4px var(--componentTheme---bg-interaction-focus);
+}
+
+/* TAILWIND_VARIANTS slot: expandCollapseBtnActive */
+.expandCollapseBtnActive {
+  color: var(--component-accordion-toggle_-toggle);
+  font-weight: var(--typography-font-weight-bold);
+}
+
+/* TAILWIND_VARIANTS slot: expandCollapseBtnInactive */
+.expandCollapseBtnInactive {
+  color: var(--component-accordion-toggle_-toggle-active);
+  font-weight: var(--typography-font-weight-normal);
+}
+
+.expandCollapseBtnInactive:disabled {
+  cursor: not-allowed;
+}
+
+/* TAILWIND_VARIANTS slot: divider */
+.divider {
+  border-left: var(--border-width-width-1) solid
+    var(--component-accordion-toggle_-divider);
+  margin: 0 var(--spacing-spacing-8);
+  height: 1.25rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* TAILWIND_VARIANTS slot: controlsContainer */
+.controlsContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-spacing-0);
+}

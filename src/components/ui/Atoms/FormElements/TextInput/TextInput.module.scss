@@ -1,0 +1,73 @@
+@use '@/assets/_breakpoints.scss' as breakpoints;
+@use '@/assets/_mixins.scss' as mixins;
+
+.inputField {
+  width: 100%;
+  height: 48px;
+  padding: var(--spacing-spacing-4) var(--spacing-spacing-12);
+  align-self: stretch;
+
+  /* Body/Small */
+  font-family: var(--typography-body-font-family);
+  font-size: var(--typography-font-size-desktop-body-small);
+  font-style: normal;
+  font-weight: var(--typography-font-weight-body);
+  line-height: 150%;
+  /* 21px */
+
+  :global(html.ios-mobile-input-fix) & {
+    @media screen and (max-width: breakpoints.$breakpoint-tablet-max) {
+      font-size: var(--typography-font-size-desktop-body-medium);
+    }
+  }
+
+  color: var(--general-color-text-dark);
+
+  &::placeholder {
+    color: var(--general-color-text-mid);
+  }
+
+  border-radius: var(--radius-radius-4);
+  border: 2px solid var(--component-form-field-color-default-border);
+  background: var(--component-search-field-default-bg);
+
+  &:focus {
+    outline: none;
+    border-color: var(--general-color-border-brand-2);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.inputWithLeftIcon {
+  padding-left: calc(var(--spacing-spacing-12) + 24px + var(--spacing-spacing-8));
+}
+
+.inputWithRightIcon {
+  padding-right: calc(var(--spacing-spacing-12) + 24px + var(--spacing-spacing-8));
+}
+
+.leftIcon {
+  position: absolute;
+  left: var(--spacing-spacing-12);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rightIcon {
+  position: absolute;
+  right: var(--spacing-spacing-12);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.errorMessage {
+  @include mixins.text-style($textSize: 'small', $textColor: var(--color-system-error-500));
+}
