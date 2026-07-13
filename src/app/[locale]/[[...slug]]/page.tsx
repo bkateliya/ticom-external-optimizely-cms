@@ -1,6 +1,7 @@
 import "@/lib/opti/opti-init";
 import {
   OptimizelyComponent,
+  setContextData,
   withAppContext,
 } from "@optimizely/cms-sdk/react/server";
 import { redirect, RedirectType } from "next/navigation";
@@ -32,6 +33,9 @@ async function Page({ params }: Props) {
   if (!mainContent) {
     return <div>No content found</div>;
   }
+
+  const breadcrumbPath = await cached.getPath(path);
+  setContextData("breadcrumbPath", breadcrumbPath);
 
   return (
     <OptimizelyComponent content={mainContent} />

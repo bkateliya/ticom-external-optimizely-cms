@@ -1,5 +1,5 @@
 export const SUPPORTED_LOCALES = ["en-us", "zh-cn", "zh-tw", "de-de", "ja-jp", "ko-kr", "es-mx"];
-
+export const DEFAULT_LOCALE = SUPPORTED_LOCALES[0];
 const regionNameFormatter = new Intl.DisplayNames(["en"], { type: "region" });
 const languageNameFormatter = new Intl.DisplayNames(["en"], {
   type: "language",

@@ -11,7 +11,7 @@ import { PreviewParams } from "@optimizely/cms-sdk";
 import { OptimizelyContentProps } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { cached } from "@/lib/data/opti";
 import { RootLayout } from "../RootLayout";
-import { SUPPORTED_LOCALES } from "@/constants/locales";
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/constants/locales";
 export { generateMetadata } from "./metadata";
 
 type Props = {
@@ -31,11 +31,16 @@ export async function Page({ searchParams }: Props) {
 
   let language = previewParams.loc;
   if (!language || !SUPPORTED_LOCALES.includes(language)) {
-    language = "en-US";
+    language = DEFAULT_LOCALE;
   }
 
   const siteSettings = await cached.getSiteSettings(language);
   setContextData("siteSettings", siteSettings);
+
+
+  const breadcrumbPath = await cached.getPath({ key: previewParams.key, locale: previewParams.loc.replace('-', '_') });
+  console.log('breadcrumbPath', breadcrumbPath);
+  setContextData("breadcrumbPath", breadcrumbPath);
   return (
     <RootLayout locale={language}>
       <Script

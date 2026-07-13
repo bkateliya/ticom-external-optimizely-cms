@@ -8,6 +8,7 @@ import {
 } from "@optimizely/cms-sdk/react/server";
 import { ArticlePageType } from "./Article.model";
 import { HeroComponentType } from "../../components/Hero/Hero.model";
+import { Breadcrumb } from "@/components/global/Breadcrumb/Breadcrumb";
 
 type Props = {
   content: ContentProps<typeof ArticlePageType>;
@@ -36,7 +37,7 @@ async function ArticlePage({ content }: Props) {
   return (
     <main>
       {/* <TextField cmsContent={content} field="pageTitle" as="h1" /> */}
-
+      <Breadcrumb />
       <HeroComponent
         content={content.hero as ContentProps<typeof HeroComponentType>}
         parentField="hero"

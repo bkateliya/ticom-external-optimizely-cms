@@ -1,6 +1,7 @@
 import { contract } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "@/components/cms/constants";
 import { PropertyTypes } from "@/lib/property-types";
+import { ContractContentType } from "@/lib/ts/opti";
 
 export const PageContentContract = contract({
   key: `${KEY_PREFIX}PageContent_Contract`,
@@ -27,3 +28,9 @@ export const PageContentContract = contract({
     },
   },
 });
+
+
+/** For using contracts as component interfaces. */
+export type PageContentContractContentType = ContractContentType<
+    [typeof PageContentContract]
+>;

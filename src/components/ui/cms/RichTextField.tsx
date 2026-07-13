@@ -1,7 +1,9 @@
 import { CmsFieldProps } from "@/lib/ts/field-props";
+import { normalizeUrl } from "@/lib/utils/link-utils";
 import { ContentTypes } from "@optimizely/cms-sdk";
-import { RichText, RichTextProps } from "@optimizely/cms-sdk/react/richText";
+import { ElementRendererProps, LinkElement, RichText, RichTextProps } from "@optimizely/cms-sdk/react/richText";
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
+import NextLink from 'next/link';
 
 type RichTextFieldContent = { json: RichTextProps["content"] } | null;
 
@@ -28,6 +30,30 @@ export function RichTextField<
       content={value?.json}
       {...pa([parentField, field].filter(Boolean).join("."))}
       {...props}
+      elements={{
+        link: LinkRenderer
+      }}
     />
   );
 }
+
+  const LinkRenderer = ({ children, attributes, element }: ElementRendererProps) => {
+
+    const linkElement = element as LinkElement;
+    const href = normalizeUrl(linkElement.url);
+    if (!href) {
+      return null;
+    }
+    const linkProps = {
+      href: href,
+      target: linkElement.target,
+      rel: linkElement.rel,
+      title: linkElement.title,
+    };
+
+    const mergedProps = {
+      ...attributes,
+      ...linkProps,
+    };
+    return <NextLink {...mergedProps}>{children}</NextLink>;
+  };

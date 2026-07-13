@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/Atoms/Cta/CtaButton";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
+import { normalizeUrl } from "@/lib/utils/link-utils";
 
 type Props = OptiComponentProps<typeof CTAElementType> & {
   ctaSurface?: CtaSurface;
@@ -35,10 +36,16 @@ export function CTAElement({
   }
   const { pa } = getPreviewUtils(content);
 
+  const url = normalizeUrl(href);
+
+  if (!url) {
+    return null;
+  }
+
   return (
     <div {...pa([parentField, "link"].filter(Boolean).join("."))}>
       <CtaLink
-        href={href}
+        href={url}
         text={content.link?.text ?? ""}
         ctaSurface={ctaSurface}
         ctaVariant={ctaVariant}

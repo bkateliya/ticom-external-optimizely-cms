@@ -5,18 +5,19 @@ import { CtaIcons, CtaSurface } from "@/components/ui/Atoms/Cta/CtaButton";
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { CmsFieldProps } from "@/lib/ts/field-props";
 import { CTAElementType } from "@/components/cms/elements/CTA/CTA.model";
+import { normalizeUrl } from "@/lib/utils/link-utils";
 
 type LinkFieldContent = ContentProps<typeof CTAElementType>["link"];
 
 export type LinkFieldProps<TContentType extends ContentTypes.AnyContentType> =
   CmsFieldProps<TContentType, LinkFieldContent> &
-    Omit<CtaLinkProps, "content" | "text" | "href"> & {
-      ctaSurface?: CtaSurface;
-      iconAlignment?: "Left" | "Right";
-      icon?: CtaIcons;
-      hideLinkText?: boolean;
-      renderChildrenIfNoLink?: boolean;
-    };
+  Omit<CtaLinkProps, "content" | "text" | "href"> & {
+    ctaSurface?: CtaSurface;
+    iconAlignment?: "Left" | "Right";
+    icon?: CtaIcons;
+    hideLinkText?: boolean;
+    renderChildrenIfNoLink?: boolean;
+  };
 
 export function LinkField<TContentType extends ContentTypes.AnyContentType>({
   cmsContent: content,
@@ -84,9 +85,14 @@ export function LinkFieldDirect({
   if (!href) {
     return renderChildrenIfNoLink ? props.children : null;
   }
+
+  const url = normalizeUrl(href);
+  if (!url) {
+    return null;
+  }
   return (
     <CtaLink
-      href={href}
+      href={url}
       text={hideLinkText ? "" : (link?.text ?? "")}
       ctaSurface={ctaSurface}
       ctaVariant={ctaVariant}

@@ -1,4 +1,53 @@
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/constants/locales";
+import { getContextData } from "@optimizely/cms-sdk/react/server";
 import type { UrlObject } from "node:url";
+
+const TI_DOMAINS = ['localhost', 'ti.com', 'www.ti.com', 'www.ti.com.cn'];
+const DUMMY_DOMAIN = 'dummy';
+const DUMMY_BASE_URL = `http://${DUMMY_DOMAIN}`;
+
+export function normalizeUrl(url: string | UrlObject): string | null {
+  const currentLocale = getContextData('locale') || DEFAULT_LOCALE;
+  let parsedUrl;
+  try {
+    parsedUrl = parseUrlObject(url);
+  } catch {
+    console.error(`Invalid url: ${url}`);
+    return null;
+  }
+  if (!parsedUrl) {
+    return null;
+  }
+// Only process TI domains or relative urls
+  const shouldProcessUrl = !parsedUrl.hostname || TI_DOMAINS.includes(parsedUrl.hostname);
+  if (!shouldProcessUrl) {
+    return url.toString();
+  }
+
+  // Remove leading slash and "home" segment
+  const cleanedPathName = parsedUrl.pathname.replace('/home/', '/').replace(/^\//, '');
+
+  const split = cleanedPathName.split('/')
+  const urlLocale = split[0].toLocaleLowerCase();
+
+  // No locale present
+  if (!SUPPORTED_LOCALES.includes(urlLocale)) {
+    // Add the locale
+    split.unshift(currentLocale)
+  }
+  // Locale is present, but different from current page
+  else if (SUPPORTED_LOCALES.includes(urlLocale) && urlLocale !== currentLocale) {
+    // Change the locale
+    split[0] = currentLocale;
+  }
+
+  parsedUrl.pathname = split.join('/');
+
+  if (parsedUrl.hostname === DUMMY_DOMAIN) {
+    return parsedUrl.pathname
+  }
+  return parsedUrl.toString();
+}
 /**
  * Matches a protocol (e.g. http:, https:, ftp:, mailto:, etc.)
  */
@@ -29,17 +78,11 @@ export function parseUrlObject(
     return null;
   }
   try {
-    const publicURL =
-      (process.env.SITE_DOMAIN as string) || "https://example.com";
-
-    const fullyQualifiedPublicURL = publicURL.startsWith("http")
-      ? publicURL
-      : `https://${publicURL}`;
 
     // If it's a fully qualified url, use it as is, otherwise include the public url
 
     if (href.match(PROTOCOL_REGEX)) return new URL(href);
-    const urlWithDummyDomain = new URL(href, new URL(fullyQualifiedPublicURL));
+    const urlWithDummyDomain = new URL(href, new URL(DUMMY_BASE_URL));
     const removeLeadingSlash = href.startsWith("#") || href.startsWith("?");
     return new UrlWithRelativePath(urlWithDummyDomain, removeLeadingSlash);
   } catch (error) {
@@ -79,6 +122,7 @@ export function encodeURIComponentSafe(str: string) {
 }
 
 export class UrlWithRelativePath {
+  hostname: string | null;
   href: string;
   pathname: string;
   protocol: string;
@@ -91,6 +135,7 @@ export class UrlWithRelativePath {
     if (removeLeadingSlash) {
       this.href = this.href.replace(/^\//, "");
     }
+    this.hostname = url.hostname === DUMMY_DOMAIN ? null : url.hostname;
     this.pathname = url.pathname;
     this.protocol = "";
     this.search = url.search;

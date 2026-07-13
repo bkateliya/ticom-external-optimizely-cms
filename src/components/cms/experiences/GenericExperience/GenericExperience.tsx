@@ -9,6 +9,7 @@ import { GenericExperienceType } from "./GenericExperience.model";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 // import { getTranslations } from "next-intl/server";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
+import { Breadcrumb } from "@/components/global/Breadcrumb/Breadcrumb";
 
 type Props = {
   content: ContentProps<typeof GenericExperienceType>;
@@ -26,6 +27,7 @@ export async function GenericExperience({ content }: Props) {
   );
   return (
     <main className="generic-experience">
+      <Breadcrumb />
       <SectionWrapper>
         <h1 {...pa("pageTitle")}>{content.pageTitle}</h1>
       </SectionWrapper>
