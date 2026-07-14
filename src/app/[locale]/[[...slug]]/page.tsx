@@ -7,6 +7,7 @@ import {
 import { redirect, RedirectType } from "next/navigation";
 import { cached } from "@/lib/data/opti";
 import { SUPPORTED_LOCALES } from "@/constants/locales";
+import { SchemaMarkup } from "@/components/cms/SchemaMarkup/SchemaMarkup";
 
 type Props = {
   params: Promise<{
@@ -38,7 +39,10 @@ async function Page({ params }: Props) {
   setContextData("breadcrumbPath", breadcrumbPath);
 
   return (
-    <OptimizelyComponent content={mainContent} />
+    <>
+      <SchemaMarkup content={mainContent} />
+      <OptimizelyComponent content={mainContent} />
+    </>
   );
 }
 
