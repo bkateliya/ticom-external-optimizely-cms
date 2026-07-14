@@ -7,6 +7,8 @@ declare module "@optimizely/cms-sdk/react/server" {
   export interface ContextData extends BaseContextData {
     siteSettings: ContentProps<typeof SiteSettingsDataType>;
     pageTitle: string;
+    pageContentId: string;
+    pageType: string;
     breadcrumbPath: PathItem[] | null
   }
 }

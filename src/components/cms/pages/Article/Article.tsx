@@ -7,6 +7,8 @@ import {
   withAppContext,
 } from "@optimizely/cms-sdk/react/server";
 import { ArticlePageType } from "./Article.model";
+import { GenericPage } from "../GenericPage/GenericPage";
+
 import { HeroComponentType } from "../../components/Hero/Hero.model";
 import { Breadcrumb } from "@/components/global/Breadcrumb/Breadcrumb";
 
@@ -35,7 +37,7 @@ async function ArticlePage({ content }: Props) {
   //   : null;
 
   return (
-    <main>
+    <GenericPage content={content}>
       {/* <TextField cmsContent={content} field="pageTitle" as="h1" /> */}
       <Breadcrumb />
       <HeroComponent
@@ -49,7 +51,8 @@ async function ArticlePage({ content }: Props) {
       {/* {contentRefComponent && (
         <OptimizelyComponent content={contentRefComponent} />
       )} */}
-    </main>
+    </GenericPage>
+
   );
 }
 

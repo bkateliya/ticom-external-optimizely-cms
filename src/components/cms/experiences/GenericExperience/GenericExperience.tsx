@@ -2,7 +2,6 @@ import {
   // getContextData,
   getPreviewUtils,
   OptimizelyComposition,
-  setContextData,
 } from "@optimizely/cms-sdk/react/server";
 import { ContentProps } from "@optimizely/cms-sdk";
 import { GenericExperienceType } from "./GenericExperience.model";
@@ -10,6 +9,7 @@ import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimiz
 // import { getTranslations } from "next-intl/server";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { Breadcrumb } from "@/components/global/Breadcrumb/Breadcrumb";
+import { setPageContext } from "@/lib/utils/page-context-utils";
 
 type Props = {
   content: ContentProps<typeof GenericExperienceType>;
@@ -21,10 +21,7 @@ export async function GenericExperience({ content }: Props) {
   // const siteSettings = getContextData("siteSettings");
   // console.log("siteSettings", siteSettings);
   // content.hero
-  setContextData(
-    "pageTitle",
-    content.pageTitle || content.hero?.headline || "",
-  );
+  setPageContext(content, content.pageTitle || content.hero?.headline || "");
   return (
     <main className="generic-experience">
       <Breadcrumb />
