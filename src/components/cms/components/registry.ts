@@ -14,7 +14,7 @@ import { PromoBlockComponent } from "./PromoBlock/index";
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
 import { CodeEmbedComponent } from "./CodeEmbed";
 import { TimedHeroBannerComponent } from "./TimedHeroBanner/TimedHeroBanner";
-import { TimedHeroBannerCarouselComponentType, TimedHeroBannerComponentType } from "./TimedHeroBanner/TimedHeroBanner.model";
+import { TimedHeroBannerSlideshowComponentType, TimedHeroBannerComponentType } from "./TimedHeroBanner/TimedHeroBanner.model";
 import { TimedHeroBannerCarouselComponent } from "./TimedHeroBanner/TimedHeroBannerCarousel";
 import { cardListComponentRegistry } from "./CardList/registry";
 
@@ -26,6 +26,6 @@ export const componentRegistry: ComponentRegistry = {
   [PromoBlockComponentType.key]: PromoBlockComponent,
   [CodeEmbedComponentType.key]: CodeEmbedComponent,
   [TimedHeroBannerComponentType.key]: TimedHeroBannerComponent,
-  [TimedHeroBannerCarouselComponentType.key]: TimedHeroBannerCarouselComponent,
+  [TimedHeroBannerSlideshowComponentType.key]: TimedHeroBannerCarouselComponent,
   ...cardListComponentRegistry
 };

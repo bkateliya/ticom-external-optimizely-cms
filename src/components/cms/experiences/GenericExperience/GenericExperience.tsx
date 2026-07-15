@@ -21,7 +21,7 @@ export async function GenericExperience({ content }: Props) {
   // const siteSettings = getContextData("siteSettings");
   // console.log("siteSettings", siteSettings);
   // content.hero
-  setPageContext(content, content.pageTitle || content.hero?.headline || "");
+  setPageContext(content);
   return (
     <main className="generic-experience">
       <Breadcrumb />

@@ -20,7 +20,7 @@ export const TimedHeroBannerComponentType = contentType({
   },
 });
 
-export const TimedHeroBannerCarouselComponentType = contentType({
+export const TimedHeroBannerSlideshowComponentType = contentType({
   key: `${KEY_PREFIX}TimedHeroBannerCarousel_Component`,
   displayName: `${DISPLAY_NAME_PREFIX}Timed Hero Banner Carousel`,
   baseType: "_component",

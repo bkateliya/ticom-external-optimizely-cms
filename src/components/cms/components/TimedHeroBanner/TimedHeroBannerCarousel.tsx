@@ -1,5 +1,5 @@
 import {
-  TimedHeroBannerCarouselComponentType,
+  TimedHeroBannerSlideshowComponentType,
   TimedHeroBannerComponentType,
 } from "./TimedHeroBanner.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
@@ -12,7 +12,7 @@ import { ContentProps } from "@optimizely/cms-sdk";
 export function TimedHeroBannerCarouselComponent({
   content,
 }: OptiComponentProps<
-  typeof TimedHeroBannerCarouselComponentType
+  typeof TimedHeroBannerSlideshowComponentType
 >): React.ReactNode {
   const isPreview = !!getContextData("previewToken");
   if (!content) {
