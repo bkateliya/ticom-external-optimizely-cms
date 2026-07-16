@@ -1,0 +1,11 @@
+/* ==========================================================================
+ * Theme — Border radius
+ * --------------------------------------------------------------------------
+ * Generates: rounded-none, rounded (2px), rounded-tag (pill), rounded-full.
+ * ========================================================================== */
+@theme {
+  --radius-none: 0px;
+  --radius: 2px; /* buttons, cards, inputs */
+  --radius-tag: 1rem; /* pill / tag */
+  --radius-full: 9999px;
+}

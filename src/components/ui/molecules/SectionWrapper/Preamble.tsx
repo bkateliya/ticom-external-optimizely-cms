@@ -9,6 +9,7 @@ import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
 import { HeadlineComponentType } from "@/components/cms/contracts/component-contracts/headline.model";
 import { CtaList } from "../CtaList/CtaList";
 import { parseHeadlineLevel } from "../Headline/Headline";
+import { getContext } from "@optimizely/cms-sdk/react/server";
 
 export interface PreambleProps
   extends
@@ -42,6 +43,8 @@ export const Preamble = ({
     return null;
   }
 
+  // Page-level data set in populateSiteSettings (src/lib/data/site-settings.ts)
+  console.log("Preamble page-level data", getContext());
   const baseClassName = clsx(
     styles.base,
     textAlignmentClassMap[textAlignment],
@@ -72,6 +75,7 @@ export const Preamble = ({
 
   return (
     <div className={baseClassName}>
+      <h1 >asddf</h1>
       <div
         data-component="generic-wrappers/preamble-section-wrapper"
         className={styles.content}
