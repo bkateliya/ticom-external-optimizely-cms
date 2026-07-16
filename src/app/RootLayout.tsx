@@ -24,6 +24,10 @@ export async function RootLayout({
   return (
     <html lang={locale}>
       <head>
+        <link
+          rel="stylesheet"
+          href="https://www.ti.com/assets/js/@ticom/header-content/1.latest/style/ticom.global.header.css"
+        />
         {/*
           TI's header/footer scripts reject internally with opaque cross-origin
           resource Events (currency/login/cart XHRs, fonts, lazy chunks). They're
@@ -39,13 +43,13 @@ export async function RootLayout({
           {/* TI front-end scripts — web-component bundles + header/footer init,
               loaded once for the whole page (see TiScripts). */}
           <TiScripts />
-          <TiHeader locale={locale} />
+          {/* <TiHeader locale={locale} /> */}
           <NextIntlClientProvider>
             {/* Hero is hard-coded as H1 so others should start at H2  */}
             <HeadingLevelContext headingLevel={2}>{children}</HeadingLevelContext>
           </NextIntlClientProvider>
 
-          <TiFooter />
+          {/* <TiFooter /> */}
         </ThemeProvider>
       </body>
     </html>

@@ -1,6 +1,6 @@
 import { ComponentRegistry } from "@/lib/ts/component-props";
-import { GenericExperience } from "./GenericExperience/GenericExperience";
-import { ApplicationExperienceType, FamilyExperienceType, GenericExperienceType } from "./GenericExperience/GenericExperience.model";
+import { GenericExperience } from "./FlexibleMarketing/FlexibleMarketing";
+import { ApplicationExperienceType, FamilyExperienceType, GenericExperienceType } from "./FlexibleMarketing/FlexibleMarketing.model";
 import { HomeExperienceType } from "./HomeExperience/HomeExperience.model";
 import { HomeExperience } from "./HomeExperience/HomeExperience";
 

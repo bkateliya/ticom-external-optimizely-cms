@@ -1,7 +1,6 @@
 import { ContextData as BaseContextData } from "@optimizely/cms-sdk/react/server";
 import { ContentProps } from "@optimizely/cms-sdk";
-import { SiteSettingsDataType } from "@/components/cms/pages/SiteSettings/SiteSettings.model";
-import { PathItem } from "@/lib/data/opti";
+import { SiteSettingsDataType } from "@/components/cms/structural-components/SiteSettings/SiteSettings.model";
 
 declare module "@optimizely/cms-sdk/react/server" {
   export interface ContextData extends BaseContextData {
@@ -9,6 +8,9 @@ declare module "@optimizely/cms-sdk/react/server" {
     pageTitle: string;
     pageContentId: string;
     pageType: string;
-    breadcrumbPath: PathItem[] | null
+    breadcrumb: {
+      title: string;
+      url: string
+    }[]
   }
 }

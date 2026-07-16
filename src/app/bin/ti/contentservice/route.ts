@@ -2,8 +2,6 @@ import { getClient } from "@optimizely/cms-sdk";
 import '@/lib/opti/client-config';
 import { ApplicationReferenceContract } from "@/components/cms/contracts/page-contacts/application-reference.model";
 import { FamilyReferenceContract } from "@/components/cms/contracts/page-contacts/family-reference.model";
-import { SiteRootType } from "@/components/cms/pages/SiteRoot/SiteRoot.model";
-import { SiteSettingsDataType } from "@/components/cms/pages/SiteSettings/SiteSettings.model";
 import { PageContentContract } from "@/components/cms/contracts/page-contacts/page-content.model";
 import { NextRequest } from "next/server";
 
@@ -49,7 +47,7 @@ export async function GET(request: NextRequest) {
         pagename: x.pageTitle || x._metadata.displayName,
         pagetype: x._itemMetadata.type,
         tags: [],
-        url: `${x._metadata.url.base}${x._metadata.url.hierarchical}`.replace('/home', '')
+        url: `${x._metadata.url.base}${x._metadata.url.hierarchical}`
     }))
     return Response.json(finalResult);
 }
@@ -133,9 +131,6 @@ const OTHER_PAGE_QUERY = `query {
         {
           _metadata: { types: { in: "_Page", notIn: ["${ApplicationReferenceContract.key}", "${FamilyReferenceContract.key}"] } }
         }
-        {
-          _not: { _itemMetadata: { type: { in: ["${SiteRootType.key}", "${SiteSettingsDataType.key}"] } } }
-        }
       ]
     }
   ) {
@@ -153,9 +148,6 @@ const ALL_PAGE_QUERY = `query {
       _and: [
         {
           _metadata: { types: { in: "_Page" } }
-        }
-        {
-          _not: { _itemMetadata: { type: { in: ["${SiteRootType.key}", "${SiteSettingsDataType.key}"] } } }
         }
       ]
     }

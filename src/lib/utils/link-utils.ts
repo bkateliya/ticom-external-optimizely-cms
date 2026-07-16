@@ -24,8 +24,8 @@ export function normalizeUrl(url: string | UrlObject): string | null {
     return url.toString();
   }
 
-  // Remove leading slash and "home" segment
-  const cleanedPathName = parsedUrl.pathname.replace('/home/', '/').replace(/^\//, '');
+  // Remove leading slash
+  const cleanedPathName = parsedUrl.pathname.replace(/^\//, '');
 
   const split = cleanedPathName.split('/')
   const urlLocale = split[0].toLocaleLowerCase();

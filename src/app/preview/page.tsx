@@ -2,16 +2,15 @@ import "@/lib/opti/opti-init";
 import { getClient } from "@optimizely/cms-sdk";
 import {
   OptimizelyComponent,
-  setContextData,
   withAppContext,
 } from "@optimizely/cms-sdk/react/server";
 import Script from "next/script";
 import { NextPreviewComponent } from "@optimizely/cms-sdk/react/nextjs";
 import { PreviewParams } from "@optimizely/cms-sdk";
 import { OptimizelyContentProps } from "@/components/ui/cms/ExtendedOptimizelyComponent";
-import { cached } from "@/lib/data/opti";
 import { RootLayout } from "../RootLayout";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/constants/locales";
+import { populateSiteSettings } from "@/lib/data/site-settings";
 export { generateMetadata } from "./metadata";
 
 type Props = {
@@ -29,20 +28,16 @@ export async function Page({ searchParams }: Props) {
     previewParams,
   )) as OptimizelyContentProps;
 
-  let language = previewParams.loc;
-  if (!language || !SUPPORTED_LOCALES.includes(language)) {
-    language = DEFAULT_LOCALE;
+  let locale = previewParams.loc;
+  if (!locale || !SUPPORTED_LOCALES.includes(locale)) {
+    locale = DEFAULT_LOCALE;
   }
 
-  const siteSettings = await cached.getSiteSettings(language);
-  setContextData("siteSettings", siteSettings);
+  await populateSiteSettings((response._metadata as any)?.url.hierarchical, locale);
 
-
-  const breadcrumbPath = await cached.getPath({ key: previewParams.key, locale: previewParams.loc.replace('-', '_') });
-  console.log('breadcrumbPath', breadcrumbPath);
-  setContextData("breadcrumbPath", breadcrumbPath);
   return (
-    <RootLayout locale={language}>
+    <RootLayout locale={locale}>
+
       <Script
         src={
           new URL(

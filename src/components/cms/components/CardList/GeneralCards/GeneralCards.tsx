@@ -1,4 +1,3 @@
-import { getContext } from "@optimizely/cms-sdk/react/server";
 import { fieldFactory } from "@/components/ui/cms";
 import {
   SingleGeneralCardComponentType,
@@ -19,13 +18,13 @@ export function GeneralCard({
   const { WrappedTextField, WrappedRichTextField, WrappedHeadingTextField } =
     fieldFactory<typeof SingleGeneralCardComponentType>(content, parentField);
   return (
-    <div>111
+    <div className="bg-sky-300 rounded-xl p-4 m-4">
       <WrappedTextField field="eyebrow" />
       <WrappedHeadingTextField field="headline" />
       <WrappedTextField field="subheadline" />
       <WrappedRichTextField field="description" />
 
-      <CtaList content={content} parentField={parentField} ctaSurface="onCard" />
+      <CtaList content={content} parentField={parentField}/>
     </div>
   );
 }
@@ -38,7 +37,6 @@ export async function GeneralCardsComponent({
   if (!content) {
     return null;
   }
-  console.log("full context data", getContext());
   const cards = normalizeGenericArrayToTyped(
     content.cards,
     SingleGeneralCardComponentType,

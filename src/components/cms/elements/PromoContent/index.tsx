@@ -5,6 +5,7 @@ import { OptiComponentProps } from "@/lib/ts/component-props";
 import { fieldFactory } from "@/components/ui/cms";
 
 import styles from "./styles.module.css";
+import { ButtonAppearance } from "@/components/ui/ti/enums";
 
 type Props = OptiComponentProps<typeof PromoContentElementType> & {};
 
@@ -38,7 +39,7 @@ export function PromoContentElement({ content, parentField }: Props) {
           className={styles.description}
         />
         {content.link ? (
-          <WrappedLinkField field="link" ctaSurface="onBg" ctaVariant="link" />
+          <WrappedLinkField field="link" appearance={ButtonAppearance.link} />
         ) : null}
       </div>
     </div>

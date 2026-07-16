@@ -1,14 +1,13 @@
 import "@/lib/opti/opti-init";
 import {
   OptimizelyComponent,
-  setContextData,
   withAppContext,
 } from "@optimizely/cms-sdk/react/server";
 import { redirect, RedirectType } from "next/navigation";
 import { cached } from "@/lib/data/opti";
 import { SUPPORTED_LOCALES } from "@/constants/locales";
-import { SchemaMarkup } from "@/components/cms/SchemaMarkup/SchemaMarkup";
-
+import { populateSiteSettings } from "@/lib/data/site-settings";
+export { generateMetadata } from './metadata'
 type Props = {
   params: Promise<{
     locale: string;
@@ -24,8 +23,7 @@ async function Page({ params }: Props) {
     redirect("/" + SUPPORTED_LOCALES[0], RedirectType.replace);
   }
 
-  // Add home to the slug
-  const path = `/${locale}/home/${slug.join("/")}/`;
+  const path = `/${locale}/${slug.join("/")}`;
 
   const content = await cached.getContentByPath(path);
 
@@ -35,14 +33,11 @@ async function Page({ params }: Props) {
     return <div>No content found</div>;
   }
 
-  const breadcrumbPath = await cached.getPath(path);
-  setContextData("breadcrumbPath", breadcrumbPath);
+  await populateSiteSettings(path, locale);
 
+  console.log('main page')
   return (
-    <>
-      <SchemaMarkup content={mainContent} />
-      <OptimizelyComponent content={mainContent} />
-    </>
+    <OptimizelyComponent content={mainContent} />
   );
 }
 

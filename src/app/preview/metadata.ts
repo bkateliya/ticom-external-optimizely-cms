@@ -16,8 +16,8 @@ export async function generateMetadata(
   if (!language) {
     return {};
   }
-  const siteSettings = await cached.getSiteSettings(language);
+  // const siteSettings = await cached.getSiteSettings(language);
   return {
-    icons: siteSettings?.favicon?.url.default,
+    // icons: siteSettings?.favicon?.url.default,
   };
 }

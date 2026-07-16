@@ -6,6 +6,20 @@ This project uses `pnpm` instead of `npm` for package management. You can instal
 `pnpm` using `corepack`:
 A Next.js application for Optimizely CMS with code-first content modeling and Graph content delivery
 
+Ensure that TI Proxy is being used
+
+```sh
+#Windows 
+SET NODE_USE_ENV_PROXY=1
+SET HTTP_PROXY=http://wwwgate.ti.com:80
+SET HTTPS_PROXY=http://wwwgate.ti.com:80
+
+# Linux/Mac
+export NODE_USE_ENV_PROXY=1
+export HTTP_PROXY=http://wwwgate.ti.com:80
+export HTTPS_PROXY=http://wwwgate.ti.com:80
+```
+
 ```sh
 npm install --global corepack@latest
 corepack enable pnpm
@@ -15,7 +29,7 @@ corepack enable pnpm
 ### 1. Install dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### 2. Configure environment variables
@@ -28,19 +42,16 @@ cp .env.example .env.local
 
 | Variable | Purpose |
 | --- | --- |
-| `OPTIMIZELY_CMS_CLIENT_ID` / `OPTIMIZELY_CMS_CLIENT_SECRET` | OAuth credentials for the CMS CLI (`npm run opti`) |
+| `OPTIMIZELY_CMS_CLIENT_ID` / `OPTIMIZELY_CMS_CLIENT_SECRET` | OAuth credentials for the CMS CLI (`pnpm opti`) |
 | `OPTIMIZELY_GRAPH_SINGLE_KEY` | API key for Optimizely Graph content queries |
 | `OPTIMIZELY_CMS_URL` | CMS instance URL (used for preview and CLI) |
 | `OPTIMIZELY_GRAPH_HOST` | Host name configured in Optimizely |
 | `NEXT_PUBLIC_ALLOW_BRAND_THEME_SWITCHING` | Enables brand/theme switching in the UI |
 
-### 3. Bootstrap and run
-
-The bootstrap step generates the dictionary TypeScript definitions
+### 3. Run
 
 ```bash
-npm run bootstrap
-npm run dev
+pnpm dev
 ```
 
 The dev server runs at [http://localhost:3000](http://localhost:3000).
@@ -66,13 +77,13 @@ Models declare their own properties and can **extend** shared contracts (see bel
 After changing models, push them to the CMS:
 
 ```bash
-npm run opti -- config push
+pnpm opti -- config push
 ```
 
 Or verify credentials first:
 
 ```bash
-npm run opti -- login
+pnpm opti -- login
 ```
 
 Then install dependencies with `pnpm install`, and start the dev server with `pnpm dev`.
@@ -105,15 +116,15 @@ export default buildConfig({
 });
 ```
 
-- **`components`** — glob paths scanned when you run `npm run opti config push` or `config pull`. This picks up every `model.ts` file plus contract definitions.
+- **`components`** — glob paths scanned when you run `pnpm opti config push` or `config pull`. This picks up every `model.ts` file plus contract definitions.
 - **`propertyGroups`** — editor tabs/groups for CMS properties. Contracts reference these groups (e.g. SEO fields use the `seo` group).
 
 ## Scripts
 
 | Command | Description |
 | --- | --- |
-| `npm run dev` | Start Next.js dev server (port 3003) |
-| `npm run build` / `npm start` | Production build and server |
-| `npm run bootstrap` | Generate branded files and CSS variables |
-| `npm run opti` | Run the Optimizely CMS CLI (pass additional properti with ` -- ` ) |
-| `npm test` | Bootstrap, then run Jest tests |
+| `pnpm dev` | Start Next.js dev server (port 3000) |
+| `pnpm build` / `pnpm start` | Production build and server |
+| `pnpm bootstrap` | Generate branded files and CSS variables |
+| `pnpm opti` | Run the Optimizely CMS CLI (pass additional properties with ` -- ` ) |
+| `pnpm test` | Bootstrap, then run Jest tests |

@@ -5,13 +5,13 @@ import Image from "next/image";
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
-import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
 // import { BackgroundColorSetting, BackgroundImageSetting } from "@components/";
 import { Themes } from "@/lib/themes";
-import { ThemeMode } from "@/components/ui/context/BrandAndTheme/consts";
 import clsx from "clsx";
 import { BackgroundColorSetting, BackgroundImageSetting, SectionBackgroundContractContentType } from "@/components/cms/contracts/component-contracts/section.model";
+
+import { ComponentTheme } from "@/components/ui/ti/enums";
 
 export function ThemedSection({
   content,
@@ -26,7 +26,7 @@ export function ThemedSection({
   const hasBackground = !!(backgroundColorSetting || backgroundImageSetting)
 
   const theme = (backgroundColorSetting?.theme as Themes | undefined) || 'custom';
-  const mode = (backgroundImageSetting?.backgroundTheme) as ThemeMode | undefined;
+  const mode = (backgroundImageSetting?.backgroundTheme) as ComponentTheme | undefined;
 
   const backgroundSize = hasBackground ? content.backgroundSize || 'full' : null;
 

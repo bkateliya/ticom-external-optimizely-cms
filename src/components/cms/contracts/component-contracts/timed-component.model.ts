@@ -14,13 +14,13 @@ export const TimedComponentContract = contract({
       type: "dateTime",
       displayName: "Start Date",
       description: "Component can be visible from this date",
-      group: propertyGroupKeys.Settings,
+      group: propertyGroupKeys.ComponentConfiguration,
     },
     endDate: {
       type: "dateTime",
       displayName: "End Date",
       description: "Component will be hidden after this date",
-      group: propertyGroupKeys.Settings,
+      group: propertyGroupKeys.ComponentConfiguration,
     },
   },
 });

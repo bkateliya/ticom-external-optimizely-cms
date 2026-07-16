@@ -13,21 +13,31 @@ import { componentRegistry } from "@/components/cms/components/registry";
 import { elementTypes } from "@/components/cms/elements/types";
 import { elementRegistry } from "@/components/cms/elements/registry";
 import { sectionTypes } from '@/components/cms/sections/types';
-import { sectionRegistry} from '@/components/cms/sections/registry';
+import { sectionRegistry } from '@/components/cms/sections/registry';
 import { contractComponentTypes } from '@/components/cms/contracts/component-contracts/types';
 import { contractComponentRegistry } from '@/components/cms/contracts/component-contracts/registry';
+import { structuralComponentTypes } from "@/components/cms/structural-components/types";
+import { structuralComponentRegistry } from "@/components/cms/structural-components/registry";
 
 
 bootstrap();
 // Configure Optimizely Graph client
 
-initContentTypeRegistry([...experienceTypes, ...pageTypes, ...componentTypes, ...elementTypes, ...sectionTypes, ...contractComponentTypes]);
+initContentTypeRegistry([
+  ...experienceTypes,
+  ...pageTypes,
+  ...componentTypes,
+  ...structuralComponentTypes,
+  ...elementTypes,
+  ...sectionTypes,
+  ...contractComponentTypes]);
 
 initReactComponentRegistry({
   resolver: {
     ...pageRegistry,
     ...experienceRegistry,
     ...componentRegistry,
+    ...structuralComponentRegistry,
     ...elementRegistry,
     ...sectionRegistry,
     ...contractComponentRegistry,

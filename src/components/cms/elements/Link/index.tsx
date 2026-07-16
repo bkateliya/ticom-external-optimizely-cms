@@ -1,13 +1,10 @@
 import { LinkElementType } from "./Link.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { fieldFactory } from "@/components/ui/cms";
-import { CtaSurface } from "@/components/ui/Atoms/Cta/CtaButton";
 
-type Props = OptiComponentProps<typeof LinkElementType> & {
-  ctaSurface?: CtaSurface;
-};
+type Props = OptiComponentProps<typeof LinkElementType>;
 
-export function LinkElement({ content, parentField, ctaSurface = "onBg" }: Props) {
+export function LinkElement({ content, parentField }: Props) {
   if (!content) {
     return null;
   }
@@ -15,5 +12,5 @@ export function LinkElement({ content, parentField, ctaSurface = "onBg" }: Props
     content,
     parentField,
   );
-  return <WrappedLinkField field="link" ctaSurface={ctaSurface} ctaVariant="link" />;
+  return <WrappedLinkField field="link" />;
 }

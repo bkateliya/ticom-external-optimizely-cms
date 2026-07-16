@@ -1,7 +1,5 @@
 "use server";
-import { damAssets } from "@optimizely/cms-sdk";
 
-import Image from "next/image";
 import { TimedHeroBannerComponentType } from "./TimedHeroBanner.model";
 import {
   getContextData,
@@ -14,6 +12,7 @@ import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
 import { HeadlineComponentType } from "../../contracts/component-contracts/headline.model";
 import { CtaList } from "@/components/ui/molecules/CtaList/CtaList";
 import { parseHeadlineLevel } from "@/components/ui/molecules/Headline/Headline";
+import { TiSlide } from "@/components/ui/ti/TiSlideshow/TiSlide";
 
 export async function TimedHeroBannerComponent({
   content,
@@ -31,7 +30,7 @@ export async function TimedHeroBannerComponent({
     (!endDate || endDate >= new Date());
 
   const { src } = getPreviewUtils(content);
-  const { getAlt } = damAssets(content);
+
   const imageUrl = src(content.bannerImage);
 
   const headline = normalizeGenericContentToTyped<typeof HeadlineComponentType>(content.headline);
@@ -48,119 +47,60 @@ export async function TimedHeroBannerComponent({
     previewInfo,
     base,
     eyebrow,
-    ctaButtons,
-    descriptionText,
     heading,
     subHeadline,
-    imageWrapper,
     gradientOverlay,
-    slide,
     slideContent,
-    slideMedia,
     wrapper,
   } = TAILWIND_VARIANTS();
 
   return (
-    <div data-component="authorable/shared/lists/carouselitem">
+    <TiSlide thumbnailSrc={imageUrl ?? ""} thumbnailLabel={headline.headline ?? undefined} backgroundImageSrc={imageUrl}>
+      <div className={gradientOverlay()} />
       {isPreview && (
         <div className={previewInfo({ slideVisible: isVisible })}>
           Visible from: {startDate?.toLocaleString()} to:{" "}
           {endDate?.toLocaleString()}
         </div>
       )}
-      <div className={slide()}>
-        <div className={slideMedia()}>
-          {imageUrl && (
-            <>
-              <Image
-                className={imageWrapper()}
-                src={imageUrl}
-                alt={getAlt(content.bannerImage) ?? ""}
-                width={680}
-                height={540}
-                sizes="100vw"
-                style={{ width: "100%", height: "auto" }}
-              />
-              <div className={gradientOverlay()} />
-            </>
-          )}
-          <div className={slideContent()}>
-            <div className={base()}>
-              <div className={wrapper()}>
-                <WrappedTextField
-                  as="p"
-                  className={eyebrow()}
-                  field="eyebrow"
-                />
-                <WrappedHeadingTextField
-                  className={heading()}
-                  field="headline"
-                  headingLevel={parseHeadlineLevel({ content: headline })}
-                />
+      <div className={slideContent()}>
+        <div className={base()}>
+          <div className={wrapper()}>
+            <WrappedTextField
+              as="p"
+              className={eyebrow()}
+              field="eyebrow"
+            />
+            <WrappedHeadingTextField
+              className={heading()}
+              field="headline"
+              headingLevel={parseHeadlineLevel({ content: headline })}
+            />
 
-                <WrappedTextField
-                  className={subHeadline()}
-                  as="p"
-                  field="subheadline"
-                />
-                <WrappedRichTextField
-                  className={descriptionText()}
-                  field="description"
-                />
-              </div>
-              <CtaList content={content} parentField={parentField} ctaSurface="onBg" />
-            </div>
+            <WrappedTextField
+              className={subHeadline()}
+              as="p"
+              field="subheadline"
+            />
+            <WrappedRichTextField
+              field="description"
+            />
           </div>
+          <CtaList content={content} parentField={parentField} />
         </div>
       </div>
-    </div>
+    </TiSlide>
   );
 }
 
 // TODO clean up theses styles.  Some of theses classes don't exist.
 const TAILWIND_VARIANTS = tv({
   slots: {
-    previewInfo: ["text-center", "p-4", "rounded-md", "text-white"],
+    previewInfo: ["text-center", "p-4", "rounded-md", "text-white", "z-1", "relative"],
     base: [
       "text-white",
-      // "slide-content-inner",
-      // "flex",
-      // "w-full",
-      // "md:max-w-[548px]",
-      // "shrink-0",
-      // "self-stretch",
-      // "mr-spacing-spacing-16",
-      // "md:mx-spacing-spacing-40",
-      // "md:my-spacing-spacing-48",
-      // "flex-col",
-      // "items-start",
-      // "justify-center",
-      // "px-component-carousel-content-padding-x",
-      // "py-component-carousel-content-padding-y",
-      // "md:rounded-border-radius-container-l2",
-      // "md:border-component-hero-copy-border-width",
-      // "md:border-component-carousel-color-content-border",
-      // "bg-component-carousel-color-content-surface",
-      // "gap-component-carousel-buttons-margin-top",
     ],
     cta: [],
-    descriptionText: [
-      "carousel-rich-text",
-      "text-component-carousel-color-body",
-      "font-typography-body-font-family",
-      "text-typography-body-large-font-size",
-      "font-normal",
-      "leading-[27px]",
-      "line-clamp-3",
-    ],
-    ctaButtons: [
-      "flex",
-      "flex-col",
-      "gap-spacing-spacing-12",
-      "md:flex-row",
-      "w-full",
-      "md:w-auto",
-    ],
     eyebrow: [
       "text-sm",
       "font-bold",
@@ -181,47 +121,18 @@ const TAILWIND_VARIANTS = tv({
       "md:leading-[48px]",
       "leading-[38px]",
     ],
-    imageWrapper: [
-      "relative",
-      "md:absolute",
-      "inset-0",
-      "object-cover",
-      "w-full",
-      "overflow-hidden",
-      "md:rounded-[12px]",
-      "aspect-video",
-      "bg-center",
-      "bg-cover",
-      "left-0",
-      "top-0",
-      "xl:h-[550px]",
-      "md:h-[470px]",
-      "self-stretch",
-    ],
     gradientOverlay: [
       "absolute",
       "top-0",
-      "z-10",
+      // "z-10",
       "bg-gradient-to-r",
       "from-black",
       "from-30%",
-      // "via-black",
       "to-transparent",
-      // "h-[70vh]",
-      // "lg:h-[80vh]",
       "w-full",
       "h-full",
     ],
-    slide: [
-      "flex",
-      "md:justify-center",
-      "xl:h-[550px]",
-      "md:min-h-[470px]",
-      "flex-col",
-      "relative",
-    ],
     slideContent: [
-      "slide-content",
       "p-16",
       "relative",
       "flex",
@@ -235,7 +146,6 @@ const TAILWIND_VARIANTS = tv({
       "justify-start",
       "md:items-center",
     ],
-    slideMedia: ["slide-media", "h-full", "flex", "flex-col", "md:min-h-full"],
     wrapper: [
       "flex",
       "flex-col",

@@ -9,16 +9,18 @@ import {
   useState,
 } from "react";
 import { ALL_THEMES, Themes } from "@/lib/themes";
-import { ThemeSetting, DefaultTheme, ThemeMode } from "./consts";
+import { ThemeSetting, DefaultTheme } from "./consts";
 import clsx from "clsx";
 import style from "./BrandAndThemeContext.module.css";
 import { ThemeSelector, ThemeSettingToggle } from "./BrandSelector";
 
-function getModeFromTheme(theme: Themes | undefined | 'custom'): ThemeMode {
+import { ComponentTheme } from "@/components/ui/ti/enums";
+
+function getModeFromTheme(theme: Themes | undefined | 'custom'): ComponentTheme {
   if (theme === 'theme-tertiary' || theme === 'theme-accent') {
-    return 'dark';
+    return ComponentTheme.dark;
   }
-  return 'light';
+  return ComponentTheme.light;
 }
 
 export const ThemeContext = createContext<ThemeSetting>({
@@ -39,7 +41,7 @@ type ThemeProviderProps = HTMLAttributes<HTMLDivElement> & {
    */
   theme?: Themes | 'custom';
   /** Optional.  Light or Dark mode.  This is usually determined by the theme. */
-  mode?: ThemeMode;
+  mode?: ComponentTheme;
   /**
    * Optional. Whether to apply the brand and theme to the body element instead.
    * Note: other attributes will be ignored if this is set

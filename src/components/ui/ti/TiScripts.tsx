@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { MODULE_BUNDLES, CONTENT_SCRIPTS } from "./TIScriptConstants";
 
 /**
  * Loads the TI front-end scripts client-side, mirroring the working reference
@@ -16,22 +17,6 @@ import { useEffect } from "react";
  *     time we inject them, so we re-dispatch it once afterwards to run their
  *     init (this is what makes the menu work).
  */
-// const TICOM = "https://www.ti.com/assets/js/@ticom";
-const TICOM = "https://www-int.itg.ti.com/assets/js/@ticom"
-
-const MODULE_BUNDLES = [
-  `${TICOM}/ui-components/3.latest/ui-components.esm.js`,
-  `${TICOM}/header-components/3.latest/header-components.esm.js`,
-  `${TICOM}/feature-components/2.4.18/feature-components.esm.js`,
-  `${TICOM}/selection-tool-components/1.latest/selection-tool-components.esm.js`,
-  `${TICOM}/personalization-components/0.0.41/personalization-components.esm.js`,
-];
-
-const CONTENT_SCRIPTS = [
-  `${TICOM}/header-content/1.latest/en/js/header-responsive.js`,
-  `${TICOM}/header-content/1.latest/en/js/footer.js`,
-];
-
 function injectScript(src: string, type?: string) {
   return new Promise<void>((resolve) => {
     if (document.querySelector(`script[src="${src}"]`)) return resolve();

@@ -1,8 +1,8 @@
 "use client";
 
-import { Themes } from "@/lib/themes";
 import { useTheme } from "../../context/BrandAndTheme/BrandAndThemeContext";
-import { ThemeMode } from "../../context/BrandAndTheme/consts";
+
+import { ComponentTheme } from "@/components/ui/ti/enums";
 
 export type ExpansionPanelSize = 'lg' | undefined;
 export interface TiAccordionProps extends React.PropsWithChildren {
@@ -12,7 +12,7 @@ export interface TiAccordionProps extends React.PropsWithChildren {
     collapseAllLabel?: string;
     expandAllLabel?: string;
     size?: ExpansionPanelSize
-    theme?: ThemeMode
+    theme?: ComponentTheme
 }
 
 export function TiAccordion({ appearance, autoCollapse, autoScroll, collapseAllLabel, expandAllLabel, size, theme, children }: TiAccordionProps) {

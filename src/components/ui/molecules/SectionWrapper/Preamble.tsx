@@ -80,7 +80,7 @@ export const Preamble = ({
         <HeadingLevelContext headingLevel={parseHeadlineLevel({ content: headline })}>
           <ExtendedOptimizelyComponent content={content.headline} parentField={parentField} />
 
-          <CtaList content={content} parentField={parentField} ctaSurface="onBg" />
+          <CtaList content={content} parentField={parentField} />
 
           <div className={sectionContentWrapperClassName}>
             {/* Then increment the level if needed, e.g. if component set H3, then we set it to H3 above, 

@@ -15,8 +15,8 @@ export default buildConfig({
       // sortOrder: 1,
     },
     {
-      key: propertyGroupKeys.Settings,
-      displayName: `Settings`,
+      key: propertyGroupKeys.ComponentConfiguration,
+      displayName: `Component Configuration`,
       // sortOrder: 1,
     },
     {
@@ -27,6 +27,11 @@ export default buildConfig({
     {
       key: propertyGroupKeys.Data,
       displayName: "Data"
+    },
+    {
+      key: propertyGroupKeys.Config,
+      displayName: "Configuration",
+      sortOrder: 15,
     }
   ],
   

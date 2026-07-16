@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThe
 import styles from "./styles.module.css";
 import Image from "next/image";
 import { HeroComponentType } from "./Hero.model";
-import { getContextData, getPreviewUtils } from "@optimizely/cms-sdk/react/server";
+import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { fieldFactory } from "@/components/ui/cms";
 import { CTAElement } from "../../elements/CTA";
 import { OptiComponentProps } from "@/lib/ts/component-props";
@@ -20,11 +20,6 @@ export function HeroComponent({
   if (!content) {
     return null;
   }
-
-  const siteSettings = getContextData("siteSettings");
-  console.log("[Hero] siteSettings", siteSettings);
-
-
   const { src } = getPreviewUtils(content);
   const { getAlt } = damAssets(content);
   const imageUrl = src(content.image);
@@ -59,7 +54,7 @@ export function HeroComponent({
                 className={styles.description}
               />
             </div>
-            <CtaList content={content} ctaSurface="onSurface" />
+            <CtaList content={content} />
           </div>
           {imageUrl && (
             <div className={styles.image}>
