@@ -32,7 +32,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@ticom/form-components": "^1.0.26",
+    "@ticom/form-components": "file:.stubs/ticom-form-components",
     "@types/jest": "^30.0.0",
     "clsx": "^2.1.1",
     "country-flag-icons": "^1.6.17",
