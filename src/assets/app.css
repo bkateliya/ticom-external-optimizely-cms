@@ -1,52 +1,10 @@
-/* @import "tailwindcss"; */
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
+/* Preflight stays off — the hosted TI header CSS depends on browser defaults.
+   tw-typography.css carries the reset TI's own CSS would normally provide. */
 /* @import "tailwindcss/preflight.css" layer(base); */
 @import "tailwindcss/utilities.css" layer(utilities);
 
-@import "./themes";
-@import "./tw-theme.css";
-
-@theme {
-  --color-text-default: var(--ti-text-color);
-
-  --font-body: var(--font-roboto);
-}
-
-:root,
-.theme-root {
-  --color-text-default: var(--ti-text-color);
-
-  --font-body: var(--font-roboto);
-
-}
-
-/* Placeholder values for testing */
-@layer base {
-
-  h1 {
-    font-size: 48px;
-  }
-
-  h2 {
-    font-size: 36px;
-  }
-
-  h3 {
-    font-size: 28px;
-  }
-
-  h4 {
-    font-size: 24px;
-  }
-
-  h5 {
-    font-size: 20px;
-  }
-
-  h6 {
-    font-size: 18px;
-  }
-}
-
-/* @import "./tw-theme"; */
+@import "./themes"; /* tier 2: Polaris --pl-* semantic vars + theme/mode classes */
+@import "./tw-theme.css"; /* tier 1: @theme tokens → all Tailwind utilities */
+@import "./tw-typography.css"; /* base element styles for CMS rich text */

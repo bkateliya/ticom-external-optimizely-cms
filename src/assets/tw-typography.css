@@ -1,0 +1,219 @@
+/*
+ * Base element typography for CMS rich-text output (bare h1–h6/p/a can't carry
+ * Tailwind classes), plus TI's u-header-* / u-paragraph-* companion classes for
+ * putting the same styles on any other element — same names as ti.com.
+ * Values: docs/typography.md — extracted from ti.com.
+ */
+
+@layer base {
+  /* TI's own reset (preflight is disabled in app.css to coexist with the
+     hosted TI header CSS) */
+  html {
+    box-sizing: border-box;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  blockquote,
+  p,
+  pre,
+  dl,
+  dd,
+  ol,
+  ul,
+  figure,
+  hr,
+  fieldset,
+  legend {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-foreground);
+    font-variant-ligatures: no-common-ligatures;
+  }
+
+  .u-header-extraLarge {
+    font-size: var(--text-display);
+    line-height: var(--text-display--line-height);
+    font-weight: var(--text-display--font-weight);
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-heading);
+  }
+
+  h1,
+  .u-header-1 {
+    font-size: var(--text-h1);
+    line-height: var(--text-h1--line-height);
+    font-weight: var(--text-h1--font-weight);
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-heading);
+  }
+
+  h2,
+  .u-header-2 {
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    font-weight: var(--text-h2--font-weight);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-heading);
+  }
+
+  h3,
+  .u-header-3 {
+    font-size: var(--text-h3);
+    line-height: var(--text-h3--line-height);
+    font-weight: var(--text-h3--font-weight);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-heading);
+  }
+
+  h4,
+  .u-header-4 {
+    font-size: var(--text-h4);
+    line-height: var(--text-h4--line-height);
+    font-weight: var(--text-h4--font-weight);
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-heading);
+  }
+
+  .u-header-5plus {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: var(--font-weight-normal);
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-heading);
+  }
+
+  h5,
+  .u-header-5 {
+    font-size: var(--text-h5);
+    line-height: var(--text-h5--line-height);
+    font-weight: var(--text-h5--font-weight);
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-heading);
+  }
+
+  h6,
+  .u-header-6 {
+    font-size: var(--text-h6);
+    line-height: var(--text-h6--line-height);
+    font-weight: var(--text-h6--font-weight);
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-heading);
+  }
+
+  .u-paragraph-extraLarge {
+    font-size: var(--text-body-xl);
+    line-height: var(--text-body-xl--line-height);
+    font-weight: var(--font-weight-normal);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .u-paragraph-large {
+    font-size: var(--text-body-lg);
+    line-height: var(--text-body-lg--line-height);
+    font-weight: var(--font-weight-normal);
+    margin-bottom: var(--spacing-md);
+  }
+
+  p,
+  .u-paragraph-medium {
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    font-weight: var(--font-weight-normal);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .u-paragraph-small {
+    font-size: var(--text-body-sm);
+    line-height: var(--text-body-sm--line-height);
+    font-weight: var(--font-weight-normal);
+    margin-bottom: var(--spacing-md);
+  }
+
+  b,
+  strong {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  a {
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Phone (≤766px) pairs — same breakpoint as `max-md:` */
+  @media (width < 767px) {
+    body {
+      line-height: 24px;
+    }
+
+    .u-header-extraLarge,
+    h1,
+    .u-header-1 {
+      font-size: var(--text-h2);
+      line-height: var(--text-h2--line-height);
+      margin-bottom: var(--spacing-md);
+    }
+
+    h2,
+    .u-header-2 {
+      font-size: var(--text-h3);
+      line-height: var(--text-h3--line-height);
+      margin-bottom: var(--spacing-md);
+    }
+
+    h3,
+    .u-header-3 {
+      font-size: var(--text-h4);
+      line-height: var(--text-h4--line-height);
+      margin-bottom: var(--spacing-md);
+    }
+
+    h4,
+    .u-header-4 {
+      font-size: 18px;
+      line-height: 28px;
+      font-weight: var(--font-weight-normal);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .u-header-5plus,
+    h5,
+    .u-header-5 {
+      margin-bottom: var(--spacing-md);
+    }
+
+    h6,
+    .u-header-6 {
+      line-height: 28px;
+      margin-bottom: var(--spacing-md);
+    }
+
+    p,
+    .u-paragraph-medium,
+    .u-paragraph-small {
+      line-height: 24px;
+    }
+  }
+}

@@ -1,5 +1,190 @@
+/*
+ * Tier-1 design tokens — single source for all Tailwind utilities.
+ * Every value is extracted from https://www.ti.com/assets/style/ticom.global.portals.css
+ * (v2.0.146). See docs/style-guide.md before adding anything here.
+ */
+
 @theme {
+  /* ---------- Color primitives (TI numbered ramps) ---------- */
+  /* Tailwind's default palette is disabled so only brand colors exist. */
+  --color-*: initial;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-red-1: #fff5f5;
+  --color-red-2: #fee9e9;
+  --color-red-3: #fbaeae;
+  --color-red-4: #ee0000;
+  --color-red-5: #cc0000; /* brand */
+  --color-red-6: #a40000;
+
+  --color-teal-1: #f2feff;
+  --color-teal-2: #e5f7fa;
+  --color-teal-3: #bee7ec;
+  --color-teal-4: #9bd7df;
+  --color-teal-5: #007c8c; /* links / interactive */
+  --color-teal-6: #00525d;
+  --color-teal-light: #3fa8b5;
+
+  --color-grey-1: #f7f7f7;
+  --color-grey-2: #e8e8e8;
+  --color-grey-3: #cccccc;
+  --color-grey-4: #b9b9b9;
+  --color-grey-5: #aaaaaa;
+  --color-grey-6: #949494;
+  --color-grey-7: #555555;
+  --color-grey-8: #333333; /* default text */
+
+  --color-blue-1: #f5f9ff;
+  --color-blue-2: #e9f1fb;
+  --color-blue-3: #ccddf2;
+  --color-blue-4: #b1cae9;
+  --color-blue-5: #6694cd;
+  --color-blue-6: #2a66b0;
+  --color-blue-7: #1e518f;
+  --color-blue-8: #143d6f;
+  --color-blue-9: #07274e;
+
+  --color-yellow-1: #fffcf5;
+  --color-yellow-2: #fff8e9;
+  --color-yellow-3: #ffc758;
+  --color-yellow-4: #ffa358;
+
+  --color-green: #37a145;
+
+  /* ---------- Typography ---------- */
+  --font-sans: var(--font-roboto), "Helvetica Neue", "Arial Nova",
+    "Nimbus Sans", Arial, sans-serif;
+  --font-serif: Rockwell, "Rockwell Nova", "Roboto Slab", "DejaVu Serif",
+    "Sitka Small", serif;
+
+  /* Only the three weights TI ships (font files: 300/400/600). */
+  --font-weight-*: initial;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+
+  /* Role-based type scale (desktop values — phone pairs live in tw-typography.css).
+     Handy cascade for responsive composition: phone h1 == desktop h2, phone h2 ==
+     desktop h3, phone h3 == desktop h4 — so `text-h2 md:text-h1` matches TI exactly. */
+  --text-*: initial;
+  --text-display: 48px;
+  --text-display--line-height: 60px;
+  --text-display--font-weight: 300;
+  --text-h1: 34px;
+  --text-h1--line-height: 40px;
+  --text-h1--font-weight: 300;
+  --text-h2: 28px;
+  --text-h2--line-height: 36px;
+  --text-h2--font-weight: 300;
+  --text-h3: 24px;
+  --text-h3--line-height: 32px;
+  --text-h3--font-weight: 300;
+  --text-h4: 20px;
+  --text-h4--line-height: 28px;
+  --text-h4--font-weight: 300;
+  --text-h5: 16px;
+  --text-h5--line-height: 24px;
+  --text-h5--font-weight: 600;
+  --text-h6: 14px;
+  --text-h6--line-height: 20px;
+  --text-h6--font-weight: 600;
+  --text-body-xl: 18px;
+  --text-body-xl--line-height: 28px;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 24px;
+  --text-body: 14px;
+  --text-body--line-height: 20px;
+  --text-body-sm: 12px;
+  --text-body-sm--line-height: 20px;
+
+  /* ---------- Breakpoints (TI uses exactly these three ranges) ---------- */
+  --breakpoint-*: initial;
+  --breakpoint-md: 767px; /* tablet */
+  --breakpoint-lg: 1240px; /* desktop */
+
+  /* Content max-width → `max-w-page` */
+  --container-page: 1240px;
+
+  /* ---------- Spacing ---------- */
+  /* Numeric scale stays default (4px base): p-1=4 … p-24=96 — identical to TI's
+     u-margin/u-padding numbers. Named aliases for design intent: */
+  --spacing-3xs: 4px;
+  --spacing-2xs: 8px;
+  --spacing-xs: 12px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 96px;
+
+  /* ---------- Radius (TI is a square system) ---------- */
+  --radius-*: initial;
+  --radius-sm: 2px; /* buttons, inputs, cards — the default */
+  --radius-md: 6px; /* rare */
+
+  /* ---------- Elevation (u-boxShadow-1…4) ---------- */
+  --shadow-*: initial;
+  --shadow-1: 0 0 1px 1px rgb(0 0 0 / 0.05), 0 3px 1px -2px rgb(0 0 0 / 0.16),
+    0 2px 2px 0 rgb(0 0 0 / 0.1), 0 1px 5px 0 rgb(0 0 0 / 0.08);
+  --shadow-2: 0 0 1px 1px rgb(0 0 0 / 0.05), 0 2px 4px -1px rgb(0 0 0 / 0.16),
+    0 4px 5px 0 rgb(0 0 0 / 0.1), 0 1px 10px 0 rgb(0 0 0 / 0.08);
+  --shadow-3: 0 0 1px 1px rgb(0 0 0 / 0.05), 0 5px 5px -3px rgb(0 0 0 / 0.16),
+    0 8px 10px 1px rgb(0 0 0 / 0.1), 0 3px 14px 2px rgb(0 0 0 / 0.08);
+  --shadow-4: 0 0 1px 1px rgb(0 0 0 / 0.05), 0 7px 9px -4px rgb(0 0 0 / 0.16),
+    0 14px 21px 2px rgb(0 0 0 / 0.1), 0 5px 26px 4px rgb(0 0 0 / 0.08);
+  --shadow-focus: 0 0 0 3px var(--color-teal-3);
+
+  /* ---------- Motion ---------- */
+  --default-transition-duration: 100ms;
+  --default-transition-timing-function: linear;
+}
+
+/*
+ * TI page container: centered, 1240px content width, 16px gutter on phone /
+ * 28px from tablet up (ti.com slide-content values). Usage: class="container".
+ */
+@utility container {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--spacing-sm);
+
+  @media (width >= 767px) {
+    padding-inline: 28px;
+  }
+}
+
+/*
+ * Tier-2 semantic aliases over the Polaris --pl-* vars (src/assets/themes/).
+ * `inline` is required: utilities must emit var(--pl-…) directly so the
+ * theme/mode section classes can re-resolve them per subtree.
+ */
+@theme inline {
+  --color-foreground: var(--pl-text-color-primary);
+  --color-heading: var(--pl-text-color-secondary);
+  --color-muted: var(--pl-input-placeholder-color);
+  --color-disabled: var(--pl-text-color-disabled);
+  --color-accent: var(--pl-text-color-accent);
+
+  --color-link: var(--pl-link-color-primary);
+  --color-link-hover: var(--pl-element-color-tertiary-darker);
+
+  --color-border: var(--pl-border-color-primary);
+  --color-border-strong: var(--pl-border-color-secondary);
+  --color-border-subtle: var(--pl-border-color-tertiary);
+
+  --color-page: var(--pl-page-background-color-primary);
+  --color-page-alt: var(--pl-page-background-color-secondary);
+
   --color-error: var(--pl-error-color);
   --color-success: var(--pl-success-color);
   --color-warning: var(--pl-warning-color);
+
+  /* Back-compat: --ti-text-color is set by the theme/mode classes, so this
+     re-resolves inside themed sections (used by BrandAndThemeContext). */
+  --color-text-default: var(--ti-text-color, var(--pl-text-color-primary));
+  --font-body: var(--font-sans);
 }
