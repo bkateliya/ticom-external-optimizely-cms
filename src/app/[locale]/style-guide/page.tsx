@@ -5,6 +5,16 @@
  * from ticom.global.portals.css.
  */
 
+import { TifButton } from "@ticom/form-components/react";
+import {
+  ButtonAppearance,
+  ButtonColor,
+  ComponentSize,
+  ComponentTheme,
+} from "@/components/ui/ti/enums";
+import { CtaList } from "@/components/ui/molecules/CtaList/CtaList";
+import { ClientOnly } from "@/components/utilities/ClientOnly";
+
 type Swatch = { label: string; cls: string };
 
 const COLOR_GROUPS: { name: string; note?: string; swatches: Swatch[] }[] = [
@@ -161,10 +171,65 @@ const SPACING: { label: string; cls: string; px: string }[] = [
   { label: "24", cls: "w-24", px: "96px" },
 ];
 
+const BUTTON_APPEARANCES: ButtonAppearance[] = [
+  ButtonAppearance.solid,
+  ButtonAppearance.outline,
+  ButtonAppearance.ghost,
+  ButtonAppearance.link,
+];
+
+// CTAs expose only primary and secondary — success/warning aren't offered.
+const BUTTON_COLORS: ButtonColor[] = [
+  ButtonColor.primary,
+  ButtonColor.secondary,
+];
+
+const BUTTON_SIZES: ComponentSize[] = [
+  ComponentSize.small,
+  ComponentSize.medium,
+  ComponentSize.large,
+];
+
+/* Mock CMS content so the real CtaList renders here exactly as it does on a
+   page — CtaList → CTAElement → TiButton (theme comes from ThemeProvider). */
+const CTA_LIST_DEMO = {
+  ctas: [
+    {
+      _id: "demo-cta-order",
+      __typename: "TI_CTA_Element",
+      link: { url: { base: "", default: "/products" }, text: "Order now" },
+      Variant: ButtonAppearance.solid,
+      ButtonColor: ButtonColor.primary,
+      Icon: null,
+    },
+    {
+      _id: "demo-cta-support",
+      __typename: "TI_CTA_Element",
+      link: { url: { base: "", default: "/support" }, text: "Contact support" },
+      Variant: ButtonAppearance.outline,
+      ButtonColor: ButtonColor.primary,
+      Icon: null,
+    },
+  ],
+} as unknown as React.ComponentProps<typeof CtaList>["content"];
+
+const slugify = (title: string) =>
+  title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+const SECTIONS = [
+  "Colors",
+  "Typography",
+  "Spacing",
+  "Radius",
+  "Elevation",
+  "Buttons",
+  "Breakpoints",
+];
+
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="mb-16">
-      <h2 className="border-b border-pl-border-color-tertiary pb-2">{title}</h2>
+    <section id={slugify(title)} className="mb-16 scroll-mt-24">
+      <h2 className="mb-6 border-b border-pl-border-color-tertiary pb-2">{title}</h2>
       {children}
     </section>
   );
@@ -178,13 +243,37 @@ function Spec({ children }: { children: React.ReactNode }) {
 
 export default function StyleGuidePage() {
   return (
-    <main className="mx-auto w-full max-w-[1240px] px-4 md:px-6 py-16 text-body-md text-pl-text-color-primary">
-      <Spec>Design system</Spec>
-      <h1>TI.com style guide</h1>
-      <p className="text-body-lg mb-16">
-        Every sample renders from the live Tailwind tokens in
-        src/assets/tv-theme/, mapped from the Polaris --pl-* variables.
-      </p>
+    <main id="top" className="mx-auto w-full max-w-[1240px] px-4 md:px-6 pb-16 text-body-md text-pl-text-color-primary scroll-mt-6">
+      <header className="pt-16 pb-8">
+        <Spec>Design system</Spec>
+        <h1 className="mb-3">TI.com style guide</h1>
+        <p className="text-body-lg mb-0 max-w-[68ch]">
+          Every sample renders from the live Tailwind tokens in
+          src/assets/tv-theme/, mapped from the Polaris --pl-* variables. If it
+          looks wrong here, the token is wrong.
+        </p>
+      </header>
+
+      <nav
+        aria-label="Jump to section"
+        className="sticky top-0 z-10 -mx-4 mb-16 flex flex-wrap items-center gap-2 border-y border-pl-border-color-tertiary bg-pl-page-background-color-primary px-4 py-3 md:-mx-6 md:px-6"
+      >
+        <span className="text-body-sm text-pl-input-placeholder-color mb-0 mr-1">
+          Jump to
+        </span>
+        {SECTIONS.map((title) => (
+          <TifButton
+            key={title}
+            href={`#${slugify(title)}`}
+            appearance={ButtonAppearance.ghost}
+            color={ButtonColor.secondary}
+            size={ComponentSize.small}
+            theme={ComponentTheme.light}
+          >
+            {title}
+          </TifButton>
+        ))}
+      </nav>
 
       <Section title="Colors">
         <Spec>
@@ -192,32 +281,39 @@ export default function StyleGuidePage() {
           border-pl-*, fill-pl-* …
         </Spec>
         {COLOR_GROUPS.map((group) => (
-          <div key={group.name} className="mb-6">
-            <h6 className="mb-2">{group.name}</h6>
-            <div className="flex flex-wrap gap-2">
+          <div key={group.name} className="mb-8">
+            <h6 className="mb-3">{group.name}</h6>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {group.swatches.map((s) => (
-                <div key={s.label} className="w-40">
-                  <div className={`${s.cls} h-12 rounded border border-pl-border-color-tertiary`} />
-                  <p className="text-body-sm mb-0 mt-1 break-words">{s.label}</p>
+                <div
+                  key={s.label}
+                  className="overflow-hidden rounded border border-pl-border-color-tertiary"
+                >
+                  <div className={`${s.cls} h-14`} />
+                  <p className="text-body-sm mb-0 break-words border-t border-pl-border-color-tertiary bg-pl-container-background-color-secondary-variant px-2 py-1">
+                    {s.label}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         ))}
         <div className="mb-6">
-          <h6 className="mb-2">Section gradients</h6>
+          <h6 className="mb-3">Section gradients</h6>
           <Spec>
             Gradients, not colors — apply via style/background, not bg-pl-* (a
             background-color can&apos;t hold a gradient).
           </Spec>
-          <div className="flex flex-wrap gap-2">
+          <div className="mt-1 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {GRADIENTS.map((g) => (
-              <div key={g} className="w-40">
-                <div
-                  className="h-12 rounded border border-pl-border-color-tertiary"
-                  style={{ background: `var(--pl-${g})` }}
-                />
-                <p className="text-body-sm mb-0 mt-1 break-words">{g}</p>
+              <div
+                key={g}
+                className="overflow-hidden rounded border border-pl-border-color-tertiary"
+              >
+                <div className="h-14" style={{ background: `var(--pl-${g})` }} />
+                <p className="text-body-sm mb-0 break-words border-t border-pl-border-color-tertiary bg-pl-container-background-color-secondary-variant px-2 py-1">
+                  {g}
+                </p>
               </div>
             ))}
           </div>
@@ -299,6 +395,158 @@ export default function StyleGuidePage() {
         </div>
       </Section>
 
+      <Section title="Buttons">
+        <Spec>
+          @ticom/form-components TifButton — used directly in every example
+          below. Props are passed statically: appearance (
+          {BUTTON_APPEARANCES.join(" · ")}), color ({BUTTON_COLORS.join(" · ")}),
+          size ({BUTTON_SIZES.join(" · ")}), and theme (this is a server
+          component, so theme is passed explicitly rather than read from
+          context).
+        </Spec>
+
+        <div className="mb-8">
+          <Spec>Single button — usage (renders a &lt;button&gt;)</Spec>
+          <div className="flex flex-wrap items-center gap-6">
+            <TifButton
+              appearance={ButtonAppearance.solid}
+              color={ButtonColor.primary}
+              theme={ComponentTheme.light}
+            >
+              Order now
+            </TifButton>
+            <pre className="text-body-sm overflow-x-auto rounded bg-pl-container-background-color-secondary-variant p-4">
+              {`import { TifButton } from "@ticom/form-components/react";
+import { ButtonAppearance, ButtonColor, ComponentTheme } from "@/components/ui/ti/enums";
+
+<TifButton
+  appearance={ButtonAppearance.solid}
+  color={ButtonColor.primary}
+  theme={ComponentTheme.light}
+>
+  Order now
+</TifButton>`}
+            </pre>
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <Spec>Single link — usage (add href, renders an &lt;a&gt;)</Spec>
+          <div className="flex flex-wrap items-center gap-6">
+            <TifButton
+              appearance={ButtonAppearance.solid}
+              color={ButtonColor.primary}
+              href="/products"
+              theme={ComponentTheme.light}
+            >
+              View products
+            </TifButton>
+            <pre className="text-body-sm overflow-x-auto rounded bg-pl-container-background-color-secondary-variant p-4">
+              {`// Same component — passing href makes it render as an anchor
+<TifButton
+  href="/products"
+  appearance={ButtonAppearance.solid}
+  color={ButtonColor.primary}
+  theme={ComponentTheme.light}
+>
+  View products
+</TifButton>`}
+            </pre>
+          </div>
+        </div>
+
+        {BUTTON_APPEARANCES.map((appearance) => (
+          <div key={appearance} className="mb-6">
+            <Spec>appearance=&quot;{appearance}&quot;</Spec>
+            <div className="flex flex-wrap items-center gap-3">
+              {BUTTON_COLORS.map((color) => (
+                <TifButton
+                  key={color}
+                  appearance={appearance}
+                  color={color}
+                  theme={ComponentTheme.light}
+                >
+                  {color}
+                </TifButton>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <div className="mb-6">
+          <Spec>Sizes — appearance=&quot;solid&quot; color=&quot;primary&quot;</Spec>
+          <div className="flex flex-wrap items-center gap-3">
+            {BUTTON_SIZES.map((size) => (
+              <TifButton
+                key={size}
+                appearance={ButtonAppearance.solid}
+                color={ButtonColor.primary}
+                size={size}
+                theme={ComponentTheme.light}
+              >
+                size {size}
+              </TifButton>
+            ))}
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <Spec>Variations</Spec>
+          <div className="flex flex-wrap items-center gap-3">
+            <TifButton
+              appearance={ButtonAppearance.solid}
+              color={ButtonColor.primary}
+              iconName="arrow-right"
+              theme={ComponentTheme.light}
+            >
+              With icon
+            </TifButton>
+            <TifButton
+              appearance={ButtonAppearance.outline}
+              color={ButtonColor.primary}
+              href="#"
+              theme={ComponentTheme.light}
+            >
+              As link
+            </TifButton>
+            <TifButton
+              appearance={ButtonAppearance.solid}
+              color={ButtonColor.primary}
+              disabled
+              theme={ComponentTheme.light}
+            >
+              Disabled
+            </TifButton>
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <Spec>
+            Button group — CtaList renders a page&apos;s CTAs. Pass it CMS
+            content and it maps each cta into a CTAElement (a themed TiButton)
+            inside a TifButtonGroup; theme resolves from context.
+          </Spec>
+          <div className="flex flex-wrap items-center gap-6">
+            <ClientOnly>
+              <CtaList content={CTA_LIST_DEMO} />
+            </ClientOnly>
+            <pre className="text-body-sm overflow-x-auto rounded bg-pl-container-background-color-secondary-variant p-4">
+              {`import { CtaList } from "@/components/ui/molecules/CtaList/CtaList";
+
+// content comes from the CMS (a CtaList component / contract)
+<CtaList content={content} />
+
+// Internally CtaList maps ctas into CTAElement inside a group:
+<TifButtonGroup>
+  {ctas.map((cta, index) => (
+    <CTAElement key={cta._id || index} content={cta} />
+  ))}
+</TifButtonGroup>`}
+            </pre>
+          </div>
+        </div>
+      </Section>
+
       <Section title="Breakpoints">
         <div className="mt-4 [&_td]:pr-8 [&_td]:pb-1 [&_th]:pr-8 [&_th]:pb-2 [&_th]:text-left">
           <table className="text-body-sm">
@@ -339,6 +587,19 @@ export default function StyleGuidePage() {
           </table>
         </div>
       </Section>
+
+      <div className="mt-4 flex justify-center">
+        <TifButton
+          href="#top"
+          appearance={ButtonAppearance.ghost}
+          color={ButtonColor.secondary}
+          size={ComponentSize.small}
+          iconName="arrow-up"
+          theme={ComponentTheme.light}
+        >
+          Back to top
+        </TifButton>
+      </div>
     </main>
   );
 }
