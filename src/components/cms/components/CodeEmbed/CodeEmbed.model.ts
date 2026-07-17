@@ -1,8 +1,9 @@
 import { contentType } from "@optimizely/cms-sdk";
-import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "@/components/cms/constants";
+import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants";
+import { AllComponentTypeKeyMap } from "../keys";
 
 export const CodeEmbedComponentType = contentType({
-  key: `${KEY_PREFIX}CodeEmbed_Component`,
+  key: AllComponentTypeKeyMap.CodeEmbedComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Code Embed`,
   baseType: "_component",
   compositionBehaviors: ["sectionEnabled", "elementEnabled"],

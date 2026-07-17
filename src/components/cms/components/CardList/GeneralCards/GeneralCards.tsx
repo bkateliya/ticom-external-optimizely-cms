@@ -18,7 +18,7 @@ export function GeneralCard({
   const { WrappedTextField, WrappedRichTextField, WrappedHeadingTextField } =
     fieldFactory<typeof SingleGeneralCardComponentType>(content, parentField);
   return (
-    <div className="bg-sky-300 rounded-xl p-4 m-4">
+    <div className="bg-sky-300 rounded-xl p-4 overflow-hidden">
       <WrappedTextField field="eyebrow" />
       <WrappedHeadingTextField field="headline" />
       <WrappedTextField field="subheadline" />

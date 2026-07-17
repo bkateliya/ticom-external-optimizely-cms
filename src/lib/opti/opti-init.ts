@@ -8,7 +8,7 @@ import {
 } from "@/components/cms/experiences";
 import { pageTypes } from "@/components/cms/pages/types";
 import { pageRegistry } from "@/components/cms/pages/registry";
-import { componentTypes } from "@/components/cms/components/types";
+import { allComponentTypes } from "@/components/cms/components/types";
 import { componentRegistry } from "@/components/cms/components/registry";
 import { elementTypes } from "@/components/cms/elements/types";
 import { elementRegistry } from "@/components/cms/elements/registry";
@@ -26,7 +26,7 @@ bootstrap();
 initContentTypeRegistry([
   ...experienceTypes,
   ...pageTypes,
-  ...componentTypes,
+  ...allComponentTypes,
   ...structuralComponentTypes,
   ...elementTypes,
   ...sectionTypes,

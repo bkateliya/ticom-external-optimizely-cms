@@ -4,9 +4,9 @@ import { AllComponentTypeKeyMap } from "../keys";
 import { HeadlineContract } from "../../contracts/component-contracts/headline.model";
 import { CtaListContract } from "../../contracts/component-contracts/cta-list.model";
 
-export const HeroComponentType = contentType({
-  key: AllComponentTypeKeyMap.HeroComponent,
-  displayName: `${DISPLAY_NAME_PREFIX}Hero`,
+export const ContentBlockComponentType = contentType({
+  key: AllComponentTypeKeyMap.ContentBlockComponent,
+  displayName: `${DISPLAY_NAME_PREFIX}Content Block`,
   baseType: "_component",
   extends: [HeadlineContract, CtaListContract],
   properties: {

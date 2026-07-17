@@ -1,4 +1,3 @@
-/* @import "tailwindcss"; */
 @layer reset, theme, base, components, utilities;
 @import "./reset.css" layer(reset);
 @import "tailwindcss/theme.css" layer(theme);
@@ -8,17 +7,10 @@
 @import "./themes";
 @import "./tw-theme.css";
 
-@theme {
-  --color-text-default: var(--ti-text-color);
-  --font-body: var(--font-roboto);
-}
-
 :root,
 .theme-root {
   --color-text-default: var(--ti-text-color);
-
   --font-body: var(--font-roboto);
-
 }
 
 /* Placeholder values for testing */

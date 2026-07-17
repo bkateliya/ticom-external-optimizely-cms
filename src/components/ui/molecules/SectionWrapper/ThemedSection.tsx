@@ -1,17 +1,16 @@
 import { damAssets } from "@optimizely/cms-sdk";
 import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 
-import Image from "next/image";
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
-// import { BackgroundColorSetting, BackgroundImageSetting } from "@components/";
 import { Themes } from "@/lib/themes";
 import clsx from "clsx";
 import { BackgroundColorSetting, BackgroundImageSetting, SectionBackgroundContractContentType } from "@/components/cms/contracts/component-contracts/section.model";
 
 import { ComponentTheme } from "@/components/ui/ti/enums";
+import EnhancedNextImage from "../../Atoms/EnhancedNextImage/EnhancedNextImage";
 
 export function ThemedSection({
   content,
@@ -94,15 +93,10 @@ function BackgroundImage({ content }: OptiComponentProps<typeof BackgroundImageS
     "opacity-60",
     "self-stretch",)
   return <div>
-    <Image
-      priority
+    <EnhancedNextImage
       className={className}
       src={imageUrl}
       alt={getAlt(content.backgroundImage) ?? ""}
-      width={680}
-      height={540}
-      sizes="100vw"
-      style={{ width: "100%", height: "auto" }}
     />
     {content.noOverlay ? null : <div className={overlayClassName}></div>}
   </div>

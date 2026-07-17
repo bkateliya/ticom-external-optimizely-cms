@@ -11,10 +11,6 @@ export interface HeadlineProps extends
   OptiComponentProps<HeadlineContractContentType>,
   Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
   textAlignment?: TextAlignment;
-  noPaddingTop?: boolean;
-  noPaddingBottom?: boolean;
-  noPaddingSides?: boolean;
-  isCentered75?: boolean;
 }
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
@@ -30,10 +26,6 @@ export function parseHeadlineLevel({ content }: OptiComponentProps<HeadlineContr
 
 export const Headline = ({
   textAlignment = "Left",
-  noPaddingTop,
-  noPaddingBottom,
-  noPaddingSides,
-  isCentered75,
   content,
   parentField,
 }: HeadlineProps) => {
@@ -49,12 +41,6 @@ export const Headline = ({
   const baseClassName = clsx(
     styles.base,
     textAlignmentClassMap[textAlignment],
-    {
-      [styles.noPaddingTop]: noPaddingTop,
-      [styles.paddingBottom]: noPaddingBottom,
-      [styles.paddingSides]: !noPaddingSides,
-      [styles.centered75]: isCentered75,
-    },
   );
 
   const hasHeaderContent = !!(

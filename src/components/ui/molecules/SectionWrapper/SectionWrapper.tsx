@@ -1,4 +1,5 @@
 "use client";
+
 import { TextAlignment } from "@/components/ui/context/TextAlignmentContext";
 import { createContext, useContext } from "react";
 import styles from "./styles.module.css";
@@ -11,22 +12,17 @@ export interface SectionWrapperProps
   noPaddingTop?: boolean;
   noPaddingBottom?: boolean;
   noPaddingSides?: boolean;
-  isCentered75?: boolean;
 }
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
-  Left: styles.textAlignLeft,
-  Center: styles.textAlignCenter,
-  Right: styles.textAlignRight,
+  Left: "text-left",
+  Center: "text-center",
+  Right: "text-right",
 };
 
 export const SectionWrapper = ({
   children,
   textAlignment = "Left",
-  noPaddingTop,
-  noPaddingBottom,
-  noPaddingSides,
-  isCentered75,
 }: SectionWrapperProps) => {
   const { isInsideSectionWrapper } = useContext(SectionWrapperContext);
   // We don't want to double-wrap, if we're already inside one, don't add another one.
@@ -37,14 +33,11 @@ export const SectionWrapper = ({
     styles.base,
     "container",
     "mx-auto",
+    "my-10",
+    "space-10",
     "py-10",
+
     textAlignmentClassMap[textAlignment],
-    {
-      [styles.noPaddingTop]: noPaddingTop,
-      [styles.paddingBottom]: noPaddingBottom,
-      [styles.paddingSides]: !noPaddingSides,
-      [styles.centered75]: isCentered75,
-    },
   );
 
   return (
@@ -53,7 +46,7 @@ export const SectionWrapper = ({
         data-component="generic-wrappers/section-wrapper"
         className={baseClassName}
       >
-        <div className={styles.content}>{children}</div>
+        <div className={clsx("flex", "space-y-4")}>{children}</div>
       </div>
     </SectionWrapperContext.Provider>
   );

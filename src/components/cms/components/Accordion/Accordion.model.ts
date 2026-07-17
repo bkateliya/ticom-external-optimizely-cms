@@ -2,11 +2,11 @@ import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "../../constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
 import { DEFAULT_VALUE } from "@/lib/utils/default-utils";
-import { SectionContacts } from "../../contracts/component-contracts/section.model";
 import { PreambleContracts } from "../../contracts/component-contracts/preamble.model";
+import { AllComponentTypeKeyMap } from "../keys";
 
 export const AccordionPanelComponentType = contentType({
-  key: `${KEY_PREFIX}AccordionPanel_Component`,
+  key: AllComponentTypeKeyMap.AccordionPanelComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Accordion Panel`,
   baseType: "_component",
   properties: {
@@ -22,7 +22,7 @@ export const AccordionPanelComponentType = contentType({
 });
 
 export const AccordionComponentType = contentType({
-  key: `${KEY_PREFIX}Accordion_Component`,
+  key: AllComponentTypeKeyMap.AccordionComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Accordion`,
   baseType: "_component",
   extends: PreambleContracts,
@@ -72,5 +72,5 @@ export const AccordionComponentType = contentType({
       ],
     },
   },
-  compositionBehaviors: ["sectionEnabled"],
+  // compositionBehaviors: ["sectionEnabled"],
 });

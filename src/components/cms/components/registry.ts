@@ -17,15 +17,23 @@ import { TimedHeroBannerComponent } from "./TimedHeroBanner/TimedHeroBanner";
 import { TimedHeroBannerSlideshowComponentType, TimedHeroBannerComponentType } from "./TimedHeroBanner/TimedHeroBanner.model";
 import { TimedHeroBannerSlideshowComponent } from "./TimedHeroBanner/TimedHeroBannerSlideshow";
 import { cardListComponentRegistry } from "./CardList/registry";
+import { ColumnGridColumnComponentType, ColumnGridComponentType } from "./ColumnGrid/ColumnGrid.model";
+import { ColumnGridComponent } from "./ColumnGrid/ColumnGrid";
+import { NoPreviewComponent } from "@/components/ui/cms/NoPreviewComponent";
+import { ContentBlockComponent } from "./ContentBlock/ContentBlock";
+import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
 
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
+  [ContentBlockComponentType.key]: ContentBlockComponent,
   [AccordionComponentType.key]: AccordionComponent,
   [AccordionPanelComponentType.key]: AccordionItem,
   [PromoBlockComponentType.key]: PromoBlockComponent,
   [CodeEmbedComponentType.key]: CodeEmbedComponent,
   [TimedHeroBannerComponentType.key]: TimedHeroBannerComponent,
   [TimedHeroBannerSlideshowComponentType.key]: TimedHeroBannerSlideshowComponent,
+  [ColumnGridComponentType.key]: ColumnGridComponent,
+  [ColumnGridColumnComponentType.key]: NoPreviewComponent,
   ...cardListComponentRegistry
 };

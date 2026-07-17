@@ -3,9 +3,10 @@ import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "../../constants.mjs";
 import { ProductCardsComponentType } from "./ProductCards/ProductCards.model";
 import { GeneralCardsComponentType } from "./GeneralCards/GeneralCards.model";
+import { AllComponentTypeKeyMap } from "../keys";
 
 export const CardListComponentType = contentType({
-  key: `${KEY_PREFIX}CardList_Component`,
+  key: AllComponentTypeKeyMap.CardListComponent,
   displayName: `${DISPLAY_NAME_PREFIX}CardList`,
   baseType: "_component",
   extends: PreambleContracts,
@@ -21,5 +22,5 @@ export const CardListComponentType = contentType({
       ],
     },
   },
-  compositionBehaviors: ["sectionEnabled"],
+  // compositionBehaviors: ["sectionEnabled"],
 });

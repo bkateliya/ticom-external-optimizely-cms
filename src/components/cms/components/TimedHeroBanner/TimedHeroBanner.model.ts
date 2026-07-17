@@ -3,9 +3,10 @@ import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "@/components/cms/constants.mjs";
 import { TimedComponentContract } from "@/components/cms/contracts/component-contracts/timed-component.model";
 import { SlideshowComponentContract } from "@/components/cms/contracts/component-contracts/slideshow.model";
+import { AllComponentTypeKeyMap } from "../keys";
 
 export const TimedHeroBannerComponentType = contentType({
-  key: `${KEY_PREFIX}TimedHeroBanner_Component`,
+  key: AllComponentTypeKeyMap.TimedHeroBannerComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Timed Hero Banner`,
   baseType: "_component",
   extends: [...PreambleContracts, TimedComponentContract],
@@ -21,7 +22,7 @@ export const TimedHeroBannerComponentType = contentType({
 });
 
 export const TimedHeroBannerSlideshowComponentType = contentType({
-  key: `${KEY_PREFIX}TimedHeroBannerCarousel_Component`,
+  key: AllComponentTypeKeyMap.TimedHeroBannerSlideshowComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Timed Hero Banner Slideshow`,
   baseType: "_component",
   extends: [SlideshowComponentContract],

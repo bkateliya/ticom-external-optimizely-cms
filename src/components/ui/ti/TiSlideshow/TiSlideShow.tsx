@@ -72,7 +72,6 @@ export function TiSlideShow({
             ))}
           </>
         ) : (
-
           <ti-slideshow
             auto-advance={autoAdvance}
             hide-navigation={hideNavigation}

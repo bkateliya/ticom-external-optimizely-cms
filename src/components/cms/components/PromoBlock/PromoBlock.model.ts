@@ -1,13 +1,14 @@
 import { contentType } from "@optimizely/cms-sdk";
-import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "@/components/cms/constants";
+import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants";
 import { PromoContentElementType } from "../../elements/PromoContent/PromoContent.model";
 import { ImageElementType } from "../../elements/Image/Image.model";
+import { AllComponentTypeKeyMap } from "../keys";
 
 export const PromoBlockComponentType = contentType({
-  key: `${KEY_PREFIX}PromoBlock_Component`,
+  key: AllComponentTypeKeyMap.PromoBlockComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Promo Block`,
   baseType: "_component",
-  compositionBehaviors: ["sectionEnabled"],
+  // compositionBehaviors: ["sectionEnabled"],
   properties: {
     leftContent: {
       type: "content",

@@ -1,11 +1,9 @@
 import { contentType } from "@optimizely/cms-sdk";
-import {
-  DISPLAY_NAME_PREFIX,
-  KEY_PREFIX,
-} from "src/components/cms/constants.mjs";
+import { DISPLAY_NAME_PREFIX } from "src/components/cms/constants.mjs";
+import { AllComponentTypeKeyMap } from "../../keys";
 
 export const ProductCardsComponentType = contentType({
-  key: `${KEY_PREFIX}ProductCards_Component`,
+  key: AllComponentTypeKeyMap.ProductCardsComponent,
   displayName: `${DISPLAY_NAME_PREFIX}ProductCards`,
   baseType: "_component",
   properties: {
@@ -14,7 +12,7 @@ export const ProductCardsComponentType = contentType({
       displayName: "Currency",
       group: "content",
       format: "selectOne",
-      
+
       enum: [
         { value: "ALL", displayName: "All" },
         { value: "CAD", displayName: "Canadian Dollar" },

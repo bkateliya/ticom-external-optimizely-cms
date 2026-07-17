@@ -97,7 +97,7 @@ export type SectionBackgroundContractContentType = ContractContentType<
     [typeof SectionBackgroundContract]
 >;
 
-export const SectionContacts = [SectionBackgroundContract, ...PreambleContracts];
+export const SectionContracts = [SectionBackgroundContract, ...PreambleContracts];
 
 /** For using contracts as component interfaces. */
 export type SectionContractContentType = ContractContentType<
