@@ -33,7 +33,8 @@ export async function Page({ searchParams }: Props) {
     locale = DEFAULT_LOCALE;
   }
 
-  await populateSiteSettings((response._metadata as any)?.url.hierarchical, locale);
+  const metadata = response._metadata as { url?: { hierarchical?: string } } | undefined;
+  await populateSiteSettings(metadata?.url?.hierarchical ?? "", locale);
 
   return (
     <RootLayout locale={locale}>

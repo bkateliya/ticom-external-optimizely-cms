@@ -40,9 +40,10 @@ function getSiteSettings(items: ResultItemType[]) {
     return items.map(x => x.siteSettingsOverride._json).reduce((acc, curr) => {
         for (const key in curr) {
             const typedKey = key as keyof typeof acc;
-            const value = curr[typedKey] as any;
-            if (value.__typename && value.__typename !== "_Content") {
-                acc[typedKey] = value;
+            const value = curr[typedKey];
+            const typename = (value as { __typename?: string } | undefined)?.__typename;
+            if (typename && typename !== "_Content") {
+                (acc as Record<string, unknown>)[typedKey] = value;
             }
         }
         return acc;
