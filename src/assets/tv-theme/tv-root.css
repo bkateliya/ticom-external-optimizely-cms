@@ -2,13 +2,40 @@
  * Typography scale — source variables (single source of truth)
  * --------------------------------------------------------------------------
  * Raw sizes live here as --ti-text-* vars. typography.css @theme maps the
- * Tailwind --text-* tokens onto these, so overriding them in the mobile
+ * Tailwind --text-* tokens onto these, so overriding them in the desktop
  * @media block makes every text-* utility responsive automatically.
  * Values from ticom.global.portals.css (u-header-* / u-paragraph-*).
+ *
+ * NOTE: mobile is the base (defined first). The desktop @media block MUST
+ * come after it — media queries add no specificity, so source order decides
+ * the winner when both set the same var.
  * ========================================================================== */
+
+/* mobile (<=767px) — base values */
+:root {
+  --ti-text-hero: 28px;
+  --ti-text-hero-lh: 36px;
+  --ti-text-h1: 28px;
+  --ti-text-h1-lh: 36px;
+  --ti-text-h2: 24px;
+  --ti-text-h2-lh: 32px;
+  --ti-text-h3: 20px;
+  --ti-text-h3-lh: 28px;
+  --ti-text-h4: 18px;
+  --ti-text-h4-lh: 28px;
+  --ti-text-h5: 16px;
+  --ti-text-h5-lh: 24px;
+  --ti-text-h6: 14px;
+  --ti-text-h6-lh: 28px;
+  --ti-text-body-md: 14px;
+  --ti-text-body-md-lh: 24px;
+  --ti-text-body-sm: 12px;
+  --ti-text-body-sm-lh: 24px;
+}
+
+/* desktop / tablet (>=768px) — overrides the mobile base */
 @media (width >=768px) {
   :root {
-    /* desktop / tablet */
     --ti-text-hero: 48px;
     --ti-text-hero-lh: 60px;
     /* u-header-extraLarge */
@@ -37,27 +64,4 @@
     --ti-text-body-sm-lh: 20px;
     /* u-paragraph-small */
   }
-}
-
-/* mobile (<=766px) — only the tokens that change */
-
-:root {
-  --ti-text-hero: 28px;
-  --ti-text-hero-lh: 36px;
-  --ti-text-h1: 28px;
-  --ti-text-h1-lh: 36px;
-  --ti-text-h2: 24px;
-  --ti-text-h2-lh: 32px;
-  --ti-text-h3: 20px;
-  --ti-text-h3-lh: 28px;
-  --ti-text-h4: 18px;
-  --ti-text-h4-lh: 28px;
-  --ti-text-h5: 16px;
-  --ti-text-h5-lh: 24px;
-  --ti-text-h6: 14px;
-  --ti-text-h6-lh: 28px;
-  --ti-text-body-md: 14px;
-  --ti-text-body-md-lh: 24px;
-  --ti-text-body-sm: 12px;
-  --ti-text-body-sm-lh: 24px;
 }
