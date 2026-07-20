@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/ti/enums";
 import { CtaList } from "@/components/ui/molecules/CtaList/CtaList";
 import { ClientOnly } from "@/components/utilities/ClientOnly";
+import { TiImageComparison } from "@/components/ui/ti/TiImages/TiImageComparison/TiImageComparison";
 
 type Swatch = { label: string; cls: string };
 
@@ -274,7 +275,61 @@ export default function StyleGuidePage() {
           </TifButton>
         ))}
       </nav>
+      {/* Image comparison */}
+      <TiImageComparison
+        leftImage={{
+          ratio: "rectangle",
+          alt: "Left image",
+          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
+          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
+        }}
+        rightImage={{
+          ratio: "rectangle",
+          alt: "Right image",
+          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
+          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
+        }}
+      />
 
+      {/* Image comparison with slotted labels */}
+      <TiImageComparison
+        leftLabel="Before"
+        rightLabel="After"
+        leftImage={{
+          ratio: "rectangle",
+          alt: "Left image",
+          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
+          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
+        }}
+        rightImage={{
+          ratio: "rectangle",
+          alt: "Right image",
+          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
+          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
+        }}
+      />
+
+      {/* Image comparison with slotted caption */}
+      <TiImageComparison
+        // caption="Lorem ipsum dolor sit amet consectetur."
+        caption={
+          <>
+            Image caption <a href="//www.ti.com">with link</a>. Lorem, ipsum dolor.
+          </>
+        }
+        leftImage={{
+          ratio: "rectangle",
+          alt: "Left image",
+          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
+          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
+        }}
+        rightImage={{
+          ratio: "rectangle",
+          alt: "Right image",
+          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
+          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
+        }}
+      />
       <Section title="Colors">
         <Spec>
           Utilities mirror the Polaris names 1:1 — usable as text-pl-*, bg-pl-*,

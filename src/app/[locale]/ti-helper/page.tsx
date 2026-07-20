@@ -8,7 +8,7 @@
  * Nothing in HelperTabs needs to change.
  */
 
-import { TiImage } from "@/components/ui/ti/TiImage/TiImage";
+import { TiImage } from "@/components/ui/ti/TiImages/TiImage/TiImage";
 import { HelperTabs, HelperTab } from "./HelperTabs";
 
 function Example({ title, children }: { title: string; children: React.ReactNode }) {
