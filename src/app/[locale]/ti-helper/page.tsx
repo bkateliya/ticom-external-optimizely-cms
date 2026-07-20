@@ -9,6 +9,7 @@
  */
 
 import { TiImage } from "@/components/ui/ti/TiImages/TiImage/TiImage";
+import { TiImageMap } from "@/components/ui/ti/TiImageMap/TiImageMap";
 import { HelperTabs, HelperTab } from "./HelperTabs";
 
 function Example({ title, children }: { title: string; children: React.ReactNode }) {
@@ -99,8 +100,31 @@ function ImageHelperDemo() {
   );
 }
 
+function ImageMapHelperDemo() {
+  return (
+    <Example title="Image map with pin (start → end image, animated)">
+      <TiImageMap
+        startImageAngle={-158}
+        startImageOffset={200}
+        startImageSrc="//www.ti.com/diagrams/tida-01414_tida01414_soundbaramplifier-image.jpg"
+        endImageSrc="//www.ti.com/diagrams/tida-00738_tida-00738_blockdiagram_large.jpg"
+        pins={[
+          {
+            linePath: "up right",
+            positionHorizontal: "30%",
+            positionVertical: "36%",
+            href: "https://www.ti.com/",
+            label: <>HEV/EV inverter &amp; motor control</>,
+          },
+        ]}
+      />
+    </Example>
+  );
+}
+
 const HELPERS: HelperTab[] = [
   { id: "image", label: "Image", content: <ImageHelperDemo /> },
+  { id: "image-map", label: "Image Map", content: <ImageMapHelperDemo /> },
   // Add future helpers here, e.g.
   // { id: "video", label: "Video", content: <VideoHelperDemo /> },
 ];
