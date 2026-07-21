@@ -19,6 +19,15 @@ export const AllComponentTypeKeyMap = {
   TimedHeroBannerSlideshowComponent: `${KEY_PREFIX}TimedHeroBannerCarousel_Component`,
   ColumnGridColumnComponent: `${KEY_PREFIX}ColumnGridColumn_Component`,
   ColumnGridComponent: `${KEY_PREFIX}ColumnGrid_Component`,
+  // CarouselComponent: `${KEY_PREFIX}Carousel_Component`,
+  // CarouselItemComponent: `${KEY_PREFIX}CarouselItem_Component`,
+  // CarouselSlideComponent: `${KEY_PREFIX}CarouselSlide_Component`,
+  ImageComparisonComponent: `${KEY_PREFIX}ImageComparison_Component`,
+  // ScrollingStoryComponent: `${KEY_PREFIX}ScrollingStory_Component`,
+  // ScrollingStoryItemComponent: `${KEY_PREFIX}ScrollingStoryItem_Component`,
+  // PortfolioViewerComponent: `${KEY_PREFIX}PortfolioViewer_Component`,
+  ImageMapComponent: `${KEY_PREFIX}ImageMap_Component`,
+  PinComponent: `${KEY_PREFIX}Pin_Component`,
 };
 
 /**
@@ -31,4 +40,9 @@ export const StandaloneComponentTypeKeys = [
   AllComponentTypeKeyMap.CodeEmbedComponent,
   AllComponentTypeKeyMap.CardListComponent,
   AllComponentTypeKeyMap.SingleGeneralCardComponent,
+  // AllComponentTypeKeyMap.CarouselComponent,
+  AllComponentTypeKeyMap.ImageComparisonComponent,
+  // AllComponentTypeKeyMap.ScrollingStoryComponent,
+  // AllComponentTypeKeyMap.PortfolioViewerComponent,
+  AllComponentTypeKeyMap.ImageMapComponent,
 ]

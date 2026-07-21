@@ -11,6 +11,21 @@ import { cardListComponents } from "./CardList/types";
 
 import { ColumnGridColumnComponentType, ColumnGridComponentType } from "./ColumnGrid/ColumnGrid.model";
 import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
+// import {
+//   CarouselComponentType,
+//   CarouselItemComponentType,
+//   CarouselSlideComponentType,
+// } from "./Carousel/Carousel.model";
+import { ImageComparisonComponentType } from "./ImageComparison/ImageComparison.model";
+// import {
+//   ScrollingStoryComponentType,
+//   ScrollingStoryItemComponentType,
+// } from "./ScrollingStory/ScrollingStory.model";
+// import { PortfolioViewerComponentType } from "./PortfolioViewer/PortfolioViewer.model";
+import {
+  ImageMapComponentType,
+  PinComponentType,
+} from "./ImageMap/ImageMap.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -23,5 +38,14 @@ export const allComponentTypes = [
   TimedHeroBannerSlideshowComponentType,
   ColumnGridColumnComponentType,
   ColumnGridComponentType,
+  // CarouselComponentType,
+  // CarouselItemComponentType,
+  // CarouselSlideComponentType,
+  ImageComparisonComponentType,
+  // ScrollingStoryComponentType,
+  // ScrollingStoryItemComponentType,
+  // PortfolioViewerComponentType,
+  ImageMapComponentType,
+  PinComponentType,
   ...cardListComponents
 ];

@@ -22,6 +22,23 @@ import { ColumnGridComponent } from "./ColumnGrid/ColumnGrid";
 import { NoPreviewComponent } from "@/components/ui/cms/NoPreviewComponent";
 import { ContentBlockComponent } from "./ContentBlock/ContentBlock";
 import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
+// import {
+//   CarouselComponentType,
+//   CarouselItemComponentType,
+//   CarouselSlideComponentType,
+// } from "./Carousel/Carousel.model";
+import { ImageComparisonComponentType } from "./ImageComparison/ImageComparison.model";
+import { ImageComparisonComponent } from "./ImageComparison/ImageComparison";
+// import {
+//   ScrollingStoryComponentType,
+//   ScrollingStoryItemComponentType,
+// } from "./ScrollingStory/ScrollingStory.model";
+// import { PortfolioViewerComponentType } from "./PortfolioViewer/PortfolioViewer.model";
+import {
+  ImageMapComponentType,
+  PinComponentType,
+} from "./ImageMap/ImageMap.model";
+import { ImageMapComponent } from "./ImageMap/ImageMap";
 
 
 export const componentRegistry: ComponentRegistry = {
@@ -35,5 +52,14 @@ export const componentRegistry: ComponentRegistry = {
   [TimedHeroBannerSlideshowComponentType.key]: TimedHeroBannerSlideshowComponent,
   [ColumnGridComponentType.key]: ColumnGridComponent,
   [ColumnGridColumnComponentType.key]: NoPreviewComponent,
+  // [CarouselComponentType.key]: NoPreviewComponent,
+  // [CarouselItemComponentType.key]: NoPreviewComponent,
+  // [CarouselSlideComponentType.key]: NoPreviewComponent,
+  [ImageComparisonComponentType.key]: ImageComparisonComponent,
+  // [ScrollingStoryComponentType.key]: NoPreviewComponent,
+  // [ScrollingStoryItemComponentType.key]: NoPreviewComponent,
+  // [PortfolioViewerComponentType.key]: NoPreviewComponent,
+  [ImageMapComponentType.key]: ImageMapComponent,
+  [PinComponentType.key]: NoPreviewComponent,
   ...cardListComponentRegistry
 };
