@@ -13,6 +13,7 @@ import { TiImageMap } from "@/components/ui/ti/TiImages/TiImageMap/TiImageMap";
 import { TiCard } from "@/components/ui/ti/TiCard/TiCard";
 import { TiCarousel } from "@/components/ui/ti/TiCarousel/TiCarousel";
 import { TiViewMore } from "@/components/ui/ti/TiViewMore/TiViewMore";
+import { TiTabContainer } from "@/components/ui/ti/TiTabContainer/TiTabContainer";
 import { HelperTabs, HelperTab } from "./HelperTabs";
 
 function Example({ title, children }: { title: string; children: React.ReactNode }) {
@@ -389,12 +390,51 @@ function ViewMoreHelperDemo() {
   );
 }
 
+function TabContainerHelperDemo() {
+  const basicTabs = [
+    { tabId: "first", title: "Title 1 <sup>(long)</sup>", content: <p>This is content for tab with HTML title</p> },
+    { tabId: "second", title: "Title 2", content: <p>This is content for tab 1</p> },
+    { tabId: "third", title: "Title 3", content: <p>Some random content for tab 2</p> },
+    { tabId: "fourth", title: "Title 4", content: <p>This is content for tab 3</p> },
+  ];
+  return (
+    <div className="flex flex-col gap-12">
+      <CardCell title="Standard tabs (second selected, All tab shown, hash selection)">
+        <TiTabContainer
+          selectedTabId="second"
+          allTabShown
+          hashSelection
+          allTabId="tabs-demo-all"
+          tabs={basicTabs}
+        />
+      </CardCell>
+
+      <CardCell title="Chip appearance">
+        <TiTabContainer appearance="chip" selectedTabId="first" tabs={basicTabs} />
+      </CardCell>
+
+      <CardCell title="Auto-collapse on mobile (one panel open at a time)">
+        <TiTabContainer autoCollapseMobile selectedTabId="second" tabs={basicTabs} />
+      </CardCell>
+
+      <CardCell title="With header content beside the tab list">
+        <TiTabContainer
+          selectedTabId="first"
+          headerContent={<div>Extra header content</div>}
+          tabs={basicTabs}
+        />
+      </CardCell>
+    </div>
+  );
+}
+
 const HELPERS: HelperTab[] = [
   { id: "image", label: "Image", content: <ImageHelperDemo /> },
   { id: "image-map", label: "Image Map", content: <ImageMapHelperDemo /> },
   { id: "card", label: "Card", content: <CardHelperDemo /> },
   { id: "carousel", label: "Carousel", content: <CarouselHelperDemo /> },
   { id: "view-more", label: "View More", content: <ViewMoreHelperDemo /> },
+  { id: "tabs", label: "Tabs", content: <TabContainerHelperDemo /> },
   // Add future helpers here, e.g.
   // { id: "video", label: "Video", content: <VideoHelperDemo /> },
 ];
