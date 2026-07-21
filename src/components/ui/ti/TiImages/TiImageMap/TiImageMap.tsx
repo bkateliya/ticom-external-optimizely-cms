@@ -1,8 +1,10 @@
+import { PinLinePath, TiPin } from "./TiPin";
+
 /**
  * Animated image map (`ti-image-map`) with its pins in one helper.
  * Animates a start image in from a direction/distance, optionally fades to an
  * end image, then animates the pins placed on top. Pass pins via the `pins` prop
- * — each is rendered as a `ti-pin` for you.
+ * — each is rendered with the `TiPin` helper for you.
  */
 
 /** A single interactive marker placed on the image map. */
@@ -18,8 +20,16 @@ export type ImageMapPin = {
    * Accepts a space-separated vertical + horizontal direction.
    */
   linePath?: string;
+  /** Line height value (length of the vertical segment), e.g. "80px". */
+  lineHeight?: string;
+  /** Line width value (length of the horizontal segment), e.g. "60px". */
+  lineWidth?: string;
   /** Optional link URL the pin navigates to. */
   href?: string;
+  /** Open the link in a new tab/window. */
+  target?: string;
+  /** Selected modifier for the pin. */
+  selected?: boolean;
 };
 
 export type TiImageMapProps = {
@@ -54,15 +64,19 @@ export function TiImageMap({
       alt={alt}
     >
       {pins?.map((pin, i) => (
-        <ti-pin
+        <TiPin
           key={i}
-          position-horizontal={pin.positionHorizontal}
-          position-vertical={pin.positionVertical}
-          line-path={pin.linePath}
+          positionHorizontal={pin.positionHorizontal}
+          positionVertical={pin.positionVertical}
+          linePath={pin.linePath as PinLinePath | undefined}
+          lineHeight={pin.lineHeight}
+          lineWidth={pin.lineWidth}
           href={pin.href}
+          target={pin.target}
+          selected={pin.selected}
         >
           {pin.label}
-        </ti-pin>
+        </TiPin>
       ))}
     </ti-image-map>
   );

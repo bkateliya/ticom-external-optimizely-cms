@@ -10,6 +10,7 @@
 
 import { TiImage } from "@/components/ui/ti/TiImages/TiImage/TiImage";
 import { TiImageMap } from "@/components/ui/ti/TiImages/TiImageMap/TiImageMap";
+import { TiPin, PinLinePath } from "@/components/ui/ti/TiImages/TiImageMap/TiPin";
 import { TiCard } from "@/components/ui/ti/TiCard/TiCard";
 import { TiCarousel } from "@/components/ui/ti/TiCarousel/TiCarousel";
 import { TiViewMore } from "@/components/ui/ti/TiViewMore/TiViewMore";
@@ -123,6 +124,50 @@ function ImageMapHelperDemo() {
         ]}
       />
     </Example>
+  );
+}
+
+function PinHelperDemo() {
+  const paths: { linePath: PinLinePath; lineHeight?: string; lineWidth?: string }[] = [
+    { linePath: "up" },
+    { linePath: "down" },
+    { linePath: "left" },
+    { linePath: "right" },
+    { linePath: "up left" },
+    { linePath: "up right" },
+    { linePath: "down left" },
+    { linePath: "down right" },
+    { linePath: "left up" },
+    { linePath: "left down" },
+    { linePath: "right up" },
+    { linePath: "right down" },
+    { linePath: "up", lineHeight: "80px" },
+    { linePath: "left", lineWidth: "60px" },
+  ];
+  return (
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {paths.map((p, i) => (
+        <div key={i}>
+          <h6 className="mb-2 text-body-sm text-pl-text-color-secondary">
+            {p.linePath}
+            {p.lineHeight ? ` (line-height ${p.lineHeight})` : ""}
+            {p.lineWidth ? ` (line-width ${p.lineWidth})` : ""}
+          </h6>
+          <div className="relative h-40 border border-pl-border-color-tertiary bg-pl-container-background-color-secondary">
+            <TiPin
+              positionHorizontal="50%"
+              positionVertical="50%"
+              linePath={p.linePath}
+              lineHeight={p.lineHeight}
+              lineWidth={p.lineWidth}
+              href="https://www.ti.com/"
+            >
+              {p.linePath}: Lorem ipsum dolor sit amet
+            </TiPin>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -431,6 +476,7 @@ function TabContainerHelperDemo() {
 const HELPERS: HelperTab[] = [
   { id: "image", label: "Image", content: <ImageHelperDemo /> },
   { id: "image-map", label: "Image Map", content: <ImageMapHelperDemo /> },
+  { id: "pin", label: "Pin", content: <PinHelperDemo /> },
   { id: "card", label: "Card", content: <CardHelperDemo /> },
   { id: "carousel", label: "Carousel", content: <CarouselHelperDemo /> },
   { id: "view-more", label: "View More", content: <ViewMoreHelperDemo /> },
