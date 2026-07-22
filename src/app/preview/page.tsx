@@ -9,7 +9,7 @@ import { NextPreviewComponent } from "@optimizely/cms-sdk/react/nextjs";
 import { PreviewParams } from "@optimizely/cms-sdk";
 import { OptimizelyContentProps } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { RootLayout } from "../RootLayout";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/constants/locales";
+import { toAppLocale } from "@/constants/locales";
 import { populateSiteSettings } from "@/lib/data/site-settings";
 export { generateMetadata } from "./metadata";
 
@@ -28,10 +28,11 @@ export async function Page({ searchParams }: Props) {
     previewParams,
   )) as OptimizelyContentProps;
 
-  let locale = previewParams.loc;
-  if (!locale || !SUPPORTED_LOCALES.includes(locale)) {
-    locale = DEFAULT_LOCALE;
-  }
+  // The CMS preview passes the content locale as a Graph Language Code
+  // (e.g. "zh-Hans-CN"), not our URL slug ("zh-cn"). Comparing it against
+  // SUPPORTED_LOCALES (slugs) always failed for Chinese, so preview fell back to
+  // English chrome. Map it back to the app slug for RootLayout/SiteSettings.
+  const locale = toAppLocale(previewParams.loc);
 
   const metadata = response._metadata as { url?: { hierarchical?: string } } | undefined;
   await populateSiteSettings(metadata?.url?.hierarchical ?? "", locale);

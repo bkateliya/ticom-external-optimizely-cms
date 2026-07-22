@@ -4,6 +4,7 @@ import { cache } from "react";
 import { SiteSettingsDataType } from "@/components/cms/structural-components/SiteSettings/SiteSettings.model";
 import { setContext } from "@optimizely/cms-sdk/react/server";
 import { getTranslations } from "next-intl/server";
+import { toGraphLocale } from "@/constants/locales";
 
 type PathType = Parameters<GraphClient["getPath"]>["0"]
 async function populateSiteSettingsImpl(path: PathType, locale: string) {
@@ -57,7 +58,12 @@ async function getItemsInPath(path: string | GraphReference, locale: string) {
 
     const client = getClient();
 
-    const result = await client.request(Query, { keys: keyPath, locale }) as ResultType;
+    // The CMS filters `_metadata.locale` by Language Code, not URL slug (e.g.
+    // slug "zh-cn" -> code "zh-Hans-CN"); the raw slug matches nothing and the
+    // header/footer SiteSettings silently disappear. Map slug -> code here.
+    const graphLocale = toGraphLocale(locale);
+
+    const result = await client.request(Query, { keys: keyPath, locale: graphLocale }) as ResultType;
 
     const items = result.TI_PageContent_Contract.items
         // Make sure they're in the right order since order isn't guaranteed

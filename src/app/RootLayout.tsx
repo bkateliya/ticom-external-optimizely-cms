@@ -40,18 +40,15 @@ export async function RootLayout({
       </head>
       <body className={clsx(roboto.variable, DefaultTheme)}>
         <div className="w-full overflow-hidden">
-        <ThemeProvider theme={DefaultTheme} applyToBody={true}>
-          {/* TI front-end scripts — web-component bundles + header/footer init,
+          <ThemeProvider theme={DefaultTheme} applyToBody={true}>
+            {/* TI front-end scripts — web-component bundles + header/footer init,
               loaded once for the whole page (see TiScripts). */}
-          <TiScripts />
-          {/* <TiHeader locale={locale} /> */}
-          <NextIntlClientProvider>
-            {/* Hero is hard-coded as H1 so others should start at H2  */}
-            <HeadingLevelContext headingLevel={2}>{children}</HeadingLevelContext>
-          </NextIntlClientProvider>
-
-          {/* <TiFooter /> */}
-        </ThemeProvider>
+            <TiScripts locale={locale} />
+            <NextIntlClientProvider>
+              {/* Hero is hard-coded as H1 so others should start at H2  */}
+              <HeadingLevelContext headingLevel={2}>{children}</HeadingLevelContext>
+            </NextIntlClientProvider>
+          </ThemeProvider>
         </div>
       </body>
     </html>
