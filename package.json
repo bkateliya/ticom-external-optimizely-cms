@@ -7,6 +7,8 @@
     "next:dev-ssl": "cross-env NODE_USE_ENV_PROXY=1 HTTP_PROXY=http://wwwgate.ti.com:80 HTTPS_PROXY=http://wwwgate.ti.com:80 NO_PROXY=localhost:3000,127.0.0.1,ti.com,www.ti.com next dev -p 3000 --experimental-https",
     "next:build": "cross-env NODE_USE_ENV_PROXY=1 HTTP_PROXY=http://wwwgate.ti.com:80 HTTPS_PROXY=http://wwwgate.ti.com:80 NO_PROXY=localhost:3000,127.0.0.1,ti.com,www.ti.com next build",
     "dev": "npm run bootstrap && npm run next:dev",
+    "next:dev-noproxy": "next dev",
+    "dev-noproxy": "npm run bootstrap && npm run next:dev-noproxy",
     "dev-ssl": "npm run bootstrap && npm run next:dev-ssl",
     "build": "npm run bootstrap && npm run next:build",
     "start": "cross-env NODE_USE_ENV_PROXY=1 HTTP_PROXY=http://wwwgate.ti.com:80 HTTPS_PROXY=http://wwwgate.ti.com:80 NO_PROXY=localhost:3000,127.0.0.1,ti.com,www.ti.com next start",
