@@ -11,13 +11,21 @@ export interface TiImageProps {
     dataMetricsName?: string;
 }
 
-export function TiImage({ slot, ratio, alt, src, dataMetricsName }: TiImageProps) {
+/** Extract the image file name (with extension) from a src URL, ignoring any query/hash. */
+function getImageName(src: string): string | undefined {
+    if (!src) return undefined;
+    const path = src.split(/[?#]/)[0];
+    const name = path.split("/").pop();
+    return name ? decodeURIComponent(name) : undefined;
+}
+
+export function TiImage({ slot, ratio, alt, src }: TiImageProps) {
     return (
         <ti-image
             slot={slot}
             ratio={ratio}
             alt={alt}
-            data-metrics-name={dataMetricsName}
+            data-metrics-name={getImageName(src)}
             src={src}
         />
     );
