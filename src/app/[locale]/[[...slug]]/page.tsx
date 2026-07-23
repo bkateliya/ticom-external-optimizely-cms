@@ -1,5 +1,6 @@
 import "@/lib/opti/opti-init";
 import {
+  getContext,
   OptimizelyComponent,
   withAppContext,
 } from "@optimizely/cms-sdk/react/server";
@@ -7,7 +8,8 @@ import { redirect, RedirectType } from "next/navigation";
 import { cached } from "@/lib/data/opti";
 import { SUPPORTED_LOCALES } from "@/constants/locales";
 import { populateSiteSettings } from "@/lib/data/site-settings";
-export { generateMetadata } from './metadata'
+import { OptiContextProvider } from "@/components/ui/context/OptiContext";
+export { generateMetadata } from "./metadata";
 type Props = {
   params: Promise<{
     locale: string;
@@ -35,9 +37,14 @@ async function Page({ params }: Props) {
 
   await populateSiteSettings(path, locale);
 
-  console.log('main page')
+  const contextData = getContext();
+  if (!contextData) {
+    throw new Error("Context Data missing");
+  }
   return (
-    <OptimizelyComponent content={mainContent} />
+    <OptiContextProvider contextData={contextData}>
+      <OptimizelyComponent content={mainContent} />
+    </OptiContextProvider>
   );
 }
 

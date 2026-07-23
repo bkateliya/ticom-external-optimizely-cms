@@ -1,3 +1,6 @@
+"use client";
+
+import { CustomEventHandler, useEventListenerRef } from "../../Common/events";
 import { PinLinePath, TiPin } from "./TiPin";
 
 /**
@@ -6,6 +9,12 @@ import { PinLinePath, TiPin } from "./TiPin";
  * end image, then animates the pins placed on top. Pass pins via the `pins` prop
  * — each is rendered with the `TiPin` helper for you.
  */
+
+/** Detail payload for the `tiImageMapChange` event. */
+export interface TiImageMapChangeEventDetail {
+  /** Index of the pin that became selected. */
+  selectedIndex: number;
+}
 
 /** A single interactive marker placed on the image map. */
 export type ImageMapPin = {
@@ -45,6 +54,8 @@ export type TiImageMapProps = {
   alt?: string;
   /** Interactive pins to place on the image map. */
   pins?: ImageMapPin[];
+  /** Fired when the selected pin changes. */
+  tiImageMapChange?: CustomEventHandler<TiImageMapChangeEventDetail>;
 };
 
 export function TiImageMap({
@@ -54,9 +65,14 @@ export function TiImageMap({
   startImageOffset,
   alt,
   pins,
+  tiImageMapChange,
 }: TiImageMapProps): React.ReactNode {
+  const ref = useEventListenerRef({
+    tiImageMapChange: tiImageMapChange,
+  });
   return (
     <ti-image-map
+      ref={ref}
       end-image-src={endImageSrc}
       start-image-src={startImageSrc}
       start-image-angle={startImageAngle}

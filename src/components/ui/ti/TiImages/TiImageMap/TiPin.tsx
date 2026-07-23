@@ -1,3 +1,7 @@
+"use client";
+
+import { CustomEventHandler, useEventListenerRef } from "../../Common/events";
+
 /** Line path from the pin circle to its label. Any single or paired up/down/left/right. */
 export type PinLinePath =
   | "up"
@@ -12,6 +16,12 @@ export type PinLinePath =
   | "left down"
   | "right up"
   | "right down";
+
+/** Detail payload for the `tiPinChange` event. */
+export interface TiPinChangeEventDetail {
+  /** Whether the pin is now selected. */
+  selected: boolean;
+}
 
 /**
  * Wrapper for `ti-pin` — a positioned pin + label with a connector line, for use
@@ -44,6 +54,8 @@ export type TiPinProps = React.PropsWithChildren & {
   dataLid?: string;
   /** `data-navtitle` link text, required for metrics tracking. */
   dataNavtitle?: string;
+  /** Fired when the pin's selected state changes. */
+  tiPinChange?: CustomEventHandler<TiPinChangeEventDetail>;
 };
 
 export function TiPin({
@@ -57,10 +69,15 @@ export function TiPin({
   selected,
   dataLid,
   dataNavtitle,
+  tiPinChange,
   children,
 }: TiPinProps): React.ReactNode {
+  const ref = useEventListenerRef({
+    tiPinChange: tiPinChange,
+  });
   return (
     <ti-pin
+      ref={ref}
       position-horizontal={positionHorizontal}
       position-vertical={positionVertical}
       line-path={linePath}

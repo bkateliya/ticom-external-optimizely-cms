@@ -1,5 +1,15 @@
+"use client";
+
+import { CustomEventHandler, useEventListenerRef } from "../../Common/events";
+
 export type ImageRatio = "square" | "rectangle";
 export type ImageHoverAnimation = "center" | "left" | "right";
+
+/** Detail payload for the `tiImageZoomChange` event. */
+export interface TiImageZoomChangeEventDetail {
+  /** Whether the zoom modal is now open. */
+  isOpen: boolean;
+}
 
 export type TiImageProps = React.PropsWithChildren & {
   /** Property for image URL source */
@@ -43,6 +53,8 @@ export type TiImageProps = React.PropsWithChildren & {
    * <TiImage src="/foo.jpg" alt="Foo" zoom zoomDownload downloadLabel="Download" />
    */
   downloadLabel?: React.ReactNode;
+  /** Fired when the zoom modal opens or closes. */
+  tiImageZoomChange?: CustomEventHandler<TiImageZoomChangeEventDetail>;
 };
 
 export function TiImage({
@@ -59,10 +71,15 @@ export function TiImage({
   hoverAnimation,
   caption,
   downloadLabel,
+  tiImageZoomChange,
   children,
 }: TiImageProps): React.ReactNode {
+  const ref = useEventListenerRef({
+    tiImageZoomChange: tiImageZoomChange,
+  });
   return (
     <ti-image
+      ref={ref}
       src={src}
       src-lg={srcLg}
       src-default={srcDefault}

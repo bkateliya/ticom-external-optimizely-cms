@@ -1,5 +1,5 @@
 import { contentType } from "@optimizely/cms-sdk";
-import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "../../constants.mjs";
+import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
 import { DEFAULT_VALUE } from "@/lib/utils/default-utils";
 import { PreambleContracts } from "../../contracts/component-contracts/preamble.model";

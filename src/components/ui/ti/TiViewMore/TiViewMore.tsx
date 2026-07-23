@@ -1,3 +1,13 @@
+"use client";
+
+import { CustomEventHandler, useEventListenerRef } from "../Common/events";
+
+/** Detail payload for the `tiViewMoreChange` event. */
+export interface TiViewMoreChangeEventDetail {
+  /** Whether the content is now expanded. */
+  isExpanded: boolean;
+}
+
 /**
  * Wrapper for `ti-view-more` — collapses a tall block of content behind a
  * "View more / View less" control. The content goes in as children (the
@@ -37,6 +47,8 @@ export type TiViewMoreProps = React.PropsWithChildren & {
   expandAriaLabel?: string;
   /** Aria-label for the collapse control. */
   collapseAriaLabel?: string;
+  /** Fired when the content is expanded or collapsed. */
+  tiViewMoreChange?: CustomEventHandler<TiViewMoreChangeEventDetail>;
 };
 
 export function TiViewMore({
@@ -47,10 +59,15 @@ export function TiViewMore({
   collapseActionLabel,
   expandAriaLabel,
   collapseAriaLabel,
+  tiViewMoreChange,
   children,
 }: TiViewMoreProps): React.ReactNode {
+  const ref = useEventListenerRef({
+    tiViewMoreChange: tiViewMoreChange,
+  });
   return (
     <ti-view-more
+      ref={ref}
       collapsed-height={collapsedHeight}
       is-expanded={isExpanded}
       use-button={useButton}

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/ti/enums";
 import { CtaList } from "@/components/ui/molecules/CtaList/CtaList";
 import { ClientOnly } from "@/components/utilities/ClientOnly";
-import { TiImageComparison } from "@/components/ui/ti/TiImages/TiImageComparison/TiImageComparison";
+import { withAppContext } from "@optimizely/cms-sdk/react/server";
 
 type Swatch = { label: string; cls: string };
 
@@ -242,7 +242,7 @@ function Spec({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function StyleGuidePage() {
+function StyleGuidePage() {
   return (
     <main id="top" className="mx-auto w-full max-w-[1240px] px-4 md:px-6 pb-16 text-body-md text-pl-text-color-primary scroll-mt-6">
       <header className="pt-16 pb-8">
@@ -275,61 +275,7 @@ export default function StyleGuidePage() {
           </TifButton>
         ))}
       </nav>
-      {/* Image comparison */}
-      <TiImageComparison
-        leftImage={{
-          ratio: "rectangle",
-          alt: "Left image",
-          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
-          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
-        }}
-        rightImage={{
-          ratio: "rectangle",
-          alt: "Right image",
-          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
-          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
-        }}
-      />
 
-      {/* Image comparison with slotted labels */}
-      <TiImageComparison
-        leftLabel="Before"
-        rightLabel="After"
-        leftImage={{
-          ratio: "rectangle",
-          alt: "Left image",
-          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
-          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
-        }}
-        rightImage={{
-          ratio: "rectangle",
-          alt: "Right image",
-          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
-          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
-        }}
-      />
-
-      {/* Image comparison with slotted caption */}
-      <TiImageComparison
-        // caption="Lorem ipsum dolor sit amet consectetur."
-        caption={
-          <>
-            Image caption <a href="//www.ti.com">with link</a>. Lorem, ipsum dolor.
-          </>
-        }
-        leftImage={{
-          ratio: "rectangle",
-          alt: "Left image",
-          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
-          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
-        }}
-        rightImage={{
-          ratio: "rectangle",
-          alt: "Right image",
-          dataMetricsName: "programmer-coding-software-on-a-laptop.jpg",
-          src: "https://www.ti.com/content/dam/ticom/images/themes/network/programmer-coding-software-on-a-laptop.jpg",
-        }}
-      />
       <Section title="Colors">
         <Spec>
           Utilities mirror the Polaris names 1:1 — usable as text-pl-*, bg-pl-*,
@@ -643,7 +589,7 @@ import { ButtonAppearance, ButtonColor, ComponentTheme } from "@/components/ui/t
         </div>
       </Section>
 
-      <div className="mt-4 flex justify-center">
+      <div className="mt-4 flex justify-center fixed right-[20px] bottom-[20px]">
         <TifButton
           href="#top"
           appearance={ButtonAppearance.ghost}
@@ -658,3 +604,5 @@ import { ButtonAppearance, ButtonColor, ComponentTheme } from "@/components/ui/t
     </main>
   );
 }
+
+export default withAppContext(StyleGuidePage);

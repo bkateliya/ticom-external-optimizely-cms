@@ -1,6 +1,16 @@
+"use client";
+
+import { CustomEventHandler, useEventListenerRef } from "../Common/events";
+
 export type TabContainerAppearance = "tab" | "chip" | "cards";
 export type TabContainerTheme = "light" | "dark";
 export type TabTitleLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+/** Detail payload for the `tiTabContainerChange` event. */
+export interface TiTabContainerChangeEventDetail {
+  /** `tabId` of the newly-selected tab. */
+  tabId: string;
+}
 
 /** A single tab and its panel content. Rendered as a `ti-tab-panel`. */
 export type TabPanel = {
@@ -61,6 +71,8 @@ export type TiTabContainerProps = {
   tabTitleLevel?: TabTitleLevel;
   /** Light or dark theme. Defaults to "light". */
   theme?: TabContainerTheme;
+  /** Fired when the selected tab changes. */
+  tiTabContainerChange?: CustomEventHandler<TiTabContainerChangeEventDetail>;
 };
 
 export function TiTabContainer({
@@ -78,9 +90,14 @@ export function TiTabContainer({
   tabListLabel,
   tabTitleLevel,
   theme,
+  tiTabContainerChange,
 }: TiTabContainerProps): React.ReactNode {
+  const ref = useEventListenerRef({
+    tiTabContainerChange: tiTabContainerChange,
+  });
   return (
     <ti-tab-container
+      ref={ref}
       appearance={appearance}
       selected-tab-id={selectedTabId}
       all-tab-shown={allTabShown}

@@ -1,6 +1,6 @@
 import { contract } from "@optimizely/cms-sdk";
 import { HeroComponentType } from "@/components/cms/components/Hero/Hero.model";
-import { TimedHeroBannerSlideshowComponentType } from "@/components/cms/components/TimedHeroBanner/TimedHeroBanner.model";
+import { HomePageHeroComponentType } from "@/components/cms/components/HomePageHero/HomePageHero.model";
 import { KEY_PREFIX, DISPLAY_NAME_PREFIX } from "@/components/cms/constants.mjs";
 import { ContractContentType } from "@/lib/ts/opti";
 
@@ -10,7 +10,7 @@ export const PageHeroContract = contract({
     properties: {
         hero: {
             type: "content",
-            allowedTypes: [HeroComponentType, TimedHeroBannerSlideshowComponentType],
+            allowedTypes: [HeroComponentType, HomePageHeroComponentType],
             displayName: "Hero Section",
             isLocalized: true,
         },

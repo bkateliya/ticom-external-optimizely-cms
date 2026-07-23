@@ -89,7 +89,8 @@ export const ThemeProvider = ({
         ].filter(Boolean),
       );
     }
-  }, [applyToBody, themeSetting.theme]);
+
+  }, [applyToBody, themeSetting.mode, themeSetting.theme]);
 
   if (applyToBody) {
     // Don't render an additional div if we're applying to the body

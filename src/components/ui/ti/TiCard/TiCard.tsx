@@ -1,3 +1,7 @@
+"use client";
+
+import { CustomEventHandler, useEventListenerRef } from "../Common/events";
+
 export type TiCardAppearance =
   | "primary"
   | "secondary"
@@ -10,6 +14,12 @@ export type TiCardAppearance =
   | "plain-dark"
   | "outlined"
   | "outlined-white";
+
+/** Detail payload for the `tiCardChange` event. */
+export interface TiCardChangeEventDetail {
+  /** Whether the card has been dismissed. */
+  dismissed: boolean;
+}
 
 /**
  * Wrapper for `ti-card` — an elevated content area with title / content / action
@@ -44,6 +54,8 @@ export type TiCardProps = React.PropsWithChildren & {
   dataLid?: string;
   /** Accessible label for the dismiss button on alert cards. Defaults to "Close". */
   dismissLabel?: string;
+  /** Fired when the card's state changes (e.g. an alert card is dismissed). */
+  tiCardChange?: CustomEventHandler<TiCardChangeEventDetail>;
 };
 
 export function TiCard({
@@ -52,10 +64,15 @@ export function TiCard({
   responsive,
   dataLid,
   dismissLabel,
+  tiCardChange,
   children,
 }: TiCardProps): React.ReactNode {
+  const ref = useEventListenerRef({
+    tiCardChange: tiCardChange,
+  });
   return (
     <ti-card
+      ref={ref}
       appearance={appearance}
       wide={wide}
       responsive={responsive}

@@ -1,6 +1,6 @@
 import { PreambleContracts } from "../../contracts/component-contracts/preamble.model";
 import { contentType } from "@optimizely/cms-sdk";
-import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "../../constants.mjs";
+import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
 import { ProductCardsComponentType } from "./ProductCards/ProductCards.model";
 import { GeneralCardsComponentType } from "./GeneralCards/GeneralCards.model";
 import { AllComponentTypeKeyMap } from "../keys";

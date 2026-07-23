@@ -4,12 +4,21 @@ This is a Next.js frontend app that serves content from Optimizely CMS.
 This project requires Node.js v22 or higher.
 This project uses `pnpm` instead of `npm` for package management. You can install
 `pnpm` using `corepack`:
+
+```sh
+npm install --global corepack@latest
+corepack enable pnpm
+```
+
+Corepack will pack the exact version of pnpm for the build container at `bin/corepack.tgz`.
+If the pnpm version needs to change, repack this with `corepack pack -o ./bin/corepack.tgz`.
+
 A Next.js application for Optimizely CMS with code-first content modeling and Graph content delivery
 
 Ensure that TI Proxy is being used
 
 ```sh
-#Windows 
+#Windows
 SET NODE_USE_ENV_PROXY=1
 SET HTTP_PROXY=http://wwwgate.ti.com:80
 SET HTTPS_PROXY=http://wwwgate.ti.com:80
@@ -19,10 +28,6 @@ export NODE_USE_ENV_PROXY=1
 export HTTP_PROXY=http://wwwgate.ti.com:80
 export HTTPS_PROXY=http://wwwgate.ti.com:80
 ```
-
-```sh
-npm install --global corepack@latest
-corepack enable pnpm
 
 ## Getting started
 

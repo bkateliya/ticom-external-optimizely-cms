@@ -13,32 +13,15 @@ import { PromoBlockComponentType } from "./PromoBlock/PromoBlock.model";
 import { PromoBlockComponent } from "./PromoBlock/index";
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
 import { CodeEmbedComponent } from "./CodeEmbed";
-import { TimedHeroBannerComponent } from "./TimedHeroBanner/TimedHeroBanner";
-import { TimedHeroBannerSlideshowComponentType, TimedHeroBannerComponentType } from "./TimedHeroBanner/TimedHeroBanner.model";
-import { TimedHeroBannerSlideshowComponent } from "./TimedHeroBanner/TimedHeroBannerSlideshow";
+import { HomePageHeroSlideComponent } from "./HomePageHero/HomePageHeroSlide";
+import { HomePageHeroComponentType, HomePageHeroSlideComponentType } from "./HomePageHero/HomePageHero.model";
+import { HomePageHeroComponent } from "./HomePageHero/HomePageHero";
 import { cardListComponentRegistry } from "./CardList/registry";
 import { ColumnGridColumnComponentType, ColumnGridComponentType } from "./ColumnGrid/ColumnGrid.model";
 import { ColumnGridComponent } from "./ColumnGrid/ColumnGrid";
 import { NoPreviewComponent } from "@/components/ui/cms/NoPreviewComponent";
 import { ContentBlockComponent } from "./ContentBlock/ContentBlock";
 import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
-// import {
-//   CarouselComponentType,
-//   CarouselItemComponentType,
-//   CarouselSlideComponentType,
-// } from "./Carousel/Carousel.model";
-import { ImageComparisonComponentType } from "./ImageComparison/ImageComparison.model";
-import { ImageComparisonComponent } from "./ImageComparison/ImageComparison";
-// import {
-//   ScrollingStoryComponentType,
-//   ScrollingStoryItemComponentType,
-// } from "./ScrollingStory/ScrollingStory.model";
-// import { PortfolioViewerComponentType } from "./PortfolioViewer/PortfolioViewer.model";
-import {
-  ImageMapComponentType,
-  PinComponentType,
-} from "./ImageMap/ImageMap.model";
-import { ImageMapComponent } from "./ImageMap/ImageMap";
 
 
 export const componentRegistry: ComponentRegistry = {
@@ -48,18 +31,9 @@ export const componentRegistry: ComponentRegistry = {
   [AccordionPanelComponentType.key]: AccordionItem,
   [PromoBlockComponentType.key]: PromoBlockComponent,
   [CodeEmbedComponentType.key]: CodeEmbedComponent,
-  [TimedHeroBannerComponentType.key]: TimedHeroBannerComponent,
-  [TimedHeroBannerSlideshowComponentType.key]: TimedHeroBannerSlideshowComponent,
+  [HomePageHeroSlideComponentType.key]: HomePageHeroSlideComponent,
+  [HomePageHeroComponentType.key]: HomePageHeroComponent,
   [ColumnGridComponentType.key]: ColumnGridComponent,
   [ColumnGridColumnComponentType.key]: NoPreviewComponent,
-  // [CarouselComponentType.key]: NoPreviewComponent,
-  // [CarouselItemComponentType.key]: NoPreviewComponent,
-  // [CarouselSlideComponentType.key]: NoPreviewComponent,
-  [ImageComparisonComponentType.key]: ImageComparisonComponent,
-  // [ScrollingStoryComponentType.key]: NoPreviewComponent,
-  // [ScrollingStoryItemComponentType.key]: NoPreviewComponent,
-  // [PortfolioViewerComponentType.key]: NoPreviewComponent,
-  [ImageMapComponentType.key]: ImageMapComponent,
-  [PinComponentType.key]: NoPreviewComponent,
   ...cardListComponentRegistry
 };

@@ -1,7 +1,7 @@
 import { ProductCardsComponentType } from "./ProductCards.model";
 import { getProducts } from "@/lib/api/product-api";
 import { OptiCardComponentProps } from "../CardList";
-import { Heading } from "./Heading";
+import { DynamicHeading } from "@/components/ui/Atoms/DynamicHeading";
 import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedNextImage";
 
 export async function ProductCardsComponent({
@@ -37,7 +37,7 @@ export async function ProductCardsComponent({
       {filteredProducts.map((product) => (
         <div key={product.id}>
           {/* <HeadingField field="familyName" /> */}
-          <Heading>{product.familyName}</Heading>
+          <DynamicHeading>{product.familyName}</DynamicHeading>
           <p>{product.genericPartNumber}</p>
           <p>
             {product.approximatePrice} {product.currency}

@@ -1,11 +1,10 @@
 import Script from "next/script";
-import { headerContentBase } from "./TIScriptConstants";
+import { TICOM } from "./TIScriptConstants";
 
-export function TiFooter({ locale }: { locale: string }) {
-  const base = headerContentBase(locale);
+export function TiFooter() {
   return (
     <>
-      <Script src={`${base}/js/footer.js`} />
+      <Script src={`${TICOM}/header-content/1.latest/en/js/footer.js`} />
       <div
         id="tiFooter"
 

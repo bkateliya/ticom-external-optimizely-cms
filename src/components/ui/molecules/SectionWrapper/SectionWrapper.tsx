@@ -31,6 +31,7 @@ export const SectionWrapper = ({
   }
   const baseClassName = clsx(
     styles.base,
+    "w-full",
     "container",
     "mx-auto",
     "my-10",
@@ -46,7 +47,7 @@ export const SectionWrapper = ({
         data-component="generic-wrappers/section-wrapper"
         className={baseClassName}
       >
-        <div className={clsx("flex", "space-y-4")}>{children}</div>
+        <div className={clsx("w-full", "flex", "flex-col", "space-y-4")}>{children}</div>
       </div>
     </SectionWrapperContext.Provider>
   );

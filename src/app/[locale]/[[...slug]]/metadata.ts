@@ -1,6 +1,7 @@
-import { SUPPORTED_LOCALES } from "@/constants/locales";
-import { cached } from "@/lib/data/opti";
-import { Metadata, ResolvingMetadata } from "next";
+// import { SUPPORTED_LOCALES } from "@/constants/locales";
+// import { cached } from "@/lib/data/opti";
+// import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -9,7 +10,7 @@ type Props = {
 
 export async function generateMetadata(
   { params }: Props,
-  _parent: ResolvingMetadata,
+  // _parent: ResolvingMetadata,
 ): Promise<Metadata> {
   // const { locale, slug } = await params;
   console.log("metadata params", await params);

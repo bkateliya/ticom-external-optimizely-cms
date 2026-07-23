@@ -4,12 +4,23 @@ import { useState } from "react";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { useTheme } from "../../context/BrandAndTheme/BrandAndThemeContext";
 import React from "react";
+import { TiComponentPropsBase } from "../Common/base";
+import { CustomEventHandler, useEventListenerRef } from "../Common/events";
 
 export const ThumbnailSizeOptions = ["large", "none", "small"] as const;
 
-export type ThumbnailSize = typeof ThumbnailSizeOptions[number];
+export type ThumbnailSize = (typeof ThumbnailSizeOptions)[number];
 
-export type TiSlideShowProps = {
+export type SlideshowChangeEventDetail = {
+  slideIndex: number;
+};
+
+export type TiSlideShowElement = HTMLElement & {
+  next: () => Promise<void>;
+  goToSlide: (index: number) => Promise<void>;
+};
+
+export type TiSlideShowProps = TiComponentPropsBase & {
   isPreview: boolean;
   /**Property for enabling auto-advance timer feature */
   autoAdvance?: boolean;
@@ -28,7 +39,7 @@ export type TiSlideShowProps = {
   /**Property to set default slide duration for auto-advance */
   slideDuration?: number;
   /**	Property for thumbnail size, small or large. */
-  thumbnailSize?: ThumbnailSize
+  thumbnailSize?: ThumbnailSize;
 
   /**
    * The slide elements to display in the carousel.
@@ -37,6 +48,10 @@ export type TiSlideShowProps = {
    * @param isHidden - Whether the slide element is hidden.  In preview mode we have an option to show hidden slides.
    */
   slideElements: { element: React.ReactNode; isHidden: boolean }[];
+
+  tiSlideshowChange?: CustomEventHandler<SlideshowChangeEventDetail>;
+
+  ref?: React.RefObject<TiSlideShowElement | null>;
 };
 
 export function TiSlideShow({
@@ -51,51 +66,57 @@ export function TiSlideShow({
   slideDuration,
   thumbnailSize,
   slideElements,
+  tiMetricsAction,
+  tiSlideshowChange,
+  ref,
 }: TiSlideShowProps): React.ReactNode {
-
   const { showHiddenSlides, flattenedSlides, PreviewControls } =
     usePreviewControl(isPreview);
 
   const { mode } = useTheme();
 
+  useEventListenerRef(
+    {
+      tiMetricsAction: tiMetricsAction,
+      tiSlideshowChange: tiSlideshowChange,
+    },
+    ref,
+  );
+
   const visibleSlideElements = slideElements.filter(
     (slideElement) => !slideElement.isHidden || showHiddenSlides,
   );
   return (
-    <section data-component="authorable/shared/lists/carousel">
-      <SectionWrapper>
-        {PreviewControls}
-        {flattenedSlides || visibleSlideElements.length === 1 ? (
-          <>
-            {visibleSlideElements.map((slideElement, index) => (
-              <div className="w-full" key={index}>{slideElement.element}</div>
-            ))}
-          </>
-        ) : (
-          <ti-slideshow
-            auto-advance={autoAdvance}
-            hide-navigation={hideNavigation}
-            inset-navigation={insetNavigation}
-            mobile-allow-swipe={mobileAllowSwipe}
-            mobile-hide-chevrons={mobileHideChevrons}
-            show-chevrons={showChevrons}
-            show-pause-button={showPauseButton}
-            slide-duration={slideDuration}
-            thumbnail-size={thumbnailSize}
-            theme={mode}
-          >
-            {
-              visibleSlideElements.map((slideElement, index) => (
-                <React.Fragment key={index}>
-                  {slideElement.element}
-                </React.Fragment>
-              ))
-            }
-          </ti-slideshow>
-
-        )}
-      </SectionWrapper>
-    </section >
+    <SectionWrapper>
+      {PreviewControls}
+      {flattenedSlides || visibleSlideElements.length === 1 ? (
+        <>
+          {visibleSlideElements.map((slideElement, index) => (
+            <div className="w-full" key={index}>
+              {slideElement.element}
+            </div>
+          ))}
+        </>
+      ) : (
+        <ti-slideshow
+          ref={ref}
+          auto-advance={autoAdvance}
+          hide-navigation={hideNavigation}
+          inset-navigation={insetNavigation}
+          mobile-allow-swipe={mobileAllowSwipe}
+          mobile-hide-chevrons={mobileHideChevrons}
+          show-chevrons={showChevrons}
+          show-pause-button={showPauseButton}
+          slide-duration={slideDuration}
+          thumbnail-size={thumbnailSize}
+          theme={mode}
+        >
+          {visibleSlideElements.map((slideElement, index) => (
+            <React.Fragment key={index}>{slideElement.element}</React.Fragment>
+          ))}
+        </ti-slideshow>
+      )}
+    </SectionWrapper>
   );
 }
 

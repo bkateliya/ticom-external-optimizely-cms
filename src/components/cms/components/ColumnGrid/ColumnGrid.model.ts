@@ -27,8 +27,20 @@ export const ColumnGridColumnComponentType = contentType({
   properties: {
     colSpan: {
       type: "integer",
-      displayName: "Column Span (Advanced Only)",
+      displayName: "Desktop Column Span (Advanced Only)",
       description: "The number of column subdivisions this takes up",
+      group: PropertyTypes.Appearance,
+    },
+    colSpanTablet: {
+      type: "integer",
+      displayName: "Tablet Column Span (Advanced Only)",
+      description: "The number of column subdivisions this takes up, defaults to full width",
+      group: PropertyTypes.Appearance,
+    },
+    colSpanMobile: {
+      type: "integer",
+      displayName: "Mobile Column Span (Advanced Only)",
+      description: "The number of column subdivisions this takes up, defaults to full width",
       group: PropertyTypes.Appearance,
     },
     content: {

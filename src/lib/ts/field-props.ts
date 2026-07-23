@@ -1,5 +1,4 @@
 import type { ContentProps, ContentTypes, damAssets } from "@optimizely/cms-sdk";
-import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 
 export type PolymorphicElementProps<E extends React.ElementType> =
   React.PropsWithChildren<

@@ -1,6 +1,5 @@
 import { CmsFieldElementProps } from "@/lib/ts/field-props";
-import { ContentProps, ContentTypes } from "@optimizely/cms-sdk";
-import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
+import { ContentTypes } from "@optimizely/cms-sdk";
 
 export type TextFieldProps<
   TContentType extends ContentTypes.AnyContentType,
@@ -14,11 +13,10 @@ export function TextField<
   as,
   cmsContent: content,
   field,
-  parentField,
   ...props
 }: TextFieldProps<TContentType, TElement>) {
   const Component = as || "span";
-  const { pa } = getPreviewUtils(content);
+
   const value = content[field];
 
   if (!value) {

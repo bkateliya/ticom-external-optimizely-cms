@@ -1,6 +1,16 @@
+"use client";
+
+import { CustomEventHandler, useEventListenerRef } from "../Common/events";
+
 export type CarouselGap = "small" | "large";
 export type CarouselNavigation = "inline" | "below" | "chips" | "none";
 export type CarouselTheme = "light" | "dark";
+
+/** Detail payload for the `tiCarouselChange` event. */
+export interface TiCarouselChangeEventDetail {
+  /** Index of the slide now in view. */
+  slideIndex: number;
+}
 
 /** A single carousel slide. Its content is wrapped in the neutral div the carousel requires. */
 export type CarouselSlide = {
@@ -48,6 +58,8 @@ export type TiCarouselProps = {
   slidesPerViewMobile?: number;
   /** Light or dark theme for navigation controls. Defaults to "light". */
   theme?: CarouselTheme;
+  /** Fired when the active slide changes. */
+  tiCarouselChange?: CustomEventHandler<TiCarouselChangeEventDetail>;
 };
 
 export function TiCarousel({
@@ -60,9 +72,14 @@ export function TiCarousel({
   slidesPerViewTablet,
   slidesPerViewMobile,
   theme,
+  tiCarouselChange,
 }: TiCarouselProps): React.ReactNode {
+  const ref = useEventListenerRef({
+    tiCarouselChange: tiCarouselChange,
+  });
   return (
     <ti-carousel
+      ref={ref}
       gap={gap}
       navigation={navigation}
       peek-amount={peekAmount}

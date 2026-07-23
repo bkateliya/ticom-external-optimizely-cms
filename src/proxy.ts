@@ -4,8 +4,10 @@ import { routing } from './i18n/routing';
 export default createMiddleware(routing);
 
 export const config = {
+    // Match urls that start with a locale
+    matcher: `/(..-../?.*)`
     // Match all pathnames except for
     // - … if they start with `/api`, `/trpc`, `/_next` or `/preview`
     // - … the ones containing a dot (e.g. `favicon.ico`)
-    matcher: '/((?!api|trpc|_next|preview|.*\\..*).*)'
+    // matcher: '/((?!api|trpc|_next|preview|assets|bin|.*\\..*).*)'
 };
