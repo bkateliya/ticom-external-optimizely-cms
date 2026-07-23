@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { MODULE_BUNDLES, contentScripts } from "./TIScriptConstants";
+import { ensureTiGlobals } from "./ensureTiGlobals";
 
 /**
  * Loads the TI front-end scripts client-side, mirroring the working reference
@@ -46,10 +47,17 @@ export function TiScripts({ locale }: { locale: string }) {
     // before Next registers its own, so it can't live here in an effect).
     (async () => {
       await Promise.all(MODULE_BUNDLES.map((s) => injectScript(s, "module")));
-      // ensureTiGlobals();
+      // Define com.TI.User / com.TI.UserPreferences before the header scripts
+      // run so the header components read a valid language/ship-to/currency on
+      // init. Without this, a standalone embed has no ship-to and changing the
+      // language throws in _saveLllcData ("Cannot set properties of undefined").
+      ensureTiGlobals(locale);
       await Promise.all(contentScripts(locale).map((s) => injectScript(s)));
       // Re-fire DOMContentLoaded so the header/footer init listeners run.
       document.dispatchEvent(new Event("DOMContentLoaded"));
+      // Preferences are ready synchronously above; let any component/cart code
+      // that waits on `tiUserPreferenceReady` proceed instead of timing out.
+      window.dispatchEvent(new Event("tiUserPreferenceReady"));
     })();
   }, [locale]);
 

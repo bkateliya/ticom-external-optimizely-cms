@@ -9,6 +9,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { TiHeader } from "@/components/ui/ti/TiHeader";
 import { TiFooter } from "@/components/ui/ti/TiFooter";
 import { TiScripts } from "@/components/ui/ti/TiScripts";
+import { TiLanguageSync } from "@/components/ui/ti/TiLanguageSync";
 import { HeadingLevelContext } from "@/components/utilities/HeadingLevelContext";
 
 import clsx from "clsx";
@@ -45,6 +46,8 @@ export async function RootLayout({
               loaded once for the whole page (see TiScripts). */}
             <TiScripts locale={locale} />
             <NextIntlClientProvider>
+              {/* Keep the header's language selector in sync with app routing. */}
+              <TiLanguageSync />
               {/* Hero is hard-coded as H1 so others should start at H2  */}
               <HeadingLevelContext headingLevel={2}>{children}</HeadingLevelContext>
             </NextIntlClientProvider>
