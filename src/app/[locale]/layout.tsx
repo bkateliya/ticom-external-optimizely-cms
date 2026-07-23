@@ -1,6 +1,5 @@
 import { setContextData } from "@optimizely/cms-sdk/react/server";
-import { cached } from "@/lib/data/opti";
-export { generateMetadata } from "./metadata";
+// export { generateMetadata } from "./[[...slug]]/metadata";
 import { RootLayout } from '@/app/RootLayout'
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/constants/locales";
 
@@ -21,8 +20,6 @@ export default async function Layout({
     language = DEFAULT_LOCALE;
   }
 
-  const siteSettings = await cached.getSiteSettings(language);
-  setContextData("siteSettings", siteSettings);
   setContextData("locale", locale);
   return <RootLayout locale={language}>{children}</RootLayout>;
 }

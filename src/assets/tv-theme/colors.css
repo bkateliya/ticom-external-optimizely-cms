@@ -1,0 +1,100 @@
+/* ==========================================================================
+ * Theme — Colors
+ * --------------------------------------------------------------------------
+ * Semantic tokens mapped from Polaris --pl-* variables, plus the raw Polaris
+ * palette scales. Generates: text-*, bg-*, border-*, fill-* utilities
+ * (e.g. bg-red-5, text-error, border-divider).
+ * ========================================================================== */
+@theme {
+  --color-pl-page-background-color-primary: var(--pl-page-background-color-primary);
+  --color-pl-page-background-color-secondary: var(--pl-page-background-color-secondary);
+  --color-pl-section-background-color-primary: var(--pl-section-background-color-primary);
+  --color-pl-section-background-color-secondary: var(--pl-section-background-color-secondary);
+  --color-pl-section-background-color-tertiary: var(--pl-section-background-color-tertiary);
+  --color-pl-section-background-color-accent: var(--pl-section-background-color-accent);
+  --color-pl-container-background-color-primary: var(--pl-container-background-color-primary);
+  --color-pl-container-background-color-primary-variant: var(--pl-container-background-color-primary-variant);
+  --color-pl-container-background-color-secondary: var(--pl-container-background-color-secondary);
+  --color-pl-container-background-color-secondary-variant: var(--pl-container-background-color-secondary-variant);
+  --color-pl-container-background-color-tertiary: var(--pl-container-background-color-tertiary);
+  --color-pl-container-background-color-tertiary-variant: var(--pl-container-background-color-tertiary-variant);
+  --color-pl-text-color-primary: var(--pl-text-color-primary);
+  --color-pl-text-color-primary-contrast: var(--pl-text-color-primary-contrast);
+  --color-pl-text-color-secondary: var(--pl-text-color-secondary);
+  --color-pl-text-color-secondary-contrast: var(--pl-text-color-secondary-contrast);
+  --color-pl-text-color-accent: var(--pl-text-color-accent);
+  --color-pl-text-color-accent-contrast: var(--pl-text-color-accent-contrast);
+  --color-pl-text-color-disabled: var(--pl-text-color-disabled);
+  --color-pl-text-color-disabled-contrast: var(--pl-text-color-disabled-contrast);
+  --color-pl-link-color-primary: var(--pl-link-color-primary);
+  --color-pl-link-color-primary-contrast: var(--pl-link-color-primary-contrast);
+  --color-pl-link-color-secondary: var(--pl-link-color-secondary);
+  --color-pl-link-color-secondary-contrast: var(--pl-link-color-secondary-contrast);
+  --color-pl-link-color-tertiary: var(--pl-link-color-tertiary);
+  --color-pl-link-color-accent: var(--pl-link-color-accent);
+  --color-pl-link-color-accent-contrast: var(--pl-link-color-accent-contrast);
+  --color-pl-element-color-primary-lighter: var(--pl-element-color-primary-lighter);
+  --color-pl-element-color-primary: var(--pl-element-color-primary);
+  --color-pl-element-color-primary-darker: var(--pl-element-color-primary-darker);
+  --color-pl-element-color-secondary-lighter: var(--pl-element-color-secondary-lighter);
+  --color-pl-element-color-secondary: var(--pl-element-color-secondary);
+  --color-pl-element-color-secondary-darker: var(--pl-element-color-secondary-darker);
+  --color-pl-element-color-tertiary-lighter: var(--pl-element-color-tertiary-lighter);
+  --color-pl-element-color-tertiary: var(--pl-element-color-tertiary);
+  --color-pl-element-color-tertiary-darker: var(--pl-element-color-tertiary-darker);
+  --color-pl-element-color-disabled: var(--pl-element-color-disabled);
+  --color-pl-element-color-disabled-variant: var(--pl-element-color-disabled-variant);
+  --color-pl-element-color-contrast: var(--pl-element-color-contrast);
+  --color-pl-element-color-contrast-variant: var(--pl-element-color-contrast-variant);
+  --color-pl-element-color-contrast-disabled: var(--pl-element-color-contrast-disabled);
+  --color-pl-element-color-contrast-disabled-variant: var(--pl-element-color-contrast-disabled-variant);
+  --color-pl-input-element-color: var(--pl-input-element-color);
+  --color-pl-input-element-color-disabled: var(--pl-input-element-color-disabled);
+  --color-pl-input-text-color: var(--pl-input-text-color);
+  --color-pl-input-text-color-disabled: var(--pl-input-text-color-disabled);
+  --color-pl-input-border-color: var(--pl-input-border-color);
+  --color-pl-input-border-color-disabled: var(--pl-input-border-color-disabled);
+  --color-pl-input-border-color-focus: var(--pl-input-border-color-focus);
+  --color-pl-input-background-color: var(--pl-input-background-color);
+  --color-pl-input-background-color-disabled: var(--pl-input-background-color-disabled);
+  --color-pl-input-background-color-hover: var(--pl-input-background-color-hover);
+  --color-pl-input-placeholder-color: var(--pl-input-placeholder-color);
+  --color-pl-button-primary-color: var(--pl-button-primary-color);
+  --color-pl-button-primary-color-hover: var(--pl-button-primary-color-hover);
+  --color-pl-button-primary-color-active: var(--pl-button-primary-color-active);
+  --color-pl-button-primary-text-color: var(--pl-button-primary-text-color);
+  --color-pl-button-primary-text-color-hover: var(--pl-button-primary-text-color-hover);
+  --color-pl-button-primary-text-color-active: var(--pl-button-primary-text-color-active);
+  --color-pl-button-secondary-color: var(--pl-button-secondary-color);
+  --color-pl-button-secondary-color-hover: var(--pl-button-secondary-color-hover);
+  --color-pl-button-secondary-color-active: var(--pl-button-secondary-color-active);
+  --color-pl-button-secondary-text-color: var(--pl-button-secondary-text-color);
+  --color-pl-button-secondary-text-color-hover: var(--pl-button-secondary-text-color-hover);
+  --color-pl-button-secondary-text-color-active: var(--pl-button-secondary-text-color-active);
+  --color-pl-button-tertiary-color: var(--pl-button-tertiary-color);
+  --color-pl-button-tertiary-color-hover: var(--pl-button-tertiary-color-hover);
+  --color-pl-button-tertiary-color-active: var(--pl-button-tertiary-color-active);
+  --color-pl-button-tertiary-text-color: var(--pl-button-tertiary-text-color);
+  --color-pl-button-tertiary-text-color-hover: var(--pl-button-tertiary-text-color-hover);
+  --color-pl-button-tertiary-text-color-active: var(--pl-button-tertiary-text-color-active);
+  --color-pl-button-reversed-color: var(--pl-button-reversed-color);
+  --color-pl-button-reversed-color-hover: var(--pl-button-reversed-color-hover);
+  --color-pl-button-reversed-color-active: var(--pl-button-reversed-color-active);
+  --color-pl-button-reversed-text-color: var(--pl-button-reversed-text-color);
+  --color-pl-button-reversed-text-color-hover: var(--pl-button-reversed-text-color-hover);
+  --color-pl-button-reversed-text-color-active: var(--pl-button-reversed-text-color-active);
+  --color-pl-button-disabled-color: var(--pl-button-disabled-color);
+  --color-pl-button-disabled-color-reverse: var(--pl-button-disabled-color-reverse);
+  --color-pl-border-color-primary: var(--pl-border-color-primary);
+  --color-pl-border-color-secondary: var(--pl-border-color-secondary);
+  --color-pl-border-color-tertiary: var(--pl-border-color-tertiary);
+  --color-pl-border-color-accent: var(--pl-border-color-accent);
+  --color-pl-divider-color-primary: var(--pl-divider-color-primary);
+  --color-pl-divider-color-primary-contrast: var(--pl-divider-color-primary-contrast);
+  --color-pl-divider-color-secondary: var(--pl-divider-color-secondary);
+  --color-pl-divider-color-secondary-contrast: var(--pl-divider-color-secondary-contrast);
+  --color-pl-error-color: var(--pl-error-color);
+  --color-pl-success-color: var(--pl-success-color);
+  --color-pl-warning-color: var(--pl-warning-color);
+
+}

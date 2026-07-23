@@ -1,0 +1,13 @@
+/* ==========================================================================
+ * Theme — Breakpoints (Polaris responsive system)
+ * --------------------------------------------------------------------------
+ *   phone   : < 767px          (unprefixed base)
+ *   tablet  : 767px – 1239px   -> `md:` prefix (min-width 767)
+ *   desktop : >= 1240px        -> `xl:` prefix (min-width 1240)
+ * ========================================================================== */
+@theme {
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1240px;
+}

@@ -1,22 +1,18 @@
-import styles from "./styles.module.css";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { CTAElement } from "@/components/cms/elements/CTA";
 import { normalizeGenericArrayToTyped } from "@/lib/utils/content-type-utils";
 import { CTAElementType } from "@/components/cms/elements/CTA/CTA.model";
 import { CtaListComponentType } from "@/components/cms/contracts/component-contracts/cta-list.model";
-import { CtaSurface } from "../../Atoms/Cta/CtaButton";
+import { TifButtonGroup } from "@ticom/form-components/react";
 
 export interface CtaListProps
   extends
   OptiComponentProps<typeof CtaListComponentType>,
   Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
-
-  ctaSurface: CtaSurface;
 }
 
 export const CtaList = ({
   content,
-  ctaSurface,
 }: CtaListProps) => {
   if (!content) {
     return null;
@@ -30,15 +26,13 @@ export const CtaList = ({
     return null;
   }
   return (
-    <div className={styles.buttonWrapper}>
+    <TifButtonGroup>
       {ctas.map((cta, index) => (
         <CTAElement
           key={cta._id || index}
           content={cta}
-          ctaSurface={ctaSurface}
-          defaultCtaVariant={index === 0 ? 'fill' : index === 1 ? 'outline' : 'ghost'}
         />
       ))}
-    </div>
+    </TifButtonGroup>
   );
 };

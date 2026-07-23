@@ -1,20 +1,19 @@
-
 import { TextAlignment } from "@/components/ui/context/TextAlignmentContext";
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import { HeadlineComponentType, HeadlineContractContentType } from "@/components/cms/contracts/component-contracts/headline.model";
+import {
+  HeadlineComponentType,
+  HeadlineContractContentType,
+} from "@/components/cms/contracts/component-contracts/headline.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { fieldFactory } from "@/components/ui/cms";
 import { HeadingLevelContext } from "@/components/utilities/HeadingLevelContext";
 
-export interface HeadlineProps extends
-  OptiComponentProps<HeadlineContractContentType>,
-  Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
+export interface HeadlineProps
+  extends
+    OptiComponentProps<HeadlineContractContentType>,
+    Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
   textAlignment?: TextAlignment;
-  noPaddingTop?: boolean;
-  noPaddingBottom?: boolean;
-  noPaddingSides?: boolean;
-  isCentered75?: boolean;
 }
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
@@ -23,19 +22,20 @@ const textAlignmentClassMap: Record<TextAlignment, string> = {
   Right: styles.textAlignRight,
 };
 
-export function parseHeadlineLevel({ content }: OptiComponentProps<HeadlineContractContentType>) {
-  const headlineLevel = (parseInt(content?.headlineLevel ?? '') as 1 | 2 | 3 | 4 | 5 | 6 | undefined) || 'same';
-  return headlineLevel
+export function parseHeadlineLevel({
+  content,
+}: OptiComponentProps<HeadlineContractContentType>) {
+  const headlineLevel =
+    (parseInt(content?.headlineLevel ?? "") as
+      1 | 2 | 3 | 4 | 5 | 6 | undefined) || "same";
+  return headlineLevel;
 }
 
 export const Headline = ({
   textAlignment = "Left",
-  noPaddingTop,
-  noPaddingBottom,
-  noPaddingSides,
-  isCentered75,
   content,
   parentField,
+  ...props
 }: HeadlineProps) => {
   "use client";
 
@@ -46,16 +46,7 @@ export const Headline = ({
   const { WrappedTextField, WrappedRichTextField, WrappedHeadingTextField } =
     fieldFactory<typeof HeadlineComponentType>(content, parentField);
 
-  const baseClassName = clsx(
-    styles.base,
-    textAlignmentClassMap[textAlignment],
-    {
-      [styles.noPaddingTop]: noPaddingTop,
-      [styles.paddingBottom]: noPaddingBottom,
-      [styles.paddingSides]: !noPaddingSides,
-      [styles.centered75]: isCentered75,
-    },
-  );
+  const baseClassName = clsx(styles.base, textAlignmentClassMap[textAlignment]);
 
   const hasHeaderContent = !!(
     content.eyebrow ||
@@ -69,7 +60,7 @@ export const Headline = ({
   }
 
   return (
-    <div className={baseClassName}>
+    <div className={clsx(baseClassName, props.className)} {...props}>
       <div className={styles.eyebrow}>
         <WrappedTextField
           as="span"

@@ -15,12 +15,10 @@ export function GeneralSectionComponent({
 
   return (
     <ThemedSection content={content}>
-      <PreambleSectionWrapper content={content} parentField={parentField} >
-        {
-          content.content?.map((x, i) => <ExtendedOptimizelyComponent key={i} content={x} />)
-        }
+      <PreambleSectionWrapper content={content} parentField={parentField}>
+        {content.content?.map((x, i) => <ExtendedOptimizelyComponent key={i} content={x} />)}
+
       </PreambleSectionWrapper>
     </ThemedSection>
   );
 }
-
