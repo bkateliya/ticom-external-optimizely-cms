@@ -2,10 +2,15 @@
 
 import { DEFAULT_LOCALE } from "@/constants/locales";
 
-// TODO figure out how to dynamically swap this
+// Base URL for TI's @ticom asset host. Sourced from the environment so it can
+// be swapped per deployment (int vs. prod: https://www.ti.com/assets/js/@ticom).
+// Must be NEXT_PUBLIC_ since this file is imported client-side.
+export const TICOM =
+  process.env.NEXT_PUBLIC_TICOM_BASE_URL ??
+  "https://www-int.itg.ti.com/assets/js/@ticom";
 
-// const TICOM = "https://www.ti.com/assets/js/@ticom";
-export const TICOM = "https://www-int.itg.ti.com/assets/js/@ticom"
+// Global header stylesheet, served from the same @ticom host (no locale segment).
+export const GLOBAL_HEADER_CSS = `${TICOM}/header-content/1.latest/style/ticom.global.header.css`;
 
 export const MODULE_BUNDLES = [
   `${TICOM}/ui-components/3.latest/ui-components.esm.js`,

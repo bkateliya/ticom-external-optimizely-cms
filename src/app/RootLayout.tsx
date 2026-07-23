@@ -6,6 +6,7 @@ import { DefaultTheme } from "@/components/ui/context/BrandAndTheme/consts";
 import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 import { NextIntlClientProvider } from "next-intl";
 
+import { GLOBAL_HEADER_CSS } from "@/components/ui/ti/TIScriptConstants";
 import { TiHeader } from "@/components/ui/ti/TiHeader";
 import { TiFooter } from "@/components/ui/ti/TiFooter";
 import { TiScripts } from "@/components/ui/ti/TiScripts";
@@ -25,10 +26,7 @@ export async function RootLayout({
   return (
     <html lang={locale}>
       <head>
-        <link
-          rel="stylesheet"
-          href="https://www.ti.com/assets/js/@ticom/header-content/1.latest/style/ticom.global.header.css"
-        />
+        <link rel="stylesheet" href={GLOBAL_HEADER_CSS} />
         {/*
           TI's header/footer scripts reject internally with opaque cross-origin
           resource Events (currency/login/cart XHRs, fonts, lazy chunks). They're
