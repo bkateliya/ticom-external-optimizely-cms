@@ -1,5 +1,6 @@
 import { TiFooter } from "@/components/ui/ti/TiFooter";
-
+import { getContextLocale } from "@/lib/utils/server-utils";
 export function MainFooter() {
-    return <TiFooter />
+    const locale = getContextLocale();
+    return <TiFooter locale={locale} />
 }

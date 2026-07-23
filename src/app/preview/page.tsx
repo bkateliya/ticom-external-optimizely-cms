@@ -1,7 +1,6 @@
 import "@/lib/opti/opti-init";
 import { getClient } from "@optimizely/cms-sdk";
 import {
-  getContext,
   OptimizelyComponent,
   withAppContext,
 } from "@optimizely/cms-sdk/react/server";
@@ -10,9 +9,8 @@ import { NextPreviewComponent } from "@optimizely/cms-sdk/react/nextjs";
 import { PreviewParams } from "@optimizely/cms-sdk";
 import { OptimizelyContentProps } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { RootLayout } from "../RootLayout";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/constants/locales";
+import { toAppLocale } from "@/constants/locales";
 import { populateSiteSettings } from "@/lib/data/site-settings";
-import { OptiContextProvider } from "@/components/ui/context/OptiContext";
 export { generateMetadata } from "./metadata";
 
 type Props = {
@@ -24,27 +22,24 @@ export async function Page({ searchParams }: Props) {
 
   const previewParams = (await searchParams) as PreviewParams;
   if (!previewParams) {
-    return <h1>No content found</h1>;
+    return <h1>No content found</h1>
   }
   const response = (await client.getPreviewContent(
     previewParams,
   )) as OptimizelyContentProps;
 
-  let locale = previewParams.loc;
-  if (!locale || !SUPPORTED_LOCALES.includes(locale)) {
-    locale = DEFAULT_LOCALE;
-  }
-  const metadata = response._metadata as
-    { url?: { hierarchical?: string } } | undefined;
-  await populateSiteSettings(metadata?.url?.hierarchical ?? "", locale);
+  // The CMS preview passes the content locale as a Graph Language Code
+  // (e.g. "zh-Hans-CN"), not our URL slug ("zh-cn"). Comparing it against
+  // SUPPORTED_LOCALES (slugs) always failed for Chinese, so preview fell back to
+  // English chrome. Map it back to the app slug for RootLayout/SiteSettings.
+  const locale = toAppLocale(previewParams.loc);
 
-  const contextData = getContext();
-  if (!contextData) {
-    throw new Error("Context Data missing");
-  }
+  const metadata = response._metadata as { url?: { hierarchical?: string } } | undefined;
+  await populateSiteSettings(metadata?.url?.hierarchical ?? "", locale);
 
   return (
     <RootLayout locale={locale}>
+
       <Script
         src={
           new URL(
@@ -54,9 +49,7 @@ export async function Page({ searchParams }: Props) {
         }
       ></Script>
       <NextPreviewComponent />
-      <OptiContextProvider contextData={contextData}>
-        <OptimizelyComponent content={response} />
-      </OptiContextProvider>
+      <OptimizelyComponent content={response} />
     </RootLayout>
   );
 }

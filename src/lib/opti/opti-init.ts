@@ -18,6 +18,8 @@ import { contractComponentTypes } from '@/components/cms/contracts/component-con
 import { contractComponentRegistry } from '@/components/cms/contracts/component-contracts/registry';
 import { structuralComponentTypes } from "@/components/cms/structural-components/types";
 import { structuralComponentRegistry } from "@/components/cms/structural-components/registry";
+import { dataTypes } from "@/components/cms/data/types";
+import { dataRegistry } from "@/components/cms/data/registry";
 
 
 bootstrap();
@@ -27,6 +29,7 @@ initContentTypeRegistry([
   ...experienceTypes,
   ...pageTypes,
   ...allComponentTypes,
+  ...dataTypes,
   ...structuralComponentTypes,
   ...elementTypes,
   ...sectionTypes,
@@ -37,6 +40,7 @@ initReactComponentRegistry({
     ...pageRegistry,
     ...experienceRegistry,
     ...componentRegistry,
+    ...dataRegistry,
     ...structuralComponentRegistry,
     ...elementRegistry,
     ...sectionRegistry,

@@ -1,7 +1,6 @@
 import { getClient, GraphClient, GraphReference } from "@optimizely/cms-sdk";
 import { cache } from "react";
 
-
 const getPath: GraphClient["getPath"] = async (path) => {
   const client = getClient();
   const content = await client.getPath(path);
@@ -14,7 +13,12 @@ const getContentByPath = async (path: string) => {
   return content;
 };
 
-async function getReferencedContent<T>(contentId: string | GraphReference) {
+async function getReferencedContent<T>(
+  contentId: string | GraphReference | null,
+) {
+  if (!contentId) {
+    return null;
+  }
   const client = getClient();
   const content = await client.getContent(contentId);
   return content as T;
