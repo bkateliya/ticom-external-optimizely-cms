@@ -6,9 +6,9 @@ import {
   CommonPageContracts,
 } from "@/components/cms/contracts/common";
 
-export const SelectionToolPageType = contentType({
-  key: PageTypeKeyMap.SelectionToolPageTypeKey,
-  displayName: `${DISPLAY_NAME_PREFIX}SelectionTool Page`,
+export const FaqPageType = contentType({
+  key: PageTypeKeyMap.FaqPageTypeKey,
+  displayName: `${DISPLAY_NAME_PREFIX}FAQ Page`,
   baseType: "_page",
   extends: CommonPageContracts,
   properties: {},
