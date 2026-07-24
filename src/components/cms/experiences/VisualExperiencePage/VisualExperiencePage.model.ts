@@ -6,10 +6,10 @@ import {
   CommonPageContracts,
 } from "@/components/cms/contracts/common";
 
-export const GenericExperienceType = contentType({
+export const VisualExperiencePageType = contentType({
   baseType: "_experience",
-  key: ExperienceTypeKeyMap.FlexibleMarketingExperienceTypeKey,
-  displayName: `${DISPLAY_NAME_PREFIX}FlexibleMarketing Experience`,
+  key: ExperienceTypeKeyMap.VisualExperiencePageTypeKey,
+  displayName: `${DISPLAY_NAME_PREFIX}Visual Experience Page`,
   extends: CommonPageContracts,
   mayContainTypes: AllPageAndExperienceTypeKeys,
 

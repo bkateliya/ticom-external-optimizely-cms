@@ -15,6 +15,9 @@ import { ApplicationType } from "@/components/cms/data/Application.model";
 import { ProductFamilyType } from "@/components/cms/data/ProductFamily.model";
 import { OptiComponentProps } from "../ts/component-props";
 import { normalizeGenericContentToTyped } from "../utils/content-type-utils";
+import { BreadcrumbEntry } from "@/components/global/Breadcrumb/Breadcrumb.utils";
+import { PageFolderType } from "@/components/cms/pages/PageFolder/PageFolder.model";
+import { ArticlePageType } from "@/components/cms/pages/Article/Article.model";
 
 type PathType = Parameters<GraphClient["getPath"]>["0"];
 async function populateSiteSettingsImpl(path: PathType, locale: string) {
@@ -46,12 +49,12 @@ async function populatePageDataImpl(
   }
 
   const productFamily = normalizeGenericContentToTyped(
-    content.goldenSourcedData,
+    await cached.getReferencedContent(content.productFamily),
     ProductFamilyType,
   );
 
   const application = normalizeGenericContentToTyped(
-    content.goldenSourcedData,
+    await cached.getReferencedContent(content.application),
     ApplicationType,
   );
 
@@ -62,11 +65,23 @@ async function populatePageDataImpl(
 
 export const populatePageData = cache(populatePageDataImpl);
 
-async function getBreadcrumb(items: ResultItemType[]) {
+async function getBreadcrumb(
+  items: ResultItemType[],
+): Promise<BreadcrumbEntry[]> {
   const t = await getTranslations();
-  return items.map((x, i) => ({
+  const visibleItems = items.filter(
+    (x) =>
+      // Don't show for Article Page
+      (x._itemMetadata.type !== ArticlePageType.key),
+  );
+  return visibleItems.map((x, i) => ({
     title: i === 0 ? t("Home") : x.navigationTitle || x.pageTitle,
     url: x._metadata.url.default,
+    asSpan:
+      // Last entry should be span
+      i === visibleItems.length - 1 ||
+      // Folders should be span
+      x._itemMetadata.type === PageFolderType.key,
   }));
 }
 
@@ -123,6 +138,7 @@ query($keys: [String], $locale: String) {
     items {
       pageTitle
       navigationTitle
+      hideInNavigation
       siteSettingsOverride {
         _json
       }
@@ -143,6 +159,7 @@ query($keys: [String], $locale: String) {
 type ResultItemType = {
   pageTitle: string;
   navigationTitle: string;
+  hideInNavigation: boolean;
   siteSettingsOverride: {
     _json: ContentProps<typeof SiteSettingsDataType>;
   };

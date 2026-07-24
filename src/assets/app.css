@@ -12,6 +12,7 @@
   --color-text-default: var(--ti-text-color);
   --font-body: var(--font-roboto);
 }
+*{box-sizing: border-box}
 
 /* Placeholder values for testing */
 @layer base {

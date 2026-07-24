@@ -2,12 +2,20 @@ import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/constants/locales";
 import { getContextData } from "@optimizely/cms-sdk/react/server";
 import type { UrlObject } from "node:url";
 
-const TI_DOMAINS = ['localhost', 'ti.com', 'www.ti.com', 'www.ti.com.cn'];
-const DUMMY_DOMAIN = 'dummy';
+const TI_DOMAINS = ["localhost", "ti.com", "www.ti.com", "www.ti.com.cn"];
+const DUMMY_DOMAIN = "dummy";
 const DUMMY_BASE_URL = `http://${DUMMY_DOMAIN}`;
 
+/** Removes the /"overview.html" and ".html" from legacy urls to match new format  */
+export function cleanLegacyUrl(url?: string | null) {
+  if (!url) {
+    return "";
+  }
+  return url.replace("/overview.html", "").replace(".html", "");
+}
+
 export function normalizeUrl(url: string | UrlObject): string | null {
-  const currentLocale = getContextData('locale') || DEFAULT_LOCALE;
+  const currentLocale = getContextData("locale") || DEFAULT_LOCALE;
   let parsedUrl;
   try {
     parsedUrl = parseUrlObject(url);
@@ -18,33 +26,37 @@ export function normalizeUrl(url: string | UrlObject): string | null {
   if (!parsedUrl) {
     return null;
   }
-// Only process TI domains or relative urls
-  const shouldProcessUrl = !parsedUrl.hostname || TI_DOMAINS.includes(parsedUrl.hostname);
+  // Only process TI domains or relative urls
+  const shouldProcessUrl =
+    !parsedUrl.hostname || TI_DOMAINS.includes(parsedUrl.hostname);
   if (!shouldProcessUrl) {
     return url.toString();
   }
 
   // Remove leading slash
-  const cleanedPathName = parsedUrl.pathname.replace(/^\//, '');
+  const cleanedPathName = parsedUrl.pathname.replace(/^\//, "");
 
-  const split = cleanedPathName.split('/')
+  const split = cleanedPathName.split("/");
   const urlLocale = split[0].toLocaleLowerCase();
 
   // No locale present
   if (!SUPPORTED_LOCALES.includes(urlLocale)) {
     // Add the locale
-    split.unshift(currentLocale)
+    split.unshift(currentLocale);
   }
   // Locale is present, but different from current page
-  else if (SUPPORTED_LOCALES.includes(urlLocale) && urlLocale !== currentLocale) {
+  else if (
+    SUPPORTED_LOCALES.includes(urlLocale) &&
+    urlLocale !== currentLocale
+  ) {
     // Change the locale
     split[0] = currentLocale;
   }
 
-  parsedUrl.pathname = split.join('/');
+  parsedUrl.pathname = split.join("/");
 
   if (parsedUrl.hostname === DUMMY_DOMAIN) {
-    return parsedUrl.pathname
+    return parsedUrl.pathname;
   }
   return parsedUrl.toString();
 }
@@ -78,7 +90,6 @@ export function parseUrlObject(
     return null;
   }
   try {
-
     // If it's a fully qualified url, use it as is, otherwise include the public url
 
     if (href.match(PROTOCOL_REGEX)) return new URL(href);

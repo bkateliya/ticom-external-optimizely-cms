@@ -6,9 +6,9 @@ import {
   CommonPageContracts,
 } from "@/components/cms/contracts/common";
 
-export const SelectionToolPageType = contentType({
-  key: PageTypeKeyMap.SelectionToolPageTypeKey,
-  displayName: `${DISPLAY_NAME_PREFIX}SelectionTool Page`,
+export const SingleVideoPageType = contentType({
+  key: PageTypeKeyMap.SingleVideoPageTypeKey,
+  displayName: `${DISPLAY_NAME_PREFIX}Single Video Page`,
   baseType: "_page",
   extends: CommonPageContracts,
   properties: {},

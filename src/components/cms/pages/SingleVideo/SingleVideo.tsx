@@ -1,14 +1,14 @@
 import { ContentProps } from "@optimizely/cms-sdk";
-import { FaqPortalPageType } from "./FaqPortal.model";
+import { SingleVideoPageType } from "./SingleVideo.model";
 import { SiteFrame } from "@/components/global/SiteFrame/SiteFrame";
 import { CommonPageHero } from "@/components/global/CommonPageHero";
 import { populatePageData } from "@/lib/data/site-settings";
 
 type Props = {
-  content: ContentProps<typeof FaqPortalPageType>;
+  content: ContentProps<typeof SingleVideoPageType>;
 };
 
-export async function FaqPortalPage({ content }: Props) {
+export async function SingleVideoPage({ content }: Props) {
   await populatePageData(content);
   return (
     <SiteFrame>
@@ -16,4 +16,3 @@ export async function FaqPortalPage({ content }: Props) {
     </SiteFrame>
   );
 }
-

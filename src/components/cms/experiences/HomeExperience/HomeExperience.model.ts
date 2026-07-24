@@ -6,7 +6,7 @@ import { ApplicationReferenceContract } from "@/components/cms/contracts/page-co
 export const HomeExperienceType = contentType({
   baseType: "_experience",
   key: `${KEY_PREFIX}HomeExperience_Experience`,
-  displayName: `${DISPLAY_NAME_PREFIX}Home Experience`,
+  displayName: `${DISPLAY_NAME_PREFIX}Home Experience Page`,
 
   extends: [...CommonPageContracts, ApplicationReferenceContract],
   mayContainTypes: AllPageAndExperienceTypeKeys,

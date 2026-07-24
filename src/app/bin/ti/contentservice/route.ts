@@ -1,9 +1,8 @@
-import { getClient } from "@optimizely/cms-sdk";
 import "@/lib/opti/client-config";
-import { ApplicationReferenceContract } from "@/components/cms/contracts/page-contacts/application-reference.model";
-import { FamilyReferenceContract } from "@/components/cms/contracts/page-contacts/family-reference.model";
+import { getClient } from "@optimizely/cms-sdk";
 import { PageContentContract } from "@/components/cms/contracts/page-contacts/page-content.model";
 import { NextRequest } from "next/server";
+import { GoldenSourcedDataContract } from "@/components/cms/contracts/page-contacts/golden-sourced.model";
 
 export async function GET(request: NextRequest) {
   const category = request.nextUrl.searchParams.get("category");
@@ -11,72 +10,79 @@ export async function GET(request: NextRequest) {
   const familyid = request.nextUrl.searchParams.get("familyid");
 
   const applicationid = request.nextUrl.searchParams.get("applicationid");
-  const client = getClient();
+
+  const { applicationIdToKeyMap, applicationKeyToIdMap } =
+    await getAllApplications();
+
+  const { familyIdToKeyMap, familyKeyToIdMap } = await getAllFamilies();
+
   let query: string;
   let vars;
-  if (category === "family" || category === "application") {
-    query = GOLDEN_SOURCED_EXISTS_QUERY;
-    vars = { isGoldenSourced: true };
+  if (category === "family") {
+    query = GOLDEN_SOURCED_FAMILY_QUERY;
+    vars = null;
+  } else if (category === "application") {
+    query = GOLDEN_SOURCED_APPLICATION_QUERY;
+    vars = null;
   } else if (category === "other") {
-    query = GOLDEN_SOURCED_EXISTS_QUERY;
-    vars = { isGoldenSourced: false };
+    query = GOLDEN_SOURCED_OTHER_QUERY;
+    vars = null;
   } else if (familyid) {
-    const results = (await client.request(FAMILY_ID_QUERY, {
-      id: familyid,
-    })) as MetaDataKeyResult;
-    const familyKey = results.data.items[0]?._metadata.key;
-
-    if (!familyKey) {
+    query = GOLDEN_SOURCED_KEY_QUERY;
+    const key = familyIdToKeyMap[familyid];
+    if (!key) {
       return Response.json([]);
     }
-    query = GOLDEN_SOURCED_KEY_QUERY;
-    vars = { key: familyKey };
+    vars = { key: key };
   } else if (applicationid) {
-    const results = (await client.request(APPLICATION_ID_QUERY, {
-      id: applicationid,
-    })) as MetaDataKeyResult;
-    const application = results.data.items[0]?._metadata.key;
-
-    if (!application) {
+    query = GOLDEN_SOURCED_KEY_QUERY;
+    const key = applicationIdToKeyMap[applicationid];
+    if (!key) {
       return Response.json([]);
     }
-    query = GOLDEN_SOURCED_KEY_QUERY;
-    vars = { key: application };
+    vars = { key: key };
   } else {
     query = ALL_PAGE_QUERY;
     vars = undefined;
   }
-  const results = (await client.request(query, vars)) as MetaDataKeyResult;
-  if (category === "family") {
-    results.data.items = results.data.items.filter(
-      (x) => x.goldenSourcedData?.familyId !== undefined,
-    );
-  }
-  if (category === "application") {
-    results.data.items = results.data.items.filter(
-      (x) => x.goldenSourcedData?.applicationId !== undefined,
-    );
-  }
-  const keys = results.data.items.map((x) => x._metadata.key);
-  const dataResults = (await client.request(DATA_QUERY, {
-    keys,
-  })) as DataResult;
 
-  const finalResult: ContentServiceResult[] = dataResults.data.items.map(
-    (x) => ({
-      applicationid: x.applicationId || "",
-      displayorder: -1,
-      familyid: x.familyId || "",
-      hideinnavigation: false,
-      language: x._metadata.locale.replace(/\-\w+\-/, "_").replace("-", "_"),
-      navigationtitle:
-        x.navigationTitle || x.pageTitle || x._metadata.displayName,
-      pagename: x.pageTitle || x._metadata.displayName,
-      pagetype: x._itemMetadata.type,
-      tags: [],
-      url: `${x._metadata.url.base}${x._metadata.url.hierarchical}`,
-    }),
+  const results = await getPaginatedResults(query, vars);
+  const keys = results.map((x) => x._metadata.key);
+
+  const finalItems = await getPaginatedResults<PageContentResult>(DATA_QUERY, {
+    keys,
+  });
+
+  // We unfortunately cannot do this in a single query because they are different contracts
+  const gsItems = await getPaginatedResults<GoldenSourcedResult>(
+    GOLDEN_SOURCED_QUERY,
+    {
+      keys,
+    },
   );
+
+  const finalResult: ContentServiceResult[] = finalItems.map((x) => ({
+    applicationid:
+      applicationKeyToIdMap[
+        gsItems.find((y) => y._metadata.key === x._metadata.key)?.application
+          ?.key ?? ""
+      ] || "",
+    displayorder: -1,
+    familyid:
+      familyKeyToIdMap[
+        gsItems.find((y) => y._metadata.key === x._metadata.key)?.productFamily
+          ?.key ?? ""
+      ] || "",
+    hideinnavigation: x.hideInNavigation ?? false,
+    language: x._metadata.locale.replace(/\-\w+\-/, "_").replace("-", "_"),
+    navigationtitle:
+      x.navigationTitle || x.pageTitle || x._metadata.displayName,
+    pagename: x.pageTitle || x._metadata.displayName,
+    pagetype: x._itemMetadata.type,
+    tags: [],
+    url: `${x._metadata.url.base}${x._metadata.url.hierarchical}`,
+  }));
+
   return Response.json(finalResult);
 }
 
@@ -93,43 +99,25 @@ interface ContentServiceResult {
   url: string;
 }
 
-interface MetaDataKeyResult {
-  data: {
-    items: {
-      _metadata: {
-        key: string;
-      };
-      goldenSourcedData?: {
-        familyId?: string;
-        applicationId?: string;
-      };
-    }[];
-  };
-}
-
-const GOLDEN_SOURCED_EXISTS_QUERY = `query ($isGoldenSourced: Boolean) {
+const COMMON_QUERY = `$cursor: String, $limit: Int = 100`;
+const COMMON_FILTER = `limit: $limit, cursor: $cursor`;
+const GOLDEN_SOURCED_FAMILY_QUERY = `query(${COMMON_QUERY}) {
   data: TI_GoldenSourcedData_Contract(
-    where: { goldenSourcedData: { _itemMetadata: { key: { exist: $isGoldenSourced } } } }
+    where: { productFamily: { key: { exist: true } } } 
+    ${COMMON_FILTER}
   ) {
     items {
       _metadata {
         key
       }
-      goldenSourcedData {
-        ... on TI_ProductFamily_Data {
-          familyId
-        }
-        ... on TI_Application_Data {
-          applicationId
-        }
-      }
     }
   }
 }`;
 
-const GOLDEN_SOURCED_KEY_QUERY = `query ($key: String) {
+const GOLDEN_SOURCED_APPLICATION_QUERY = `query(${COMMON_QUERY}) {
   data: TI_GoldenSourcedData_Contract(
-    where: { goldenSourcedData: { _itemMetadata: { key: { eq: $key } } } }
+    where: { application: { key: { exist: true } } } 
+    ${COMMON_FILTER}
   ) {
     items {
       _metadata {
@@ -139,9 +127,13 @@ const GOLDEN_SOURCED_KEY_QUERY = `query ($key: String) {
   }
 }`;
 
-const APPLICATION_ID_QUERY = `query ($id: String) {
-  data: TI_Application_Data(
-    where: { applicationId: { eq: $id } }
+const GOLDEN_SOURCED_OTHER_QUERY = `query(${COMMON_QUERY}) {
+  data: TI_GoldenSourcedData_Contract(
+    where: { 
+      application: { key: { exist: false } }
+      productFamily: { key: { exist: false } }
+    } 
+    ${COMMON_FILTER}
   ) {
     items {
       _metadata {
@@ -151,9 +143,15 @@ const APPLICATION_ID_QUERY = `query ($id: String) {
   }
 }`;
 
-const FAMILY_ID_QUERY = `query ($id: String) {
-  data: TI_ProductFamily_Data(
-    where: { familyId: { eq: $id } }
+const GOLDEN_SOURCED_KEY_QUERY = `query ($key: String, ${COMMON_QUERY}) {
+  data: TI_GoldenSourcedData_Contract(
+    where: { 
+    _or: [
+        { application: { key: { eq: $key } } }
+        { productFamily: { key: { eq: $key } } }
+      ]
+    }
+    ${COMMON_FILTER}
   ) {
     items {
       _metadata {
@@ -163,7 +161,7 @@ const FAMILY_ID_QUERY = `query ($id: String) {
   }
 }`;
 
-const ALL_PAGE_QUERY = `query {
+const ALL_PAGE_QUERY = `query(${COMMON_QUERY}) {
   data: _Content(
     where: {
       _and: [
@@ -172,6 +170,7 @@ const ALL_PAGE_QUERY = `query {
         }
       ]
     }
+    ${COMMON_FILTER}
   ) {
     items {
       _metadata {
@@ -181,38 +180,143 @@ const ALL_PAGE_QUERY = `query {
   }
 }`;
 
-interface DataResult {
-  data: {
-    items: {
-      _itemMetadata: {
-        type: string;
-      };
-      _metadata: {
-        locale: string;
-        displayName: string;
-        url: {
-          base: string;
-          hierarchical: string;
-        };
-      };
-      navigationTitle: string;
-      pageTitle: string;
-      applicationId: string;
-      familyId: string;
-    }[];
-  };
+const GET_ALL_FAMILIES = `query (${COMMON_QUERY}) {
+  data: TI_ProductFamily_Data(${COMMON_FILTER}) {    
+    items {
+      _metadata {
+        displayName
+        key
+      }
+      familyId
+    }
+    cursor
+  }
+}`;
+interface FamilyResult extends ResultWithKey {
+  familyId: string;
+}
+async function getAllFamilies() {
+  const familyKeyToIdMap: Record<string, string> = {};
+  const familyIdToKeyMap: Record<string, string> = {};
+
+  const items = await getPaginatedResults<FamilyResult>(GET_ALL_FAMILIES);
+  items.forEach((x) => {
+    familyIdToKeyMap[x.familyId] = x._metadata.key;
+    familyKeyToIdMap[x._metadata.key] = x.familyId;
+  });
+
+  return { familyKeyToIdMap, familyIdToKeyMap };
 }
 
-const DATA_QUERY = `query PageData($keys: [String]) {
-  data: _Content(
-    where: { _itemMetadata: { key: { in: $keys } } }
-  ) {
+const GET_ALL_APPLICATIONS = `query (${COMMON_QUERY}) {
+  data: TI_Application_Data(${COMMON_FILTER}) {    
     items {
-      ... on ${PageContentContract.key} {
-        _modified
-        navigationTitle
-        pageTitle
+      _metadata {
+        displayName
+        key
       }
+      applicationId
+    }
+    cursor
+  }
+}`;
+
+interface ApplicationResult extends ResultWithKey {
+  applicationId: string;
+}
+
+async function getAllApplications() {
+  const applicationKeyToIdMap: Record<string, string> = {};
+  const applicationIdToKeyMap: Record<string, string> = {};
+
+  const items =
+    await getPaginatedResults<ApplicationResult>(GET_ALL_APPLICATIONS);
+  items.forEach((x) => {
+    applicationIdToKeyMap[x.applicationId] = x._metadata.key;
+    applicationKeyToIdMap[x._metadata.key] = x.applicationId;
+  });
+
+  return { applicationKeyToIdMap, applicationIdToKeyMap };
+}
+
+interface ResultWithKey {
+  _metadata: {
+    key: string;
+  };
+}
+interface PaginatedResult<T extends ResultWithKey = ResultWithKey> {
+  data: {
+    items: ({
+      _metadata: {
+        key: string;
+      };
+    } & T)[];
+    cursor: string | undefined;
+  };
+}
+async function getPaginatedResults<TResult extends ResultWithKey>(
+  query: string,
+  params?: Record<string, unknown> | null,
+) {
+  //($cursor: String, $limit: Int = 100)
+  //(limit: $limit, cursor: $cursor)
+  if (!query.includes("cursor: $cursor")) {
+    throw Error(`Query does not contain cursor: $cursor.  ${query}`);
+  }
+  const client = getClient();
+  let hasNext = true;
+  let cursor = null;
+  const results: TResult[] = [];
+  let loopCount = 0;
+  while (hasNext) {
+    const dataResults = (await client.request(query, {
+      ...params,
+      cursor,
+    })) as PaginatedResult<TResult>;
+    cursor = dataResults.data.cursor;
+    hasNext = !!dataResults.data.cursor && dataResults.data.items.length > 0;
+    results.push(...dataResults.data.items);
+    loopCount++;
+    if (loopCount > 10) {
+      throw Error("Possible infinite loop");
+    }
+  }
+  return results;
+}
+
+interface PageContentResult extends ResultWithKey {
+  _itemMetadata: {
+    type: string;
+  };
+  _metadata: {
+    key: string;
+    locale: string;
+    displayName: string;
+    url: {
+      base: string;
+      hierarchical: string;
+    };
+  };
+  navigationTitle: string;
+  pageTitle: string;
+  hideInNavigation: boolean;
+
+  application?: { key: string };
+  family?: { key: string };
+}
+
+interface GoldenSourcedResult extends ResultWithKey {
+  application?: { key: string };
+  productFamily?: { key: string };
+}
+
+const DATA_QUERY = `query PageData($keys: [String], ${COMMON_QUERY}) {
+  data: ${PageContentContract.key}(
+    where: { _itemMetadata: { key: { in: $keys } } }
+    ${COMMON_FILTER}
+  ) {
+    cursor
+    items {
       _itemMetadata {
         type
       }
@@ -224,12 +328,34 @@ const DATA_QUERY = `query PageData($keys: [String]) {
           hierarchical
         }
         types
+        key
       }
-      ... on ${ApplicationReferenceContract.key} {
-        applicationId
+        ... on ${PageContentContract.key} {
+        navigationTitle
+        pageTitle
+        hideInNavigation
       }
-      ... on ${FamilyReferenceContract.key} {
-        familyId
+    }
+  }
+}`;
+
+const GOLDEN_SOURCED_QUERY = `query PageData($keys: [String], ${COMMON_QUERY}) {
+  data: ${GoldenSourcedDataContract.key}(
+    where: { _itemMetadata: { key: { in: $keys } } }
+    ${COMMON_FILTER}
+  ) {
+    cursor
+    items {    
+      _metadata {
+        key
+      }
+      ... on ${GoldenSourcedDataContract.key} {
+        application {
+          key          
+        }
+        productFamily {
+          key
+        }
       }
     }
   }

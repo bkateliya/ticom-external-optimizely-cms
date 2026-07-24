@@ -8,10 +8,17 @@ export const GoldenSourcedDataContract = contract({
   key: `${KEY_PREFIX}GoldenSourcedData_Contract`,
   displayName: `${DISPLAY_NAME_PREFIX}Golden Sourced Data Contract`,
   properties: {
-    goldenSourcedData: {
-      type: "content",
-      allowedTypes: [ProductFamilyType, ApplicationType],
-      displayName: "Golden Sourced Data",
+    productFamily: {
+      type: "contentReference",
+      allowedTypes: [ProductFamilyType],
+      displayName: "Golden Sourced Product Family",
+      group: PropertyTypes.Data,
+      isLocalized: false,
+    },
+    application: {
+      type: "contentReference",
+      allowedTypes: [ApplicationType],
+      displayName: "Golden Sourced Application",
       group: PropertyTypes.Data,
       isLocalized: false,
     },
