@@ -1,5 +1,0 @@
-.mode-light {
-  /* Mode background is handled externally */
-  --ti-section-background: transparent;
-  --ti-text-color: var(--pl-text-color-primary);
-}
