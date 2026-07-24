@@ -1,11 +1,11 @@
 import { ContentProps } from "@optimizely/cms-sdk";
 import { HomeExperienceType } from "./HomeExperience.model";
-import { GenericExperience } from "../FlexibleMarketing/FlexibleMarketing";
+import { VisualExperiencePage } from "../VisualExperiencePage/VisualExperiencePage";
 
 type Props = {
   content: ContentProps<typeof HomeExperienceType>;
 };
 
 export function HomeExperience({ content }: Props) {
-  return <GenericExperience content={content} />;
+  return <VisualExperiencePage content={content} />;
 }

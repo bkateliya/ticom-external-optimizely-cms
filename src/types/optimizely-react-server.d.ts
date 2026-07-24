@@ -4,17 +4,15 @@ import { SiteSettingsDataType } from "@/components/cms/structural-components/Sit
 import { ProductFamilyType } from "@/components/cms/data/ProductFamily.model";
 import { ApplicationType } from "@/components/cms/data/Application.model";
 
+import { BreadcrumbEntry } from "./Breadcrumb.utils";
 declare module "@optimizely/cms-sdk/react/server" {
   export interface ContextData extends BaseContextData {
     siteSettings: ContentProps<typeof SiteSettingsDataType>;
-    productFamily?:  ContentProps<typeof ProductFamilyType> | null;
-    application?:  ContentProps<typeof ApplicationType> | null;
+    productFamily?: ContentProps<typeof ProductFamilyType> | null;
+    application?: ContentProps<typeof ApplicationType> | null;
     pageTitle: string;
     pageContentId: string;
     pageType: string;
-    breadcrumb: {
-      title: string;
-      url: string
-    }[];
+    breadcrumb: BreadcrumbEntry[];
   }
 }
