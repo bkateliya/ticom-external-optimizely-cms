@@ -9,7 +9,6 @@ import { cached } from "@/lib/data/opti";
 import { SUPPORTED_LOCALES } from "@/constants/locales";
 import { populateSiteSettings } from "@/lib/data/site-settings";
 import { OptiContextProvider } from "@/components/ui/context/OptiContext";
-export { generateMetadata } from "./metadata";
 type Props = {
   params: Promise<{
     locale: string;
