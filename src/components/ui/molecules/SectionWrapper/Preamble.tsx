@@ -8,6 +8,7 @@ import { HeadlineComponentType } from "@/components/cms/contracts/component-cont
 import { CtaList } from "../CtaList/CtaList";
 import { Headline, parseHeadlineLevel } from "../Headline/Headline";
 
+
 export interface PreambleProps
   extends
   OptiComponentProps<PreambleContractContentType>,

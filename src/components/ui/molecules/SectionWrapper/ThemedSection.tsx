@@ -9,6 +9,7 @@ import { Themes } from "@/lib/themes";
 import clsx from "clsx";
 import { BackgroundColorSetting, BackgroundImageSetting, SectionBackgroundContractContentType } from "@/components/cms/contracts/component-contracts/section.model";
 
+
 import { ComponentTheme } from "@/components/ui/ti/enums";
 import EnhancedNextImage from "../../Atoms/EnhancedNextImage/EnhancedNextImage";
 
