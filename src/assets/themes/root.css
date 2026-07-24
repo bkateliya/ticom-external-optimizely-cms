@@ -1,0 +1,108 @@
+:root {
+  --pl-page-background-color-primary: #ffffff;
+  --pl-page-background-color-secondary: #f7f7f7;
+  --pl-section-background-color-primary: linear-gradient(
+    35deg,
+    #f7f7f7 0%,
+    #fafafa 100%
+  );
+  --pl-section-background-color-secondary: linear-gradient(
+    35deg,
+    #333333 35%,
+    #555555 100%
+  );
+  --pl-section-background-color-tertiary: linear-gradient(
+    35deg,
+    #000000 0%,
+    #333333 100%
+  );
+  --pl-section-background-color-accent: linear-gradient(
+    35deg,
+    #a40000 35%,
+    #cc0000 100%
+  );
+  --pl-container-background-color-primary: #ffffff;
+  --pl-container-background-color-primary-variant: #f7f7f7;
+  --pl-container-background-color-secondary: #f7f7f7;
+  --pl-container-background-color-secondary-variant: #e8e8e8;
+  --pl-container-background-color-tertiary: #555555;
+  --pl-container-background-color-tertiary-variant: #333333;
+  --pl-text-color-primary: #333333;
+  --pl-text-color-primary-contrast: #ffffff;
+  --pl-text-color-secondary: #333333;
+  --pl-text-color-secondary-contrast: #cccccc;
+  --pl-text-color-accent: #cc0000;
+  --pl-text-color-accent-contrast: #aaaaaa;
+  --pl-text-color-disabled: #aaaaaa;
+  --pl-text-color-disabled-contrast: #b9b9b9;
+  --pl-link-color-primary: #007c8c;
+  --pl-link-color-primary-contrast: #ffffff;
+  --pl-link-color-secondary: #333333;
+  --pl-link-color-secondary-contrast: #ffffff;
+  --pl-link-color-tertiary: #9bd7df;
+  --pl-link-color-accent: #cc0000;
+  --pl-link-color-accent-contrast: #ffffff;
+  --pl-element-color-primary-lighter: #ee0000;
+  --pl-element-color-primary: #cc0000;
+  --pl-element-color-primary-darker: #a40000;
+  --pl-element-color-secondary-lighter: #949494;
+  --pl-element-color-secondary: #555555;
+  --pl-element-color-secondary-darker: #333333;
+  --pl-element-color-tertiary-lighter: #9bd7df;
+  --pl-element-color-tertiary: #007c8c;
+  --pl-element-color-tertiary-darker: #00525d;
+  --pl-element-color-disabled: #cccccc;
+  --pl-element-color-disabled-variant: #e8e8e8;
+  --pl-element-color-contrast: #ffffff;
+  --pl-element-color-contrast-variant: #f7f7f7;
+  --pl-element-color-contrast-disabled: #555555;
+  --pl-element-color-contrast-disabled-variant: #949494;
+  --pl-input-element-color: #555555;
+  --pl-input-element-color-disabled: #aaaaaa;
+  --pl-input-text-color: #333333;
+  --pl-input-text-color-disabled: #949494;
+  --pl-input-border-color: #cccccc;
+  --pl-input-border-color-disabled: #cccccc;
+  --pl-input-border-color-focus: #555555;
+  --pl-input-background-color: #ffffff;
+  --pl-input-background-color-disabled: #e8e8e8;
+  --pl-input-background-color-hover: #e8e8e8;
+  --pl-input-placeholder-color: #767676;
+  --pl-button-primary-color: #cc0000;
+  --pl-button-primary-color-hover: #ee0000;
+  --pl-button-primary-color-active: #a40000;
+  --pl-button-primary-text-color: #ffffff;
+  --pl-button-primary-text-color-hover: #ffffff;
+  --pl-button-primary-text-color-active: #ffffff;
+  --pl-button-secondary-color: #cc0000;
+  --pl-button-secondary-color-hover: #ee0000;
+  --pl-button-secondary-color-active: #a40000;
+  --pl-button-secondary-text-color: #cc0000;
+  --pl-button-secondary-text-color-hover: #ffffff;
+  --pl-button-secondary-text-color-active: #ffffff;
+  --pl-button-tertiary-color: transparent;
+  --pl-button-tertiary-color-hover: transparent;
+  --pl-button-tertiary-color-active: transparent;
+  --pl-button-tertiary-text-color: #007c8c;
+  --pl-button-tertiary-text-color-hover: #007c8c;
+  --pl-button-tertiary-text-color-active: #006774;
+  --pl-button-reversed-color: #ffffff;
+  --pl-button-reversed-color-hover: #ffffff;
+  --pl-button-reversed-color-active: #e8e8e8;
+  --pl-button-reversed-text-color: #ffffff;
+  --pl-button-reversed-text-color-hover: #333333;
+  --pl-button-reversed-text-color-active: #333333;
+  --pl-button-disabled-color: #cccccc;
+  --pl-button-disabled-color-reverse: #f7f7f7;
+  --pl-border-color-primary: #cccccc;
+  --pl-border-color-secondary: #333333;
+  --pl-border-color-tertiary: #e8e8e8;
+  --pl-border-color-accent: #cc0000;
+  --pl-divider-color-primary: #cccccc;
+  --pl-divider-color-primary-contrast: #949494;
+  --pl-divider-color-secondary: #e8e8e8;
+  --pl-divider-color-secondary-contrast: #555555;
+  --pl-error-color: #cc0000;
+  --pl-success-color: #37a145;
+  --pl-warning-color: #ffa358;
+}

@@ -1,0 +1,4 @@
+.theme-tertiary {
+  --ti-section-background: var(--pl-container-background-color-tertiary);
+  --ti-text-color: var(--pl-text-color-primary-contrast);
+}

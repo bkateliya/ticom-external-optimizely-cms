@@ -1,0 +1,6 @@
+/* Using regular module.css here because Tailwind doesn't support dynamic background that can be either color or gradient */
+.themeRoot {
+  background: var(--ti-section-background);
+  color: var(--ti-text-color);
+  font-family: var(--font-body);
+}
