@@ -2,10 +2,7 @@ export function TiHeader({ locale }: { locale: string; }) {
   return (
     <>
       {/* <link rel="stylesheet" href="https://www.ti.com/assets/fonts/font.css" /> */}
-      <link
-        rel="stylesheet"
-        href="https://www.ti.com/assets/js/@ticom/header-content/1.latest/style/ticom.global.header.css"
-      />
+
 
       {/*
         The header menu is wired up by header-responsive.js, loaded (with the
@@ -19,6 +16,7 @@ export function TiHeader({ locale }: { locale: string; }) {
         className="ti_p-responsiveHeader"
 
       />
+
     </>
   );
 }

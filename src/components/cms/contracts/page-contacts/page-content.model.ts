@@ -2,6 +2,7 @@ import { contract } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "@/components/cms/constants";
 import { PropertyTypes } from "@/lib/property-types";
 import { ContractContentType } from "@/lib/ts/opti";
+import { SiteSettingsDataType } from "@/components/cms/structural-components/SiteSettings/SiteSettings.model";
 
 export const PageContentContract = contract({
   key: `${KEY_PREFIX}PageContent_Contract`,
@@ -26,11 +27,23 @@ export const PageContentContract = contract({
       indexingType: 'queryable',
       isLocalized: true,
     },
+
+    siteSettingsOverride: {
+      type: 'content',
+      displayName: 'Site Section Settings Override',
+      description: 'Any settings set here will override that setting for this page and sub pages.  For Home Page, this will the default settings for the whole site.',
+      isLocalized: true,
+      group: PropertyTypes.Config,
+      sortOrder: 0,
+      allowedTypes: [
+        SiteSettingsDataType
+      ]
+    }
   },
 });
 
 
 /** For using contracts as component interfaces. */
 export type PageContentContractContentType = ContractContentType<
-    [typeof PageContentContract]
+  [typeof PageContentContract]
 >;

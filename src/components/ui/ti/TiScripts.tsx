@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
+import { MODULE_BUNDLES, contentScripts } from "./TIScriptConstants";
+import { ensureTiGlobals } from "./ensureTiGlobals";
 
 /**
  * Loads the TI front-end scripts client-side, mirroring the working reference
@@ -16,22 +18,6 @@ import { useEffect } from "react";
  *     time we inject them, so we re-dispatch it once afterwards to run their
  *     init (this is what makes the menu work).
  */
-// const TICOM = "https://www.ti.com/assets/js/@ticom";
-const TICOM = "https://www-int.itg.ti.com/assets/js/@ticom"
-
-const MODULE_BUNDLES = [
-  `${TICOM}/ui-components/3.latest/ui-components.esm.js`,
-  `${TICOM}/header-components/3.latest/header-components.esm.js`,
-  `${TICOM}/feature-components/2.4.18/feature-components.esm.js`,
-  `${TICOM}/selection-tool-components/1.latest/selection-tool-components.esm.js`,
-  `${TICOM}/personalization-components/0.0.41/personalization-components.esm.js`,
-];
-
-const CONTENT_SCRIPTS = [
-  `${TICOM}/header-content/1.latest/en/js/header-responsive.js`,
-  `${TICOM}/header-content/1.latest/en/js/footer.js`,
-];
-
 function injectScript(src: string, type?: string) {
   return new Promise<void>((resolve) => {
     if (document.querySelector(`script[src="${src}"]`)) return resolve();
@@ -51,7 +37,7 @@ function injectScript(src: string, type?: string) {
 // DOMContentLoaded twice, racing the header/footer build.
 let initialized = false;
 
-export function TiScripts() {
+export function TiScripts({ locale }: { locale: string }) {
   useEffect(() => {
     if (initialized) return;
     initialized = true;
@@ -61,12 +47,19 @@ export function TiScripts() {
     // before Next registers its own, so it can't live here in an effect).
     (async () => {
       await Promise.all(MODULE_BUNDLES.map((s) => injectScript(s, "module")));
-      // ensureTiGlobals();
-      await Promise.all(CONTENT_SCRIPTS.map((s) => injectScript(s)));
+      // Define com.TI.User / com.TI.UserPreferences before the header scripts
+      // run so the header components read a valid language/ship-to/currency on
+      // init. Without this, a standalone embed has no ship-to and changing the
+      // language throws in _saveLllcData ("Cannot set properties of undefined").
+      ensureTiGlobals(locale);
+      await Promise.all(contentScripts(locale).map((s) => injectScript(s)));
       // Re-fire DOMContentLoaded so the header/footer init listeners run.
       document.dispatchEvent(new Event("DOMContentLoaded"));
+      // Preferences are ready synchronously above; let any component/cart code
+      // that waits on `tiUserPreferenceReady` proceed instead of timing out.
+      window.dispatchEvent(new Event("tiUserPreferenceReady"));
     })();
-  }, []);
+  }, [locale]);
 
   return null;
 }

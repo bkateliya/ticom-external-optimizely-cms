@@ -1,47 +1,9 @@
 import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "../../constants.mjs";
-import {
-  CtaIcons,
-  CtaVariantsWithAuto,
-} from "@/components/ui/Atoms/Cta/CtaButton";
-import { IconMapping } from "@/components/ui/Atoms/SvgIcon/SvgIconMapping";
 import { LinkContract } from "../../contracts/element-contracts/link.model";
-
-export const CtaVariantOptions: {
-  value: CtaVariantsWithAuto;
-  displayName: string;
-}[] = [
-  {
-    value: "auto",
-    displayName: "Auto",
-  },
-  {
-    value: "fill",
-    displayName: "Fill",
-  },
-  {
-    value: "outline",
-    displayName: "Outline",
-  },
-  {
-    value: "ghost",
-    displayName: "Ghost",
-  },
-  {
-    value: "link",
-    displayName: "Link",
-  },
-  {
-    value: "demo" as CtaVariantsWithAuto,
-    displayName: "Demo",
-  },
-] as const;
-
-export const CtaIconOptions: { value: CtaIcons; displayName: string }[] =
-  Object.keys(IconMapping).map((key) => ({
-    value: key as CtaIcons,
-    displayName: key,
-  }));
+import { ButtonAppearance, ButtonColor } from "@/components/ui/ti/enums";
+import { UiIconList } from "@/components/ui/ti/TiSvgIcon/SvgIconMapping";
+import { enumToOptions } from "@/lib/opti/enum-utils";
 
 export const CTAElementType = contentType({
   key: `${KEY_PREFIX}CTA_Element`,
@@ -53,10 +15,18 @@ export const CTAElementType = contentType({
     Variant: {
       type: "string",
       format: 'selectOne',
-      displayName: "Theme",
+      displayName: "Button Appearance",
       group: "Content",
       sortOrder: -200,
-      enum: CtaVariantOptions,
+      enum: enumToOptions(ButtonAppearance, true),
+    },
+    ButtonColor: {
+      type: "string",
+      format: 'selectOne',
+      displayName: "Button Color",
+      group: "Content",
+      sortOrder: -180,
+      enum: enumToOptions(ButtonColor, true),
     },
     Icon: {
       type: "string",
@@ -65,24 +35,14 @@ export const CTAElementType = contentType({
       description: "Icon to display on the CTA",
       group: "Content",
       sortOrder: -100,
-      enum: CtaIconOptions,
+      enum: enumToOptions(UiIconList),
     },
-    IconAlignment: {
-      type: "string",
-      format: 'selectOne',
-      displayName: "Icon Alignment",
+    IsDownload: {
+      type: "boolean",
+      displayName: "Is Download Button",
+      description: "If checked, CTA will trigger a download.  Only use for files",
       group: "Content",
       sortOrder: -50,
-      enum: [
-        {
-          value: "Left",
-          displayName: "Left",
-        },
-        {
-          value: "Right",
-          displayName: "Right",
-        },
-      ],
     },
   },
 });

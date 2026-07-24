@@ -1,4 +1,3 @@
-import { wildcardToRegExp } from "./string-utils";
 import { parseUrlObject } from "./link-utils";
 import { isAllowedImageDomain } from "../next-config/images";
 

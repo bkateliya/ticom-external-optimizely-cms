@@ -2,16 +2,15 @@ import "@/lib/opti/opti-init";
 import { getClient } from "@optimizely/cms-sdk";
 import {
   OptimizelyComponent,
-  setContextData,
   withAppContext,
 } from "@optimizely/cms-sdk/react/server";
 import Script from "next/script";
 import { NextPreviewComponent } from "@optimizely/cms-sdk/react/nextjs";
 import { PreviewParams } from "@optimizely/cms-sdk";
 import { OptimizelyContentProps } from "@/components/ui/cms/ExtendedOptimizelyComponent";
-import { cached } from "@/lib/data/opti";
 import { RootLayout } from "../RootLayout";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/constants/locales";
+import { toAppLocale } from "@/constants/locales";
+import { populateSiteSettings } from "@/lib/data/site-settings";
 export { generateMetadata } from "./metadata";
 
 type Props = {
@@ -29,20 +28,18 @@ export async function Page({ searchParams }: Props) {
     previewParams,
   )) as OptimizelyContentProps;
 
-  let language = previewParams.loc;
-  if (!language || !SUPPORTED_LOCALES.includes(language)) {
-    language = DEFAULT_LOCALE;
-  }
+  // The CMS preview passes the content locale as a Graph Language Code
+  // (e.g. "zh-Hans-CN"), not our URL slug ("zh-cn"). Comparing it against
+  // SUPPORTED_LOCALES (slugs) always failed for Chinese, so preview fell back to
+  // English chrome. Map it back to the app slug for RootLayout/SiteSettings.
+  const locale = toAppLocale(previewParams.loc);
 
-  const siteSettings = await cached.getSiteSettings(language);
-  setContextData("siteSettings", siteSettings);
+  const metadata = response._metadata as { url?: { hierarchical?: string } } | undefined;
+  await populateSiteSettings(metadata?.url?.hierarchical ?? "", locale);
 
-
-  const breadcrumbPath = await cached.getPath({ key: previewParams.key, locale: previewParams.loc.replace('-', '_') });
-  console.log('breadcrumbPath', breadcrumbPath);
-  setContextData("breadcrumbPath", breadcrumbPath);
   return (
-    <RootLayout locale={language}>
+    <RootLayout locale={locale}>
+
       <Script
         src={
           new URL(

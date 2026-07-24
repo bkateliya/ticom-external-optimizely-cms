@@ -5,22 +5,28 @@ import {
   propertyGroupKeys,
 } from "@/components/cms/constants.mjs";
 import { ContractContentType } from "@/lib/ts/opti";
+import { enumToOptions } from "@/lib/opti/enum-utils";
+import { CarouselGapOptions, CarouselNavigationOptions } from "@/components/ui/molecules/Carousel/CarouselWrapper";
 
 export const CarouselComponentContract = contract({
   key: `${KEY_PREFIX}CarouselComponent_Contract`,
   displayName: `${DISPLAY_NAME_PREFIX}Carousel Component Contract`,
   properties: {
-    autoPlay: {
-      type: "boolean",
-      displayName: "Auto Play",
-      description: "Whether the carousel should automatically play",
-      group: propertyGroupKeys.Settings,
+    gap: {
+      type: "string",
+      format: "selectOne",
+      displayName: "Gap Size",
+      description: "The size of the gap between cards",
+      group: propertyGroupKeys.ComponentConfiguration,
+      enum: enumToOptions(CarouselGapOptions, true)
     },
-    autoPlayInterval: {
-      type: "integer",
-      displayName: "Auto Play Interval",
-      description: "The interval in milliseconds between slides",
-      group: propertyGroupKeys.Settings,
+    navigation: {
+      type: "string",
+      format: "selectOne",
+      displayName: "Navigation Options",
+      description: "The type of navigation to display",
+      group: propertyGroupKeys.ComponentConfiguration,
+      enum: enumToOptions(CarouselNavigationOptions, true)
     },
   },
 });

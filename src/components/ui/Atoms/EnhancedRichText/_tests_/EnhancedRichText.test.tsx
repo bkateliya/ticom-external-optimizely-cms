@@ -5,7 +5,6 @@ import { render, waitFor } from '@testing-library/react';
 import EnhancedRichText from '../EnhancedRichText';
 import {
   htmlExternal,
-  htmlDownload,
   htmlInternal,
   htmlImageWrapped,
   htmlTable,

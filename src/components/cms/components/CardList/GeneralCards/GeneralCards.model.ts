@@ -3,11 +3,11 @@ import { HeadlineContract } from "@/components/cms/contracts/component-contracts
 import { contentType } from "@optimizely/cms-sdk";
 import {
   DISPLAY_NAME_PREFIX,
-  KEY_PREFIX,
 } from "src/components/cms/constants.mjs";
+import { AllComponentTypeKeyMap } from "../../keys";
 
 export const SingleGeneralCardComponentType = contentType({
-  key: `${KEY_PREFIX}GeneralCard_Component`,
+  key: AllComponentTypeKeyMap.SingleGeneralCardComponent,
   displayName: `${DISPLAY_NAME_PREFIX}General Card`,
   baseType: "_component",
   extends: [HeadlineContract, CtaListContract],
@@ -15,7 +15,7 @@ export const SingleGeneralCardComponentType = contentType({
 });
 
 export const GeneralCardsComponentType = contentType({
-  key: `${KEY_PREFIX}GeneralCards_Component`,
+  key: AllComponentTypeKeyMap.GeneralCardsComponent,
   displayName: `${DISPLAY_NAME_PREFIX}General Cards`,
   baseType: "_component",
   properties: {

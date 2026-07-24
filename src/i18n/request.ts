@@ -1,14 +1,20 @@
+import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
+import { routing } from "./routing";
 
 export const fallbackFileName = "fallback.json";
 export const normalizedFileName = "normalized.json";
 
-export default getRequestConfig(async (params) => {
-  // Static for now, we'll change this later
-  const locale = "en-us";
+export default getRequestConfig(async ({ requestLocale }) => {
+  // Typically corresponds to the `[locale]` segment
+  const requested = await requestLocale;
+  const locale = hasLocale(routing.locales, requested)
+    ? requested
+    : routing.defaultLocale;
 
   const fallbackMessages = (await import(`../../messages/${fallbackFileName}`))
     .default;
+
   const messages = (await import(`../../messages/${locale}.json`)).default;
 
   const combinedMessages = { ...fallbackMessages, ...messages };

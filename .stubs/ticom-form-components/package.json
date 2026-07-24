@@ -1,0 +1,13 @@
+{
+  "name": "@ticom/form-components",
+  "version": "1.0.26",
+  "description": "LOCAL STUB of the private @ticom/form-components package. Lets the app build/run without access to TI's private Artifactory registry. Replace with the real package once on the TI network/VPN.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./react": {
+      "types": "./react.d.ts",
+      "default": "./react.js"
+    }
+  }
+}

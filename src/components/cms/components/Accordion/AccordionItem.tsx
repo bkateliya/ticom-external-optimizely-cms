@@ -5,20 +5,20 @@ import { fieldFactory } from "@/components/ui/cms";
 import styles from "./styles-item.module.css";
 import { useHeadingLevel } from "@/components/utilities/HeadingLevelContext";
 
-interface AccordionItemProps extends OptiComponentProps<
+type AccordionItemProps = OptiComponentProps<
   typeof AccordionPanelComponentType
-> {
-}
+>;
 
 export function AccordionItem({
   content,
   parentField,
 }: AccordionItemProps) {
+  const headingLevel = useHeadingLevel();
+
   if (!content) {
     return null;
   }
 
-  const headingLevel = useHeadingLevel();
   const { WrappedTextField, WrappedRichTextField } = fieldFactory<
     typeof AccordionPanelComponentType
   >(content, parentField);

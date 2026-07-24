@@ -1,12 +1,14 @@
-import { PreambleContracts } from "../../contracts/component-contracts/preamble.model";
 import { contentType } from "@optimizely/cms-sdk";
-import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "../../constants.mjs";
+import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
+import { AllComponentTypeKeyMap } from "../keys";
+import { HeadlineContract } from "../../contracts/component-contracts/headline.model";
+import { CtaListContract } from "../../contracts/component-contracts/cta-list.model";
 
 export const HeroComponentType = contentType({
-  key: `${KEY_PREFIX}Hero_Component`,
+  key: AllComponentTypeKeyMap.HeroComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Hero`,
   baseType: "_component",
-  extends: PreambleContracts,
+  extends: [HeadlineContract, CtaListContract],
   properties: {
     image: { type: "contentReference", allowedTypes: ["_image"] },
   },

@@ -17,7 +17,8 @@ export const CtaListContract = contract({
       items: {
         type: "content",
         allowedTypes: [CTAElementType],
-      }
+      },
+      sortOrder: 50
     },
   },
 });

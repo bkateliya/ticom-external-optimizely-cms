@@ -1,9 +1,10 @@
 import { Themes } from "@/lib/themes";
 
-export type ThemeMode = 'dark' | 'light';
+import { ComponentTheme } from "@/components/ui/ti/enums";
+
 export interface ThemeSetting {
   theme: Themes | null;
-  mode: ThemeMode;
+  mode: ComponentTheme;
   isReversed?: boolean;
   allowThemeSwitching: boolean;
 }

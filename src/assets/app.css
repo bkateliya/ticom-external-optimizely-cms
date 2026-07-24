@@ -1,5 +1,5 @@
-/* @import "tailwindcss"; */
-@layer theme, base, components, utilities;
+@layer reset, theme, base, components, utilities;
+@import "./reset.css" layer(reset);
 @import "tailwindcss/theme.css" layer(theme);
 /* @import "tailwindcss/preflight.css" layer(base); */
 @import "tailwindcss/utilities.css" layer(utilities);
@@ -7,45 +7,157 @@
 @import "./themes";
 @import "./tw-theme.css";
 
-@theme {
-  --color-text-default: var(--ti-text-color);
-
-  --font-body: var(--font-roboto);
-}
-
 :root,
 .theme-root {
   --color-text-default: var(--ti-text-color);
-
   --font-body: var(--font-roboto);
-
 }
 
 /* Placeholder values for testing */
 @layer base {
 
-  h1 {
-    font-size: 48px;
+  h1,
+  .text-h1 {
+    @apply text-h1 mb-12;
   }
 
-  h2 {
-    font-size: 36px;
+  h2,
+  .text-h2 {
+    @apply text-h2 mb-8;
   }
 
-  h3 {
-    font-size: 28px;
+  h3,
+  .text-h3 {
+    @apply text-h3 mb-4;
   }
 
-  h4 {
-    font-size: 24px;
+  h4,
+  .text-h4 {
+    @apply text-h4 mb-3;
   }
 
-  h5 {
-    font-size: 20px;
+  h5,
+  .text-h5 {
+    @apply text-h5 mb-3;
   }
 
-  h6 {
-    font-size: 18px;
+  h6,
+  .text-h6 {
+    @apply text-h6 mb-3;
+  }
+
+  
+  @keyframes focus-highlight {
+    from {
+      box-shadow: 0 0 0 3px #bee7ec;
+    }
+
+    to {
+      box-shadow: 0 0 0 3px rgba(190, 231, 236, 0.25);
+    }
+  }
+
+  @keyframes focus-btn {
+    from {
+      width: 75%;
+      padding-top: 65%;
+    }
+
+    70% {
+      width: 85%;
+      padding-top: 75%;
+    }
+
+    to {
+      width: 75%;
+      padding-top: 65%;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes slideUp {
+    0% {
+      transform: translateY(15px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideDown {
+    0% {
+      transform: translateY(0);
+    }
+
+    100% {
+      transform: translateY(15px);
+    }
+  }
+
+  @keyframes slideRight {
+    0% {
+      transform: translateX(-15px);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideLeft {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-15px);
+    }
+  }
+
+  @keyframes menu-enter-view {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes menu-exit-view {
+    0% {
+      transform: translateX(0);
+      display: block;
+    }
+
+    99% {
+      display: block;
+    }
+
+    100% {
+      transform: translateX(-100%);
+      display: none;
+    }
   }
 }
 

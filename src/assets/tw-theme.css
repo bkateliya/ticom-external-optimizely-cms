@@ -1,5 +1,15 @@
-@theme {
-  --color-error: var(--pl-error-color);
-  --color-success: var(--pl-success-color);
-  --color-warning: var(--pl-warning-color);
-}
+/* ==========================================================================
+ * Tailwind theme configuration (index)
+ * --------------------------------------------------------------------------
+ * Maps TI.com Polaris design tokens (--pl-* variables from the global portals
+ * stylesheet) and the Polaris palette into Tailwind v4 theme variables.
+ * Split by concern — edit the relevant file below. Tailwind merges every
+ * @theme block, so utilities are generated the same as one combined file.
+ * ========================================================================== */
+@import "./tv-theme/tv-root.css";
+@import "./tv-theme/colors.css";
+@import "./tv-theme/typography.css";
+@import "./tv-theme/spacing.css";
+@import "./tv-theme/radius.css";
+@import "./tv-theme/shadows.css";
+@import "./tv-theme/breakpoints.css";

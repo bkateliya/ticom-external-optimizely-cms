@@ -4,19 +4,24 @@ import {
   AccordionPanelComponentType,
 } from "./Accordion/Accordion.model";
 
-
 import { PromoBlockComponentType } from "./PromoBlock/PromoBlock.model";
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
-import { TimedHeroBannerSlideshowComponentType, TimedHeroBannerComponentType } from "./TimedHeroBanner/TimedHeroBanner.model";
+import { HomePageHeroComponentType, HomePageHeroSlideComponentType } from "./HomePageHero/HomePageHero.model";
 import { cardListComponents } from "./CardList/types";
 
-export const componentTypes = [
+import { ColumnGridColumnComponentType, ColumnGridComponentType } from "./ColumnGrid/ColumnGrid.model";
+import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
+
+export const allComponentTypes = [
   HeroComponentType,
+  ContentBlockComponentType,
   AccordionComponentType,
   AccordionPanelComponentType,
   PromoBlockComponentType,
   CodeEmbedComponentType,
-  TimedHeroBannerComponentType,
-  TimedHeroBannerSlideshowComponentType,
+  HomePageHeroSlideComponentType,
+  HomePageHeroComponentType,
+  ColumnGridColumnComponentType,
+  ColumnGridComponentType,
   ...cardListComponents
 ];

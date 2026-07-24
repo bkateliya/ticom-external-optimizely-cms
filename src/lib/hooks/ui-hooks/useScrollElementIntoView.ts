@@ -1,6 +1,6 @@
 "use client";
 // Global
-import { Ref, RefObject, useCallback, useEffect, useRef } from "react";
+import { RefObject, useCallback, useEffect, useRef } from "react";
 
 interface ScrollElementIntoViewOptions {
   /** Since this is a hook, we can't conditionally call it, so we have the option to disable */
@@ -97,6 +97,7 @@ export function useScrollElementIntoView<TElement extends HTMLElement>(
         delay,
       );
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animationElement?.current, delay, disableScroll, stickyHeaderId]);
 
   // Previous condition so we only scroll if it changed from false to true.

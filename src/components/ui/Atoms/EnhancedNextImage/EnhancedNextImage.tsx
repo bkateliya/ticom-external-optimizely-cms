@@ -4,6 +4,7 @@ import NextImage, { ImageProps } from 'next/image';
 // Lib
 import { isValidNextImageDomain } from '@/lib/utils/config-utils';
 import { JSX } from 'react';
+import clsx from 'clsx';
 
 const EnhancedNextImage = (props: ImageProps): JSX.Element => {
   if (!props.src) {
@@ -42,6 +43,17 @@ const EnhancedNextImage = (props: ImageProps): JSX.Element => {
         style={{ width: 'auto', height: 'auto' }}
       />
     );
+  }
+  const isAutoSize = !props.width || !props.height;
+  if (isAutoSize) {
+    return <NextImage
+      {...nextImageProps}
+      unoptimized={!isValidDomain || isStorybook}
+      className={clsx(props.className, "w-full h-auto object-contain")}
+      width={0}
+      height={0}
+      sizes="100vw"
+    />
   }
   return (
     <NextImage
