@@ -9,7 +9,7 @@ import { ExperienceTypeKeyMap } from "../keys";
 export const FaqExperiencePageType = contentType({
   key: ExperienceTypeKeyMap.FaqExperiencePageTypeKey,
   displayName: `${DISPLAY_NAME_PREFIX}FAQ Experience Page`,
-  baseType: "_page",
+  baseType: "_experience",
   extends: CommonPageContracts,
   properties: {},
   mayContainTypes: AllPageAndExperienceTypeKeys,
