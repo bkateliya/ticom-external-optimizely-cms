@@ -7,54 +7,74 @@ import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/Section
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
 import { Themes } from "@/lib/themes";
 import clsx from "clsx";
-import { BackgroundColorSetting, BackgroundImageSetting, SectionBackgroundContractContentType } from "@/components/cms/contracts/component-contracts/section.model";
+import {
+  BackgroundColorSetting,
+  BackgroundImageSetting,
+  SectionBackgroundContractContentType,
+} from "@/components/cms/contracts/component-contracts/section.model";
 
 import { ComponentTheme } from "@/components/ui/ti/enums";
 import EnhancedNextImage from "../../Atoms/EnhancedNextImage/EnhancedNextImage";
 
 export function ThemedSection({
   content,
-  children
-}: OptiComponentProps<SectionBackgroundContractContentType> & React.PropsWithChildren) {
+  children,
+}: OptiComponentProps<SectionBackgroundContractContentType> &
+  React.PropsWithChildren) {
   if (!content) {
     return null;
   }
-  const backgroundColorSetting = normalizeGenericContentToTyped(content.background, BackgroundColorSetting);
-  const backgroundImageSetting = normalizeGenericContentToTyped(content.background, BackgroundImageSetting);
-
-  const hasBackground = !!(backgroundColorSetting || backgroundImageSetting)
-
-  const theme = (backgroundColorSetting?.theme as Themes | undefined) || 'custom';
-  const mode = (backgroundImageSetting?.backgroundTheme) as ComponentTheme | undefined;
-
-  const backgroundSize = hasBackground ? content.backgroundSize || 'full' : null;
-
-  let childContent = null;
-  if (backgroundSize === 'full') {
-    childContent = <>
-      <BackgroundImage content={backgroundImageSetting ?? undefined} />
-      <SectionWrapper>{children}</SectionWrapper>
-    </>
-  } else if (backgroundSize === 'section') {
-    childContent = <div>
-      <SectionWrapper>
-        <BackgroundImage content={backgroundImageSetting ?? undefined} />
-        <div className="px-10 w-full">{children}</div>
-      </SectionWrapper>
-    </div>
-  } else {
-    childContent = <SectionWrapper>{children}</SectionWrapper>;
-  }
-  return (
-    <ThemeProvider theme={theme} mode={mode} className="relative">
-      {childContent}
-    </ThemeProvider>
+  const backgroundColorSetting = normalizeGenericContentToTyped(
+    content.background,
+    BackgroundColorSetting,
   );
+  const backgroundImageSetting = normalizeGenericContentToTyped(
+    content.background,
+    BackgroundImageSetting,
+  );
+
+  const hasBackground = !!(backgroundColorSetting || backgroundImageSetting);
+
+  const theme =
+    (backgroundColorSetting?.theme as Themes | undefined) || "custom";
+  const mode = backgroundImageSetting?.backgroundTheme as
+    ComponentTheme | undefined;
+
+  const backgroundSize = hasBackground
+    ? content.backgroundSize || "full"
+    : null;
+
+  if (backgroundSize === "section") {
+    return (
+      <div className="container mx-auto">
+        <div className="-mx-10 relative">
+          <BackgroundImage content={backgroundImageSetting ?? undefined} />
+          <ThemeProvider
+            theme={theme}
+            mode={mode}
+            className="relative px-10 w-full"
+          >
+            <SectionWrapper>{children}</SectionWrapper>
+            {/* <div className="w-full">{children}</div> */}
+          </ThemeProvider>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <BackgroundImage content={backgroundImageSetting ?? undefined} />
+        <ThemeProvider theme={theme} mode={mode} className="relative">
+          <SectionWrapper>{children}</SectionWrapper>
+        </ThemeProvider>
+      </>
+    );
+  }
 }
 
-
-function BackgroundImage({ content }: OptiComponentProps<typeof BackgroundImageSetting>) {
-
+function BackgroundImage({
+  content,
+}: OptiComponentProps<typeof BackgroundImageSetting>) {
   if (!content) {
     return;
   }
@@ -76,8 +96,8 @@ function BackgroundImage({ content }: OptiComponentProps<typeof BackgroundImageS
     "bg-cover",
     "left-0",
     "top-0",
-    "self-stretch",)
-
+    "self-stretch",
+  );
 
   const overlayClassName = clsx(
     "absolute",
@@ -86,18 +106,21 @@ function BackgroundImage({ content }: OptiComponentProps<typeof BackgroundImageS
     "w-full",
     "h-full",
     "overflow-hidden",
-    content.backgroundTheme === 'light' ? 'bg-white' : 'bg-black',
+    content.backgroundTheme === "light" ? "bg-white" : "bg-black",
     "bg-cover",
     "left-0",
     "top-0",
     "opacity-60",
-    "self-stretch",)
-  return <div>
-    <EnhancedNextImage
-      className={className}
-      src={imageUrl}
-      alt={getAlt(content.backgroundImage) ?? ""}
-    />
-    {content.noOverlay ? null : <div className={overlayClassName}></div>}
-  </div>
+    "self-stretch",
+  );
+  return (
+    <div>
+      <EnhancedNextImage
+        className={className}
+        src={imageUrl}
+        alt={getAlt(content.backgroundImage) ?? ""}
+      />
+      {content.noOverlay ? null : <div className={overlayClassName}></div>}
+    </div>
+  );
 }

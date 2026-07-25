@@ -31,4 +31,5 @@ export const StandaloneComponentTypeKeys = [
   AllComponentTypeKeyMap.CodeEmbedComponent,
   AllComponentTypeKeyMap.CardListComponent,
   AllComponentTypeKeyMap.SingleGeneralCardComponent,
+  AllComponentTypeKeyMap.ColumnGridComponent
 ]
