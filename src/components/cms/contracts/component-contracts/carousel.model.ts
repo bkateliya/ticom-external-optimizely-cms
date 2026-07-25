@@ -6,7 +6,10 @@ import {
 } from "@/components/cms/constants.mjs";
 import { ContractContentType } from "@/lib/ts/opti";
 import { enumToOptions } from "@/lib/opti/enum-utils";
-import { CarouselGapOptions, CarouselNavigationOptions } from "@/components/ui/molecules/Carousel/CarouselWrapper";
+import {
+  CarouselGapOptions,
+  CarouselNavigationOptions,
+} from "@/components/ui/molecules/Carousel/CarouselWrapper";
 
 export const CarouselComponentContract = contract({
   key: `${KEY_PREFIX}CarouselComponent_Contract`,
@@ -18,7 +21,7 @@ export const CarouselComponentContract = contract({
       displayName: "Gap Size",
       description: "The size of the gap between cards",
       group: propertyGroupKeys.ComponentConfiguration,
-      enum: enumToOptions(CarouselGapOptions, true)
+      enum: enumToOptions(CarouselGapOptions, { withAuto: true }),
     },
     navigation: {
       type: "string",
@@ -26,7 +29,7 @@ export const CarouselComponentContract = contract({
       displayName: "Navigation Options",
       description: "The type of navigation to display",
       group: propertyGroupKeys.ComponentConfiguration,
-      enum: enumToOptions(CarouselNavigationOptions, true)
+      enum: enumToOptions(CarouselNavigationOptions, { withAuto: true }),
     },
   },
 });

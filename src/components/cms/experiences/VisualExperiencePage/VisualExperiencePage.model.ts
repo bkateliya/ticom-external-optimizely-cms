@@ -11,7 +11,6 @@ export const VisualExperiencePageType = contentType({
   key: ExperienceTypeKeyMap.VisualExperiencePageTypeKey,
   displayName: `${DISPLAY_NAME_PREFIX}Visual Experience Page`,
   extends: CommonPageContracts,
-  mayContainTypes: AllPageAndExperienceTypeKeys,
-
   properties: {},
+  mayContainTypes: AllPageAndExperienceTypeKeys,
 });
