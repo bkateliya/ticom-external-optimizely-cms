@@ -13,7 +13,6 @@ import {
   SectionBackgroundContractContentType,
 } from "@/components/cms/contracts/component-contracts/section.model";
 
-
 import { ComponentTheme } from "@/components/ui/ti/enums";
 import EnhancedNextImage from "../../Atoms/EnhancedNextImage/EnhancedNextImage";
 
