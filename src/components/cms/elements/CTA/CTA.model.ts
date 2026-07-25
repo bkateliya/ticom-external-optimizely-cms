@@ -14,23 +14,23 @@ export const CTAElementType = contentType({
   properties: {
     Variant: {
       type: "string",
-      format: 'selectOne',
+      format: "selectOne",
       displayName: "Button Appearance",
       group: "Content",
       sortOrder: -200,
-      enum: enumToOptions(ButtonAppearance, true),
+      enum: enumToOptions(ButtonAppearance, { withAuto: true }),
     },
     ButtonColor: {
       type: "string",
-      format: 'selectOne',
+      format: "selectOne",
       displayName: "Button Color",
       group: "Content",
       sortOrder: -180,
-      enum: enumToOptions(ButtonColor, true),
+      enum: enumToOptions(ButtonColor, { withAuto: true }),
     },
     Icon: {
       type: "string",
-      format: 'selectOne',
+      format: "selectOne",
       displayName: "Icon",
       description: "Icon to display on the CTA",
       group: "Content",
@@ -40,7 +40,8 @@ export const CTAElementType = contentType({
     IsDownload: {
       type: "boolean",
       displayName: "Is Download Button",
-      description: "If checked, CTA will trigger a download.  Only use for files",
+      description:
+        "If checked, CTA will trigger a download.  Only use for files",
       group: "Content",
       sortOrder: -50,
     },
