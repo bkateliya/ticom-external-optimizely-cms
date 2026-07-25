@@ -4,6 +4,7 @@ import { OptiComponentProps } from "@/lib/ts/component-props";
 import { Preamble } from "./Preamble";
 import { SectionWrapper, SectionWrapperProps } from "./SectionWrapper";
 
+
 export interface PreambleSectionWrapperProps
   extends
   SectionWrapperProps,
