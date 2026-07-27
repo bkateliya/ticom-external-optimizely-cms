@@ -61,7 +61,7 @@ export const PreambleDirectHeadline = ({
     "flex",
     "flex-column",
     "bg-{var(--component-section-color-bg)}",
-    "py-4",
+    // "py-4",
     textAlignmentClassMap[textAlignment],
   );
 

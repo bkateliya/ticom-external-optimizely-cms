@@ -7,8 +7,8 @@ import clsx from "clsx";
 
 export interface SectionWrapperProps
   extends
-    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-    React.PropsWithChildren {
+  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+  React.PropsWithChildren {
   contained?: boolean;
   textAlignment?: TextAlignment;
   noPaddingTop?: boolean;
@@ -35,7 +35,7 @@ export const SectionWrapper = ({
     return (
       <div
         {...props}
-        className={clsx({ container: contained }, "mx-auto", className)}
+        className={clsx({ container: contained }, className)}
       >
         {children}
       </div>
@@ -44,11 +44,12 @@ export const SectionWrapper = ({
   const baseClassName = clsx(
     styles.base,
     "w-full",
-    { container: contained },
+    { 'container-lg': contained },
     "mx-auto",
-    "my-10",
+    // "my-10",
     "space-10",
-    "py-10",
+    "py-16",
+    "md:py-24",
     textAlignmentClassMap[textAlignment],
     className,
   );

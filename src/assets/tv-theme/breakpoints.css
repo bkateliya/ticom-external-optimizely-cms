@@ -11,3 +11,17 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1240px;
 }
+
+/* --------------------------------------------------------------------------
+ * Container max-widths (page content caps)
+ *   Tailwind v4 turns the `--container-*` namespace into width utilities:
+ *     --container-sm -> max-w-sm / w-sm / min-w-sm  (500px)
+ *     --container-md -> max-w-md / w-md / min-w-md  (826px = 770px ti.com
+ *     --container-lg -> max-w-lg / w-lg / min-w-lg  (1240px = 1184px ti.com
+ *                       content grid + 28px gutter each side)
+ * -------------------------------------------------------------------------- */
+@theme {
+  --container-sm: 500px;
+  --container-md: 826px;
+  --container-lg: 1240px;
+}

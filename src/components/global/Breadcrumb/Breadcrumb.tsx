@@ -16,8 +16,9 @@ import {
  *    without the parametric icon.
  *  - Everything else / any API failure → automatic CMS-hierarchy breadcrumb.
  *
- * Styling: matches live ti.com's page grid (content centered, capped at 1184px,
- * responsive gutter); plain scrollable list on mobile, TI <ti-breadcrumb>
+ * Styling: matches live ti.com's page grid — 1184px content width plus a 28px
+ * gutter each side (56px total) gives a 1240px container max-width; content is
+ * centered; plain scrollable list on mobile, TI <ti-breadcrumb>
  * Stencil component on desktop. All styling lives in TAILWIND_VARIANTS below.
  */
 export async function Breadcrumb() {
@@ -187,10 +188,10 @@ export async function Breadcrumb() {
 const TAILWIND_VARIANTS = tv(
   {
     slots: {
-      // Match live ti.com's page grid: responsive side gutter (16px mobile /
-      // 28px tablet+) with the content centered and capped at 1184px on desktop.
-      nav: ["mt-6", "mb-6", "px-4", "md:mb-12", "md:px-[28px]"],
-      container: ["mx-auto", "max-w-[1184px]"],
+      // Centering, capping (1240px) and the responsive gutter now live in the
+      // `container-lg` utility (see app.css); nav only owns vertical spacing.
+      nav: ["mt-6", "mb-6",],
+      container: ["container-lg"],
       // Mobile: single scrollable row with "/" separators (matches live).
       mobileList: [
         "flex",

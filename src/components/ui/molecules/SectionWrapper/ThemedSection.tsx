@@ -46,13 +46,13 @@ export function ThemedSection({
 
   if (backgroundSize === "section") {
     return (
-      <div className="container mx-auto">
-        <div className="-mx-10 relative">
+      <div className="container-lg">
+        <div className="relative">
           <BackgroundImage content={backgroundImageSetting ?? undefined} />
           <ThemeProvider
             theme={theme}
             mode={mode}
-            className="relative px-10 w-full"
+            className="relative w-full"
           >
             <SectionWrapper>{children}</SectionWrapper>
             {/* <div className="w-full">{children}</div> */}
@@ -62,12 +62,15 @@ export function ThemedSection({
     );
   } else {
     return (
-      <>
+      // `relative` here is the positioned ancestor the absolute background image
+      // needs — without it the image escapes to <body> instead of filling the
+      // section (full-width: image spans the section's full width).
+      <div className="relative w-full">
         <BackgroundImage content={backgroundImageSetting ?? undefined} />
         <ThemeProvider theme={theme} mode={mode} className="relative">
           <SectionWrapper>{children}</SectionWrapper>
         </ThemeProvider>
-      </>
+      </div>
     );
   }
 }
