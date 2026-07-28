@@ -198,6 +198,7 @@ const TAILWIND_VARIANTS = tv(
         "list-none",
         "flex-nowrap",
         "overflow-x-auto",
+        "mr-6",
         "text-body-md",
         "leading-7",
         "text-pl-text-color-primary",

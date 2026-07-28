@@ -28,12 +28,6 @@ export function PromoContentElement({ content, parentField }: Props) {
           field="headline"
         />
 
-        <WrappedTextField
-          as="p"
-          className={styles.subheadline}
-          field="subheadline"
-        />
-
         <WrappedRichTextField
           field="description"
           className={styles.description}

@@ -12,7 +12,31 @@
   --color-text-default: var(--ti-text-color);
   --font-body: var(--font-roboto);
 }
-*{box-sizing: border-box}
+
+* {
+  box-sizing: border-box
+}
+
+/* Centered, full-width page containers capped at the --container-* tokens
+ * (see tv-theme/breakpoints.css). Use `container-sm|md|lg` anywhere. */
+
+/* Override Tailwind's built-in `container` to the ti.com page grid (1240px),
+ * centered with the responsive gutter — same as `container-lg`. */
+@utility container {
+  @apply w-full max-w-lg;
+}
+
+@utility container-sm {
+  @apply mx-auto w-full max-w-sm px-4 md:px-7;
+}
+
+@utility container-md {
+  @apply mx-auto w-full max-w-md px-4 md:px-7;
+}
+
+@utility container-lg {
+  @apply mx-auto w-full max-w-lg px-4 md:px-7;
+}
 
 /* Placeholder values for testing */
 @layer base {
@@ -47,7 +71,7 @@
     @apply text-h6 mb-3;
   }
 
-  
+
   @keyframes focus-highlight {
     from {
       box-shadow: 0 0 0 3px #bee7ec;

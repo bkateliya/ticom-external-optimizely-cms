@@ -1,29 +1,29 @@
-
 import { PreambleContractContentType } from "@/components/cms/contracts/component-contracts/preamble.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { Preamble } from "./Preamble";
 import { SectionWrapper, SectionWrapperProps } from "./SectionWrapper";
-
+import { HeadlineStyleProps } from "../Headline/Headline";
 
 export interface PreambleSectionWrapperProps
   extends
-  SectionWrapperProps,
-  OptiComponentProps<PreambleContractContentType> { }
+    SectionWrapperProps,
+    OptiComponentProps<PreambleContractContentType>,
+    HeadlineStyleProps {}
 
 export const PreambleSectionWrapper = ({
   children,
   content,
   parentField,
   textAlignment,
+  redUnderline,
 }: PreambleSectionWrapperProps) => {
   return (
-    <SectionWrapper
-      textAlignment={textAlignment}
-    >
+    <SectionWrapper textAlignment={textAlignment}>
       <Preamble
         content={content}
         parentField={parentField}
         textAlignment={textAlignment}
+        redUnderline={redUnderline}
       >
         {children}
       </Preamble>
