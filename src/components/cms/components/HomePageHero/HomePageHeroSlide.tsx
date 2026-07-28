@@ -8,7 +8,7 @@ import {
 import { fieldFactory } from "@/components/ui/cms";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { tv } from "tailwind-variants";
-import { parseHeadlineLevel } from "@/components/ui/molecules/Headline/Headline";
+import { parseHeadlineSize } from "@/components/ui/molecules/Headline/Headline";
 import { TiSlide } from "@/components/ui/ti/TiSlideshow/TiSlide";
 import NextLink from "next/link";
 import { TiButton } from "@/components/ui/ti/TiButton/TiButton";
@@ -49,7 +49,6 @@ export async function HomePageHeroSlideComponent({
     base,
     eyebrow,
     heading,
-    subHeadline,
     gradientOverlay,
     slideContent,
     wrapper,
@@ -80,14 +79,9 @@ export async function HomePageHeroSlideComponent({
               <WrappedHeadingTextField
                 className={heading()}
                 field="headline"
-                headingLevel={parseHeadlineLevel({ content: content })}
+                headingSize={parseHeadlineSize({ content: content })}
               />
 
-              <WrappedTextField
-                className={subHeadline()}
-                as="p"
-                field="subheadline"
-              />
               <WrappedRichTextField field="description" />
               <TiButton>{content.link?.text}</TiButton>
             </div>
@@ -127,12 +121,6 @@ const TAILWIND_VARIANTS = tv({
       "md:leading-[48px]",
       "leading-[38px]",
       "line-clamp-1",
-    ],
-    subHeadline: [
-      "text-3xl",
-      "font-bold",
-      "md:leading-[48px]",
-      "leading-[38px]",
     ],
     gradientOverlay: [
       "absolute",

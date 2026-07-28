@@ -42,7 +42,6 @@ export function HeroComponent({
               </div>
               <div className={styles.titleContainer}>
                 <WrappedTextField as="h1" field="headline" />
-                <WrappedTextField as="p" field="subheadline" />
               </div>
               <WrappedRichTextField
                 field="description"

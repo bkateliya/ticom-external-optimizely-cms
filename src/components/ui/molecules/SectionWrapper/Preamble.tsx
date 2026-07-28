@@ -1,22 +1,26 @@
 import { TextAlignment } from "@/components/ui/context/TextAlignmentContext";
 import clsx from "clsx";
-import { PreambleContractContentType, PreambleDirectHeadlineContractContentType } from "@/components/cms/contracts/component-contracts/preamble.model";
+import {
+  PreambleContractContentType,
+  PreambleDirectHeadlineContractContentType,
+} from "@/components/cms/contracts/component-contracts/preamble.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { HeadingLevelContext } from "@/components/utilities/HeadingLevelContext";
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
 import { HeadlineComponentType } from "@/components/cms/contracts/component-contracts/headline.model";
 import { CtaList } from "../CtaList/CtaList";
-import { Headline, parseHeadlineLevel } from "../Headline/Headline";
+import { Headline, HeadlineStyleProps } from "../Headline/Headline";
 
+export interface PreambleStyleOptions extends HeadlineStyleProps {
+  beforeElements?: React.ReactNode;
+}
 
 export interface PreambleProps
   extends
-  OptiComponentProps<PreambleContractContentType>,
-  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-  React.PropsWithChildren {
-  beforeElements?: React.ReactNode,
-  textAlignment?: TextAlignment;
-}
+    OptiComponentProps<PreambleContractContentType>,
+    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+    React.PropsWithChildren,
+    PreambleStyleOptions {}
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
   Left: "text-left",
@@ -24,27 +28,28 @@ const textAlignmentClassMap: Record<TextAlignment, string> = {
   Right: "text-right",
 };
 
-export const Preamble = ({
-  content,
-  ...props
-}: PreambleProps) => {
+export const Preamble = ({ content, ...props }: PreambleProps) => {
   if (!content) {
     return null;
   }
 
-  const headline = normalizeGenericContentToTyped<typeof HeadlineComponentType>(content.headline);
-  return <PreambleDirectHeadline {...props} content={{ ...headline, ctas: content.ctas }} />
+  const headline = normalizeGenericContentToTyped<typeof HeadlineComponentType>(
+    content.headline,
+  );
+  return (
+    <PreambleDirectHeadline
+      {...props}
+      content={{ ...headline, ctas: content.ctas }}
+    />
+  );
 };
-
 
 export interface PreambleDirectHeadlineProps
   extends
-  OptiComponentProps<PreambleDirectHeadlineContractContentType>,
-  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-  React.PropsWithChildren {
-  beforeElements?: React.ReactNode,
-  textAlignment?: TextAlignment;
-}
+    OptiComponentProps<PreambleDirectHeadlineContractContentType>,
+    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+    React.PropsWithChildren,
+    PreambleStyleOptions {}
 
 export const PreambleDirectHeadline = ({
   children,
@@ -52,6 +57,7 @@ export const PreambleDirectHeadline = ({
   textAlignment = "Left",
   content,
   parentField,
+  redUnderline,
 }: PreambleDirectHeadlineProps) => {
   if (!content) {
     return null;
@@ -68,39 +74,52 @@ export const PreambleDirectHeadline = ({
   const hasHeaderContent = !!(
     content.eyebrow ||
     content.headline ||
-    content.subheadline ||
     content.description
   );
 
   const sectionContentWrapperClassName = clsx([
-    'space-y-4',
+    "space-y-4",
     {
-      'py-4': hasHeaderContent
-    }
+      "py-4": hasHeaderContent,
+    },
   ]);
 
   return (
     <div className={baseClassName}>
       <div
         data-component="generic-wrappers/preamble-section-wrapper"
-        className={clsx("flex", "flex-col", "w-full")}
+        className={clsx("flex", "flex-col", "w-full", "gap-8")}
       >
         {beforeElements}
-        {/* First update level before rendering headline */}
-        <HeadingLevelContext headingLevel={parseHeadlineLevel({ content: content })}>
+        <div
+          className={clsx("flex", "gap-8", {
+            "flex-col": textAlignment === "Center",
+          })}
+        >
+          <Headline
+            content={content}
+            parentField={parentField}
+            textAlignment={textAlignment}
+            redUnderline={redUnderline}
+          />
 
-          <Headline content={content} parentField={parentField} />
-
-          <CtaList content={content} parentField={parentField} />
-
-          {children && <div className={sectionContentWrapperClassName}>
+          <CtaList
+            textAlignment={textAlignment}
+            content={content}
+            parentField={parentField}
+          />
+        </div>
+        {children && (
+          <div className={sectionContentWrapperClassName}>
             {/* Then increment the level if needed, e.g. if component set H3, then we set it to H3 above, 
                 and inner components will use H4 */}
-            <HeadingLevelContext headingLevel={content.headline ? 'increment' : 'same'}>
+            <HeadingLevelContext
+              headingLevel={content.headline ? "increment" : "same"}
+            >
               {children}
             </HeadingLevelContext>
-          </div>}
-        </HeadingLevelContext>
+          </div>
+        )}
       </div>
     </div>
   );

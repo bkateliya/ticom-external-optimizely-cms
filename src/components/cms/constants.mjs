@@ -8,4 +8,5 @@ export const propertyGroupKeys = {
   Seo: `${KEY_PREFIX}seo`,
   Data: `${KEY_PREFIX}data`,
   Config: `${KEY_PREFIX}config`,
+  DeletedFields: `${KEY_PREFIX}deleted`,
 };

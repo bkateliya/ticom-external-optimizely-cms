@@ -27,56 +27,65 @@ export const HeadlineContract = contract({
       group: PropertyTypes.Content,
       isLocalized: true,
     },
+    description: {
+      type: "richText",
+      displayName: "Subheadline",
+      description: "Extra rich text content",
+      group: PropertyTypes.Content,
+      isLocalized: true,
+    },
+
+    subheadline: {
+      // Soft Delete
+      displayMode: "hidden",
+
+      type: "string",
+      displayName: "[Obsolete] Subheadline",
+      description: "Subheadline of the component",
+      maxLength: 250,
+      group: PropertyTypes.DeletedFields,
+      isLocalized: true,
+    },
+
+    /** This is actually Headline Size now, not Headline Level. */
     headlineLevel: {
       type: "string",
-      displayName: "Heading Level Override",
-      description: "Manually set the heading level for this component.  Components inside should adjust if they are not overriden",
+      displayName: "Headline Size Override",
+      description:
+        "Override the visual size of the headline.  By default is is based on the heading level.  The heading level is automatically determined",
       format: "selectOne",
       enum: [
         {
           value: "AUTO",
-          displayName: "Automatic"
-        },
-        {
-          value: "2",
-          displayName: "H2"
-        },
-        {
-          value: "3",
-          displayName: "H3"
-        },
-        {
-          value: "4",
-          displayName: "H4"
-        },
-        {
-          value: "5",
-          displayName: "H5"
-        },
-        {
-          value: "6",
-          displayName: "H6"
+          displayName: "Automatic",
         },
         {
           value: "1",
-          displayName: "H1 (Use rarely, prefer to use a Hero or Page Title component)"
+          displayName: "3XL (H1)",
         },
-      ]
-    },
-    subheadline: {
-      type: "string",
-      displayName: "Subheadline",
-      description: "Subheadline of the component",
-      maxLength: 250,
-      group: PropertyTypes.Content,
-      isLocalized: true,
-    },
-    description: {
-      type: "richText",
-      displayName: "Description",
-      description: "Description of the component",
-      group: PropertyTypes.Content,
-      isLocalized: true,
+        {
+          value: "2",
+          displayName: "2XL (H2)",
+        },
+        {
+          value: "3",
+          displayName: "XL (H3)",
+        },
+        {
+          value: "4",
+          displayName: "Large (H4)",
+        },
+        {
+          value: "5",
+          displayName: "Medium (H5)",
+        },
+        {
+          value: "6",
+          displayName: "Regular (H6)",
+        },
+      ],
+
+      group: PropertyTypes.Appearance,
     },
   },
 });
@@ -86,7 +95,7 @@ export const HeadlineComponentType = contentType({
   displayName: `${DISPLAY_NAME_PREFIX}Headline`,
   baseType: "_component",
   extends: [HeadlineContract],
-})
+});
 
 export const WithHeadlineContract = contract({
   key: `${KEY_PREFIX}WithHeadline_Contract`,
@@ -95,11 +104,10 @@ export const WithHeadlineContract = contract({
     headline: {
       type: "content",
       displayName: "Headline Content",
-      allowedTypes: [HeadlineComponentType]
-    }
-  }
-})
-
+      allowedTypes: [HeadlineComponentType],
+    },
+  },
+});
 
 /** For using contracts as component interfaces. */
 export type HeadlineContractContentType = ContractContentType<
