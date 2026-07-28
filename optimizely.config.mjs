@@ -12,26 +12,32 @@ export default buildConfig({
     {
       key: propertyGroupKeys.Layout,
       displayName: `Layout`,
-      // sortOrder: 1,
+      sortOrder: 13,
     },
     {
       key: propertyGroupKeys.ComponentConfiguration,
       displayName: `Component Configuration`,
-      // sortOrder: 1,
+      sortOrder: 12,
     },
     {
       key: propertyGroupKeys.Appearance,
-      displayName: `Appearance`,
-      // sortOrder: 1,
+      displayName: `Style Options`,
+      sortOrder: 15,
     },
     {
       key: propertyGroupKeys.Data,
-      displayName: "Data"
+      displayName: "Data",
+      sortOrder: 11,
     },
     {
       key: propertyGroupKeys.Config,
       displayName: "Configuration",
-      sortOrder: 15,
+      sortOrder: 18,
+    },
+    {
+      key: propertyGroupKeys.DeletedFields,
+      displayName: "Deleted Fields",
+      sortOrder: 999,
     }
   ],
   

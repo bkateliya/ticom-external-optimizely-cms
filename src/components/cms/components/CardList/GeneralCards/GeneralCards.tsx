@@ -21,7 +21,6 @@ export function GeneralCard({
     <div className="bg-sky-300 rounded-xl p-4 overflow-hidden">
       <WrappedTextField field="eyebrow" />
       <WrappedHeadingTextField field="headline" />
-      <WrappedTextField field="subheadline" />
       <WrappedRichTextField field="description" />
 
       <CtaList content={content} parentField={parentField}/>

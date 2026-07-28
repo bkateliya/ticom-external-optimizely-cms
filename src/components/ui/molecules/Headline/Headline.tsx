@@ -7,32 +7,34 @@ import {
 } from "@/components/cms/contracts/component-contracts/headline.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { fieldFactory } from "@/components/ui/cms";
-import { HeadingLevelContext } from "@/components/utilities/HeadingLevelContext";
 
+export interface HeadlineStyleProps {
+  textAlignment?: TextAlignment;
+  redUnderline?: boolean;
+}
 export interface HeadlineProps
   extends
     OptiComponentProps<HeadlineContractContentType>,
-    Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
-  textAlignment?: TextAlignment;
-}
+    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+    HeadlineStyleProps {}
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
-  Left: styles.textAlignLeft,
-  Center: styles.textAlignCenter,
-  Right: styles.textAlignRight,
+  Left: "text-left",
+  Center: "text-center",
+  Right: "text-right",
 };
 
-export function parseHeadlineLevel({
+export function parseHeadlineSize({
   content,
 }: OptiComponentProps<HeadlineContractContentType>) {
-  const headlineLevel =
-    (parseInt(content?.headlineLevel ?? "") as
-      1 | 2 | 3 | 4 | 5 | 6 | undefined) || "same";
-  return headlineLevel;
+  const headlineSize = parseInt(content?.headlineLevel ?? "") as
+    1 | 2 | 3 | 4 | 5 | 6 | undefined;
+  return headlineSize;
 }
 
 export const Headline = ({
   textAlignment = "Left",
+  redUnderline,
   content,
   parentField,
   ...props
@@ -46,12 +48,11 @@ export const Headline = ({
   const { WrappedTextField, WrappedRichTextField, WrappedHeadingTextField } =
     fieldFactory<typeof HeadlineComponentType>(content, parentField);
 
-  const baseClassName = clsx(styles.base, textAlignmentClassMap[textAlignment]);
+  const baseClassName = clsx(textAlignmentClassMap[textAlignment]);
 
   const hasHeaderContent = !!(
     content.eyebrow ||
     content.headline ||
-    content.subheadline ||
     content.description
   );
 
@@ -61,26 +62,28 @@ export const Headline = ({
 
   return (
     <div className={clsx(baseClassName, props.className)} {...props}>
-      <div className={styles.eyebrow}>
+      <div>
         <WrappedTextField
           as="span"
           className={styles.eyebrowText}
           field="eyebrow"
         />
       </div>
-      <div className={styles.copy}>
-        <HeadingLevelContext headingLevel={parseHeadlineLevel({ content })}>
-          <WrappedHeadingTextField
-            className={styles.headline}
-
-            field="headline"
-          />
-        </HeadingLevelContext>
-        <WrappedTextField
-          as="p"
-          className={styles.subheadline}
-          field="subheadline"
+      <div className={clsx()}>
+        <WrappedHeadingTextField
+          headingSize={parseHeadlineSize({ content })}
+          field="headline"
         />
+        {redUnderline ? (
+          <hr
+            className={clsx(
+              "w-24 border-0 h-px -mt-2 mb-8 bg-pl-border-color-accent",
+              {
+                "mx-auto": textAlignment === "Center",
+              },
+            )}
+          />
+        ) : null}
         <WrappedRichTextField
           field="description"
           className={styles.description}
