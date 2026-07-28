@@ -39,6 +39,12 @@ export function CTAElement({ content, parentField }: Props) {
       {...pa([parentField, "link"].filter(Boolean).join("."))}
       data-url={url}
       data-orig-url={content.link?.url.default}
+      // When inside a TifButtonGroup, the web component writes data-first /
+      // data-last onto its direct children (this div) as it upgrades, before
+      // hydration finishes. The server HTML can't contain them, so React
+      // reports an attribute mismatch. Suppressing here keeps the CTAs in the
+      // server HTML instead of deferring the whole subtree to the client.
+      suppressHydrationWarning
     >
       {/* TODO: When TIF button is updated to allow a `download` attribute directly,
       we can remove this hack */}

@@ -1,0 +1,45 @@
+a {
+    text-decoration: none;
+}
+
+.ti_aem-ce h1,
+.ti_aem-ce h2,
+.ti_aem-ce h3,
+.ti_aem-ce h4,
+.ti_aem-ce h5,
+.ti_aem-ce h6 {
+    font-weight: 400 !important
+}
+
+.ti_aem-ce .title h1,
+.ti_aem-ce .title h2,
+.ti_aem-ce .title h3,
+.ti_aem-ce .title h4,
+.ti_aem-ce .title h5,
+.ti_aem-ce .title h6,
+.ti_aem-ce .ti_aem-title h1,
+.ti_aem-ce .ti_aem-title h2,
+.ti_aem-ce .ti_aem-title h3,
+.ti_aem-ce .ti_aem-title h4,
+.ti_aem-ce .ti_aem-title h5,
+.ti_aem-ce .ti_aem-title h6,
+.ti_aem-ce * h1,
+.ti_aem-ce * h2,
+.ti_aem-ce * h3,
+.ti_aem-ce * h4,
+.ti_aem-ce * h5,
+.ti_aem-ce * h6 {
+    font-weight: 400 !important
+}
+
+.ti_aem-ce .title.u-header-5plus,
+.ti_aem-ce .ti_aem-title.u-header-5plus,
+.ti_aem-ce *.u-header-5plus {
+    font-weight: 500 !important
+}
+
+.ti_aem-ce .title.u-header-5plus *,
+.ti_aem-ce .ti_aem-title.u-header-5plus *,
+.ti_aem-ce *.u-header-5plus * {
+    font-weight: 500 !important
+}

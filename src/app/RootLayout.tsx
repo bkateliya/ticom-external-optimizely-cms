@@ -14,7 +14,7 @@ import "@/assets/app.css";
 
 export async function RootLayout({
   children,
-  locale
+  locale,
 }: Readonly<{
   children: React.ReactNode;
   locale: string;
@@ -33,7 +33,7 @@ export async function RootLayout({
         */}
         {/* <link type="text/css" href="https://www.ti.com/assets/style/ticom.global.portals.css" rel="stylesheet" /> */}
       </head>
-      <body className={clsx(roboto.variable, DefaultTheme)}>
+      <body className={clsx(roboto.variable, DefaultTheme, "ti_aem-ce hydrated")}>
         <div className="w-full overflow-hidden">
           <ThemeProvider theme={DefaultTheme} applyToBody={true}>
             {/* TI front-end scripts — web-component bundles + header/footer init,
@@ -41,7 +41,9 @@ export async function RootLayout({
             <TiScripts locale={locale} />
             <NextIntlClientProvider>
               {/* Hero is hard-coded as H1 so others should start at H2  */}
-              <HeadingLevelContext headingLevel={2}>{children}</HeadingLevelContext>
+              <HeadingLevelContext headingLevel={2}>
+                {children}
+              </HeadingLevelContext>
             </NextIntlClientProvider>
           </ThemeProvider>
         </div>
