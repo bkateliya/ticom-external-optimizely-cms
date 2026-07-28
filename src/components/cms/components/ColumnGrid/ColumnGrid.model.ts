@@ -19,7 +19,7 @@ const COLUMN_MAP = {
 
 export type ColumnOptions = keyof typeof COLUMN_MAP;
 
-const VAlignMap = {
+export const VAlignMap = {
   top: "Top",
   center: "Center",
   bottom: "Bottom",
@@ -32,6 +32,13 @@ export const ColumnGridColumnComponentType = contentType({
   displayName: `${DISPLAY_NAME_PREFIX}Column Grid Column`,
   baseType: "_component",
   properties: {
+    verticalAlignment: {
+      type: "string",
+      displayName: "Vertical Alignment",
+      format: "selectOne",
+      group: PropertyTypes.Appearance,
+      enum: enumToOptions(VAlignMap, { displayNameIsValue: true }),
+    },
     content: {
       type: "array",
       displayName: "Column Content",
@@ -56,14 +63,7 @@ export const ColumnGridComponentType = contentType({
       group: PropertyTypes.Appearance,
       enum: enumToOptions(COLUMN_MAP, { displayNameIsValue: true }),
     },
-    verticalAlignment: {
-      type: "string",
-      displayName: "Vertical Alignment",
-      format: "selectOne",
-      group: PropertyTypes.Appearance,
 
-      enum: enumToOptions(VAlignMap, { displayNameIsValue: true }),
-    },
     columns: {
       type: "array",
       displayName: "Column List",

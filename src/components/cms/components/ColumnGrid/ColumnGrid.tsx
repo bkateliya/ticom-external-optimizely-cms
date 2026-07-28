@@ -2,6 +2,8 @@ import {
   ColumnGridColumnComponentType,
   ColumnGridComponentType,
   ColumnOptions,
+  VAlignMap,
+  VAlignOptions,
 } from "./ColumnGrid.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
@@ -17,29 +19,70 @@ export function ColumnGridComponent({
 
   const columnControl = (content.columnControl as ColumnOptions) || "33-33-33";
 
-  const wrapperClasses = clsx("grid", "gap-4", getColumnClass(columnControl));
+  // Grid-level default; each column may override it with its own value.
 
-  return (
-    <div className={wrapperClasses}>
-      {content.columns?.map((col, index) => {
-        const column = normalizeGenericContentToTyped(
-          col,
-          ColumnGridColumnComponentType,
-        );
-        const columnClass = getColumnSpanClass(columnControl, index);
-        if (!column?.content || !columnClass) {
-          return;
-        }
-        return (
-          <div key={index} className={clsx(columnClass, "grid", "gap-4")}>
-            {column.content?.map((x, i) => (
-              <ExtendedOptimizelyComponent key={i} content={x} />
-            ))}
-          </div>
-        );
-      })}
-    </div>
-  );
+
+  const wrapperClasses = clsx("grid", "gap-7", getColumnClass(columnControl));
+
+  const renderedColumns = (content.columns ?? [])
+    .map((col, index) => {
+      const column = normalizeGenericContentToTyped(
+        col,
+        ColumnGridColumnComponentType,
+      );
+      const columnClass = getColumnSpanClass(columnControl, index);
+      if (!column?.content?.length || !columnClass) {
+        return null;
+      }
+      const alignClass = getVerticalAlignClass(
+        toVAlign(column.verticalAlignment),
+      );
+      return (
+        <div
+          key={index}
+          className={clsx(columnClass, alignClass, "grid", "gap-4")}
+        >
+          {column.content.map((x, i) => (
+            <ExtendedOptimizelyComponent key={i} content={x} />
+          ))}
+        </div>
+      );
+    })
+    .filter(Boolean);
+
+  // Nothing renderable (empty Column List, or all columns empty) → render nothing.
+  if (renderedColumns.length === 0) {
+    return null;
+  }
+
+  return <div className={wrapperClasses}>{renderedColumns}</div>;
+}
+
+/**
+ * CMS stores the enum value ("top"), but older content may hold the display
+ * name ("Top"). Accept either and reject anything else.
+ */
+function toVAlign(value: unknown): VAlignOptions | undefined {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+  const normalized = value.toLowerCase();
+  return normalized in VAlignMap ? (normalized as VAlignOptions) : undefined;
+}
+
+function getVerticalAlignClass(verticalAlignment?: VAlignOptions) {
+  // NOTE: We are listing these out so that Tailwind sees them and doesn't purge them.
+  switch (verticalAlignment) {
+    case "top":
+      return "items-start";
+    case "center":
+      return "items-center";
+    case "bottom":
+      return "items-end";
+    default:
+      // Preserve prior behavior for existing layouts with no per-column value.
+      return null;
+  }
 }
 
 function getColumnClass(columns: ColumnOptions) {
