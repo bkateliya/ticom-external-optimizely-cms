@@ -60,6 +60,13 @@ export function normalizeUrl(url: string | UrlObject): string | null {
   }
   return parsedUrl.toString();
 }
+/** The file name at the end of a url, without any query string or hash. */
+export function getUrlFileName(url: string) {
+  const split = url.split("/");
+  const last = split[split.length - 1];
+  return last.split("?")[0].split("#")[0];
+}
+
 /**
  * Matches a protocol (e.g. http:, https:, ftp:, mailto:, etc.)
  */

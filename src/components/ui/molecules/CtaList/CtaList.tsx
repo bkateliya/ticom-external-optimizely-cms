@@ -1,5 +1,5 @@
 import { OptiComponentProps } from "@/lib/ts/component-props";
-import { CTAElement } from "@/components/cms/elements/CTA";
+import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { normalizeGenericArrayToTyped } from "@/lib/utils/content-type-utils";
 import { CTAElementType } from "@/components/cms/elements/CTA/CTA.model";
 import { CtaListComponentType } from "@/components/cms/contracts/component-contracts/cta-list.model";
@@ -23,9 +23,9 @@ export const CtaList = ({
     return null;
   }
 
-  const ctas = normalizeGenericArrayToTyped<typeof CTAElementType>(
-    content.ctas,
-  );
+  /* Every allowed type carries `link` from LinkContract, so this cast is only used
+     to check whether anything is actually authored. */
+  const ctas = normalizeGenericArrayToTyped<typeof CTAElementType>(content.ctas);
   const hasCtas = !!ctas?.some((x) => x.link?.url.default);
   if (!hasCtas) {
     return null;
@@ -34,8 +34,9 @@ export const CtaList = ({
     <TifButtonGroup
       className={clsx(className, { "mx-auto": textAlignment === "Center" })}
     >
+      {/* Resolves each item to its registered component (CTA, CTA Link, …). */}
       {ctas.map((cta, index) => (
-        <CTAElement key={cta._id || index} content={cta} />
+        <ExtendedOptimizelyComponent key={cta._id || index} content={cta} />
       ))}
     </TifButtonGroup>
   );

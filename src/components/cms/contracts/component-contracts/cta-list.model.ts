@@ -5,6 +5,7 @@ import {
 } from "@/components/cms/constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
 import { CTAElementType } from "../../elements/CTA/CTA.model";
+import { CTALinkElementType } from "../../elements/CTALink/CTALink.model";
 
 export const CtaListContract = contract({
   key: `${KEY_PREFIX}CtaList_Contract`,
@@ -16,7 +17,7 @@ export const CtaListContract = contract({
       group: PropertyTypes.Content,
       items: {
         type: "content",
-        allowedTypes: [CTAElementType],
+        allowedTypes: [CTAElementType, CTALinkElementType],
       },
       sortOrder: 50
     },
