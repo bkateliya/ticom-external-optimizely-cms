@@ -190,7 +190,10 @@ const TAILWIND_VARIANTS = tv(
     slots: {
       // Centering, capping (1240px) and the responsive gutter now live in the
       // `container-lg` utility (see app.css); nav only owns vertical spacing.
-      nav: ["mt-6", "mb-6",],
+      // No top margin: TI's header already has a 16px margin-bottom, so the
+      // breadcrumb sits flush at the top of <main> — matching live ti.com
+      // (breadcrumb top 176px at 1280, i.e. 16px below the red nav).
+      nav: ["mb-6", "px-4", "md:mb-12", "md:px-[28px]"],
       container: ["container-lg"],
       // Mobile: single scrollable row with "/" separators (matches live).
       mobileList: [
