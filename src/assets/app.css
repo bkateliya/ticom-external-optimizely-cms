@@ -22,7 +22,7 @@
 @import "./ti-css/animations.css";
 
 /* Pre-hydration, breadcrumb scoped css, slotted content. */
-@import "./ti-css/hydration.css" layer(components);
+@import "./ti-css/hydration.css";
 
 :root,
 .theme-root {

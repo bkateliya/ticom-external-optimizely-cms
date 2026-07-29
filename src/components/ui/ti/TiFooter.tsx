@@ -6,9 +6,8 @@ export function TiFooter({ locale }: { locale: string }) {
   return (
     <>
       <Script src={`${base}/js/footer.js`} />
-      <div
+      <div className="ti_aem-ce"
         id="tiFooter"
-
       />
     </>
   );

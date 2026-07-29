@@ -15,18 +15,19 @@
 :root {
   --ti-text-hero: 28px;
   --ti-text-hero-lh: 36px;
-  --ti-text-h1: 28px;
-  --ti-text-h1-lh: 36px;
-  --ti-text-h2: 24px;
-  --ti-text-h2-lh: 32px;
-  --ti-text-h3: 20px;
-  --ti-text-h3-lh: 28px;
-  --ti-text-h4: 18px;
+  --ti-text-h1: 34px;
+  --ti-text-h1-lh: 40px;
+  --ti-text-h2: 28px;
+  --ti-text-h2-lh: 36px;
+  --ti-text-h3: 24px;
+  --ti-text-h3-lh: 32px;
+  --ti-text-h4: 20px;
   --ti-text-h4-lh: 28px;
-  --ti-text-h5: 16px;
-  --ti-text-h5-lh: 24px;
-  --ti-text-h6: 14px;
-  --ti-text-h6-lh: 28px;
+  --ti-text-h5: 18px;
+  --ti-text-h5-lh: 28px;
+  --ti-text-h6: 16px;
+  --ti-text-h6-lh: 24px;
+  --ti-text-h6-weight: 500;
   --ti-text-body-md: 14px;
   --ti-text-body-md-lh: 24px;
   --ti-text-body-sm: 12px;
@@ -39,18 +40,18 @@
     --ti-text-hero: 48px;
     --ti-text-hero-lh: 60px;
     /* u-header-extraLarge */
-    --ti-text-h1: 34px;
-    --ti-text-h1-lh: 40px;
-    --ti-text-h2: 28px;
-    --ti-text-h2-lh: 36px;
-    --ti-text-h3: 24px;
-    --ti-text-h3-lh: 32px;
-    --ti-text-h4: 20px;
-    --ti-text-h4-lh: 28px;
-    --ti-text-h5: 16px;
-    --ti-text-h5-lh: 24px;
-    --ti-text-h6: 14px;
-    --ti-text-h6-lh: 20px;
+    --ti-text-h1: 56px;
+    --ti-text-h1-lh: 80px;
+    --ti-text-h2: 34px;
+    --ti-text-h2-lh: 40px;
+    --ti-text-h3: 28px;
+    --ti-text-h3-lh: 36px;
+    --ti-text-h4: 24px;
+    --ti-text-h4-lh: 32px;
+    --ti-text-h5: 20px;
+    --ti-text-h5-lh: 28px;
+    --ti-text-h6: 16px;
+    --ti-text-h6-lh: 24px;
     --ti-text-body-xl: 18px;
     --ti-text-body-xl-lh: 28px;
     /* u-paragraph-extraLarge */
@@ -64,4 +65,15 @@
     --ti-text-body-sm-lh: 20px;
     /* u-paragraph-small */
   }
+}
+
+/* Simplified Chinese (zh-cn) — heavier H6 weight for CJK legibility.
+   Applies at all breakpoints; the `.zh-cn` class is set on <body> from the
+   locale slug in RootLayout. */
+
+html:lang(zh-cn),
+html:lang(zh-tw),
+html:lang(ja),
+html:lang(ko) {
+  --ti-text-h6-weight: 600;
 }

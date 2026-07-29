@@ -57,7 +57,12 @@ export const roboto = localFont({
       weight: "400",
       style: "normal",
     },
-
+    // Regular: 500
+    {
+      path: "./roboto-v20-latin-ext_latin_greek-500.woff2",
+      weight: "500",
+      style: "normal",
+    },
     // Bold: 600 — deliberately the Medium (500) file, see note 2 above.
     {
       path: "./roboto-v20-latin-ext_latin_greek-500.woff2",
