@@ -14,15 +14,21 @@ import { PromoBlockComponent } from "./PromoBlock/index";
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
 import { CodeEmbedComponent } from "./CodeEmbed";
 import { HomePageHeroSlideComponent } from "./HomePageHero/HomePageHeroSlide";
-import { HomePageHeroComponentType, HomePageHeroSlideComponentType } from "./HomePageHero/HomePageHero.model";
+import {
+  HomePageHeroComponentType,
+  HomePageHeroSlideComponentType,
+} from "./HomePageHero/HomePageHero.model";
 import { HomePageHeroComponent } from "./HomePageHero/HomePageHero";
 import { cardListComponentRegistry } from "./CardList/registry";
-import { ColumnGridColumnComponentType, ColumnGridComponentType } from "./ColumnGrid/ColumnGrid.model";
+import {
+  ColumnGridColumnComponentType,
+  ColumnGridComponentType,
+} from "./ColumnGrid/ColumnGrid.model";
 import { ColumnGridComponent } from "./ColumnGrid/ColumnGrid";
 import { NoPreviewComponent } from "@/components/ui/cms/NoPreviewComponent";
 import { ContentBlockComponent } from "./ContentBlock/ContentBlock";
 import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
-
+import { applicationListingComponentRegistry } from "./application-components/registry";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -35,5 +41,6 @@ export const componentRegistry: ComponentRegistry = {
   [HomePageHeroComponentType.key]: HomePageHeroComponent,
   [ColumnGridComponentType.key]: ColumnGridComponent,
   [ColumnGridColumnComponentType.key]: NoPreviewComponent,
-  ...cardListComponentRegistry
+  ...cardListComponentRegistry,
+  ...applicationListingComponentRegistry,
 };

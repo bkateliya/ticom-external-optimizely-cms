@@ -1,0 +1,407 @@
+/* ==========================================================================
+ * Web component hydration + slotted content baseline
+ * --------------------------------------------------------------------------
+ * Ported from ti.com `global-css` (delivered as `optimizely-hydration.css` by
+ * Kayin McLeod, 2026-07-22) for the Optimizely migration.
+ *
+ * These rules are NOT decorative. The `ti-*` Stencil components silently
+ * depend on them:
+ *   - `:not(.hydrated)` rules prevent unstyled flashing / layout shift before
+ *     the component upgrades.
+ *   - `ti-breadcrumb` / `ti-breadcrumb-section` use SCOPED css, not shadow
+ *     DOM, so styles are expected to leak in from the host page.
+ *   - Slotted content (captions, carousel columns, buttons) is styled by the
+ *     host page because it lives in light DOM.
+ *
+ * Loaded into `@layer components` so Tailwind utilities can still override.
+ *
+ * TODO(migration): Kayin flagged that some pre-hydration rules may already be
+ * obsolete. Prune only after visual QA against real components — do not guess.
+ * TODO(tokens): Polaris *primitive* tokens (grey scale, icon sizes, font
+ * sizes) are still pending from Elijah/Devin. Values that map cleanly to an
+ * existing `--pl-*` semantic token or `--ti-text-*` token have been swapped;
+ * the rest stay literal and are marked with a "primitive:" comment.
+ * ========================================================================== */
+
+/* --------------------------------------------------------------------------
+ * Pre-hydration visibility
+ * -------------------------------------------------------------------------- */
+
+/* Commonly used web components — prevent unstyled flashing as the component
+ * renders. */
+ti-breadcrumb-section:not(.hydrated),
+ti-e2e-support-forums:not(.hydrated),
+ti-dropdown-panel:not(.hydrated),
+ti-featured-product:not(.hydrated),
+ti-header-currency-selection:not(.hydrated),
+ti-header-language-selection:not(.hydrated),
+ti-header-ship-to-selection:not(.hydrated),
+ti-image-gallery:not(.hydrated),
+ti-login:not(.hydrated),
+ti-media-gallery:not(.hydrated),
+ti-product-synopsis:not(.hydrated),
+ti-quickview-item:not(.hydrated),
+ti-subscribe-to-updates:not(.hydrated),
+ti-techdoc-table:not(.hydrated),
+ti-training-series:not(.hydrated),
+ti-video-player:not(.hydrated) {
+  display: none;
+}
+
+/* Don't show dialog content before loading. */
+ti-dialog:not(.hydrated) {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+ * ti-breadcrumb
+ * --------------------------------------------------------------------------
+ * Scoped CSS, not shadow DOM — these styles are meant to leak in.
+ * -------------------------------------------------------------------------- */
+
+/* Prevent layout shifting while rendering. */
+ti-breadcrumb {
+  display: flex;
+  min-height: 28px;
+  /* primitive: no spacing token — 28px is not on the 4px scale as a named size */
+}
+
+/* Slotted breadcrumb markup styling. */
+.ti-breadcrumb-section {
+  list-style-type: none;
+  margin: 0;
+}
+
+.ti-breadcrumb-section li {
+  display: flex;
+  margin-bottom: 0;
+  padding-bottom: var(--spacing-4);
+  /* 16px */
+  break-inside: avoid;
+}
+
+.ti-breadcrumb-section--parametric-icons {
+  margin-left: calc(var(--spacing-2) * -1);
+  /* -8px */
+  position: relative;
+}
+
+/* Safari icon fix
+ * ref: https://www.bram.us/2021/06/23/css-at-supports-rules-to-target-only-firefox-safari-chromium/#safari */
+@supports (background: -webkit-named-image(i)) {
+  .ti-breadcrumb-section--parametric-icons {
+    margin-left: 0;
+  }
+}
+
+.ti-breadcrumb-parametric-link {
+  position: relative;
+  margin-right: var(--spacing-3);
+  /* 12px */
+  padding-right: var(--spacing-3);
+  /* 12px */
+  flex: 0 0 auto;
+}
+
+.ti-breadcrumb-parametric-link::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  right: 0;
+  top: 0;
+  height: calc(100% + var(--spacing-4));
+  /* 16px */
+  background-color: var(--pl-divider-color-primary);
+  /* was #cccccc / $polaris-palette-grey3 */
+}
+
+.ti-breadcrumb-parametric-link a {
+  display: inline-flex;
+}
+
+.ti-breadcrumb-parametric-link:not(:hover) ti-svg-icon {
+  opacity: 0.65;
+}
+
+.ti-breadcrumb-section-link {
+  display: block;
+  padding: 0;
+  max-width: 420px;
+  white-space: normal;
+  text-decoration: none;
+  color: #555555 !important;
+  /* primitive: $polaris-palette-grey7 — no semantic --pl-* equivalent */
+  font-size: var(--ti-text-body-md);
+  /* 14px / $polaris-font-size-2 */
+}
+
+.ti-breadcrumb-section-link:hover,
+.ti-breadcrumb-section-link:focus {
+  text-decoration: underline !important;
+}
+
+/* --------------------------------------------------------------------------
+ * ti-product-synopsis
+ * -------------------------------------------------------------------------- */
+
+/* "New" tag adjustment. */
+ti-product-synopsis.ti-product-synopsis-horizontal [slot="new-badge"] {
+  margin-right: var(--spacing-2);
+  /* 8px */
+  padding-left: var(--spacing-3);
+  /* 12px */
+}
+
+ti-product-synopsis.ti-product-synopsis-horizontal [slot="new-badge"]::before {
+  left: 0;
+}
+
+ti-product-synopsis.ti-product-synopsis-horizontal [slot="product-link"] {
+  margin-right: var(--spacing-2);
+  /* 8px */
+}
+
+/* --------------------------------------------------------------------------
+ * Image captions
+ * --------------------------------------------------------------------------
+ * Line heights kept literal: --ti-text-body-sm-lh is 24px on desktop and 20px
+ * on mobile, so swapping would change the legacy rendering.
+ * -------------------------------------------------------------------------- */
+
+ti-image [slot="caption"],
+ti-image-comparison [slot="caption"] {
+  color: #555555;
+  /* primitive: $polaris-palette-grey7 */
+  font-size: var(--ti-text-body-sm);
+  /* 12px / $polaris-font-size-1 */
+  line-height: 20px;
+  /* $polaris-line-height-2 */
+}
+
+ti-image [slot="caption"]:not(:last-child),
+ti-image-comparison [slot="caption"]:not(:last-child) {
+  margin-bottom: var(--spacing-3);
+  /* 12px / $polaris-space-3 */
+}
+
+ti-image [slot="caption"] p,
+ti-image-comparison [slot="caption"] p {
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin-bottom: var(--spacing-3);
+  /* 12px / $polaris-space-3 */
+}
+
+ti-image [slot="caption"]:last-of-type,
+ti-image-comparison [slot="caption"]:last-of-type {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+ * ti-card
+ * -------------------------------------------------------------------------- */
+
+/* Position inside links over the card link when hovering the card. */
+ti-card.ti-card-link:hover a:not([slot="card-link"]),
+ti-card.ti-card-link:hover ti-button {
+  position: relative;
+  z-index: 1;
+}
+
+ti-card.ti-card-link:hover ti-product-status {
+  position: relative;
+  z-index: 2;
+}
+
+/* --------------------------------------------------------------------------
+ * ti-svg-icon
+ * --------------------------------------------------------------------------
+ * TODO(tokens): widths are the Polaris $polaris-icon-size-* primitives. Swap
+ * for tokens once the primitive list lands.
+ * -------------------------------------------------------------------------- */
+
+/* Hide unloaded svg icon text. */
+ti-svg-icon {
+  display: inline-flex;
+  overflow: hidden;
+  text-indent: -9999px;
+  vertical-align: text-bottom;
+  aspect-ratio: 1;
+  width: 24px;
+  /* $polaris-icon-size-m — default */
+}
+
+ti-svg-icon[size="xxs"] {
+  width: 11px;
+  /* $polaris-icon-size-xxs */
+}
+
+ti-svg-icon[size="xs"] {
+  width: 14px;
+  /* $polaris-icon-size-xs */
+}
+
+ti-svg-icon[size="s"] {
+  width: 18px;
+  /* $polaris-icon-size-s */
+}
+
+ti-svg-icon[size="m"] {
+  width: 24px;
+  /* $polaris-icon-size-m */
+}
+
+ti-svg-icon[size="l"] {
+  width: 36px;
+  /* $polaris-icon-size-l */
+}
+
+ti-svg-icon[size="xl"] {
+  width: 48px;
+  /* $polaris-icon-size-xl */
+}
+
+/* --------------------------------------------------------------------------
+ * ti-button — nested slotted content
+ * -------------------------------------------------------------------------- */
+
+/* Set correct color/styles on nested icons inside slotted link buttons. */
+ti-button a ti-svg-icon {
+  transform: translateY(1px);
+  /* adjust to improve centering — can't `align-items: center` on the button */
+  flex-shrink: 0;
+
+  /* TODO(migration): this !important existed only to kill a margin set by
+   * global-css, which is not loaded here. Candidate for removal after QA. */
+  margin-right: 0 !important;
+
+  /* Enforce icon size for both .ti_icon and ti-svg-icons. */
+  width: var(--ti_c-button-iconSize, 18px);
+  height: var(--ti_c-button-iconSize, 18px);
+
+  --ti-svg-icon-size: var(--ti_c-button-iconSize, 18px);
+
+  /* Enforce icon color for both .ti_icon and ti-svg-icons. */
+  fill: currentColor;
+
+  --ti-svg-icon-fill-color: currentColor;
+}
+
+/* Set correct color/styles on nested tags inside slotted link buttons. */
+ti-button .ti_p-tag {
+  display: inline-block !important;
+  padding: 2px 5px !important;
+  min-width: 1em !important;
+  text-align: center !important;
+  font-size: 14px !important;
+  /* $polaris-font-size-2 — literal, must beat component css */
+  line-height: 14px !important;
+  margin-left: var(--spacing-2);
+  /* 8px */
+}
+
+ti-button.ti-button-primary .ti_p-tag {
+  color: var(--pl-button-primary-color);
+  /* was #cc0000 */
+  background-color: var(--pl-container-background-color-primary);
+  /* was #ffffff */
+}
+
+ti-button.ti-button-secondary:hover .ti_p-tag {
+  color: var(--pl-button-primary-color);
+  /* was #cc0000 */
+  background-color: var(--pl-container-background-color-primary);
+  /* was #ffffff */
+}
+
+ti-button.ti-button-text .ti_p-tag {
+  background-color: var(--pl-link-color-primary);
+  /* was #007c8c */
+}
+
+/* --------------------------------------------------------------------------
+ * ti-autocomplete
+ * --------------------------------------------------------------------------
+ * Buttons are not in shadow DOM — temporary fixes.
+ * -------------------------------------------------------------------------- */
+
+ti-autocomplete button {
+  align-items: center;
+  color: var(--pl-text-color-primary);
+  /* was #333333 / $polaris-palette-grey8 */
+}
+
+/* Unset nested non-shadow-dom button's min width. */
+ti-autocomplete .ti-autocomplete-actions button {
+  min-height: unset;
+  min-width: unset;
+}
+
+/* --------------------------------------------------------------------------
+ * ti-portfolio-viewer
+ * -------------------------------------------------------------------------- */
+
+/* Override diagram to use the default font. `.st**` class names are the
+ * standard Visio naming convention that needs overwriting (e.g. `.st8`). */
+ti-portfolio-viewer svg,
+ti-portfolio-viewer [class*="st"] {
+  font-family:
+    var(--font-roboto), "Helvetica Neue", "Arial Nova", "Nimbus Sans", "Arial",
+    sans-serif !important;
+}
+
+/* --------------------------------------------------------------------------
+ * ti-carousel
+ * --------------------------------------------------------------------------
+ * Slotted content helper classes to size and align content to columns in the
+ * TI responsive grid. Reference:
+ * https://confluence.itg.ti.com/display/DCWBEX/FED+Page+Template+and+Grid+implementation+reference
+ * -------------------------------------------------------------------------- */
+
+ti-carousel .ti_p-carousel-col-2 {
+  min-width: calc(16.6667% - var(--spacing-7));
+  /* 28px gutter */
+}
+
+ti-carousel .ti_p-carousel-col-3 {
+  min-width: calc(25% - var(--spacing-7));
+}
+
+/* col-4 sizing is applied by default by the carousel component. */
+ti-carousel .ti_p-carousel-col-4 {
+  min-width: calc(33.333% - var(--spacing-7));
+}
+
+ti-carousel .ti_p-carousel-col-6 {
+  min-width: calc(50% - var(--spacing-7));
+}
+
+ti-carousel .ti_p-carousel-col-8 {
+  min-width: calc(66.66667% - var(--spacing-7));
+}
+
+ti-carousel .ti_p-carousel-col-9 {
+  min-width: calc(75% - var(--spacing-7));
+}
+
+ti-carousel .ti_p-carousel-col-10 {
+  min-width: calc(83.33333% - var(--spacing-7));
+}
+
+/* --------------------------------------------------------------------------
+ * ti-fab
+ * -------------------------------------------------------------------------- */
+
+ti-fab {
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+}
+
+ti-fab.hydrated {
+  opacity: 1;
+}
+
+ti-fab:not(.hydrated) {
+  pointer-events: none;
+}

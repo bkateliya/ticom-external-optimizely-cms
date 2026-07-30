@@ -18,6 +18,15 @@ import { normalizeGenericContentToTyped } from "../utils/content-type-utils";
 import { BreadcrumbEntry } from "@/components/global/Breadcrumb/Breadcrumb.utils";
 import { PageFolderType } from "@/components/cms/pages/PageFolder/PageFolder.model";
 import { ArticlePageType } from "@/components/cms/pages/Article/Article.model";
+import {
+  ApplicationInfo,
+  DEFAULT_APPLICATION_ID,
+  getNormalizedApplicationInfo,
+} from "../api/normalized/applications";
+import {
+  FamilyInfo,
+  getNormalizedFamilyInfo,
+} from "../api/normalized/productFamilies";
 
 type PathType = Parameters<GraphClient["getPath"]>["0"];
 async function populateSiteSettingsImpl(path: PathType, locale: string) {
@@ -53,14 +62,35 @@ async function populatePageDataImpl(
     ProductFamilyType,
   );
 
+  if (productFamily?.familyId) {
+    setContextData("productFamily", productFamily);
+    try {
+      const familyInfo: FamilyInfo = await getNormalizedFamilyInfo(
+        productFamily.familyId,
+      );
+      setContextData("familyInfo", familyInfo);
+    } catch (error) {
+      console.error("Get Family Info CMS API failed", error);
+    }
+  }
   const application = normalizeGenericContentToTyped(
     await cached.getReferencedContent(content.application),
     ApplicationType,
   );
 
-  setContextData("productFamily", productFamily);
+  if (application?.applicationId) {
+    setContextData("application", application);
+  }
 
-  setContextData("application", application);
+  // Even if no application ID is set, we still want to have the default one in most cases.
+  try {
+    const applicationInfo: ApplicationInfo = await getNormalizedApplicationInfo(
+      application?.applicationId ?? DEFAULT_APPLICATION_ID,
+    );
+    setContextData("applicationInfo", applicationInfo);
+  } catch (error) {
+    console.error("Get Application CMS API failed", error);
+  }
 }
 
 export const populatePageData = cache(populatePageDataImpl);
@@ -72,7 +102,7 @@ async function getBreadcrumb(
   const visibleItems = items.filter(
     (x) =>
       // Don't show for Article Page
-      (x._itemMetadata.type !== ArticlePageType.key),
+      x._itemMetadata.type !== ArticlePageType.key,
   );
   return visibleItems.map((x, i) => ({
     title: i === 0 ? t("Home") : x.navigationTitle || x.pageTitle,
@@ -112,12 +142,15 @@ async function getItemsInPath(path: string | GraphReference, locale: string) {
 
   const client = getClient();
 
-    // The CMS filters `_metadata.locale` by Language Code, not URL slug (e.g.
-    // slug "zh-cn" -> code "zh-Hans-CN"); the raw slug matches nothing and the
-    // header/footer SiteSettings silently disappear. Map slug -> code here.
-    const graphLocale = toGraphLocale(locale);
+  // The CMS filters `_metadata.locale` by Language Code, not URL slug (e.g.
+  // slug "zh-cn" -> code "zh-Hans-CN"); the raw slug matches nothing and the
+  // header/footer SiteSettings silently disappear. Map slug -> code here.
+  const graphLocale = toGraphLocale(locale);
 
-    const result = await client.request(Query, { keys: keyPath, locale: graphLocale }) as ResultType;
+  const result = (await client.request(Query, {
+    keys: keyPath,
+    locale: graphLocale,
+  })) as ResultType;
 
   const items = result.TI_PageContent_Contract.items
     // Make sure they're in the right order since order isn't guaranteed

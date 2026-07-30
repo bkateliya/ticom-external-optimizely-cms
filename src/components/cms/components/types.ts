@@ -11,6 +11,7 @@ import { cardListComponents } from "./CardList/types";
 
 import { ColumnGridColumnComponentType, ColumnGridComponentType } from "./ColumnGrid/ColumnGrid.model";
 import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
+import { applicationListingComponents } from "./application-components/types";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -23,5 +24,6 @@ export const allComponentTypes = [
   HomePageHeroComponentType,
   ColumnGridColumnComponentType,
   ColumnGridComponentType,
-  ...cardListComponents
+  ...cardListComponents,
+  ...applicationListingComponents
 ];

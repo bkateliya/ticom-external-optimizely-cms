@@ -123,7 +123,7 @@ export interface Literature {
   productGroup: string | null;
   processType: string | null;
 }
-interface ApplicationResponse {
+export interface ApplicationResponse {
   AppHierarchyList: Application[];
   appAreaEndEquipAssoc: string | null;
   appAreaName: string | null;

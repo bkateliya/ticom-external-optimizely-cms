@@ -29,6 +29,7 @@
 
   --text-h4: var(--ti-text-h4);
   --text-h4--line-height: var(--ti-text-h4-lh);
+  --text-h4--font-weight: 400;
 
   --text-h5: var(--ti-text-h5);
   --text-h5--line-height: var(--ti-text-h5-lh);
@@ -36,7 +37,7 @@
 
   --text-h6: var(--ti-text-h6);
   --text-h6--line-height: var(--ti-text-h6-lh);
-  --text-h6--font-weight: 400;
+  --text-h6--font-weight: var(--ti-text-h6-weight);
 
   --text-body-xl: var(--ti-text-body-xl);
   --text-body-xl--line-height: var(--ti-text-body-xl-lh);
@@ -53,4 +54,5 @@
   --text-body-sm: var(--ti-text-body-sm);
   --text-body-sm--line-height: var(--ti-text-body-sm-lh);
   --text-body-sm--font-weight: 400;
+
 }

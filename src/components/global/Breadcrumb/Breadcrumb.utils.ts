@@ -1,18 +1,37 @@
-import {
-  getProductFamily,
-  getSilos,
-  getApplication,
-  Application,
-} from "@/lib/api/cms-api";
 import { cleanLegacyUrl } from "@/lib/utils/link-utils";
+import { getContextData } from "@optimizely/cms-sdk/react/server";
 import { getLocale, getTranslations } from "next-intl/server";
 
-export async function getProductFamilyBreadcrumb(familyId: string) {
-  const t = await getTranslations();
-  const locale = getLocale();
+export interface BreadcrumbResult {
+  isProducts: boolean;
+  breadcrumbs: BreadcrumbEntry[];
+}
 
-  const familyResponse = await getProductFamily(familyId);
-  const silos = await getSilos();
+export async function getBreadcrumb(): Promise<BreadcrumbResult> {
+  const familyBreadcrumb = await getProductFamilyBreadcrumb();
+  if (familyBreadcrumb) {
+    return { isProducts: true, breadcrumbs: familyBreadcrumb };
+  }
+
+  const applicationBreadcrumb = await getApplicationBreadcrumb();
+  if (applicationBreadcrumb) {
+    return { isProducts: false, breadcrumbs: applicationBreadcrumb };
+  }
+
+  const contextBreadcrumb = getContextData("breadcrumb") ?? [];
+
+  return { isProducts: false, breadcrumbs: contextBreadcrumb };
+}
+
+async function getProductFamilyBreadcrumb() {
+  const familyResponse = getContextData("familyInfo");
+
+  if (!familyResponse) {
+    return null;
+  }
+
+  const t = await getTranslations();
+  const locale = await getLocale();
 
   const finalBreadcrumb: BreadcrumbEntry[] = [
     {
@@ -38,7 +57,7 @@ export async function getProductFamilyBreadcrumb(familyId: string) {
         url: cleanLegacyUrl(item.productNodeUrl),
       };
       if (index === 0) {
-        entry.siblings = silos.map((sib) => {
+        entry.siblings = familyResponse.silos.map((sib) => {
           return {
             asSpan: false,
             title: sib.familyName,
@@ -47,10 +66,7 @@ export async function getProductFamilyBreadcrumb(familyId: string) {
           };
         });
       } else {
-        const siblings = familyResponse.tree.filter(
-          (x) => x.parentId == item.parentId,
-        );
-        entry.siblings = siblings
+        entry.siblings = item.siblings
           .filter((x) => x.productNodeUrl != null)
           .map((sib) => {
             return {
@@ -68,19 +84,16 @@ export async function getProductFamilyBreadcrumb(familyId: string) {
   return finalBreadcrumb;
 }
 
-export async function getApplicationBreadcrumb(applicationId: string) {
+async function getApplicationBreadcrumb() {
+  const applicationResponse = getContextData("applicationInfo");
+
+  if (!applicationResponse) {
+    return null;
+  }
+
   const t = await getTranslations();
-  const locale = getLocale();
+  const locale = await getLocale();
 
-  const applicationResponse = await getApplication(applicationId);
-
-  const map = applicationResponse.AppHierarchyList.reduce(
-    (prev, curr) => {
-      prev[curr.childId] = curr;
-      return prev;
-    },
-    {} as Record<number, Application>,
-  );
   const finalBreadcrumb: BreadcrumbEntry[] = [
     {
       asSpan: false,
@@ -96,28 +109,24 @@ export async function getApplicationBreadcrumb(applicationId: string) {
     },
   ];
 
-  applicationResponse.ancestors.toReversed().forEach((ancestoryItem) => {
-    const item = map[ancestoryItem.childId];
+  applicationResponse.ancestors.toReversed().forEach((item) => {
     if (item.appUrl) {
       const entry: BreadcrumbEntry = {
         asSpan: false,
         title: item.sectionName,
         titleEN: item.enSectionName,
         url: cleanLegacyUrl(item.appUrl),
+        siblings: item.siblings
+          .filter((x) => x.appUrl != null)
+          .map((sib) => {
+            return {
+              asSpan: false,
+              title: sib.sectionName,
+              titleEN: sib.enSectionName,
+              url: cleanLegacyUrl(sib.appUrl),
+            };
+          }),
       };
-      const siblings = applicationResponse.AppHierarchyList.filter(
-        (x) => x.parentAppId == item.parentAppId,
-      );
-      entry.siblings = siblings
-        .filter((x) => x.appUrl != null)
-        .map((sib) => {
-          return {
-            asSpan: false,
-            title: sib.sectionName,
-            titleEN: sib.enSectionName,
-            url: cleanLegacyUrl(sib.appUrl),
-          };
-        });
 
       finalBreadcrumb.push(entry);
     }

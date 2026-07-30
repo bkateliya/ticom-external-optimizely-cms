@@ -1,12 +1,7 @@
 import { TiSvgIcon } from "@/components/ui/ti/TiSvgIcon";
-import { getContextData } from "@optimizely/cms-sdk/react/server";
 import { getTranslations } from "next-intl/server";
 import { tv } from "tailwind-variants";
-import {
-  BreadcrumbEntry,
-  getApplicationBreadcrumb,
-  getProductFamilyBreadcrumb,
-} from "./Breadcrumb.utils";
+import { getBreadcrumb } from "./Breadcrumb.utils";
 
 /**
  * Breadcrumb:
@@ -24,33 +19,10 @@ import {
 export async function Breadcrumb() {
   const t = await getTranslations();
 
-  const contextBreadcrumb = getContextData("breadcrumb") ?? [];
-  let finalBreadcrumb: BreadcrumbEntry[] | null = null;
-  let isProducts = false;
+  const { isProducts, breadcrumbs } = await getBreadcrumb();
 
-  try {
-    const familyId = getContextData("productFamily")?.familyId;
-    if (familyId) {
-      isProducts = true;
-      finalBreadcrumb = await getProductFamilyBreadcrumb(familyId);
-    }
-
-    const applicationId = getContextData("application")?.applicationId; //"11060";
-    if (applicationId) {
-      finalBreadcrumb = await getApplicationBreadcrumb(applicationId);
-    }
-  } catch (error) {
-    console.error(
-      "Breadcrumb: PIM API failed, using automatic breadcrumb",
-      error,
-    );
-    isProducts = false;
-  }
-  if (!finalBreadcrumb) {
-    finalBreadcrumb = contextBreadcrumb;
-  }
   // If breadcrumb only has Home and no other pages, don't show
-  if (finalBreadcrumb.length <= 1) {
+  if (breadcrumbs.length <= 1) {
     return null;
   }
 
@@ -73,7 +45,7 @@ export async function Breadcrumb() {
   const jsonLd = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: finalBreadcrumb.map((item, index) => ({
+    itemListElement: breadcrumbs.map((item, index) => ({
       "@type": "ListItem",
       position: index + 1,
       name: item.title,
@@ -91,7 +63,7 @@ export async function Breadcrumb() {
 
         {/* Mobile: plain, scrollable breadcrumb — no dropdowns (matches live). */}
         <ol className={mobileList()}>
-          {finalBreadcrumb.map((item) => (
+          {breadcrumbs.map((item) => (
             <li key={item.url} className={mobileItem()}>
               {item.asSpan ? (
                 <span aria-current="page">{item.title}</span>
@@ -107,7 +79,7 @@ export async function Breadcrumb() {
         {/* Desktop: TI Stencil breadcrumb, with sibling dropdowns (parametric
             icon only on product families). Hidden on mobile. */}
         <ti-breadcrumb className={desktop()} data-lid="breadcrumb">
-          {finalBreadcrumb.map((item, index) => (
+          {breadcrumbs.map((item, index) => (
             <ti-breadcrumb-section
               key={item.url}
               data-lid={`breadcrumb_${index}-${item.titleEN ?? item.title}`}
@@ -133,7 +105,7 @@ export async function Breadcrumb() {
                   id={`ti-breadcrumb-section-${index}`}
                   href={item.url}
                   aria-current={
-                    index === finalBreadcrumb.length - 1 ? "page" : undefined
+                    index === breadcrumbs.length - 1 ? "page" : undefined
                   }
                 >
                   {item.title}
