@@ -21,6 +21,12 @@ export const roboto = localFont({
       weight: "400",
       style: "normal",
     },
+    // Bold: 500
+    {
+      path: "./roboto-v20-latin-ext_latin_greek-500.woff2",
+      weight: "500",
+      style: "normal",
+    },
     // Bold
     {
       path: "./roboto-v20-latin-ext_latin_greek-500.woff2",

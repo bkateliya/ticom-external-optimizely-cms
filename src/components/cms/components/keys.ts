@@ -1,5 +1,5 @@
-
 import { KEY_PREFIX } from "../constants";
+import { ApplicationComponentTypeKeyMap } from "./application-components/keys";
 
 // This is in separate file to avoid circular reference when pushing types
 // Otherwise there's a confusing error about object is not iterable when doing an Opti push
@@ -31,5 +31,7 @@ export const StandaloneComponentTypeKeys = [
   AllComponentTypeKeyMap.CodeEmbedComponent,
   AllComponentTypeKeyMap.CardListComponent,
   AllComponentTypeKeyMap.SingleGeneralCardComponent,
-  AllComponentTypeKeyMap.ColumnGridComponent
-]
+  AllComponentTypeKeyMap.ColumnGridComponent,
+
+  ApplicationComponentTypeKeyMap.ApplicationListing,
+];

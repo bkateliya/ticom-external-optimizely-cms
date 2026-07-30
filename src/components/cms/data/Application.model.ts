@@ -14,15 +14,34 @@ export const ApplicationType = contentType({
       indexingType: "queryable",
       isLocalized: false,
     },
-    // Additional fields can go here, but it's easier to add fields than remove so we'll add as needed.
+    categoryId: {
+      type: "string",
+      displayName: "Category Id",
+      group: PropertyTypes.Data,
+      indexingType: "queryable",
+      isLocalized: false,
+    },
+    sectorId: {
+      type: "string",
+      displayName: "Sector Id",
+      group: PropertyTypes.Data,
+      indexingType: "queryable",
+      isLocalized: false,
+    },
+    marketId: {
+      type: "string",
+      displayName: "Market Id",
+      group: PropertyTypes.Data,
+      indexingType: "queryable",
+      isLocalized: false,
+    },
   },
 });
-
 
 export const ApplicationFolderType = contentType({
   key: `${KEY_PREFIX}Application_Folder`,
   displayName: `${DISPLAY_NAME_PREFIX}Application Folder`,
   baseType: "_folder",
   properties: {},
-  mayContainTypes: ["_self", ApplicationType]
+  mayContainTypes: ["_self", ApplicationType],
 });

@@ -54,7 +54,7 @@ export async function HomePageHeroSlideComponent({
     wrapper,
   } = TAILWIND_VARIANTS();
 
-  const locale = getLocale();
+  const locale = await getLocale();
   const href = content.link?.url?.default ?? "";
   return (
     <TiSlide
