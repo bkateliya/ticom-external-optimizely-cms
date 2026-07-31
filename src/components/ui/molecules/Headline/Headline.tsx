@@ -1,5 +1,4 @@
 import { TextAlignment } from "@/components/ui/context/TextAlignmentContext";
-import styles from "./styles.module.css";
 import clsx from "clsx";
 import {
   HeadlineComponentType,
@@ -14,9 +13,9 @@ export interface HeadlineStyleProps {
 }
 export interface HeadlineProps
   extends
-    OptiComponentProps<HeadlineContractContentType>,
-    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-    HeadlineStyleProps {}
+  OptiComponentProps<HeadlineContractContentType>,
+  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+  HeadlineStyleProps { }
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
   Left: "text-left",
@@ -61,34 +60,26 @@ export const Headline = ({
   }
 
   return (
-    <div className={clsx(baseClassName, props.className)} {...props}>
-      <div>
-        <WrappedTextField
-          as="span"
-          className={styles.eyebrowText}
-          field="eyebrow"
-        />
-      </div>
-      <div className={clsx()}>
-        <WrappedHeadingTextField
-          headingSize={parseHeadlineSize({ content })}
-          field="headline"
-        />
-        {redUnderline ? (
-          <hr
-            className={clsx(
-              "w-24 border-0 h-px -mt-2 mb-8 bg-pl-border-color-accent",
-              {
-                "mx-auto": textAlignment === "Center",
-              },
-            )}
+    <div className={clsx(baseClassName, props.className, "gap-2 flex flex-col")} {...props}>
+      <WrappedTextField as="span" field="eyebrow" className="text-label mb-2" />
+
+      {/* Grouped so headline and description sit on their own typography
+          margins instead of picking up the column's gap. */}
+      {(content.headline || content.description) && (
+        <div>
+          <WrappedHeadingTextField
+            headingSize={parseHeadlineSize({ content })}
+            field="headline"
+            className={clsx({
+              "after:content-[''] after:block after:w-24 after:h-px after:mt-6 after:bg-[var(--ti-accent-color,var(--pl-border-color-accent))]":
+                redUnderline,
+              "after:mx-auto": redUnderline && textAlignment === "Center",
+              "mb-0": !content.description,
+            })}
           />
-        ) : null}
-        <WrappedRichTextField
-          field="description"
-          className={styles.description}
-        />
-      </div>
+          <WrappedRichTextField field="description" className="text-body-lg" />
+        </div>
+      )}
     </div>
   );
 };

@@ -40,7 +40,15 @@ export function ColumnGridComponent({
       return (
         <div
           key={index}
-          className={clsx(columnClass, alignClass, "grid", "gap-4")}
+          className={clsx(
+            columnClass,
+            alignClass,
+            "grid",
+            "gap-4",
+            // A column is already narrow, so drop the 2/3 width cap a Preamble
+            // applies when it sits directly in a section.
+            "[&_[data-preamble-width-cap]]:max-w-none",
+          )}
         >
           {column.content.map((x, i) => (
             <ExtendedOptimizelyComponent key={i} content={x} />
@@ -87,7 +95,8 @@ function getVerticalAlignClass(verticalAlignment?: VAlignOptions) {
 
 function getColumnClass(columns: ColumnOptions) {
   if (columns === "20-20-20-20-20") {
-    return "grid-cols-5";
+    // 1 col on mobile, 3 on tablet, 5 on desktop — not divisible out of 12.
+    return "grid-cols-1 md:grid-cols-3 lg:grid-cols-5";
   }
   return "grid-cols-12";
 }
@@ -156,13 +165,13 @@ function getColumnSpanClass(columns: ColumnOptions, columnIndex: number) {
       return null;
     case "25-25-25-25":
       if (columnIndex < 4) {
-        return "col-span-12 md:col-span-3";
+        return "col-span-12 md:col-span-6 lg:col-span-3";
       }
       return null;
     case "20-20-20-20-20":
       if (columnIndex < 5) {
         // Special case, not out of 12 total
-        return "col-span-5 md:col-span-1";
+        return "col-span-1";
       }
       return null;
   }

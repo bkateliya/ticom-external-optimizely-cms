@@ -48,33 +48,33 @@
 @layer base {
 
   h1,
-  .text-h1 {
-    @apply text-h1 mb-12;
+  .heading-text-h1 {
+    @apply text-h1 mb-6 md:mb-12;
   }
 
   h2,
-  .text-h2 {
-    @apply text-h2 mb-8;
+  .heading-text-h2 {
+    @apply text-h2 mb-6 md:mb-8;
   }
 
   h3,
-  .text-h3 {
-    @apply text-h3 mb-4;
+  .heading-text-h3 {
+    @apply text-h3 mb-6 md:mb-4;
   }
 
   h4,
-  .text-h4 {
-    @apply text-h4 mb-3;
+  .heading-text-h4 {
+    @apply text-h4 mb-3 md:mb-6;
   }
 
   h5,
-  .text-h5 {
-    @apply text-h5 mb-3;
+  .heading-text-h5 {
+    @apply text-h5 mb-3 md:mb-6;
   }
 
   h6,
-  .text-h6 {
-    @apply text-h6 mb-3;
+  .heading-text-h6 {
+    @apply text-h6 mb-3 md:mb-6;
   }
 
 }

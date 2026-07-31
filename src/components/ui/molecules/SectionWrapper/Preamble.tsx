@@ -6,8 +6,12 @@ import {
 } from "@/components/cms/contracts/component-contracts/preamble.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { HeadingLevelContext } from "@/components/utilities/HeadingLevelContext";
-import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
+import {
+  normalizeGenericArrayToTyped,
+  normalizeGenericContentToTyped,
+} from "@/lib/utils/content-type-utils";
 import { HeadlineComponentType } from "@/components/cms/contracts/component-contracts/headline.model";
+import { CTAElementType } from "@/components/cms/elements/CTA/CTA.model";
 import { CtaList } from "../CtaList/CtaList";
 import { Headline, HeadlineStyleProps } from "../Headline/Headline";
 
@@ -17,10 +21,10 @@ export interface PreambleStyleOptions extends HeadlineStyleProps {
 
 export interface PreambleProps
   extends
-    OptiComponentProps<PreambleContractContentType>,
-    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-    React.PropsWithChildren,
-    PreambleStyleOptions {}
+  OptiComponentProps<PreambleContractContentType>,
+  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+  React.PropsWithChildren,
+  PreambleStyleOptions { }
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
   Left: "text-left",
@@ -46,10 +50,10 @@ export const Preamble = ({ content, ...props }: PreambleProps) => {
 
 export interface PreambleDirectHeadlineProps
   extends
-    OptiComponentProps<PreambleDirectHeadlineContractContentType>,
-    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-    React.PropsWithChildren,
-    PreambleStyleOptions {}
+  OptiComponentProps<PreambleDirectHeadlineContractContentType>,
+  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+  React.PropsWithChildren,
+  PreambleStyleOptions { }
 
 export const PreambleDirectHeadline = ({
   children,
@@ -67,7 +71,6 @@ export const PreambleDirectHeadline = ({
     "flex",
     "flex-column",
     "bg-{var(--component-section-color-bg)}",
-    // "py-4",
     textAlignmentClassMap[textAlignment],
   );
 
@@ -76,6 +79,11 @@ export const PreambleDirectHeadline = ({
     content.headline ||
     content.description
   );
+
+  /* Mirrors CtaList's own check so the wrapper isn't rendered for CTAs it will drop. */
+  const hasCtas = normalizeGenericArrayToTyped<typeof CTAElementType>(
+    content.ctas,
+  ).some((cta) => cta.link?.url.default);
 
   const sectionContentWrapperClassName = clsx([
     "space-y-4",
@@ -91,24 +99,30 @@ export const PreambleDirectHeadline = ({
         className={clsx("flex", "flex-col", "w-full", "gap-8")}
       >
         {beforeElements}
-        <div
-          className={clsx("flex", "gap-8", {
-            "flex-col": textAlignment === "Center",
-          })}
-        >
-          <Headline
-            content={content}
-            parentField={parentField}
-            textAlignment={textAlignment}
-            redUnderline={redUnderline}
-          />
 
-          <CtaList
-            textAlignment={textAlignment}
-            content={content}
-            parentField={parentField}
-          />
-        </div>
+        {(hasHeaderContent || hasCtas) && (
+          /* The 2/3 cap assumes full section width. A Column Grid column
+             removes it (see ColumnGrid) so the header fills the column. */
+          <div
+            data-preamble-width-cap
+            className={clsx("flex", "w-full", "flex-col", "gap-8 md:max-w-2/3", {
+              "flex-col mx-auto": textAlignment === "Center",
+            })}
+          >
+            <Headline
+              content={content}
+              parentField={parentField}
+              textAlignment={textAlignment}
+              redUnderline={redUnderline}
+            />
+
+            <CtaList
+              textAlignment={textAlignment}
+              content={content}
+              parentField={parentField}
+            />
+          </div>
+        )}
         {children && (
           <div className={sectionContentWrapperClassName}>
             {/* Then increment the level if needed, e.g. if component set H3, then we set it to H3 above, 

@@ -6,12 +6,12 @@ import { TextField } from "./TextField";
 import clsx from "clsx";
 
 export const HeadingSize = {
-  1: "text-h1",
-  2: "text-h2",
-  3: "text-h3",
-  4: "text-h4",
-  5: "text-h5",
-  6: "text-h6",
+  1: "heading-text-h1",
+  2: "heading-text-h2",
+  3: "heading-text-h3",
+  4: "heading-text-h4",
+  5: "heading-text-h5",
+  6: "heading-text-h6",
 };
 
 export type HeadingSizeType = keyof typeof HeadingSize;

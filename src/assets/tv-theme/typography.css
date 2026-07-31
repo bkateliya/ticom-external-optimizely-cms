@@ -55,4 +55,36 @@
   --text-body-sm--line-height: var(--ti-text-body-sm-lh);
   --text-body-sm--font-weight: 400;
 
+  --text-label: var(--ti-text-label);
+  --text-label--line-height: var(--ti-text-label-lh);
+  --text-label--font-weight: 400;
+
+
+  /* Font Size */
+  --ti-text-xxs: 10px;
+  --ti-text-xs: 12px;
+  --ti-text-sm: 14px;
+  --ti-text-md: 16px;
+  --ti-text-lg: 18px;
+  --ti-text-xl: 20px;
+  --ti-text-2xl: 24px;
+  --ti-text-3xl: 30px;
+  --ti-text-4xl: 36px;
+  --ti-text-5xl: 48px;
+  --ti-text-6xl: 60px;
+  --ti-text-7xl: 72px;
+
+  /* Line Height */
+  --ti-leading-xxs: 14px;
+  --ti-leading-xs: 16px;
+  --ti-leading-sm: 20px;
+  --ti-leading-md: 24px;
+  --ti-leading-lg: 28px;
+  --ti-leading-xl: 30px;
+  --ti-leading-2xl: 32px;
+  --ti-leading-3xl: 38px;
+  --ti-leading-4xl: 44px;
+  --ti-leading-5xl: 56px;
+  --ti-leading-6xl: 68px;
+  --ti-leading-7xl: 80px;
 }
