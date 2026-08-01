@@ -1,7 +1,8 @@
 @import "./root.css";
-@import "./theme-primary.css";
-@import "./theme-secondary.css";
-@import "./theme-tertiary.css";
-@import "./theme-accent.css";
+@import "./theme-white.css";
+@import "./theme-grey.css";
+@import "./theme-dark-grey.css";
+@import "./theme-black.css";
+@import "./theme-red-gradient.css";
 @import "./mode-dark.css";
 @import "./mode-light.css";

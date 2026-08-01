@@ -60,6 +60,31 @@ export function normalizeUrl(url: string | UrlObject): string | null {
   }
   return parsedUrl.toString();
 }
+
+/**
+ * Points an app path at a specific locale: swaps the first segment when it
+ * already is one of ours, inserts the locale when it isn't. Absolute urls are
+ * returned untouched — prefixing a host with a locale would only corrupt it, and
+ * `normalizeUrl` is the one that deals with hosts.
+ *
+ * Unlike `normalizeUrl` the locale is always explicit, because the callers either
+ * run before the Opti context exists (breadcrumbs, `generateMetadata`) or need a
+ * locale other than the current one (hreflang alternates need all of them).
+ */
+export function withLocale(path: string, locale: string): string {
+  if (PROTOCOL_REGEX.test(path)) {
+    return path;
+  }
+
+  const segments = path.replace(/^\//, "").split("/");
+  if (SUPPORTED_LOCALES.includes(segments[0].toLowerCase())) {
+    segments[0] = locale;
+  } else {
+    segments.unshift(locale);
+  }
+  return `/${segments.join("/")}`;
+}
+
 /** The file name at the end of a url, without any query string or hash. */
 export function getUrlFileName(url: string) {
   const split = url.split("/");

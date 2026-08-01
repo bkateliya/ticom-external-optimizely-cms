@@ -15,10 +15,14 @@ export const AllComponentTypeKeyMap = {
   ProductCardsComponent: `${KEY_PREFIX}ProductCards_Component`,
   PromoBlockComponent: `${KEY_PREFIX}PromoBlock_Component`,
   CodeEmbedComponent: `${KEY_PREFIX}CodeEmbed_Component`,
+  CodeSnippetComponent: `${KEY_PREFIX}CodeSnippet_Component`,
   HomePageHeroSlideComponent: `${KEY_PREFIX}HomePageHeroSlide_Component`,
   HomePageHeroComponent: `${KEY_PREFIX}HomePageHero_Component`,
   ColumnGridColumnComponent: `${KEY_PREFIX}ColumnGridColumn_Component`,
   ColumnGridComponent: `${KEY_PREFIX}ColumnGrid_Component`,
+  StandardImageComponent:`${KEY_PREFIX}StandardImage_Component`,
+  HeadshotImageComponent:`${KEY_PREFIX}HeadshotImage_Component`,
+  PremiumMediaHeading: `${KEY_PREFIX}PremiumMediaHeading_Component`,
 };
 
 /**
@@ -29,9 +33,11 @@ export const StandaloneComponentTypeKeys = [
   AllComponentTypeKeyMap.ContentBlockComponent,
   AllComponentTypeKeyMap.PromoBlockComponent,
   AllComponentTypeKeyMap.CodeEmbedComponent,
+  AllComponentTypeKeyMap.CodeSnippetComponent,
   AllComponentTypeKeyMap.CardListComponent,
   AllComponentTypeKeyMap.SingleGeneralCardComponent,
   AllComponentTypeKeyMap.ColumnGridComponent,
-
   ApplicationComponentTypeKeyMap.ApplicationListing,
+  AllComponentTypeKeyMap.PremiumMediaHeading,
 ];
+

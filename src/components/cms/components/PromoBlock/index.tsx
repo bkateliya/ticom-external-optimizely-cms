@@ -21,7 +21,7 @@ export function PromoBlockComponent({
     split === "large-right" ? styles.largeFlex : styles.smallFlex;
 
   return (
-    <ThemeProvider theme="theme-accent">
+    <ThemeProvider theme="theme-red-gradient">
       <div className={styles.base}>
         <div className={clsx(styles.promoBlock)}>
           <div className={leftClass}>

@@ -7,7 +7,7 @@ import {
 import { MainHeaderComponentType } from "../MainHeader/MainHeader.model";
 import { ApiHeaderComponentType } from "../ApiHeader/ApiHeader.model";
 import { DlpHeaderComponentType } from "../DlpHeader/DlpHeader.model";
-import { DlpFooterComponentType } from "../DlpFooter/DlpFooter.model";
+import { CreativeShowcaseFooterComponentType } from "../CreativeShowcaseFooter/CreativeShowcaseFooter.model";
 import { MainFooterComponentType } from "../MainFooter/MainFooter.model";
 
 export const SiteSettingsDataType = contentType({
@@ -36,7 +36,7 @@ export const SiteSettingsDataType = contentType({
 
     footer: {
       type: "content",
-      allowedTypes: [MainFooterComponentType, DlpFooterComponentType],
+      allowedTypes: [MainFooterComponentType, CreativeShowcaseFooterComponentType],
       displayName: "Page Footer",
       isLocalized: true,
       group: propertyGroupKeys.Layout,

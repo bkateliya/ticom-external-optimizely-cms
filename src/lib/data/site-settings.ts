@@ -15,6 +15,7 @@ import { ApplicationType } from "@/components/cms/data/Application.model";
 import { ProductFamilyType } from "@/components/cms/data/ProductFamily.model";
 import { OptiComponentProps } from "../ts/component-props";
 import { normalizeGenericContentToTyped } from "../utils/content-type-utils";
+import { withLocale } from "../utils/link-utils";
 import { BreadcrumbEntry } from "@/components/global/Breadcrumb/Breadcrumb.utils";
 import { PageFolderType } from "@/components/cms/pages/PageFolder/PageFolder.model";
 import { ArticlePageType } from "@/components/cms/pages/Article/Article.model";
@@ -29,12 +30,20 @@ import {
 } from "../api/normalized/productFamilies";
 
 type PathType = Parameters<GraphClient["getPath"]>["0"];
-async function populateSiteSettingsImpl(path: PathType, locale: string) {
-  const items = await getItemsInPathCached(path, locale);
+async function populateSiteSettingsImpl(
+  path: PathType,
+  locale: string,
+  // Site settings, breadcrumb and page title are locale-filtered, so they have
+  // to be queried in the locale the content came from — which differs from the
+  // URL locale when an untranslated page falls back (see `getPageContent`).
+  // The context keeps the URL locale, so links and UI copy stay localized.
+  contentLocale: string = locale,
+) {
+  const items = await getItemsInPathCached(path, contentLocale);
 
   const siteSettings = getSiteSettings(items);
 
-  const breadcrumb = await getBreadcrumb(items);
+  const breadcrumb = await getBreadcrumb(items, locale);
 
   const currentPage = items[items.length - 1];
 
@@ -97,6 +106,7 @@ export const populatePageData = cache(populatePageDataImpl);
 
 async function getBreadcrumb(
   items: ResultItemType[],
+  locale: string,
 ): Promise<BreadcrumbEntry[]> {
   const t = await getTranslations();
   const visibleItems = items.filter(
@@ -106,7 +116,9 @@ async function getBreadcrumb(
   );
   return visibleItems.map((x, i) => ({
     title: i === 0 ? t("Home") : x.navigationTitle || x.pageTitle,
-    url: x._metadata.url.default,
+    // The items are in the content locale, which is the default locale on a page
+    // that fell back — the crumbs must stay on the locale the visitor is browsing.
+    url: withLocale(x._metadata.url.default, locale),
     asSpan:
       // Last entry should be span
       i === visibleItems.length - 1 ||

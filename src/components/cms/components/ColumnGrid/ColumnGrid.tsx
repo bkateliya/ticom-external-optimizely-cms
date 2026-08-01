@@ -21,7 +21,6 @@ export function ColumnGridComponent({
 
   // Grid-level default; each column may override it with its own value.
 
-
   const wrapperClasses = clsx("grid", "gap-7", getColumnClass(columnControl));
 
   const renderedColumns = (content.columns ?? [])
@@ -40,7 +39,13 @@ export function ColumnGridComponent({
       return (
         <div
           key={index}
-          className={clsx(columnClass, alignClass, "grid", "gap-4")}
+          className={clsx(
+            columnClass,
+            alignClass,
+            "grid",
+            "gap-4",
+            "[&_[data-preamble-width-cap]]:max-w-none",
+          )}
         >
           {column.content.map((x, i) => (
             <ExtendedOptimizelyComponent key={i} content={x} />

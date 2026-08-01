@@ -36,11 +36,13 @@ export type TiImageProps = React.PropsWithChildren & {
   hoverAnimation?: ImageHoverAnimation;
   /**
    * Optional caption content. Rendered into the underlying `<ti-image>` `caption`
-   * slot, wrapped in a `<p slot="caption">` for you — pass only the inner content,
-   * not the `<p>` or the `slot` attribute. Accepts rich content such as links.
+   * slot, wrapped in a `<div slot="caption">` for you — pass only the inner
+   * content, not the `slot` attribute. Should contain its own block element
+   * (e.g. a `<p>`), matching ti.com's caption markup so caption typography
+   * (`ti-image [slot="caption"] p`) applies correctly.
    *
    * @example
-   * <TiImage src="/foo.jpg" alt="Foo" caption={<>Caption <a href="//www.ti.com">with link</a>.</>} />
+   * <TiImage src="/foo.jpg" alt="Foo" caption={<p>Caption <a href="//www.ti.com">with link</a>.</p>} />
    */
   caption?: React.ReactNode;
   /**
@@ -92,7 +94,7 @@ export function TiImage({
       zoom-download={zoomDownload}
       hover-animation={hoverAnimation}
     >
-      {caption && <p slot="caption">{caption}</p>}
+      {caption && <div slot="caption">{caption}</div>}
       {downloadLabel && <span slot="download-label">{downloadLabel}</span>}
       {children}
     </ti-image>

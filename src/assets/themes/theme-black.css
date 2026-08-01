@@ -1,0 +1,4 @@
+.theme-dark-grey {
+  --ti-section-background: #111111;
+  --ti-text-color: var(--pl-text-color-primary-contrast);
+}

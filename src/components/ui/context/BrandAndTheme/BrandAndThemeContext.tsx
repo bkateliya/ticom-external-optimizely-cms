@@ -16,8 +16,14 @@ import { ThemeSelector, ThemeSettingToggle } from "./BrandSelector";
 
 import { ComponentTheme } from "@/components/ui/ti/enums";
 
-function getModeFromTheme(theme: Themes | undefined | 'custom'): ComponentTheme {
-  if (theme === 'theme-tertiary' || theme === 'theme-accent') {
+function getModeFromTheme(
+  theme: Themes | undefined | "custom",
+): ComponentTheme {
+  if (
+    theme === "theme-dark-grey" ||
+    theme === "theme-black" ||
+    theme === "theme-red-gradient"
+  ) {
     return ComponentTheme.dark;
   }
   return ComponentTheme.light;
@@ -39,7 +45,7 @@ type ThemeProviderProps = HTMLAttributes<HTMLDivElement> & {
   /**
    * Optional. The theme to use. Will fallback to the parent theme or the first theme if not provided .
    */
-  theme?: Themes | 'custom';
+  theme?: Themes | "custom";
   /** Optional.  Light or Dark mode.  This is usually determined by the theme. */
   mode?: ComponentTheme;
   /**
@@ -70,7 +76,7 @@ export const ThemeProvider = ({
 
   const effectiveMode = mode ?? getModeFromTheme(effectiveTheme);
   const themeSetting: ThemeSetting = {
-    theme: effectiveTheme === 'custom' ? null : effectiveTheme,
+    theme: effectiveTheme === "custom" ? null : effectiveTheme,
     mode: effectiveMode,
     isReversed: effectiveMode === "dark",
     allowThemeSwitching: effectiveAllowThemeSwitching,
@@ -89,7 +95,6 @@ export const ThemeProvider = ({
         ].filter(Boolean),
       );
     }
-
   }, [applyToBody, themeSetting.mode, themeSetting.theme]);
 
   if (applyToBody) {
@@ -127,6 +132,6 @@ export const ThemeProvider = ({
       >
         {children}
       </div>
-    </ThemeContext.Provider >
+    </ThemeContext.Provider>
   );
 };

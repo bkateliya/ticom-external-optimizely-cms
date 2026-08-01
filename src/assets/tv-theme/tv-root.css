@@ -32,6 +32,8 @@
   --ti-text-body-md-lh: 24px;
   --ti-text-body-sm: 12px;
   --ti-text-body-sm-lh: 24px;
+  --ti-text-label: 12px;
+  --ti-text-label-lh: 16px;
 }
 
 /* desktop / tablet (>=768px) — overrides the mobile base */

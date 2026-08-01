@@ -1,5 +1,6 @@
 import { getClient, GraphClient, GraphReference } from "@optimizely/cms-sdk";
 import { cache } from "react";
+import { DEFAULT_LOCALE } from "@/constants/locales";
 
 const getPath: GraphClient["getPath"] = async (path) => {
   const client = getClient();
@@ -29,3 +30,20 @@ export const cached = {
   getContentByPath: cache(getContentByPath),
   getReferencedContent: cache(getReferencedContent),
 };
+
+
+export async function getPageContent(locale: string, slug: string[]) {
+  const rest = slug.join("/");
+  const content = await cached.getContentByPath(`/${locale}/${rest}`);
+
+  if (content[0] || locale === DEFAULT_LOCALE) {
+    return { content: content[0], path: `/${locale}/${rest}`, contentLocale: locale };
+  }
+
+  const fallback = await cached.getContentByPath(`/${DEFAULT_LOCALE}/${rest}`);
+  return {
+    content: fallback[0],
+    path: `/${DEFAULT_LOCALE}/${rest}`,
+    contentLocale: DEFAULT_LOCALE,
+  };
+}

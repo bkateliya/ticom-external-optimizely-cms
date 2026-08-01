@@ -1,5 +1,10 @@
-import { ApiHeaderComponentType } from "./ApiHeader/ApiHeader.model";
-import { DlpFooterComponentType } from "./DlpFooter/DlpFooter.model";
+import {
+  ApiHeaderComponentType,
+  ApiHeaderLevel1ComponentType,
+  ApiHeaderLevel2ComponentType,
+} from "./ApiHeader/ApiHeader.model";
+
+import { CreativeShowcaseFooterComponentType } from "./CreativeShowcaseFooter/CreativeShowcaseFooter.model";
 import { DlpHeaderComponentType } from "./DlpHeader/DlpHeader.model";
 import { MainFooterComponentType } from "./MainFooter/MainFooter.model";
 import { MainHeaderComponentType } from "./MainHeader/MainHeader.model";
@@ -9,7 +14,9 @@ export const structuralComponentTypes = [
   MainHeaderComponentType,
   MainFooterComponentType,
   ApiHeaderComponentType,
+  ApiHeaderLevel1ComponentType,
+  ApiHeaderLevel2ComponentType,
   DlpHeaderComponentType,
-  DlpFooterComponentType,
+  CreativeShowcaseFooterComponentType,
   SiteSettingsDataType,
 ];

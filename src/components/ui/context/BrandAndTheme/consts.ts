@@ -9,4 +9,4 @@ export interface ThemeSetting {
   allowThemeSwitching: boolean;
 }
 
-export const DefaultTheme: Themes = "theme-primary";
+export const DefaultTheme: Themes = "theme-white";

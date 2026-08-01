@@ -6,12 +6,21 @@ import {
 
 import { PromoBlockComponentType } from "./PromoBlock/PromoBlock.model";
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
-import { HomePageHeroComponentType, HomePageHeroSlideComponentType } from "./HomePageHero/HomePageHero.model";
+import { CodeSnippetComponentType } from "./CodeSnippet/CodeSnippet.model";
+import {
+  HomePageHeroComponentType,
+  HomePageHeroSlideComponentType,
+} from "./HomePageHero/HomePageHero.model";
 import { cardListComponents } from "./CardList/types";
 
-import { ColumnGridColumnComponentType, ColumnGridComponentType } from "./ColumnGrid/ColumnGrid.model";
+import {
+  ColumnGridColumnComponentType,
+  ColumnGridComponentType,
+} from "./ColumnGrid/ColumnGrid.model";
 import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
 import { applicationListingComponents } from "./application-components/types";
+import { imageComponentTypes } from "./Image/types";
+import { PremiumMediaHeadingType } from "./PremiumMediaHeading/PremiumMediaHeading.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -20,10 +29,13 @@ export const allComponentTypes = [
   AccordionPanelComponentType,
   PromoBlockComponentType,
   CodeEmbedComponentType,
+  CodeSnippetComponentType,
   HomePageHeroSlideComponentType,
   HomePageHeroComponentType,
   ColumnGridColumnComponentType,
   ColumnGridComponentType,
   ...cardListComponents,
-  ...applicationListingComponents
+  ...applicationListingComponents,
+  ...imageComponentTypes,
+  PremiumMediaHeadingType
 ];

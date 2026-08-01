@@ -130,6 +130,18 @@ export const SectionSettingsContract = contract({
       description: "If checked, the headline will have a red underline",
       group: PropertyTypes.Appearance,
     },
+    sectionFullHeight: {
+      type: "boolean",
+      displayName: "Section Full Height",
+      description: "If checked, the section will take up a full screen's height",
+      group: PropertyTypes.Appearance,
+    },
+    sectionNarrow: {
+      type: "boolean",
+      displayName: "Section Narrow",
+      description: "If checked, the section content will be more narrow and have more margin on the sides",
+      group: PropertyTypes.Appearance,
+    },
   },
 });
 

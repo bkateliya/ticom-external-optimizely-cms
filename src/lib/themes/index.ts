@@ -1,8 +1,9 @@
 export const ALL_THEME_NAMES = {
-  "theme-primary": "Primary",
-  "theme-secondary": "Secondary",
-  "theme-tertiary": "Tertiary",
-  "theme-accent": "Accent",
+  "theme-white": "White",
+  "theme-grey": "Grey",
+  "theme-dark-grey": "Dark grey",
+  "theme-black": "Black",
+  "theme-red-gradient": "Red gradient",
 }
 
 export type Themes = keyof typeof ALL_THEME_NAMES;

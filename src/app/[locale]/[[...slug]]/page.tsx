@@ -5,7 +5,7 @@ import {
   withAppContext,
 } from "@optimizely/cms-sdk/react/server";
 import { redirect, RedirectType } from "next/navigation";
-import { cached } from "@/lib/data/opti";
+import { getPageContent } from "@/lib/data/opti";
 import { SUPPORTED_LOCALES } from "@/constants/locales";
 import { populateSiteSettings } from "@/lib/data/site-settings";
 import { OptiContextProvider } from "@/components/ui/context/OptiContext";
@@ -25,17 +25,18 @@ async function Page({ params }: Props) {
     redirect("/" + SUPPORTED_LOCALES[0], RedirectType.replace);
   }
 
-  const path = `/${locale}/${slug.join("/")}`;
-
-  const content = await cached.getContentByPath(path);
-
-  const mainContent = content[0];
+  // Untranslate pages resolve to the default-locale content, so every locale
+  // URL we advertise in hreflang renders instead of dead-ending.
+  const { content: mainContent, path, contentLocale } = await getPageContent(
+    locale,
+    slug,
+  );
 
   if (!mainContent) {
     return <div>No content found</div>;
   }
 
-  await populateSiteSettings(path, locale);
+  await populateSiteSettings(path, locale, contentLocale);
 
   const contextData = getContext();
   if (!contextData) {

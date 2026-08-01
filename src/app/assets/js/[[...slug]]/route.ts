@@ -3,19 +3,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{ slug: string[] }> },
+  { params }: { params: Promise<{ slug?: string[] | undefined }> },
 ) {
-  const {
-    slug: [ticom, ...slug],
-  } = await params;
+  const { slug } = await params;
 
+  const [ticom, ...mainSlug] = slug ?? [];
   if (ticom !== "@ticom") {
     return NextResponse.json(
       { message: "Resource not found" },
       { status: 404 },
     );
   }
-  const url = [TICOM, ...slug].join("/");
+  const url = [TICOM, ...mainSlug].join("/");
 
   if (!url) {
     return Response.error();

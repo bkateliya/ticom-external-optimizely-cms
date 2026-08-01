@@ -45,7 +45,7 @@ async function StyleGuidePage() {
           <SlideshowTest />
           <SlidePanelTest />
           <SvgIconTest />
-          <ThemeProvider theme="theme-accent">
+          <ThemeProvider theme="theme-red-gradient">
             <SvgIconTest />
           </ThemeProvider>
           <TiPortfolioViewer svgUrl="/example/sub-1-ghz-portfolio-visualization.svg"></TiPortfolioViewer>

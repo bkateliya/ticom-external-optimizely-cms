@@ -13,6 +13,7 @@ import { PromoBlockComponentType } from "./PromoBlock/PromoBlock.model";
 import { PromoBlockComponent } from "./PromoBlock/index";
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
 import { CodeEmbedComponent } from "./CodeEmbed";
+import { CodeSnippetComponentType } from "./CodeSnippet/CodeSnippet.model";
 import { HomePageHeroSlideComponent } from "./HomePageHero/HomePageHeroSlide";
 import {
   HomePageHeroComponentType,
@@ -29,6 +30,10 @@ import { NoPreviewComponent } from "@/components/ui/cms/NoPreviewComponent";
 import { ContentBlockComponent } from "./ContentBlock/ContentBlock";
 import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
 import { applicationListingComponentRegistry } from "./application-components/registry";
+import { imageComponentRegistry } from "./Image/registry";
+import { PremiumMediaHeadingType } from "./PremiumMediaHeading/PremiumMediaHeading.model";
+import { PremiumMediaHeadingComponent } from "./PremiumMediaHeading/PremiumMediaHeading";
+
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -37,10 +42,13 @@ export const componentRegistry: ComponentRegistry = {
   [AccordionPanelComponentType.key]: AccordionItem,
   [PromoBlockComponentType.key]: PromoBlockComponent,
   [CodeEmbedComponentType.key]: CodeEmbedComponent,
+  [CodeSnippetComponentType.key]: NoPreviewComponent,
   [HomePageHeroSlideComponentType.key]: HomePageHeroSlideComponent,
   [HomePageHeroComponentType.key]: HomePageHeroComponent,
   [ColumnGridComponentType.key]: ColumnGridComponent,
   [ColumnGridColumnComponentType.key]: NoPreviewComponent,
   ...cardListComponentRegistry,
   ...applicationListingComponentRegistry,
+  ...imageComponentRegistry,
+  [PremiumMediaHeadingType.key]: PremiumMediaHeadingComponent
 };
