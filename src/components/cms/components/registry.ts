@@ -34,6 +34,8 @@ import { applicationListingComponentRegistry } from "./application-components/re
 import { imageComponentRegistry } from "./Image/registry";
 import { PremiumMediaHeadingType } from "./PremiumMediaHeading/PremiumMediaHeading.model";
 import { PremiumMediaHeadingComponent } from "./PremiumMediaHeading/PremiumMediaHeading";
+import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
+import { VideoPlayerComponent } from "./VideoPlayer/VideoPlayer";
 
 
 export const componentRegistry: ComponentRegistry = {
@@ -51,5 +53,6 @@ export const componentRegistry: ComponentRegistry = {
   ...cardListComponentRegistry,
   ...applicationListingComponentRegistry,
   ...imageComponentRegistry,
-  [PremiumMediaHeadingType.key]: PremiumMediaHeadingComponent
+  [PremiumMediaHeadingType.key]: PremiumMediaHeadingComponent,
+  [VideoPlayerComponentType.key]: VideoPlayerComponent,
 };
