@@ -3,13 +3,19 @@ import { OptiComponentProps } from "@/lib/ts/component-props";
 import { VideoPlayerComponentType } from "./VideoPlayer.model";
 import { VideoPlaylist } from "./VideoPlaylist";
 
-const BRIGHTCOVE_ACCOUNT = "3816841626001";
-const BRIGHTCOVE_PLAYER = "whbLb5T2i";
+// Brightcove account and player, required from the environment so they can be
+// swapped per deployment. Not NEXT_PUBLIC_: this component is server-only, and
+// VideoPlaylist receives the account as a prop rather than reading it client-side.
+// See .env.example for the values the legacy AEM components used.
+const BRIGHTCOVE_ACCOUNT = process.env.BRIGHTCOVE_ACCOUNT_ID;
+const BRIGHTCOVE_PLAYER = process.env.BRIGHTCOVE_PLAYER_ID;
 
 export function VideoPlayerComponent({
   content,
 }: OptiComponentProps<typeof VideoPlayerComponentType>) {
-  if (!content?.id) {
+  // Without the account/player ids the embed can only render a broken player
+  // (`data-account` omitted, script URL 404s), so render nothing instead.
+  if (!content?.id || !BRIGHTCOVE_ACCOUNT || !BRIGHTCOVE_PLAYER) {
     return null;
   }
 
