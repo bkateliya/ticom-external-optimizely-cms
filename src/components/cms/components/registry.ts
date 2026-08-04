@@ -14,6 +14,7 @@ import { PromoBlockComponent } from "./PromoBlock/index";
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
 import { CodeEmbedComponent } from "./CodeEmbed";
 import { CodeSnippetComponentType } from "./CodeSnippet/CodeSnippet.model";
+import { CodeSnippetComponent } from "./CodeSnippet/CodeSnippet";
 import { HomePageHeroSlideComponent } from "./HomePageHero/HomePageHeroSlide";
 import {
   HomePageHeroComponentType,
@@ -42,7 +43,7 @@ export const componentRegistry: ComponentRegistry = {
   [AccordionPanelComponentType.key]: AccordionItem,
   [PromoBlockComponentType.key]: PromoBlockComponent,
   [CodeEmbedComponentType.key]: CodeEmbedComponent,
-  [CodeSnippetComponentType.key]: NoPreviewComponent,
+  [CodeSnippetComponentType.key]: CodeSnippetComponent,
   [HomePageHeroSlideComponentType.key]: HomePageHeroSlideComponent,
   [HomePageHeroComponentType.key]: HomePageHeroComponent,
   [ColumnGridComponentType.key]: ColumnGridComponent,
