@@ -1,7 +1,7 @@
 import { damAssets } from "@optimizely/cms-sdk";
 import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 
-import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
+import { getContextData, getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
@@ -14,13 +14,19 @@ import {
 } from "@/components/cms/contracts/component-contracts/section.model";
 
 import { ComponentTheme } from "@/components/ui/ti/enums";
-import EnhancedNextImage from "../../Atoms/EnhancedNextImage/EnhancedNextImage";
 
 export function ThemedSection({
   content,
   children,
+  fullHeight,
+  narrow,
 }: OptiComponentProps<SectionBackgroundContractContentType> &
-  React.PropsWithChildren) {
+  React.PropsWithChildren & {
+    /** Optional. Stretch the section to at least a full screen's height. */
+    fullHeight?: boolean;
+    /** Optional. Constrain the section content to the narrower container width. */
+    narrow?: boolean;
+  }) {
   if (!content) {
     return null;
   }
@@ -44,6 +50,16 @@ export function ThemedSection({
     ? content.backgroundSize || "full"
     : null;
 
+
+  const isEditCanvas = getContextData("mode") === "edit";
+
+  const fullHeightClassName = fullHeight
+    ? clsx(
+      isEditCanvas ? "h-screen max-h-[900px]" : "h-screen",
+      "flex items-center",
+    )
+    : undefined;
+
   if (backgroundSize === "section") {
     return (
       <div className="container-lg">
@@ -52,9 +68,9 @@ export function ThemedSection({
           <ThemeProvider
             theme={theme}
             mode={mode}
-            className="relative w-full"
+            className={clsx("relative w-full", fullHeightClassName)}
           >
-            <SectionWrapper>{children}</SectionWrapper>
+            <SectionWrapper narrow={narrow}>{children}</SectionWrapper>
             {/* <div className="w-full">{children}</div> */}
           </ThemeProvider>
         </div>
@@ -67,8 +83,12 @@ export function ThemedSection({
       // section (full-width: image spans the section's full width).
       <div className="relative w-full">
         <BackgroundImage content={backgroundImageSetting ?? undefined} />
-        <ThemeProvider theme={theme} mode={mode} className="relative">
-          <SectionWrapper>{children}</SectionWrapper>
+        <ThemeProvider
+          theme={theme}
+          mode={mode}
+          className={clsx("relative", fullHeightClassName)}
+        >
+          <SectionWrapper narrow={narrow}>{children}</SectionWrapper>
         </ThemeProvider>
       </div>
     );
@@ -91,12 +111,9 @@ function BackgroundImage({
   const className = clsx(
     "absolute",
     "inset-0",
-    "object-cover",
     "w-full",
     "h-full",
     "overflow-hidden",
-    "bg-center",
-    "bg-cover",
     "left-0",
     "top-0",
     "self-stretch",
@@ -118,11 +135,15 @@ function BackgroundImage({
   );
   return (
     <div>
-      <EnhancedNextImage
+      {/* `ti-slide` renders the background layer itself; `thumbnail-src` is
+          only used by slideshow nav, so it stays empty for a lone slide. */}
+      <ti-slide
         className={className}
-        src={imageUrl}
-        alt={getAlt(content.backgroundImage) ?? ""}
+        thumbnail-src=""
+        thumbnail-label={getAlt(content.backgroundImage) ?? ""}
+        background-image-src={imageUrl}
       />
+
       {content.noOverlay ? null : <div className={overlayClassName}></div>}
     </div>
   );

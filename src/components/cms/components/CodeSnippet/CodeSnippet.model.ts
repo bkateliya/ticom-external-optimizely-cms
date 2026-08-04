@@ -27,7 +27,11 @@ export const CodeSnippetComponentType = contentType({
       ],
     },
     text: {
-      type: "string",
+      // Rich text, not string: a Text property in this CMS is single-line
+      // whatever its length ("Long string (>255)" only raises maxLength — Enter
+      // is disabled), so pasted code lost every newline. The component flattens
+      // the paragraphs back to real newlines before highlighting.
+      type: "richText",
       isRequired: true,
       displayName: "Code Block",
       description: "Raw code to display; stored and rendered verbatim",
