@@ -23,6 +23,7 @@ export const AllComponentTypeKeyMap = {
   StandardImageComponent:`${KEY_PREFIX}StandardImage_Component`,
   HeadshotImageComponent:`${KEY_PREFIX}HeadshotImage_Component`,
   PremiumMediaHeading: `${KEY_PREFIX}PremiumMediaHeading_Component`,
+  HorizontalRuleComponent: `${KEY_PREFIX}HorizontalRule_Component`,
 };
 
 /**
@@ -39,5 +40,6 @@ export const StandaloneComponentTypeKeys = [
   AllComponentTypeKeyMap.ColumnGridComponent,
   ApplicationComponentTypeKeyMap.ApplicationListing,
   AllComponentTypeKeyMap.PremiumMediaHeading,
+  AllComponentTypeKeyMap.HorizontalRuleComponent,
 ];
 

@@ -36,6 +36,8 @@ import { PremiumMediaHeadingType } from "./PremiumMediaHeading/PremiumMediaHeadi
 import { PremiumMediaHeadingComponent } from "./PremiumMediaHeading/PremiumMediaHeading";
 import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { VideoPlayerComponent } from "./VideoPlayer/VideoPlayer";
+import { HorizontalRuleComponentType } from "./HorizontalRule/HorizontalRule.model";
+import { HorizontalRuleComponent } from "./HorizontalRule/HorizontalRule";
 
 
 export const componentRegistry: ComponentRegistry = {
@@ -55,4 +57,5 @@ export const componentRegistry: ComponentRegistry = {
   ...imageComponentRegistry,
   [PremiumMediaHeadingType.key]: PremiumMediaHeadingComponent,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,
+  [HorizontalRuleComponentType.key]: HorizontalRuleComponent,
 };

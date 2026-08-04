@@ -21,6 +21,7 @@ import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
 import { applicationListingComponents } from "./application-components/types";
 import { imageComponentTypes } from "./Image/types";
 import { PremiumMediaHeadingType } from "./PremiumMediaHeading/PremiumMediaHeading.model";
+import {HorizontalRuleComponentType} from "./HorizontalRule/HorizontalRule.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -37,5 +38,7 @@ export const allComponentTypes = [
   ...cardListComponents,
   ...applicationListingComponents,
   ...imageComponentTypes,
-  PremiumMediaHeadingType
+  PremiumMediaHeadingType,
+  HorizontalRuleComponentType,
+
 ];
