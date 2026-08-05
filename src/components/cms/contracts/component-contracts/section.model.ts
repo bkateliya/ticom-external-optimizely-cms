@@ -8,7 +8,7 @@ import { ALL_THEME_NAMES } from "@/lib/themes";
 import { PreambleContracts } from "./preamble.model";
 import { ContractContentType } from "@/lib/ts/opti";
 import { HeadlineContract } from "./headline.model";
-import { CtaListContract } from "./cta-list.model";
+import { DeprecatedCtaListContract } from "./cta-list.model";
 
 export const BackgroundColorSetting = contentType({
   key: `${KEY_PREFIX}BackgroundColor_Setting`,
@@ -161,6 +161,6 @@ export type SectionContractContentType = ContractContentType<
   [
     typeof SectionBackgroundContract,
     typeof HeadlineContract,
-    typeof CtaListContract,
+    typeof DeprecatedCtaListContract,
   ]
 >;

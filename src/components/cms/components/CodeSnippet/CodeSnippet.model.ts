@@ -27,7 +27,7 @@ export const CodeSnippetComponentType = contentType({
       ],
     },
     text: {
-      type: "string",
+      type: "richText",
       isRequired: true,
       displayName: "Code Block",
       description: "Raw code to display; stored and rendered verbatim",

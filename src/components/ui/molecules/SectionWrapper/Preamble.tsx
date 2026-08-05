@@ -4,16 +4,13 @@ import {
   PreambleContractContentType,
   PreambleDirectHeadlineContractContentType,
 } from "@/components/cms/contracts/component-contracts/preamble.model";
-import { OptiComponentProps } from "@/lib/ts/component-props";
+import { OptionalOptiComponentProps } from "@/lib/ts/component-props";
 import { HeadingLevelContext } from "@/components/utilities/HeadingLevelContext";
-import {
-  normalizeGenericArrayToTyped,
-  normalizeGenericContentToTyped,
-} from "@/lib/utils/content-type-utils";
+import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
 import { HeadlineComponentType } from "@/components/cms/contracts/component-contracts/headline.model";
-import { CTAElementType } from "@/components/cms/elements/CTA/CTA.model";
-import { CtaList } from "../CtaList/CtaList";
 import { Headline, HeadlineStyleProps } from "../Headline/Headline";
+import { ExtendedOptimizelyComponent } from "../../cms/ExtendedOptimizelyComponent";
+import { getValidCtas } from "@/components/cms/components/CtaList/CtaList.utils";
 
 export interface PreambleStyleOptions extends HeadlineStyleProps {
   beforeElements?: React.ReactNode;
@@ -21,10 +18,10 @@ export interface PreambleStyleOptions extends HeadlineStyleProps {
 
 export interface PreambleProps
   extends
-  OptiComponentProps<PreambleContractContentType>,
-  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-  React.PropsWithChildren,
-  PreambleStyleOptions { }
+    OptionalOptiComponentProps<PreambleContractContentType>,
+    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+    React.PropsWithChildren,
+    PreambleStyleOptions {}
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
   Left: "text-left",
@@ -43,17 +40,17 @@ export const Preamble = ({ content, ...props }: PreambleProps) => {
   return (
     <PreambleDirectHeadline
       {...props}
-      content={{ ...headline, ctas: content.ctas }}
+      content={{ ...headline, ctasList: content.ctasList, ctas: content.ctas }}
     />
   );
 };
 
 export interface PreambleDirectHeadlineProps
   extends
-  OptiComponentProps<PreambleDirectHeadlineContractContentType>,
-  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-  React.PropsWithChildren,
-  PreambleStyleOptions { }
+    OptionalOptiComponentProps<PreambleDirectHeadlineContractContentType>,
+    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+    React.PropsWithChildren,
+    PreambleStyleOptions {}
 
 export const PreambleDirectHeadline = ({
   children,
@@ -80,10 +77,7 @@ export const PreambleDirectHeadline = ({
     content.description
   );
 
-  /* Mirrors CtaList's own check so the wrapper isn't rendered for CTAs it will drop. */
-  const hasCtas = normalizeGenericArrayToTyped<typeof CTAElementType>(
-    content.ctas,
-  ).some((cta) => cta.link?.url.default);
+  const hasCtas = getValidCtas(content).length > 0;
 
   const sectionContentWrapperClassName = clsx([
     "space-y-4",
@@ -103,9 +97,15 @@ export const PreambleDirectHeadline = ({
         {(hasHeaderContent || hasCtas) && (
           <div
             data-preamble-width-cap
-            className={clsx("flex", "w-full", "flex-col", "gap-8 md:max-w-2/3", {
-              "flex-col mx-auto": textAlignment === "Center",
-            })}
+            className={clsx(
+              "flex",
+              "w-full",
+              "flex-col",
+              "gap-8 md:max-w-2/3",
+              {
+                "flex-col mx-auto": textAlignment === "Center",
+              },
+            )}
           >
             <Headline
               content={content}
@@ -114,11 +114,7 @@ export const PreambleDirectHeadline = ({
               redUnderline={redUnderline}
             />
 
-            <CtaList
-              textAlignment={textAlignment}
-              content={content}
-              parentField={parentField}
-            />
+            <ExtendedOptimizelyComponent content={content.ctasList} />
           </div>
         )}
         {children && (

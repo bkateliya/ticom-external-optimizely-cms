@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import { JSX } from 'react';
 
 interface VideoPlayerProps extends React.HTMLAttributes<HTMLElement> {
@@ -15,7 +16,7 @@ const VideoPlayer = (props: VideoPlayerProps): JSX.Element => {
           data-player="FvKmvD2Sc"
           data-embed="default">
         </video>
-        <script src="//players.brightcove.net/3816841626001/FvKmvD2Sc_default/index.min.js"></script>
+        <Script src="//players.brightcove.net/3816841626001/FvKmvD2Sc_default/index.min.js"></Script>
       </div> )
 };
 

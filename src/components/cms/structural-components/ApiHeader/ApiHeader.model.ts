@@ -54,6 +54,7 @@ export const ApiHeaderLevel1ComponentType = contentType({
       displayName: "Level 2 links",
       description: "Maximum of 10 Level 2 links may be authored.",
       group: PropertyTypes.Content,
+      maxItems: 10,
       items: {
         type: "content",
         allowedTypes: [ApiHeaderLevel2ComponentType],

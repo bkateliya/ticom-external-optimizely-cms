@@ -1,11 +1,10 @@
-import { CTA_LINK_ICONS, CTALinkElementType } from "./CTALink.model";
+import { CTA_LINK_ICONS, CtaLinkElementType } from "./CTALink.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
-import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { getUrlFileName, normalizeUrl } from "@/lib/utils/link-utils";
 import { TiSvgIcon } from "@/components/ui/ti/TiSvgIcon";
 import type { UiIcon } from "@/components/ui/ti/TiSvgIcon/SvgIconMapping";
 
-type Props = OptiComponentProps<typeof CTALinkElementType>;
+type Props = OptiComponentProps<typeof CtaLinkElementType>;
 
 /**
  * Inline-link CTA. Renders a plain anchor with a leading `ti-svg-icon`, matching
@@ -21,7 +20,7 @@ type Props = OptiComponentProps<typeof CTALinkElementType>;
  * as a button, which this one never is. `sectionCtaLink` on live uses a trailing
  * chevron and a bold label instead — pending a UX call on standardising it.
  */
-export function CTALinkElement({ content, parentField }: Props) {
+export function CTALinkElement({ content }: Props) {
   if (!content) {
     return null;
   }
@@ -43,21 +42,17 @@ export function CTALinkElement({ content, parentField }: Props) {
   }
 
   // The CMS has no default value for properties, so the standard icon is applied here.
-  const icon = (content.Icon ?? CTA_LINK_ICONS.standard) as UiIcon;
-  const isDownload = icon === CTA_LINK_ICONS.download;
-
-  const { pa } = getPreviewUtils(content);
+  const icon = (content.Icon ?? CTA_LINK_ICONS.standard) as UiIcon | "none";
 
   return (
     <a
-      {...pa([parentField, "link"].filter(Boolean).join("."))}
       // The download api route gets around the download attribute only working same-domain
-      href={isDownload ? `/api/download?url=${encodeURI(url)}` : url}
-      download={isDownload ? getUrlFileName(url) : undefined}
+      href={content.IsDownload ? `/api/download?url=${encodeURI(url)}` : url}
+      download={content.IsDownload ? getUrlFileName(url) : undefined}
       className="inline-flex items-center gap-1 text-body-md text-pl-link-color-primary no-underline"
       data-cta-link
     >
-      <TiSvgIcon icon={icon} size="s" />
+      {icon === "none" ? null : <TiSvgIcon icon={icon} size="s" />}
       {content.link?.text}
     </a>
   );

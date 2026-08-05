@@ -20,11 +20,23 @@ import {
 import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
 import { applicationListingComponents } from "./application-components/types";
 import { imageComponentTypes } from "./Image/types";
-import { PremiumMediaHeadingType } from "./PremiumMediaHeading/PremiumMediaHeading.model";
+import { HorizontalRuleComponentType } from "./HorizontalRule/HorizontalRule.model";
+import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
+import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model";
+import { PremiumMediaHeadingComponentType } from "./PremiumMediaHeading/PremiumMediaHeading.model";
+import { ApplicationSearchBoxComponentType } from "./ApplicationSearchBox/ApplicationSearchBox.model";
+import { FAQSearchBoxComponentType } from "./FAQSearchBox/FAQSearchBox.model";
+import { BrowseVideosComponentType } from "./BrowseVideos/BrowseVideos.model";
+import {
+  CtaButtonListComponentType,
+  CtaLinkListComponentType,
+} from "./CtaList/CtaList.model";
 
 export const allComponentTypes = [
   HeroComponentType,
   ContentBlockComponentType,
+  CtaButtonListComponentType,
+  CtaLinkListComponentType,
   AccordionComponentType,
   AccordionPanelComponentType,
   PromoBlockComponentType,
@@ -34,8 +46,14 @@ export const allComponentTypes = [
   HomePageHeroComponentType,
   ColumnGridColumnComponentType,
   ColumnGridComponentType,
+  SelectionToolComponentType,
   ...cardListComponents,
   ...applicationListingComponents,
   ...imageComponentTypes,
-  PremiumMediaHeadingType
+  HorizontalRuleComponentType,
+  VideoPlayerComponentType,
+  PremiumMediaHeadingComponentType,
+  ApplicationSearchBoxComponentType,
+  FAQSearchBoxComponentType,
+  BrowseVideosComponentType,
 ];

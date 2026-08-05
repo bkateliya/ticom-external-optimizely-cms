@@ -2,13 +2,13 @@ import { ContentProps, ContentTypes } from "@optimizely/cms-sdk";
 
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { CmsFieldProps } from "@/lib/ts/field-props";
-import { CTAElementType } from "@/components/cms/elements/CTA/CTA.model";
+import { CtaButtonElementType } from "@/components/cms/elements/CTAButton/CTAButton.model";
 import { normalizeUrl } from "@/lib/utils/link-utils";
 import { TifButtonProps } from "../ti/TiButton/TiButton";
 import { TifButton } from "@ticom/form-components/react";
 import { ButtonAppearance } from "@/components/ui/ti/enums";
 
-type LinkFieldContent = ContentProps<typeof CTAElementType>["link"];
+type LinkFieldContent = ContentProps<typeof CtaButtonElementType>["link"];
 
 export type LinkFieldProps<TContentType extends ContentTypes.AnyContentType> =
   CmsFieldProps<TContentType, LinkFieldContent> &

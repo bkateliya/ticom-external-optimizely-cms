@@ -1,8 +1,8 @@
 import { ComponentRegistry } from "@/lib/ts/component-props";
-import { CTAElement } from "./CTA";
-import { CTAElementType } from "./CTA/CTA.model";
+import { CTAButtonElement } from "./CTAButton";
+import { CtaButtonElementType } from "./CTAButton/CTAButton.model";
 import { CTALinkElement } from "./CTALink";
-import { CTALinkElementType } from "./CTALink/CTALink.model";
+import { CtaLinkElementType } from "./CTALink/CTALink.model";
 import { RichTextAreaElementType } from "./RichTextArea/RichTextArea.model";
 import { RichTextAreaElement } from "./RichTextArea";
 import { LinkElement } from "./Link";
@@ -13,8 +13,8 @@ import { PromoContentElementType } from "./PromoContent/PromoContent.model";
 import { PromoContentElement } from "./PromoContent";
 
 export const elementRegistry: ComponentRegistry = {
-  [CTAElementType.key]: CTAElement,
-  [CTALinkElementType.key]: CTALinkElement,
+  [CtaButtonElementType.key]: CTAButtonElement,
+  [CtaLinkElementType.key]: CTALinkElement,
   [LinkElementType.key]: LinkElement,
   [RichTextAreaElementType.key]: RichTextAreaElement,
   [ImageElementType.key]: ImageElement,

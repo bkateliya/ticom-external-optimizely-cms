@@ -13,9 +13,11 @@ import { HeadingField, HeadingFieldProps } from "./HeadingField";
  * @returns An object with the wrapped TextField and RichTextField components
  */
 export function fieldFactory<TContentType extends ContentTypes.AnyContentType>(
-  cmsContent: ContentProps<TContentType>,
+  partialCmsContent: ContentProps<Partial<TContentType>>,
   parentField?: string,
 ) {
+  const cmsContent = partialCmsContent as ContentProps<TContentType>;
+
   function WrappedTextField<E extends React.ElementType = "span">({
     as,
     ...props

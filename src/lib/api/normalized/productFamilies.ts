@@ -1,4 +1,4 @@
-import { Family, getProductFamily, getSilos, SiloFamily } from "../cms-api";
+import { Family, getProductFamily } from "../cms-api";
 
 export interface FamilyWithSiblings extends Family {
   siblings: Family[];
@@ -7,19 +7,16 @@ export interface FamilyWithSiblings extends Family {
 export interface FamilyInfo extends FamilyWithSiblings {
   ancestors: FamilyWithSiblings[];
   children: Family[];
-  silos: SiloFamily[];
 }
 
 export async function getNormalizedFamilyInfo(familyId: string) {
   const familyResponse = await getProductFamily(familyId);
-  const silos = await getSilos();
 
   const result: FamilyInfo = {
     ...familyResponse,
     ancestors: [],
     siblings: [],
     children: [],
-    silos,
   };
 
   familyResponse.ancestors.forEach((item) => {

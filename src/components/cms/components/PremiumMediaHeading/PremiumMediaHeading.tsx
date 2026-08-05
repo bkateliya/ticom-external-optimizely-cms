@@ -1,6 +1,6 @@
 
 import { fieldFactory } from "@/components/ui/cms";
-import { PremiumMediaHeadingType } from "./PremiumMediaHeading.model";
+import { PremiumMediaHeadingComponentType } from "./PremiumMediaHeading.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedNextImage";
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
@@ -8,14 +8,13 @@ import { damAssets } from "@optimizely/cms-sdk";
 import VideoSearchBar from "@/components/ui/Atoms/VideoSearchBar/VideoSearchBar";
 import VideoPlayer from "@/components/ui/Atoms/VideoPlayer/VideoPlayer";
 import { normalizeGenericArrayToTyped } from "@/lib/utils/content-type-utils";
-import { CTAElementType } from "../../elements/CTA/CTA.model";
+import { CtaButtonElementType } from "../../elements/CTAButton/CTAButton.model";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
-import { TiSlide } from "@/components/ui/ti/TiSlideshow/TiSlide";
 
 
 export function PremiumMediaHeadingComponent({
   content
-}: OptiComponentProps<typeof PremiumMediaHeadingType>) {
+}: OptiComponentProps<typeof PremiumMediaHeadingComponentType>) {
       
   if (!content) {
     return null;
@@ -26,10 +25,10 @@ export function PremiumMediaHeadingComponent({
   const { getAlt } = damAssets(content);
   const imageUrl = src(content.image);
 
-  const ctas = normalizeGenericArrayToTyped<typeof CTAElementType>(content.ctaLinks);
+  const ctas = normalizeGenericArrayToTyped<typeof CtaButtonElementType>(content.ctaLinks);
   const hasCtas = !!ctas?.some((x) => x.link?.url.default);
   
-  const { WrappedRichTextField } = fieldFactory< typeof PremiumMediaHeadingType>(content);
+  const { WrappedRichTextField } = fieldFactory< typeof PremiumMediaHeadingComponentType>(content);
 
   return (
       <div>
@@ -68,9 +67,7 @@ export function PremiumMediaHeadingComponent({
         }
 
         { content.searchBar === 'video' &&
-          <VideoSearchBar
-            locale="en-US"
-          />
+          <VideoSearchBar/>
         }
         
         { hasCtas && 
@@ -78,32 +75,6 @@ export function PremiumMediaHeadingComponent({
             <ExtendedOptimizelyComponent key={cta._id || index} content={cta} />
           ))
         }
-
-
-      <div className="ti_p-fullscreenVideoBGContainer u-breakout-container">
-			<TiSlide
-        thumbnailSrc=""
-				show-video-controls={content.videoPlayerControls}
-				background-video-src={content.featureOptions == 'videoOption' ? content.videoId : ''}
-   			background-image-src={content.featureOptions == 'imageOption' ? imageUrl : ''}>
-				<div className="ti_p-slideContent ti_p-page-responsive">
-					<div className="ti_p-slideContent-column" data-sly-unwrap="${properties.contentLayout != 'vertical'}">
-						<div className="ti_p-slideContent-text-container" data-sly-unwrap="${properties.contentLayout == 'vertical'}" >
-
-							<div className="ti_p-slideContent-text">
-                <WrappedRichTextField field="preHeadline"/>
-								<h1 className="ti_aem-p-mediaShowcase--headline">
-									{ content.headline}
-								</h1>
-								<WrappedRichTextField field="subheadline"/>
-								Place CTA Here
-							</div>
-						</div>
-					</div>
-				</div>
-			</TiSlide>
-
-	</div>
         
       </div>
 

@@ -4,7 +4,7 @@ import {
   HeadlineComponentType,
   HeadlineContractContentType,
 } from "@/components/cms/contracts/component-contracts/headline.model";
-import { OptiComponentProps } from "@/lib/ts/component-props";
+import { OptionalOptiComponentProps } from "@/lib/ts/component-props";
 import { fieldFactory } from "@/components/ui/cms";
 
 export interface HeadlineStyleProps {
@@ -13,9 +13,9 @@ export interface HeadlineStyleProps {
 }
 export interface HeadlineProps
   extends
-  OptiComponentProps<HeadlineContractContentType>,
-  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-  HeadlineStyleProps { }
+    OptionalOptiComponentProps<HeadlineContractContentType>,
+    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+    HeadlineStyleProps {}
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
   Left: "text-left",
@@ -25,7 +25,7 @@ const textAlignmentClassMap: Record<TextAlignment, string> = {
 
 export function parseHeadlineSize({
   content,
-}: OptiComponentProps<HeadlineContractContentType>) {
+}: OptionalOptiComponentProps<HeadlineContractContentType>) {
   const headlineSize = parseInt(content?.headlineLevel ?? "") as
     1 | 2 | 3 | 4 | 5 | 6 | undefined;
   return headlineSize;
@@ -60,34 +60,28 @@ export const Headline = ({
   }
 
   return (
-    <div className={clsx(baseClassName, props.className, "gap-2 flex flex-col")} {...props}>
+    <div
+      className={clsx(baseClassName, props.className, "gap-2 flex flex-col")}
+      {...props}
+    >
       {content.eyebrow && (
         <div className="mb-2">
-          <WrappedTextField
-            as="span"
-            field="eyebrow"
-            className="text-label"
-          />
+          <WrappedTextField as="span" field="eyebrow" className="text-label" />
         </div>
       )}
       <div className={clsx()}>
-          <WrappedHeadingTextField
-            headingSize={parseHeadlineSize({ content })}
-            field="headline"
-            className={clsx(
-              {
-                "after:content-[''] after:block after:w-24 after:h-px after:mt-6 after:bg-[var(--ti-accent-color,var(--pl-border-color-accent))]":
-                  redUnderline,
-                "after:mx-auto": redUnderline && textAlignment === "Center",
-                "mb-0": !content.description
-              },
-            )}
-          />
-       
-          <WrappedRichTextField
-            field="description"
-            className="text-body-lg"
-          />
+        <WrappedHeadingTextField
+          headingSize={parseHeadlineSize({ content })}
+          field="headline"
+          className={clsx({
+            "after:content-[''] after:block after:w-24 after:h-px after:mt-6 after:bg-[var(--ti-accent-color,var(--pl-border-color-accent))]":
+              redUnderline,
+            "after:mx-auto": redUnderline && textAlignment === "Center",
+            "mb-0": !content.description,
+          })}
+        />
+
+        <WrappedRichTextField field="description" className="text-body-lg" />
       </div>
     </div>
   );

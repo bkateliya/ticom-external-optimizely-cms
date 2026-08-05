@@ -28,6 +28,7 @@ import {
   FamilyInfo,
   getNormalizedFamilyInfo,
 } from "../api/normalized/productFamilies";
+import { getSilos } from "../api/cms-api";
 
 type PathType = Parameters<GraphClient["getPath"]>["0"];
 async function populateSiteSettingsImpl(
@@ -82,6 +83,15 @@ async function populatePageDataImpl(
       console.error("Get Family Info CMS API failed", error);
     }
   }
+
+  // Silos are always fetched regardless of whether there is a product family.
+  try {
+    const silos = await getSilos();
+    setContextData("productSilos", silos);
+  } catch (error) {
+    console.error("Get Product Silos CMS API failed", error);
+  }
+
   const application = normalizeGenericContentToTyped(
     await cached.getReferencedContent(content.application),
     ApplicationType,

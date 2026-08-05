@@ -7,6 +7,8 @@ import { ApplicationComponentTypeKeyMap } from "./application-components/keys";
 export const AllComponentTypeKeyMap = {
   HeroComponent: `${KEY_PREFIX}Hero_Component`,
   ContentBlockComponent: `${KEY_PREFIX}ContentBlock_Component`,
+  CtaLinkListComponent: `${KEY_PREFIX}CtaLinkList_Component`,
+  CtaButtonListComponent: `${KEY_PREFIX}CtaButtonList_Component`,
   AccordionComponent: `${KEY_PREFIX}Accordion_Component`,
   AccordionPanelComponent: `${KEY_PREFIX}AccordionPanel_Component`,
   CardListComponent: `${KEY_PREFIX}CardList_Component`,
@@ -20,9 +22,15 @@ export const AllComponentTypeKeyMap = {
   HomePageHeroComponent: `${KEY_PREFIX}HomePageHero_Component`,
   ColumnGridColumnComponent: `${KEY_PREFIX}ColumnGridColumn_Component`,
   ColumnGridComponent: `${KEY_PREFIX}ColumnGrid_Component`,
-  StandardImageComponent:`${KEY_PREFIX}StandardImage_Component`,
-  HeadshotImageComponent:`${KEY_PREFIX}HeadshotImage_Component`,
-  PremiumMediaHeading: `${KEY_PREFIX}PremiumMediaHeading_Component`,
+  StandardImageComponent: `${KEY_PREFIX}StandardImage_Component`,
+  HeadshotImageComponent: `${KEY_PREFIX}HeadshotImage_Component`,
+  HorizontalRuleComponent: `${KEY_PREFIX}HorizontalRule_Component`,
+  VideoPlayerComponent: `${KEY_PREFIX}VideoPlayer_Component`,
+  SelectionToolComponent: `${KEY_PREFIX}SelectionTool_Component`,
+  PremiumMediaHeadingComponent: `${KEY_PREFIX}PremiumMediaHeading_Component`,
+  ApplicationSearchBoxComponent: `${KEY_PREFIX}ApplicationSearchBox_Component`,
+  FAQSearchBoxComponent: `${KEY_PREFIX}FAQSearchBox_Component`,
+  BrowseVideosComponent: `${KEY_PREFIX}BrowseVideos_Component`,
 };
 
 /**
@@ -38,6 +46,11 @@ export const StandaloneComponentTypeKeys = [
   AllComponentTypeKeyMap.SingleGeneralCardComponent,
   AllComponentTypeKeyMap.ColumnGridComponent,
   ApplicationComponentTypeKeyMap.ApplicationListing,
-  AllComponentTypeKeyMap.PremiumMediaHeading,
+  AllComponentTypeKeyMap.VideoPlayerComponent,
+  AllComponentTypeKeyMap.SelectionToolComponent,
+  AllComponentTypeKeyMap.PremiumMediaHeadingComponent,
+  AllComponentTypeKeyMap.HorizontalRuleComponent,
+  AllComponentTypeKeyMap.ApplicationSearchBoxComponent,
+  AllComponentTypeKeyMap.FAQSearchBoxComponent,
+  AllComponentTypeKeyMap.BrowseVideosComponent,
 ];
-
