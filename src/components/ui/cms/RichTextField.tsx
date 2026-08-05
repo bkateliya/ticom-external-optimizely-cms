@@ -22,12 +22,16 @@ export function RichTextField<
 }: RichTextFieldProps<TContentType>) {
   const { pa } = getPreviewUtils(content);
   const value = content[field] as RichTextFieldContent;
-  if (!value?.json) {
+  // Content from the SiteSettings `_json` blob (header/footer) arrives as a JSON
+  // string; the typed Graph query returns it already parsed.
+  const json =
+    typeof value?.json === "string" ? JSON.parse(value.json) : value?.json;
+  if (!json) {
     return null;
   }
   return (
     <RichText
-      content={value?.json}
+      content={json}
       {...pa([parentField, field].filter(Boolean).join("."))}
       {...props}
       elements={{
@@ -37,23 +41,23 @@ export function RichTextField<
   );
 }
 
-  const LinkRenderer = ({ children, attributes, element }: ElementRendererProps) => {
+const LinkRenderer = ({ children, attributes, element }: ElementRendererProps) => {
 
-    const linkElement = element as LinkElement;
-    const href = normalizeUrl(linkElement.url);
-    if (!href) {
-      return null;
-    }
-    const linkProps = {
-      href: href,
-      target: linkElement.target,
-      rel: linkElement.rel,
-      title: linkElement.title,
-    };
-
-    const mergedProps = {
-      ...attributes,
-      ...linkProps,
-    };
-    return <NextLink {...mergedProps}>{children}</NextLink>;
+  const linkElement = element as LinkElement;
+  const href = normalizeUrl(linkElement.url);
+  if (!href) {
+    return null;
+  }
+  const linkProps = {
+    href: href,
+    target: linkElement.target,
+    rel: linkElement.rel,
+    title: linkElement.title,
   };
+
+  const mergedProps = {
+    ...attributes,
+    ...linkProps,
+  };
+  return <NextLink {...mergedProps}>{children}</NextLink>;
+};

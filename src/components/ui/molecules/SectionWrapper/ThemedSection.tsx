@@ -60,91 +60,77 @@ export function ThemedSection({
     )
     : undefined;
 
+  // The content is slotted *inside* `ti-slide` (see `BackgroundSlide`) rather
+  // than rendered next to it, so the slide's own overlay layer lands between
+  // the background image and the content instead of on top of both.
+  const body = (
+    <BackgroundSlide content={backgroundImageSetting ?? undefined}>
+      <ThemeProvider
+        theme={theme}
+        mode={mode}
+        className={clsx("relative w-full", fullHeightClassName)}
+      >
+        <SectionWrapper narrow={narrow}>{children}</SectionWrapper>
+      </ThemeProvider>
+    </BackgroundSlide>
+  );
+
   if (backgroundSize === "section") {
-    return (
-      <div className="container-lg">
-        <div className="relative">
-          <BackgroundImage content={backgroundImageSetting ?? undefined} />
-          <ThemeProvider
-            theme={theme}
-            mode={mode}
-            className={clsx("relative w-full", fullHeightClassName)}
-          >
-            <SectionWrapper narrow={narrow}>{children}</SectionWrapper>
-            {/* <div className="w-full">{children}</div> */}
-          </ThemeProvider>
-        </div>
-      </div>
-    );
+    return <div className="container-lg">{body}</div>;
   } else {
-    return (
-      // `relative` here is the positioned ancestor the absolute background image
-      // needs — without it the image escapes to <body> instead of filling the
-      // section (full-width: image spans the section's full width).
-      <div className="relative w-full">
-        <BackgroundImage content={backgroundImageSetting ?? undefined} />
-        <ThemeProvider
-          theme={theme}
-          mode={mode}
-          className={clsx("relative", fullHeightClassName)}
-        >
-          <SectionWrapper narrow={narrow}>{children}</SectionWrapper>
-        </ThemeProvider>
-      </div>
-    );
+    return <div className="w-full">{body}</div>;
   }
 }
 
-function BackgroundImage({
+/**
+ * Wraps the section content in a `ti-slide` when the section has a background
+ * image. `ti-slide` paints the image, slots the content over it, and renders
+ * its own gradient overlay in between — so we deliberately don't add an overlay
+ * of our own (that gave a double overlay which also dimmed the content).
+ * Without a background image the content passes through untouched.
+ */
+function BackgroundSlide({
   content,
-}: OptiComponentProps<typeof BackgroundImageSetting>) {
+  children,
+}: OptiComponentProps<typeof BackgroundImageSetting> &
+  React.PropsWithChildren) {
   if (!content) {
-    return;
+    return children;
   }
   const { src } = getPreviewUtils(content);
   const { getAlt } = damAssets(content);
   const imageUrl = src(content.backgroundImage);
   if (!imageUrl) {
-    return null;
+    return children;
   }
 
-  const className = clsx(
-    "absolute",
-    "inset-0",
-    "w-full",
-    "h-full",
-    "overflow-hidden",
-    "left-0",
-    "top-0",
-    "self-stretch",
-  );
+  // `ti-slide` is configured through CSS custom properties, which
+  // `React.CSSProperties` doesn't model on its own.
+  const slideStyle: React.CSSProperties &
+    Record<`--tiSlide-${string}`, string> = {
+    // The section's content decides the height. Left at its default the slide
+    // locks to a 16/9 box and `overflow: hidden` on the host clips anything
+    // taller than that.
+    "--tiSlide-aspectRatio": "auto",
+    // `ti-slide`'s overlay is a black gradient by default: a light image needs
+    // a white one, and `noOverlay` switches it off entirely.
+    ...(content.noOverlay
+      ? { "--tiSlide-overlay-background": "none" }
+      : content.backgroundTheme === "light"
+        ? { "--tiSlide-overlay-background-color-rgb": "255 255 255" }
+        : {}),
+  };
 
-  const overlayClassName = clsx(
-    "absolute",
-    "inset-0",
-    "object-cover",
-    "w-full",
-    "h-full",
-    "overflow-hidden",
-    content.backgroundTheme === "light" ? "bg-white" : "bg-black",
-    "bg-cover",
-    "left-0",
-    "top-0",
-    "opacity-60",
-    "self-stretch",
-  );
   return (
-    <div>
-      {/* `ti-slide` renders the background layer itself; `thumbnail-src` is
-          only used by slideshow nav, so it stays empty for a lone slide. */}
-      <ti-slide
-        className={className}
-        thumbnail-src=""
-        thumbnail-label={getAlt(content.backgroundImage) ?? ""}
-        background-image-src={imageUrl}
-      />
-
-      {content.noOverlay ? null : <div className={overlayClassName}></div>}
-    </div>
+    // `thumbnail-src` is only used by slideshow nav, so it stays empty for a
+    // lone slide.
+    <ti-slide
+      style={slideStyle}
+      thumbnail-src=""
+      thumbnail-label={getAlt(content.backgroundImage) ?? ""}
+      background-image-src={imageUrl}
+    >
+      {children}
+    </ti-slide>
   );
 }
