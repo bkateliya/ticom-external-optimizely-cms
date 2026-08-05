@@ -8,7 +8,6 @@ import { fieldFactory } from "@/components/ui/cms";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { HeadlineComponentType } from "../../contracts/component-contracts/headline.model";
-import { CtaList } from "@/components/ui/molecules/CtaList/CtaList";
 import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedNextImage";
 
 export function HeroComponent({
@@ -48,7 +47,6 @@ export function HeroComponent({
                 className={styles.description}
               />
             </div>
-            <CtaList content={content} />
           </div>
           {imageUrl && (
             <div className={styles.image}>

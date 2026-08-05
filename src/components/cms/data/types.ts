@@ -1,10 +1,18 @@
 import { ApplicationFolderType, ApplicationType } from "./Application.model";
-import { ProductFamilyFolderType, ProductFamilyType } from "./ProductFamily.model";
-
+import {
+  ProductFamilyFolderType,
+  ProductFamilyType,
+} from "./ProductFamily.model";
+import {
+  DestinationTypeFolderType,
+  DestinationTypeType,
+} from "./DestinationType.model";
 
 export const dataTypes = [
   ApplicationType,
   ProductFamilyType,
   ApplicationFolderType,
-  ProductFamilyFolderType
+  ProductFamilyFolderType,
+  DestinationTypeType,
+  DestinationTypeFolderType,
 ];

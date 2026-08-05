@@ -1,20 +1,21 @@
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { normalizeGenericArrayToTyped } from "@/lib/utils/content-type-utils";
-import { CTAElementType } from "@/components/cms/elements/CTA/CTA.model";
-import { CtaListComponentType } from "@/components/cms/contracts/component-contracts/cta-list.model";
 import { TifButtonGroup } from "@ticom/form-components/react";
-import { TextAlignment } from "../../context/TextAlignmentContext";
+import { TextAlignment } from "../../../ui/context/TextAlignmentContext";
 import clsx from "clsx";
+import { CtaLinkListComponentType } from "@/components/cms/components/CtaList/CtaList.model";
+import { CtaLinkElementType } from "@/components/cms/elements/CTALink/CTALink.model";
+import { ButtonGroupOrientation } from "@/components/ui/ti/enums";
 
 export interface CtaListProps
   extends
-    OptiComponentProps<typeof CtaListComponentType>,
+    OptiComponentProps<typeof CtaLinkListComponentType>,
     Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
   textAlignment?: TextAlignment;
 }
 
-export const CtaList = ({
+export const CtaLinkList = ({
   content,
   className,
   textAlignment = "Left",
@@ -25,7 +26,9 @@ export const CtaList = ({
 
   /* Every allowed type carries `link` from LinkContract, so this cast is only used
      to check whether anything is actually authored. */
-  const ctas = normalizeGenericArrayToTyped<typeof CTAElementType>(content.ctas);
+  const ctas = normalizeGenericArrayToTyped<typeof CtaLinkElementType>(
+    content.ctaLinks,
+  );
   const hasCtas = !!ctas?.some((x) => x.link?.url.default);
   if (!hasCtas) {
     return null;
@@ -33,6 +36,7 @@ export const CtaList = ({
   return (
     <TifButtonGroup
       className={clsx(className, { "mx-auto": textAlignment === "Center" })}
+      orientation={ButtonGroupOrientation.vertical}
     >
       {/* Resolves each item to its registered component (CTA, CTA Link, …). */}
       {ctas.map((cta, index) => (

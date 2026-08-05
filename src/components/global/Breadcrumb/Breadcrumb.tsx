@@ -165,17 +165,22 @@ const TAILWIND_VARIANTS = tv(
       // No top margin: TI's header already has a 16px margin-bottom, so the
       // breadcrumb sits flush at the top of <main> — matching live ti.com
       // (breadcrumb top 176px at 1280, i.e. 16px below the red nav).
-      nav: ["mb-6", "px-4", "md:mb-12", "md:px-[28px]"],
+      nav: ["mb-6", "md:mb-12"],
       container: ["container-lg"],
       // Mobile: single scrollable row with "/" separators (matches live).
+      // `!` on m-0/leading-7: on API portal pages ApiHeader loads TI's
+      // `ticom.header.subpage.css`, which is a whole-page stylesheet (normalize +
+      // Polaris base) delivered unlayered. Unlayered CSS beats every Tailwind
+      // utility, so TI's list margins and 20px leading win without the modifier.
       mobileList: [
         "flex",
         "list-none",
         "flex-nowrap",
         "overflow-x-auto",
+        "m-0!",
         "mr-6",
         "text-body-md",
-        "leading-7",
+        "leading-7!",
         "text-pl-text-color-primary",
         "md:hidden",
       ],
@@ -190,14 +195,19 @@ const TAILWIND_VARIANTS = tv(
         "before:content-['/']",
         "first:before:content-none",
       ],
+      // Same reason: TI's global `a` rule sets the link colour and leading.
       mobileLink: [
-        "text-pl-text-color-primary",
+        "text-pl-text-color-primary!",
+        "leading-7!",
         "no-underline",
         "hover:underline",
         "focus:underline",
       ],
       // Desktop: TI Stencil breadcrumb host.
-      desktop: ["ti_p-breadcrumb", "max-md:hidden"],
+      // `!` because hydration.css sets `ti-breadcrumb { display: flex }` unlayered to
+      // stop pre-hydration layout shift; a plain `max-md:hidden` loses to it and both
+      // the mobile and desktop breadcrumbs render at once.
+      desktop: ["ti_p-breadcrumb", "hidden!", "md:flex!"],
       desktopCurrent: ["text-body-md", "leading-7"],
       // Desktop parametric sibling dropdown (classes styled by portals-parity CSS
       // + these utilities).

@@ -15,7 +15,11 @@ export function GeneralSectionComponent({
 
   return (
     <div id={content.sectionId ?? undefined}>
-      <ThemedSection content={content}>
+      <ThemedSection
+        content={content}
+        fullHeight={content.sectionFullHeight ?? false}
+        narrow={content.sectionNarrow ?? false}
+      >
         <PreambleSectionWrapper
           content={content}
           parentField={parentField}

@@ -25,8 +25,9 @@ export async function getBreadcrumb(): Promise<BreadcrumbResult> {
 
 async function getProductFamilyBreadcrumb() {
   const familyResponse = getContextData("familyInfo");
+  const silos = getContextData("productSilos");
 
-  if (!familyResponse) {
+  if (!familyResponse || !silos) {
     return null;
   }
 
@@ -57,7 +58,7 @@ async function getProductFamilyBreadcrumb() {
         url: cleanLegacyUrl(item.productNodeUrl),
       };
       if (index === 0) {
-        entry.siblings = familyResponse.silos.map((sib) => {
+        entry.siblings = silos.map((sib) => {
           return {
             asSpan: false,
             title: sib.familyName,

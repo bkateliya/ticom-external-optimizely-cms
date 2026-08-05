@@ -6,7 +6,6 @@ import {
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { normalizeGenericArrayToTyped } from "@/lib/utils/content-type-utils";
 import { OptiCardComponentProps } from "../CardList";
-import { CtaList } from "@/components/ui/molecules/CtaList/CtaList";
 
 export function GeneralCard({
   content,
@@ -22,8 +21,6 @@ export function GeneralCard({
       <WrappedTextField field="eyebrow" />
       <WrappedHeadingTextField field="headline" />
       <WrappedRichTextField field="description" />
-
-      <CtaList content={content} parentField={parentField}/>
     </div>
   );
 }

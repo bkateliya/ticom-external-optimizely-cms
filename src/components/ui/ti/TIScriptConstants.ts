@@ -12,6 +12,25 @@ export const TICOM =
 // Global header stylesheet, served from the same @ticom host (no locale segment).
 export const GLOBAL_HEADER_CSS = `${TICOM}/header-content/1.latest/style/ticom.global.header.css`;
 
+// TI's plain asset root (…/assets), one level above the @ticom package host.
+const TI_ASSETS = TICOM.replace(/\/js\/@ticom\/?$/, "");
+
+/**
+ * The API/subsite header (AEM `subsiteHeader`) is a different component from the
+ * main responsive header and ships its own pair of assets — verified against
+ * https://www.ti.com/developer-api/overview.html:
+ *
+ *  - the CSS holds every `ti_header-*` rule; GLOBAL_HEADER_CSS has none of them
+ *  - the JS is a bare IIFE that reads `#ti_header` the moment it runs, so it has
+ *    to load *after* the markup and it throws on pages without it. Load it from
+ *    ApiHeader, never from the root layout.
+ *
+ * `header-responsive.js` is NOT involved: it drives `#tiResponsiveHeader`, which
+ * the subsite header doesn't have.
+ */
+export const SUBSITE_HEADER_CSS = `${TI_ASSETS}/style/ticom.header.subpage.css`;
+export const SUBSITE_HEADER_JS = `${TI_ASSETS}/js/ticom.header.subpage.js`;
+
 export const MODULE_BUNDLES = [
   `${TICOM}/ui-components/3.latest/ui-components.esm.js`,
   `${TICOM}/header-components/3.latest/header-components.esm.js`,

@@ -4,10 +4,11 @@ import { LinkContract } from "../../contracts/element-contracts/link.model";
 import { ButtonAppearance, ButtonColor } from "@/components/ui/ti/enums";
 import { UiIconList } from "@/components/ui/ti/TiSvgIcon/SvgIconMapping";
 import { enumToOptions } from "@/lib/opti/enum-utils";
+import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 
-export const CTAElementType = contentType({
+export const CtaButtonElementType = contentType({
   key: `${KEY_PREFIX}CTA_Element`,
-  displayName: `${DISPLAY_NAME_PREFIX}CTA`,
+  displayName: `${DISPLAY_NAME_PREFIX}CTA Button`,
   baseType: "_component",
   compositionBehaviors: ["elementEnabled"],
   extends: [LinkContract],
@@ -39,11 +40,12 @@ export const CTAElementType = contentType({
     },
     IsDownload: {
       type: "boolean",
-      displayName: "Is Download Button",
+      displayName: "[Obsolete] Is Download Button",
       description:
         "If checked, CTA will trigger a download.  Only use for files",
-      group: "Content",
       sortOrder: -50,
+
+      ...SoftDeleteProperties,
     },
   },
 });

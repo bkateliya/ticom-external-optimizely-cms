@@ -5,6 +5,7 @@ import {
 } from "@/components/cms/constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
 import { ContractContentType } from "@/lib/ts/opti";
+import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 
 /** Most of the time you will want to use @see WithHeadlineContract  */
 export const HeadlineContract = contract({
@@ -36,15 +37,13 @@ export const HeadlineContract = contract({
     },
 
     subheadline: {
-      // Soft Delete
-      displayMode: "hidden",
-
       type: "string",
       displayName: "[Obsolete] Subheadline",
       description: "Subheadline of the component",
       maxLength: 250,
-      group: PropertyTypes.DeletedFields,
       isLocalized: true,
+
+      ...SoftDeleteProperties,
     },
 
     /** This is actually Headline Size now, not Headline Level. */

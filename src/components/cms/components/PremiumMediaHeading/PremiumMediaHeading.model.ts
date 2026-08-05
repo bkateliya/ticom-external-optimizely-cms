@@ -2,11 +2,11 @@ import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
 import { AllComponentTypeKeyMap } from "../keys";
-import { CTALinkElementType } from "../../elements/CTALink/CTALink.model";
+import { CtaLinkElementType } from "../../elements/CTALink/CTALink.model";
 
 
-export const PremiumMediaHeadingType = contentType({
-  key: AllComponentTypeKeyMap.PremiumMediaHeading,
+export const PremiumMediaHeadingComponentType = contentType({
+  key: AllComponentTypeKeyMap.PremiumMediaHeadingComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Premium Media Heading`,
   baseType: "_component",
   properties: {
@@ -49,7 +49,7 @@ export const PremiumMediaHeadingType = contentType({
       maxItems: 2,
       items: {
         type: "content",
-        allowedTypes: [CTALinkElementType],
+        allowedTypes: [CtaLinkElementType],
       },
     },
     featureOptions: {

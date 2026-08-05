@@ -1,4 +1,4 @@
-import { CtaListContract } from "@/components/cms/contracts/component-contracts/cta-list.model";
+import { DeprecatedCtaListContract } from "@/components/cms/contracts/component-contracts/cta-list.model";
 import { HeadlineContract } from "@/components/cms/contracts/component-contracts/headline.model";
 import { contentType } from "@optimizely/cms-sdk";
 import {
@@ -10,7 +10,7 @@ export const SingleGeneralCardComponentType = contentType({
   key: AllComponentTypeKeyMap.SingleGeneralCardComponent,
   displayName: `${DISPLAY_NAME_PREFIX}General Card`,
   baseType: "_component",
-  extends: [HeadlineContract, CtaListContract],
+  extends: [HeadlineContract, DeprecatedCtaListContract],
   properties: {},
 });
 
