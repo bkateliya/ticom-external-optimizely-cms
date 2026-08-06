@@ -23,6 +23,8 @@ import { imageComponentTypes } from "./Image/types";
 import { PremiumMediaHeadingType } from "./PremiumMediaHeading/PremiumMediaHeading.model";
 import {HorizontalRuleComponentType} from "./HorizontalRule/HorizontalRule.model";
 
+import {SelectionToolComponentType} from "./SelectionTool/SelectionTool.model";
+
 export const allComponentTypes = [
   HeroComponentType,
   ContentBlockComponentType,
@@ -41,4 +43,5 @@ export const allComponentTypes = [
   PremiumMediaHeadingType,
   HorizontalRuleComponentType,
 
+  SelectionToolComponentType,
 ];

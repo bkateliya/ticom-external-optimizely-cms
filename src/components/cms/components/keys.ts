@@ -24,6 +24,7 @@ export const AllComponentTypeKeyMap = {
   HeadshotImageComponent:`${KEY_PREFIX}HeadshotImage_Component`,
   PremiumMediaHeading: `${KEY_PREFIX}PremiumMediaHeading_Component`,
   HorizontalRuleComponent: `${KEY_PREFIX}HorizontalRule_Component`,
+  SelectionToolComponent: `${KEY_PREFIX}SelectionTool_Component`,
 };
 
 /**
@@ -41,5 +42,6 @@ export const StandaloneComponentTypeKeys = [
   ApplicationComponentTypeKeyMap.ApplicationListing,
   AllComponentTypeKeyMap.PremiumMediaHeading,
   AllComponentTypeKeyMap.HorizontalRuleComponent,
+  AllComponentTypeKeyMap.SelectionToolComponent,
 ];
 

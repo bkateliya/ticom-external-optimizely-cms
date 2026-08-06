@@ -38,6 +38,8 @@ import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { VideoPlayerComponent } from "./VideoPlayer/VideoPlayer";
 import { HorizontalRuleComponentType } from "./HorizontalRule/HorizontalRule.model";
 import { HorizontalRuleComponent } from "./HorizontalRule/HorizontalRule";
+import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model";
+import { SelectionToolComponent } from "./SelectionTool/SelectionTool";
 
 
 export const componentRegistry: ComponentRegistry = {
@@ -58,4 +60,5 @@ export const componentRegistry: ComponentRegistry = {
   [PremiumMediaHeadingType.key]: PremiumMediaHeadingComponent,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,
   [HorizontalRuleComponentType.key]: HorizontalRuleComponent,
+  [SelectionToolComponentType.key]: SelectionToolComponent,
 };
