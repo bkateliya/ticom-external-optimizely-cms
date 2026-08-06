@@ -37,6 +37,7 @@ import { PremiumMediaHeadingComponent } from "./PremiumMediaHeading/PremiumMedia
 import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model";
 import { ApplicationSearchBoxComponentType } from "./ApplicationSearchBox/ApplicationSearchBox.model";
 import { FAQSearchBoxComponentType } from "./FAQSearchBox/FAQSearchBox.model";
+import { FAQSearchBox } from "./FAQSearchBox/FAQSearchBox";
 import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { VideoPlayerComponent } from "./VideoPlayer/VideoPlayer";
 import { CtaButtonListComponentType, CtaLinkListComponentType } from "./CtaList/CtaList.model";
@@ -63,6 +64,6 @@ export const componentRegistry: ComponentRegistry = {
   ...imageComponentRegistry,
   [PremiumMediaHeadingComponentType.key]: PremiumMediaHeadingComponent,
   [ApplicationSearchBoxComponentType.key]: NoPreviewComponent,
-  [FAQSearchBoxComponentType.key]: NoPreviewComponent,
+  [FAQSearchBoxComponentType.key]: FAQSearchBox,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,
 };

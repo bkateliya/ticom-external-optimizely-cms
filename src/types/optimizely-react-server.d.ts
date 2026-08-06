@@ -20,5 +20,8 @@ declare module "@optimizely/cms-sdk/react/server" {
     pageContentId: string;
     pageType: string;
     breadcrumb: BreadcrumbEntry[];
+    // Site host from the CMS (Graph `_metadata.url.base`), so components can
+    // build absolute links to TI paths this app doesn't serve itself.
+    siteBaseUrl?: string;
   }
 }

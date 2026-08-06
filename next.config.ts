@@ -1,4 +1,5 @@
 import { remotePatterns } from "@/lib/next-config/images";
+import { beforeFilesRewrites } from "@/lib/next-config/rewrites";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
@@ -9,6 +10,13 @@ const nextConfig: NextConfig = {
     remotePatterns: remotePatterns,
   },
   transpilePackages: ['@ticom/form-components'],
+  async rewrites() {
+    return {
+      beforeFiles: beforeFilesRewrites,
+      afterFiles: [],
+      fallback: [],
+    };
+  },
 };
 
 const withNextIntl = createNextIntlPlugin({

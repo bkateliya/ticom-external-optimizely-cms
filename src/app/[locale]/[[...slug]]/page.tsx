@@ -2,6 +2,7 @@ import "@/lib/opti/opti-init";
 import {
   getContext,
   OptimizelyComponent,
+  setContextData,
   withAppContext,
 } from "@optimizely/cms-sdk/react/server";
 import { redirect, RedirectType } from "next/navigation";
@@ -37,6 +38,7 @@ async function Page({ params }: Props) {
   }
 
   await populateSiteSettings(path, locale, contentLocale);
+  setContextData("siteBaseUrl", mainContent._metadata?.url?.base ?? undefined);
 
   const contextData = getContext();
   if (!contextData) {

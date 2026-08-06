@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s --max-time 90 \"http://localhost:3000/en-us\")",
+      "Bash(grep -o 'siteBaseUrl[^,]\\\\{0,40\\\\}')",
+      "Bash(npx tsc *)",
+      "Bash(npm run next:dev > /tmp/devserver.log 2>&1 & *)",
+      "Bash(curl -s -D - -o /tmp/a.out --max-time 60 \"http://localhost:3000/assets/js/@ticom/search-components/3.2.8/search-components.esm.js\")",
+      "Bash(sed -i '' \"s#from \\\\\"intl-messageformat\\\\\"#from \\\\\"/Users/bhavin/Workspace/Webserver/T/TI/POC/ticom-external-optimizely-cms/node_modules/intl-messageformat/index.js\\\\\"#\" /tmp/faqurl.mjs)",
+      "Bash(node /tmp/faqurl.mjs)"
+    ]
+  }
+}
