@@ -36,6 +36,19 @@ function menuHref(link: Level1["level1URL"] | Level2["level2URL"]) {
   return path ? normalizeUrl(path) : null;
 }
 
+/**
+ * The CMS "Open in" dropdown maps to `link.target` (`_blank`, `_self`, …). Pass
+ * it straight through to the anchor, and pair `_blank` with `rel` so a new tab
+ * can't reach back through `window.opener`.
+ */
+function linkTarget(link: Level1["level1URL"] | Level2["level2URL"]) {
+  const target = link?.target || undefined;
+  return {
+    target,
+    rel: target === "_blank" ? "noopener noreferrer" : undefined,
+  };
+}
+
 
 export function ApiHeader({
   content,
@@ -211,6 +224,7 @@ function Level1Item({ content }: { content: Level1 }) {
           data-lid={NAV_LID}
           data-navtitle={title}
           href={href}
+          {...linkTarget(content.level1URL)}
           role="menuitem"
           {...pa("level1Title")}
         >
@@ -242,6 +256,7 @@ function Level2Item({ content }: { content: Level2 }) {
         data-lid={NAV_LID}
         data-navtitle={title}
         href={href}
+        {...linkTarget(content.level2URL)}
         role="menuitem"
         {...getPreviewUtils(content).pa("level2Title")}
       >
