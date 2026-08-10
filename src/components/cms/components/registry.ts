@@ -36,6 +36,7 @@ import { PremiumMediaHeadingComponentType } from "./PremiumMediaHeading/PremiumM
 import { PremiumMediaHeadingComponent } from "./PremiumMediaHeading/PremiumMediaHeading";
 import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model";
 import { ApplicationSearchBoxComponentType } from "./ApplicationSearchBox/ApplicationSearchBox.model";
+import { ApplicationSearchBox } from "./ApplicationSearchBox/ApplicationSearchBox";
 import { FAQSearchBoxComponentType } from "./FAQSearchBox/FAQSearchBox.model";
 import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { VideoPlayerComponent } from "./VideoPlayer/VideoPlayer";
@@ -62,7 +63,7 @@ export const componentRegistry: ComponentRegistry = {
   ...applicationListingComponentRegistry,
   ...imageComponentRegistry,
   [PremiumMediaHeadingComponentType.key]: PremiumMediaHeadingComponent,
-  [ApplicationSearchBoxComponentType.key]: NoPreviewComponent,
+  [ApplicationSearchBoxComponentType.key]: ApplicationSearchBox,
   [FAQSearchBoxComponentType.key]: NoPreviewComponent,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,
 };
