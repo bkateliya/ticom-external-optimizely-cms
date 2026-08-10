@@ -38,6 +38,8 @@ import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model"
 import { ApplicationSearchBoxComponentType } from "./ApplicationSearchBox/ApplicationSearchBox.model";
 import { FAQSearchBoxComponentType } from "./FAQSearchBox/FAQSearchBox.model";
 import { FAQSearchBox } from "./FAQSearchBox/FAQSearchBox";
+import { BrowseVideosComponentType } from "./BrowseVideos/BrowseVideos.model";
+import { BrowseVideos } from "./BrowseVideos/BrowseVideos";
 import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { VideoPlayerComponent } from "./VideoPlayer/VideoPlayer";
 import {
@@ -79,6 +81,7 @@ export const componentRegistry: ComponentRegistry = {
   [PremiumMediaHeadingComponentType.key]: PremiumMediaHeadingComponent,
   [ApplicationSearchBoxComponentType.key]: NoPreviewComponent,
   [FAQSearchBoxComponentType.key]: FAQSearchBox,
+  [BrowseVideosComponentType.key]: BrowseVideos,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,
   [HierarchyNavigationComponentType.key]: HierarchyNavigation,
   [HierarchyNavigationItemComponentType.key]: NoPreviewComponent,

@@ -38,10 +38,11 @@ export const getProductFamily = cache(async function (familyId: string) {
   return (await response.json()) as Family;
 });
 
-export const getSilos = cache(async function () {
+export const getSilos = cache(async function (language?: string) {
   const url = `${BASE}/productfamily/silofamilies`;
   const headers = {
     Authorization: `Bearer ${await getBearerToken()}`,
+    ...(language && { "Content-Language": language }),
   };
   const response = await fetch(url, { headers });
 
@@ -49,10 +50,14 @@ export const getSilos = cache(async function () {
   return responseJson.content;
 });
 
-export const getApplication = cache(async function (applicationId: string) {
+export const getApplication = cache(async function (
+  applicationId: string,
+  language?: string,
+) {
   const url = `${BASE}/application/id/${applicationId}/all`;
   const headers = {
     Authorization: `Bearer ${await getBearerToken()}`,
+    ...(language && { "Content-Language": language }),
   };
   const response = await fetch(url, { headers });
 
