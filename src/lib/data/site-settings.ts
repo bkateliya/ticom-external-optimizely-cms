@@ -67,6 +67,8 @@ async function populatePageDataImpl(
     return;
   }
 
+  setContextData("preFooter", content.preFooter);
+
   const productFamily = normalizeGenericContentToTyped(
     await cached.getReferencedContent(content.productFamily),
     ProductFamilyType,

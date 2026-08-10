@@ -4,6 +4,7 @@ import { PageTypeKeys } from "../pages/keys";
 import { GoldenSourcedDataContract } from "./page-contacts/golden-sourced.model";
 import { PageContentContract } from "./page-contacts/page-content.model";
 import { PageHeroContract } from "./page-contacts/page-hero.model";
+import { PreFooterContract } from "./page-contacts/prefooter.model";
 import { SEOContract } from "./page-contacts/seo.model";
 
 export const CommonPageContracts = [
@@ -11,6 +12,7 @@ export const CommonPageContracts = [
   SEOContract,
   PageHeroContract,
   GoldenSourcedDataContract,
+  PreFooterContract,
 ];
 
 export type CommonPageContractType = ContractContentType<
@@ -19,6 +21,7 @@ export type CommonPageContractType = ContractContentType<
     typeof SEOContract,
     typeof PageHeroContract,
     typeof GoldenSourcedDataContract,
+    typeof PreFooterContract,
   ]
 >;
 
