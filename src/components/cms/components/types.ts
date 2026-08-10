@@ -31,6 +31,10 @@ import {
   CtaButtonListComponentType,
   CtaLinkListComponentType,
 } from "./CtaList/CtaList.model";
+import { HierarchyNavigationComponentType, HierarchyNavigationItemComponentType } from "./HierarchyNavigation/HierarchyNavigation.model";
+import { tabsComponents } from "./Tabs/types";
+import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
+import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -55,5 +59,10 @@ export const allComponentTypes = [
   PremiumMediaHeadingComponentType,
   ApplicationSearchBoxComponentType,
   FAQSearchBoxComponentType,
+  HierarchyNavigationComponentType,
+  HierarchyNavigationItemComponentType,
   BrowseVideosComponentType,
+  ...tabsComponents,
+  JumpLinkNavigationComponentType,
+  JumpLinkTargetComponentType,
 ];

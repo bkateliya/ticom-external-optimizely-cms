@@ -19,7 +19,7 @@ export const DeprecatedCtaListContract = contract({
   properties: {
     ctas: {
       type: "array",
-      displayName: "CTA List",
+      displayName: "[Obsolete] CTA List",
       items: {
         type: "content",
         allowedTypes: [CtaButtonElementType, CtaLinkElementType],

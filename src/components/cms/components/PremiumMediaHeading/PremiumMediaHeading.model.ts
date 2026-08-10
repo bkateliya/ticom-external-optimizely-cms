@@ -54,7 +54,7 @@ export const PremiumMediaHeadingComponentType = contentType({
     },
     featureOptions: {
       displayName: "Select background",
-      group: PropertyTypes.Content,
+      group: PropertyTypes.Appearance,
       type: "string",
       format: "selectOne",
       enum: [
@@ -77,13 +77,13 @@ export const PremiumMediaHeadingComponentType = contentType({
     },
     videoPlayerControls: {
       displayName: "Video player controls",
-      group: PropertyTypes.Content,
+      group: PropertyTypes.ComponentConfiguration ,
       description: "If controls will be usable on player",
       type: "boolean",
     },
     searchBar: {
       displayName: "Search Bar",
-      group: PropertyTypes.Content,
+      group: PropertyTypes.ComponentConfiguration ,
       type: "string",
       format: "selectOne",
       enum: [

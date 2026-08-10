@@ -2,13 +2,14 @@ import Script from "next/script";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { VideoPlayerComponentType } from "./VideoPlayer.model";
 import { VideoPlaylist } from "./VideoPlaylist";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 
 // Brightcove account and player, required from the environment so they can be
 // swapped per deployment. Not NEXT_PUBLIC_: this component is server-only, and
 // VideoPlaylist receives the account as a prop rather than reading it client-side.
 // See .env.example for the values the legacy AEM components used.
-const BRIGHTCOVE_ACCOUNT = process.env.BRIGHTCOVE_ACCOUNT_ID;
-const BRIGHTCOVE_PLAYER = process.env.BRIGHTCOVE_PLAYER_ID;
+const BRIGHTCOVE_ACCOUNT = SERVER_ENV_VARS.BRIGHTCOVE_ACCOUNT_ID;
+const BRIGHTCOVE_PLAYER = SERVER_ENV_VARS.BRIGHTCOVE_PLAYER_ID;
 
 export function VideoPlayerComponent({
   content,

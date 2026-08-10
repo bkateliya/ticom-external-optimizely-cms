@@ -31,6 +31,12 @@ export const AllComponentTypeKeyMap = {
   ApplicationSearchBoxComponent: `${KEY_PREFIX}ApplicationSearchBox_Component`,
   FAQSearchBoxComponent: `${KEY_PREFIX}FAQSearchBox_Component`,
   BrowseVideosComponent: `${KEY_PREFIX}BrowseVideos_Component`,
+  HierarchyNavigationComponent: `${KEY_PREFIX}HierarchyNavigation_Component`,
+  HierarchyNavigationItemComponent: `${KEY_PREFIX}HierarchyNavigationItem_Component`,
+  TabsComponent: `${KEY_PREFIX}Tabs_Component`,
+  GeneralTabComponent: `${KEY_PREFIX}GeneralTab_Component`,
+  JumpLinkNavigationComponent: `${KEY_PREFIX}JumpLinkNavigation_Component`,
+  JumpLinkTargetComponent: `${KEY_PREFIX}JumpLinkTarget_Component`,
 };
 
 /**
@@ -45,12 +51,18 @@ export const StandaloneComponentTypeKeys = [
   AllComponentTypeKeyMap.CardListComponent,
   AllComponentTypeKeyMap.SingleGeneralCardComponent,
   AllComponentTypeKeyMap.ColumnGridComponent,
+  AllComponentTypeKeyMap.StandardImageComponent,
+  AllComponentTypeKeyMap.HeadshotImageComponent,
   ApplicationComponentTypeKeyMap.ApplicationListing,
   AllComponentTypeKeyMap.VideoPlayerComponent,
   AllComponentTypeKeyMap.SelectionToolComponent,
   AllComponentTypeKeyMap.PremiumMediaHeadingComponent,
+  AllComponentTypeKeyMap.HierarchyNavigationComponent,
   AllComponentTypeKeyMap.HorizontalRuleComponent,
   AllComponentTypeKeyMap.ApplicationSearchBoxComponent,
   AllComponentTypeKeyMap.FAQSearchBoxComponent,
   AllComponentTypeKeyMap.BrowseVideosComponent,
+  AllComponentTypeKeyMap.TabsComponent,
+  AllComponentTypeKeyMap.JumpLinkNavigationComponent,
+  AllComponentTypeKeyMap.JumpLinkTargetComponent,
 ];

@@ -286,16 +286,17 @@ const GRADIENTS = [
 
 const TYPE_SCALE: { label: string; cls: string; spec: string }[] = [
   { label: "text-hero", cls: "text-hero", spec: "48/60 (phone 28/36)" },
-  { label: "text-h1", cls: "text-h1", spec: "34/40 (phone 28/36)" },
-  { label: "text-h2", cls: "text-h2", spec: "28/36 (phone 24/32)" },
-  { label: "text-h3", cls: "text-h3", spec: "24/32 (phone 20/28)" },
-  { label: "text-h4", cls: "text-h4", spec: "20/28 (phone 18/28)" },
-  { label: "text-h5", cls: "text-h5", spec: "16/24" },
-  { label: "text-h6", cls: "text-h6", spec: "14/20 (phone 14/28)" },
+  { label: "text-h1", cls: "text-h1", spec: "56/80 (phone 34/40)" },
+  { label: "text-h2", cls: "text-h2", spec: "34/40 (phone 28/36)" },
+  { label: "text-h3", cls: "text-h3", spec: "28/36 (phone 24/32)" },
+  { label: "text-h4", cls: "text-h4", spec: "24/32 (phone 20/28)" },
+  { label: "text-h5", cls: "text-h5", spec: "20/28 (phone 18/28)" },
+  { label: "text-h6", cls: "text-h6", spec: "16/24 (weight 500)" },
   { label: "text-body-xl", cls: "text-body-xl", spec: "18/28" },
   { label: "text-body-lg", cls: "text-body-lg", spec: "16/24" },
   { label: "text-body-md", cls: "text-body-md", spec: "14/20 (phone 14/24)" },
   { label: "text-body-sm", cls: "text-body-sm", spec: "12/20 (phone 12/24)" },
+  { label: "text-label", cls: "text-label", spec: "12/16" },
 ];
 
 const SPACING: { label: string; cls: string; px: string }[] = [

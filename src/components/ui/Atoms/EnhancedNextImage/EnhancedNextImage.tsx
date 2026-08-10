@@ -1,10 +1,10 @@
 // Global
-import NextImage, { ImageProps } from 'next/image';
+import NextImage, { ImageProps } from "next/image";
 
 // Lib
-import { isValidNextImageDomain } from '@/lib/utils/config-utils';
-import { JSX } from 'react';
-import clsx from 'clsx';
+import { isValidNextImageDomain } from "@/lib/utils/config-utils";
+import { JSX } from "react";
+import clsx from "clsx";
 
 const EnhancedNextImage = (props: ImageProps): JSX.Element => {
   if (!props.src) {
@@ -21,13 +21,12 @@ const EnhancedNextImage = (props: ImageProps): JSX.Element => {
 
   const nextImageProps: ImageProps = {
     ...props,
-    fetchPriority: props.priority ? 'high' : props.fetchPriority,
-    sizes: props.sizes || '100vw',
+    fetchPriority: props.priority ? "high" : props.fetchPriority,
+    sizes: props.sizes || "100vw",
     src: newSrc,
   };
 
   const isValidDomain = isValidNextImageDomain(newSrc);
-  const isStorybook = process.env.IS_STORYBOOK === 'true';
 
   if (props.fill) {
     // https://stackoverflow.com/a/76008677
@@ -36,30 +35,32 @@ const EnhancedNextImage = (props: ImageProps): JSX.Element => {
       <NextImage
         data-component="helpers/atoms/enhanced-next-image"
         {...nextImageProps}
-        unoptimized={!isValidDomain || isStorybook}
+        unoptimized={!isValidDomain}
         width={0}
         height={0}
         fill={false}
-        style={{ width: 'auto', height: 'auto' }}
+        style={{ width: "auto", height: "auto" }}
       />
     );
   }
   const isAutoSize = !props.width || !props.height;
   if (isAutoSize) {
-    return <NextImage
-      {...nextImageProps}
-      unoptimized={!isValidDomain || isStorybook}
-      className={clsx(props.className, "w-full h-auto object-contain")}
-      width={0}
-      height={0}
-      sizes="100vw"
-    />
+    return (
+      <NextImage
+        {...nextImageProps}
+        unoptimized={!isValidDomain}
+        className={clsx(props.className, "w-full h-auto object-contain")}
+        width={0}
+        height={0}
+        sizes="100vw"
+      />
+    );
   }
   return (
     <NextImage
       data-component="helpers/atoms/enhanced-next-image"
       {...nextImageProps}
-      unoptimized={!isValidDomain || isStorybook}
+      unoptimized={!isValidDomain}
     />
   );
 };
@@ -70,7 +71,7 @@ export function normalizeImageUrl(src: string | undefined) {
   let newSrc = src;
 
   if (src) {
-    newSrc = src.replace(/^\/\//, 'https://');
+    newSrc = src.replace(/^\/\//, "https://");
   }
 
   return newSrc;

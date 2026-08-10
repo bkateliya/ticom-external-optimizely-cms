@@ -11,6 +11,7 @@ import { OptimizelyContentProps } from "@/components/ui/cms/ExtendedOptimizelyCo
 import { RootLayout } from "../RootLayout";
 import { toAppLocale } from "@/constants/locales";
 import { populateSiteSettings } from "@/lib/data/site-settings";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 export { generateMetadata } from "./metadata";
 
 type Props = {
@@ -22,7 +23,7 @@ export async function Page({ searchParams }: Props) {
 
   const previewParams = (await searchParams) as PreviewParams;
   if (!previewParams) {
-    return <h1>No content found</h1>
+    return <h1>No content found</h1>;
   }
   const response = (await client.getPreviewContent(
     previewParams,
@@ -34,17 +35,17 @@ export async function Page({ searchParams }: Props) {
   // English chrome. Map it back to the app slug for RootLayout/SiteSettings.
   const locale = toAppLocale(previewParams.loc);
 
-  const metadata = response._metadata as { url?: { hierarchical?: string } } | undefined;
-  await populateSiteSettings(metadata?.url?.hierarchical ?? "", locale);
+  const metadata = response._metadata as
+    { url?: { hierarchical?: string } } | undefined;
+  await populateSiteSettings(response, metadata?.url?.hierarchical ?? "", locale);
 
   return (
     <RootLayout locale={locale}>
-
       <Script
         src={
           new URL(
             "/util/javascript/communicationinjector.js",
-            process.env.OPTIMIZELY_CMS_URL,
+            SERVER_ENV_VARS.OPTIMIZELY_CMS_URL,
           ).href
         }
       ></Script>

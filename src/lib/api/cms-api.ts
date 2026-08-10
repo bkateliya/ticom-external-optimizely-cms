@@ -1,45 +1,64 @@
 import { cache } from "react";
+import { SERVER_ENV_VARS } from "../env/server-env";
 
-const BASE = `${process.env.CMS_API_DOMAIN}/cmsapi`;
+const BASE = !!SERVER_ENV_VARS.CMS_API_DOMAIN
+  ? `${SERVER_ENV_VARS.CMS_API_DOMAIN}/cmsapi`
+  : SERVER_ENV_VARS.WEB_SERVICE_DOMAIN;
 
-async function getProductFamilyImpl(familyId: string) {
+const getBearerToken = cache(async function () {
+  if (SERVER_ENV_VARS.CMS_API_BEARER_TOKEN) {
+    return SERVER_ENV_VARS.CMS_API_BEARER_TOKEN;
+  }
+  const response = await fetch(
+    `${SERVER_ENV_VARS.ACCESS_TOKEN_URL}?grant_type=client_credentials`,
+    {
+      headers: {
+        Authorization: `Basic ${btoa(`${SERVER_ENV_VARS.ACCESS_TOKEN_CLIENT_ID}:${SERVER_ENV_VARS.ACCESS_TOKEN_CLIENT_SECRET}`)}`,
+      },
+      method: "POST",
+    },
+  );
+
+  const body = await response.json();
+
+  if (!body.access_token) {
+    console.error("Invalid Token Response", body);
+    throw new Error(`Access token could not be retrieved`);
+  }
+  return body.access_token;
+});
+
+export const getProductFamily = cache(async function (familyId: string) {
   const url = `${BASE}/productfamily/${familyId}/all`;
   const headers = {
-    Authorization: `Bearer ${process.env.CMS_API_BEARER_TOKEN}`,
+    Authorization: `Bearer ${await getBearerToken()}`,
   };
   const response = await fetch(url, { headers });
 
   return (await response.json()) as Family;
-}
+});
 
-export const getProductFamily = cache(getProductFamilyImpl);
-
-async function getSilosImpl() {
+export const getSilos = cache(async function () {
   const url = `${BASE}/productfamily/silofamilies`;
   const headers = {
-    Authorization: `Bearer ${process.env.CMS_API_BEARER_TOKEN}`,
+    Authorization: `Bearer ${await getBearerToken()}`,
   };
   const response = await fetch(url, { headers });
 
   const responseJson = (await response.json()) as { content: SiloFamily[] };
   return responseJson.content;
-}
+});
 
-export const getSilos = cache(getSilosImpl);
-
-async function getApplicationImpl(applicationId: string) {
+export const getApplication = cache(async function (applicationId: string) {
   const url = `${BASE}/application/id/${applicationId}/all`;
   const headers = {
-    Authorization: `Bearer ${process.env.CMS_API_BEARER_TOKEN}`,
+    Authorization: `Bearer ${await getBearerToken()}`,
   };
   const response = await fetch(url, { headers });
 
   const responseJson = (await response.json()) as ApplicationResponse;
   return responseJson;
-}
-
-export const getApplication = cache(getApplicationImpl);
-
+});
 export interface SiloFamily {
   familyId: number;
   parentId: number;

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "../../context/BrandAndTheme/BrandAndThemeContext";
 import { CustomEventHandler, useEventListenerRef } from "../Common/events";
 
 export type TabContainerAppearance = "tab" | "chip" | "cards";
@@ -21,9 +22,9 @@ export type TabPanel = {
   /** The panel content shown when this tab is active. */
   content: React.ReactNode;
   /** Hide this tab entirely. */
-  hidden?: boolean;
+  hidden?: boolean | null;
   /** Keep the panel in the DOM while hidden so its content has size. */
-  renderWhenHidden?: boolean;
+  renderWhenHidden?: boolean | null;
   /** Image icon URL for the tab button. Only used when `appearance="cards"`. */
   tabTitleImage?: string;
 };
@@ -52,19 +53,19 @@ export type TiTabContainerProps = {
   /** `tabId` of the tab selected by default. */
   selectedTabId?: string;
   /** Show an "All" tab that displays every tab's content. Defaults to false. */
-  allTabShown?: boolean;
+  allTabShown?: boolean | null;
   /** Label for the "All" tab. Defaults to "All". */
   allTabTitle?: string;
   /** Hash to use for the "All" tab. Defaults to "all". Keep unique per page. */
   allTabId?: string;
   /** Select tabs via the URL hash. Defaults to false. */
-  hashSelection?: boolean;
+  hashSelection?: boolean | null;
   /** Activate tabs on arrow-key focus instead of requiring Enter/Space. */
-  autoActivate?: boolean;
+  autoActivate?: boolean | null;
   /** On mobile, keep only one expansion panel open at a time. */
-  autoCollapseMobile?: boolean;
+  autoCollapseMobile?: boolean | null;
   /** Disable the accordion view swap on mobile. */
-  disableMobile?: boolean;
+  disableMobile?: boolean | null;
   /** Accessible label for the tab list. */
   tabListLabel?: string;
   /** Heading level for the active tab title. Only used when `appearance="cards"`. */
@@ -92,6 +93,9 @@ export function TiTabContainer({
   theme,
   tiTabContainerChange,
 }: TiTabContainerProps): React.ReactNode {
+  const { mode } = useTheme();
+
+  const resolvedTheme = theme || mode;
   const ref = useEventListenerRef({
     tiTabContainerChange: tiTabContainerChange,
   });
@@ -100,16 +104,16 @@ export function TiTabContainer({
       ref={ref}
       appearance={appearance}
       selected-tab-id={selectedTabId}
-      all-tab-shown={allTabShown}
+      all-tab-shown={allTabShown ?? undefined}
       all-tab-title={allTabTitle}
       all-tab-id={allTabId}
-      hash-selection={hashSelection}
-      auto-activate={autoActivate}
-      auto-collapse-mobile={autoCollapseMobile}
-      disable-mobile={disableMobile}
+      hash-selection={hashSelection ?? undefined}
+      auto-activate={autoActivate ?? undefined}
+      auto-collapse-mobile={autoCollapseMobile ?? undefined}
+      disable-mobile={disableMobile ?? undefined}
       tab-list-label={tabListLabel}
       tab-title-level={tabTitleLevel}
-      theme={theme}
+      theme={resolvedTheme}
     >
       {headerContent && <div slot="tab-header-content">{headerContent}</div>}
       {tabs.map((tab) => (
@@ -117,8 +121,8 @@ export function TiTabContainer({
           key={tab.tabId}
           tab-id={tab.tabId}
           tab-title={tab.title}
-          hidden={tab.hidden}
-          render-when-hidden={tab.renderWhenHidden}
+          hidden={tab.hidden ?? undefined}
+          render-when-hidden={tab.renderWhenHidden ?? undefined}
           tab-title-image={tab.tabTitleImage}
         >
           {tab.content}

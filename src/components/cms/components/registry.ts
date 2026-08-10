@@ -37,11 +37,26 @@ import { PremiumMediaHeadingComponent } from "./PremiumMediaHeading/PremiumMedia
 import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model";
 import { ApplicationSearchBoxComponentType } from "./ApplicationSearchBox/ApplicationSearchBox.model";
 import { FAQSearchBoxComponentType } from "./FAQSearchBox/FAQSearchBox.model";
+import { FAQSearchBox } from "./FAQSearchBox/FAQSearchBox";
 import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { VideoPlayerComponent } from "./VideoPlayer/VideoPlayer";
-import { CtaButtonListComponentType, CtaLinkListComponentType } from "./CtaList/CtaList.model";
+import {
+  CtaButtonListComponentType,
+  CtaLinkListComponentType,
+} from "./CtaList/CtaList.model";
 import { CtaButtonList } from "./CtaList/CtaButtonList";
 import { CtaLinkList } from "./CtaList/CtaLinkList";
+import { tabsComponentRegistry } from "./Tabs/registry";
+import {
+  HierarchyNavigationComponentType,
+  HierarchyNavigationItemComponentType,
+} from "./HierarchyNavigation/HierarchyNavigation.model";
+import { HierarchyNavigation } from "./HierarchyNavigation/HierarchyNavigation";
+import { JumpLinkNavigationComponent } from "./JumpLink/JumpLinkNavigation";
+import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
+import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
+import { JumpLinkTargetComponent } from "./JumpLink/JumpLinkTarget";
+import { SelectionToolComponent } from "./SelectionTool/SelectionTool";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -57,12 +72,17 @@ export const componentRegistry: ComponentRegistry = {
   [HomePageHeroComponentType.key]: HomePageHeroComponent,
   [ColumnGridComponentType.key]: ColumnGridComponent,
   [ColumnGridColumnComponentType.key]: NoPreviewComponent,
-  [SelectionToolComponentType.key]: NoPreviewComponent,
+  [SelectionToolComponentType.key]: SelectionToolComponent,
   ...cardListComponentRegistry,
   ...applicationListingComponentRegistry,
   ...imageComponentRegistry,
   [PremiumMediaHeadingComponentType.key]: PremiumMediaHeadingComponent,
   [ApplicationSearchBoxComponentType.key]: NoPreviewComponent,
-  [FAQSearchBoxComponentType.key]: NoPreviewComponent,
+  [FAQSearchBoxComponentType.key]: FAQSearchBox,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,
+  [HierarchyNavigationComponentType.key]: HierarchyNavigation,
+  [HierarchyNavigationItemComponentType.key]: NoPreviewComponent,
+  ...tabsComponentRegistry,
+  [JumpLinkNavigationComponentType.key]: JumpLinkNavigationComponent,
+  [JumpLinkTargetComponentType.key]: JumpLinkTargetComponent,
 };

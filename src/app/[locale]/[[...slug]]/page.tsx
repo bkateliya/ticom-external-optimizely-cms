@@ -27,16 +27,17 @@ async function Page({ params }: Props) {
 
   // Untranslate pages resolve to the default-locale content, so every locale
   // URL we advertise in hreflang renders instead of dead-ending.
-  const { content: mainContent, path, contentLocale } = await getPageContent(
-    locale,
-    slug,
-  );
+  const {
+    content: mainContent,
+    path,
+    contentLocale,
+  } = await getPageContent(locale, slug);
 
   if (!mainContent) {
     return <div>No content found</div>;
   }
 
-  await populateSiteSettings(path, locale, contentLocale);
+  await populateSiteSettings(mainContent, path, locale, contentLocale);
 
   const contextData = getContext();
   if (!contextData) {

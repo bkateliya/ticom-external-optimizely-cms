@@ -1,6 +1,7 @@
 import { ContextData as BaseContextData } from "@optimizely/cms-sdk/react/server";
 import { ContentProps } from "@optimizely/cms-sdk";
 import { SiteSettingsDataType } from "@/components/cms/structural-components/SiteSettings/SiteSettings.model";
+import { BynderImage, BynderDocument, BynderVideo } from "@/lib/data/bynder";
 import { ProductFamilyType } from "@/components/cms/data/ProductFamily.model";
 import { ApplicationType } from "@/components/cms/data/Application.model";
 import { ApplicationInfo } from "@/lib/api/normalized/applications";
@@ -11,6 +12,9 @@ import { BreadcrumbEntry } from "./Breadcrumb.utils";
 declare module "@optimizely/cms-sdk/react/server" {
   export interface ContextData extends BaseContextData {
     siteSettings: ContentProps<typeof SiteSettingsDataType>;
+    bynderImages?: Record<string, BynderImage>;
+    bynderDocuments?: Record<string, BynderDocument>;
+    bynderVideos?: Record<string, BynderVideo>;
     productFamily?: ContentProps<typeof ProductFamilyType> | null;
     familyInfo?: FamilyInfo;
     productSilos?: SiloFamily[];

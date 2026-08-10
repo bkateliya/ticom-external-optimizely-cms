@@ -15,6 +15,7 @@ import style from "./BrandAndThemeContext.module.css";
 import { ThemeSelector, ThemeSettingToggle } from "./BrandSelector";
 
 import { ComponentTheme } from "@/components/ui/ti/enums";
+import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
 
 function getModeFromTheme(
   theme: Themes | undefined | "custom",
@@ -54,9 +55,6 @@ type ThemeProviderProps = HTMLAttributes<HTMLDivElement> & {
    */
   applyToBody?: boolean;
 };
-
-const ALLOW_THEME_SWITCHING =
-  process.env.NEXT_PUBLIC_ALLOW_THEME_SWITCHING === "true";
 
 export const ThemeProvider = ({
   children,
@@ -101,7 +99,7 @@ export const ThemeProvider = ({
     // Don't render an additional div if we're applying to the body
     return (
       <ThemeContext.Provider value={themeSetting}>
-        {ALLOW_THEME_SWITCHING && (
+        {SHARED_ENV_VARS.NEXT_PUBLIC_ALLOW_THEME_SWITCHING && (
           <ThemeSettingToggle
             allowThemeSwitching={allowThemeSwitching ?? false}
             setAllowThemeSwitching={setAllowThemeSwitching}

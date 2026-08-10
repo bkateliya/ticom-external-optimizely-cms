@@ -13,6 +13,7 @@ export function TextField<
   as,
   cmsContent: content,
   field,
+  parentField: _,
   ...props
 }: TextFieldProps<TContentType, TElement>) {
   const Component = as || "span";
