@@ -1,39 +1,25 @@
-import { ContentProps } from "@optimizely/cms-sdk";
-import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { fieldFactory } from "@/components/ui/cms";
 import { normalizeUrl } from "@/lib/utils/link-utils";
 import { TiImage } from "@/components/ui/ti/TiImages/TiImage/TiImage";
 import { StandardImageComponentType } from "./StandardImage.model";
 import { HeadshotImageComponentType } from "./HeadshotImage.model";
+import { getBynderImageFromContext } from "@/lib/data/bynder";
+import { OptiComponentProps } from "@/lib/ts/component-props";
 
-type StandardImageProps = ContentProps<typeof StandardImageComponentType>;
-type HeadshotImageProps = ContentProps<typeof HeadshotImageComponentType>;
-type ImageItemContent = StandardImageProps | HeadshotImageProps;
-
-type Props = {
-  content?: ImageItemContent;
-  parentField?: string;
-};
-
-// TODO: fall back to the DAM asset's own Alt Text (via damAssets(content).getAlt(content.image))
-// once DAM lookup is wired up. For now this is authored-only.
-function resolveAltText(content: StandardImageProps | HeadshotImageProps) {
-  return content.altText ?? "";
-}
-
-function StandardImageView({
+export async function StandardImageView({
   content,
   parentField,
-}: {
-  content: StandardImageProps;
-  parentField?: string;
-}) {
-  const { src, pa } = getPreviewUtils(content);
+}: OptiComponentProps<typeof StandardImageComponentType>) {
+  if (!content) {
+    return null;
+  }
+  // const { src, pa } = getPreviewUtils(content);
   const { WrappedRichTextField } = fieldFactory<
     typeof StandardImageComponentType
   >(content, parentField);
 
-  const imageUrl = src(content.image);
+  const img = getBynderImageFromContext(content.bynderImage);
+  const imageUrl = img?.original;
   if (!imageUrl) {
     return null;
   }
@@ -45,11 +31,10 @@ function StandardImageView({
   return (
     <div
       className={content.enableBorder ? "border border-gray-300" : undefined}
-      {...pa([parentField, "image"].filter(Boolean).join("."))}
     >
       <TiImage
         src={imageUrl}
-        alt={resolveAltText(content)}
+        alt={content.altText || img.property_alt_text}
         href={href}
         zoom={content.enableEnlarge ?? undefined}
         zoomCaption={content.enableEnlarge ?? undefined}
@@ -63,50 +48,27 @@ function StandardImageView({
   );
 }
 
-function HeadshotImageView({
+export function HeadshotImageView({
   content,
-  parentField,
-}: {
-  content: HeadshotImageProps;
-  parentField?: string;
-}) {
-  const { src, pa } = getPreviewUtils(content);
-
-  const imageUrl = src(content.image);
-  if (!imageUrl) {
-    return null;
-  } // TODO: employeeName/employeeTitle come from Bynder DAM metadata, not CMS
-  // fields — render them here once the DAM metadata lookup is wired up.
-
-  return (
-    <div
-      className="float-left mb-4 w-44"
-      {...pa([parentField, "image"].filter(Boolean).join("."))}
-    >
-      <TiImage src={imageUrl} alt={resolveAltText(content)} ratio="square" />
-    </div>
-  );
-}
-
-// Registered against both StandardImage and HeadshotImage keys — __typename picks the view.
-export function ImageItem({ content, parentField }: Props) {
+}: OptiComponentProps<typeof HeadshotImageComponentType>) {
   if (!content) {
     return null;
   }
-
-  if (content.__typename === HeadshotImageComponentType.key) {
-    return (
-      <HeadshotImageView
-        content={content as HeadshotImageProps}
-        parentField={parentField}
-      />
-    );
+  const img = getBynderImageFromContext(content.bynderImage);
+  const imageUrl = img?.original;
+  if (!imageUrl) {
+    return null;
   }
+  // TODO: employeeName/employeeTitle come from Bynder DAM metadata, not CMS
+  // fields — render them here once the DAM metadata lookup is wired up.
 
   return (
-    <StandardImageView
-      content={content as StandardImageProps}
-      parentField={parentField}
-    />
+    <div className="float-left mb-4 w-44">
+      <TiImage
+        src={imageUrl}
+        alt={content.altText || img.property_alt_text}
+        ratio="square"
+      />
+    </div>
   );
 }

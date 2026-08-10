@@ -1,6 +1,8 @@
 import { contract } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "@/components/cms/constants";
 import { PropertyTypes } from "@/lib/property-types";
+import { BynderImageStubModel } from "@/components/cms/media/graph/BynderImageStub.model";
+import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 
 export const ImageBaseContract = contract({
   key: `${KEY_PREFIX}ImageBase_Contract`,
@@ -10,8 +12,15 @@ export const ImageBaseContract = contract({
       type: "contentReference",
       allowedTypes: ["_image"],
       displayName: "Image",
-      group: PropertyTypes.Content,
       isRequired: true,
+      ...SoftDeleteProperties,
+    },
+
+    bynderImage: {
+      type: "contentReference",
+      contentType: BynderImageStubModel,
+      displayName: "Image",
+      group: "Content",
     },
     altText: {
       type: "string",

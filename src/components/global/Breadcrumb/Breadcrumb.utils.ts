@@ -1,5 +1,5 @@
 import { cleanLegacyUrl } from "@/lib/utils/link-utils";
-import { getContextData } from "@optimizely/cms-sdk/react/server";
+import { getContext, getContextData } from "@optimizely/cms-sdk/react/server";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export interface BreadcrumbResult {
@@ -24,10 +24,13 @@ export async function getBreadcrumb(): Promise<BreadcrumbResult> {
 }
 
 async function getProductFamilyBreadcrumb() {
-  const familyResponse = getContextData("familyInfo");
-  const silos = getContextData("productSilos");
+  const {
+    productFamily,
+    familyInfo: familyResponse,
+    productSilos: silos,
+  } = getContext() ?? {};
 
-  if (!familyResponse || !silos) {
+  if (!productFamily?.familyId || !familyResponse || !silos) {
     return null;
   }
 
@@ -86,9 +89,10 @@ async function getProductFamilyBreadcrumb() {
 }
 
 async function getApplicationBreadcrumb() {
-  const applicationResponse = getContextData("applicationInfo");
+  const { application, applicationInfo: applicationResponse } =
+    getContext() ?? {};
 
-  if (!applicationResponse) {
+  if (!application?.applicationId || !applicationResponse) {
     return null;
   }
 

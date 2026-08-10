@@ -1,19 +1,19 @@
 // This is in separate file so it can be imported from either client or server
 
 import { DEFAULT_LOCALE } from "@/constants/locales";
+import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
 
 // Base URL for TI's @ticom asset host. Sourced from the environment so it can
 // be swapped per deployment (int vs. prod: https://www.ti.com/assets/js/@ticom).
 // Must be NEXT_PUBLIC_ since this file is imported client-side.
 export const TICOM =
-  process.env.NEXT_PUBLIC_TICOM_BASE_URL ??
-  "https://www-int.itg.ti.com/assets/js/@ticom";
+  SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN + "/assets/js/@ticom";
 
 // Global header stylesheet, served from the same @ticom host (no locale segment).
 export const GLOBAL_HEADER_CSS = `${TICOM}/header-content/1.latest/style/ticom.global.header.css`;
 
 // TI's plain asset root (…/assets), one level above the @ticom package host.
-const TI_ASSETS = TICOM.replace(/\/js\/@ticom\/?$/, "");
+const TI_ASSETS = SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN + "/assets";
 
 /**
  * The API/subsite header (AEM `subsiteHeader`) is a different component from the
@@ -49,7 +49,7 @@ const HEADER_CONTENT_SEGMENT: Record<string, string> = {
   "zh-tw": "tw",
   "de-de": "de",
   "ja-jp": "jp",
-  "ko-kr": "kr"
+  "ko-kr": "kr",
 };
 
 export const headerContentSegment = (locale: string | undefined) => {

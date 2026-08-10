@@ -19,7 +19,7 @@ import { populateSiteSettings } from "@/lib/data/site-settings";
 async function StyleGuidePage() {
   const locale = "en-us";
   const path = `/${locale}/`;
-  await populateSiteSettings(path, locale);
+  await populateSiteSettings({ __typename: "" }, path, locale);
 
   const siteSettings =
     getContextData("siteSettings") ?? ({} as ContextData["siteSettings"]);

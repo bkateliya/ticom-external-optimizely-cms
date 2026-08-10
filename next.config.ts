@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: remotePatterns,
   },
-  transpilePackages: ['@ticom/form-components'],
+  transpilePackages: ["@ticom/form-components"],
 };
 
 const withNextIntl = createNextIntlPlugin({

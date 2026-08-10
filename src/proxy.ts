@@ -1,13 +1,41 @@
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
 
-export default createMiddleware(routing);
+import { NextRequest, NextResponse } from "next/server";
+import { SHARED_ENV_VARS } from "./lib/env/shared-env";
+
+const nextIntlMiddleware = createMiddleware(routing);
+
+export async function proxy(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith("/assets/js/@ticom")) {
+    return await rewriteTiComPath(request.nextUrl.pathname);
+    // return NextResponse.rewrite(rewriteUrl);
+  }
+  if (request.nextUrl.pathname.match(/^\/..-..\/?.*/)) {
+    return nextIntlMiddleware(request);
+  }
+  return NextResponse.next();
+}
 
 export const config = {
+  matcher: [
     // Match urls that start with a locale
-    matcher: `/(..-../?.*)`
-    // Match all pathnames except for
-    // - … if they start with `/api`, `/trpc`, `/_next` or `/preview`
-    // - … the ones containing a dot (e.g. `favicon.ico`)
-    // matcher: '/((?!api|trpc|_next|preview|assets|bin|.*\\..*).*)'
+    `/(..-../?.*)`,
+    "/assets/js/@ticom/:path*",
+  ],
 };
+
+async function rewriteTiComPath(pathname: string) {
+  // We can't use a normal rewrite because the proxy gives an SSL error
+  const rewriteUrl = new URL(
+    `${SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN}${pathname}`,
+  );
+
+  const response = await fetch(rewriteUrl);
+  const body = await response.blob();
+  return new Response(body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: { ...response.headers },
+  });
+}
