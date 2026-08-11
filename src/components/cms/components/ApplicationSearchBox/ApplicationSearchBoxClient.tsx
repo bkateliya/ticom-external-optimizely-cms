@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { tv } from "tailwind-variants";
-import { twMerge } from "tailwind-merge";
 
 const MIN_CHARS = 2;
 
@@ -26,34 +25,26 @@ export interface MarketItem {
   sectors: SectorItem[];
 }
 
-// tv() slots — every styled part in one place, values matched to the live AEM
-// applicationSearch (measured on www.ti.com). TI class names are kept so TI's
-// own stylesheet styles it on the VM; Tailwind + --pl-* tokens render it locally.
+// The <ti-search-field> web component: exposes `.value` and emits `tiChange`
+// ({ value }) on every keystroke / clear — that's how we read the input.
+type TiSearchFieldEl = HTMLElement & { value: string };
+
+// tv() slots — matched to the live AEM applicationSearch (measured on ti.com).
 const style = tv({
   slots: {
-    card: "ti_aem-application-Search ti_aem-p-teaserBox flex flex-col items-center gap-4 rounded-[2px] border border-[var(--pl-border-color-tertiary)] bg-[var(--pl-container-background-color-secondary)] p-8 text-center sm:flex-row sm:text-left",
-    imgWrap: "ti_aem-p-teaserBox--img shrink-0",
-    img: "h-auto w-[110px]",
-    content: "ti_aem-p-teaserBox--content min-w-0 flex-1",
+    card: "ti_aem-application-Search ti_aem-p-teaserBox flex flex-col items-center justify-between gap-4 rounded-[2px] border border-[#e8e8e8] bg-[#f7f7f7] p-8 text-center sm:flex-row sm:text-left max-sm:gap-6 max-sm:px-6 max-sm:py-6",
+    imgWrap: "ti_aem-p-teaserBox--img shrink-0 max-sm:w-full max-sm:max-w-[calc(40vw-32px)] sm:mx-4 sm:w-[110px]",
+    img: "h-auto w-full",
+    content: "ti_aem-p-teaserBox--content min-w-0 flex-1 w-full max-sm:flex-col",
     heading:
-      "mb-4 text-xl font-light leading-7 text-[var(--pl-text-color-primary)]",
-    subheading: "mb-2 text-sm text-[var(--pl-text-color-primary)]",
-    field: "relative w-full text-left",
-    inputWrap: "relative",
-    input:
-      "h-10 w-full rounded-none border border-[var(--pl-input-border-color)] bg-[var(--pl-input-background-color)] pl-4 pr-10 text-base outline-none focus:border-[var(--pl-input-border-color-focus)]",
-    // Icons live in a right-flush flex bar; each is a 40x40 slot with an 18px
-    // glyph centered — matching the live ti-search-field button container.
-    iconBar: "absolute inset-y-0 right-0 flex items-center",
-    iconSlot:
-      "flex h-10 w-10 items-center justify-center text-[var(--pl-text-color-secondary)]",
-    // `!` overrides beat TI's ambient <button> styling (VM-only global CSS turns
-    // bare buttons into bordered boxes).
-    clearBtn: "border-0! bg-transparent! p-0! shadow-none! hover:opacity-70",
+      "mb-4 text-xl font-light leading-7 text-[var(--pl-text-color-primary)] max-sm:text-center",
+    subheading: "mb-2 text-sm text-[var(--pl-text-color-primary)] max-sm:text-center",
+    field:
+      "relative w-full max-w-[768px] text-left [&_ti-search-field]:block! [&_ti-search-field]:w-full! [&_ti-search-field]:max-w-[768px]! [&_*]:max-w-[768px]!",
     // Portaled to <body> so an ancestor's overflow can't clip it; positioned
     // via inline style (fixed, under the field). High z-index beats the footer.
     panel:
-      "ti_aem-application-SearchResults fixed z-[200] max-h-[500px] overflow-y-auto bg-white py-4 leading-6 shadow-[0_0_1px_1px_rgba(0,0,0,0.05),0_2px_4px_-1px_rgba(0,0,0,0.16),0_4px_5px_0_rgba(0,0,0,0.1),0_1px_10px_0_rgba(0,0,0,0.08)] md:max-h-[530px]",
+      "ti_aem-application-SearchResults fixed z-[200] max-h-[500px] w-full max-w-[768px] overflow-y-auto bg-white py-4 leading-6 shadow-[0_0_1px_1px_rgba(0,0,0,0.05),0_2px_4px_-1px_rgba(0,0,0,0.16),0_4px_5px_0_rgba(0,0,0,0.1),0_1px_10px_0_rgba(0,0,0,0.08)] md:max-h-[530px]",
     market: "ml-6 block pb-0.5 pr-2 text-sm text-[#333] hover:bg-black/5",
     sector: "ml-11 block pb-0.5 pr-2 text-sm text-[#555] hover:bg-black/5",
     ee: "ml-11 block pb-0.5 pr-2 text-sm text-[#555] hover:bg-black/5",
@@ -70,7 +61,6 @@ interface Props {
   headline: string;
   subheading: string;
   placeholder: string;
-  fieldTitle: string;
   /** Translated HTML; contains the "browse all markets & sectors" anchor. */
   noResultsHtml: string;
 }
@@ -89,39 +79,28 @@ function highlight(name: string, q: string): ReactNode {
   );
 }
 
-// The live search field's icons are bundled TI icons (icon-set "actions"),
-// NOT the TiSvgIcon `icon-name` form (which fetches from the VM-only DAM).
-const TiActionIcon = ({ name }: { name: string }) => (
-  <ti-svg-icon
-    icon-set="actions"
-    className="ti-svg-icon-tertiary ti-svg-icon-size-s"
-    aria-hidden="true"
-  >
-    {name}
-  </ti-svg-icon>
-);
-
 export function ApplicationSearchBoxClient({
   markets,
   iconSrc,
   headline,
   subheading,
   placeholder,
-  fieldTitle,
   noResultsHtml,
 }: Props) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
-  const [pos, setPos] = useState<{ top: number; left: number; width: number }>();
+  const [pos, setPos] = useState<{
+    top: number;
+    left: number;
+    width: number;
+  }>();
   const rootRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const fieldRef = useRef<TiSearchFieldEl>(null);
 
   const q = query.trim().toLowerCase();
 
-  // What the panel shows: browse-all = every market + sector (no EEs);
-  // search = markets/sectors/EEs on the matching branches only.
   const displayMarkets = useMemo<MarketItem[]>(() => {
     if (showAll) {
       return markets.map((m) => ({
@@ -147,16 +126,18 @@ export function ApplicationSearchBoxClient({
   const noResults = !showAll && q.length >= MIN_CHARS && !displayMarkets.length;
 
   function reset() {
+    if (fieldRef.current) fieldRef.current.value = "";
     setQuery("");
     setOpen(false);
     setShowAll(false);
   }
 
   function browseAll() {
+    if (fieldRef.current) fieldRef.current.value = "";
     setQuery("");
     setShowAll(true);
     setOpen(true);
-    inputRef.current?.focus();
+    fieldRef.current?.focus();
   }
 
   function onChange(value: string) {
@@ -168,6 +149,24 @@ export function ApplicationSearchBoxClient({
       setOpen(false);
     }
   }
+
+  // Latest onChange in a ref so the (once-bound) tiChange listener never goes stale.
+  const onChangeRef = useRef(onChange);
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  });
+
+  // Bridge the web component's `tiChange` event into React state.
+  useEffect(() => {
+    const el = fieldRef.current;
+    if (!el) return;
+    const handler = (e: Event) => {
+      const value = (e as CustomEvent<{ value?: string }>).detail?.value ?? "";
+      onChangeRef.current(value);
+    };
+    el.addEventListener("tiChange", handler);
+    return () => el.removeEventListener("tiChange", handler);
+  }, []);
 
   // Position the portaled panel under the field, kept in sync on scroll/resize.
   useEffect(() => {
@@ -292,48 +291,17 @@ export function ApplicationSearchBoxClient({
         <p className={s.subheading()}>{subheading}</p>
 
         <div ref={rootRef} className={s.field()}>
-          <div className={s.inputWrap()}>
-            <label htmlFor="application-search-input" className="sr-only">
-              {fieldTitle}
-            </label>
-            <input
-              ref={inputRef}
-              id="application-search-input"
-              type="text"
-              value={query}
-              placeholder={placeholder}
-              autoComplete="off"
-              role="combobox"
-              aria-expanded={open}
-              aria-controls="application-search-panel"
-              onChange={(e) => onChange(e.target.value)}
-              onKeyDown={(e) => e.key === "Escape" && reset()}
-              onFocus={() => {
-                if (q.length >= MIN_CHARS || showAll) setOpen(true);
-              }}
-              className={twMerge(s.input(), query.length > 0 && "pr-20")}
-            />
-            {/* Right-flush icon bar: ✕ (when typing) then the magnifier,
-                each a 40x40 slot — matches the live ti-search-field. */}
-            <div className={s.iconBar()}>
-              {query.length > 0 && (
-                <button
-                  type="button"
-                  aria-label="Clear search"
-                  onClick={() => {
-                    reset();
-                    inputRef.current?.focus();
-                  }}
-                  className={`${s.iconSlot()} ${s.clearBtn()}`}
-                >
-                  <TiActionIcon name="close" />
-                </button>
-              )}
-              <span className={`${s.iconSlot()} pointer-events-none`}>
-                <TiActionIcon name="search" />
-              </span>
-            </div>
-          </div>
+          {/* TI's search field web component — renders the input, magnifier and
+              clear button (matches the live site). Emits `tiChange` on input,
+              which we bridge into React above to drive the results panel.
+              Renders on the VM only (loads from TI's component bundle). */}
+          <ti-search-field
+            ref={fieldRef}
+            appearance="large"
+            placeholder={placeholder}
+            className="ti_aem-application-SearchField ti-search-field-large block! w-full! max-w-[768px]!"
+            style={{ width: "100%", maxWidth: "768px" }}
+          ></ti-search-field>
           {panel}
         </div>
       </div>
