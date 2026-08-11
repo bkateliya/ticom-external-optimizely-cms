@@ -1,6 +1,7 @@
 import { getContext } from "@optimizely/cms-sdk/react/server";
 import { getTranslations } from "next-intl/server";
 import type { ApplicationWithChildrenAndParent } from "@/lib/api/normalized/applications";
+import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import {
   ApplicationSearchBoxClient,
   type MarketItem,
@@ -40,15 +41,17 @@ export async function ApplicationSearchBox() {
   const t = await getTranslations();
 
   return (
-    <ApplicationSearchBoxClient
-      markets={buildTree(applicationInfo?.children ?? [])}
-      iconSrc={SEARCH_ICON}
-      headline={t("Explore over 500 applications")}
-      subheading={t(
-        "Search for the application you need or browse by market category",
-      )}
-      placeholder={t("Enter a keyword")}
-      noResultsHtml={t.raw("No search results text") as string}
-    />
+    <SectionWrapper className="py-8 md:py-12">
+      <ApplicationSearchBoxClient
+        markets={buildTree(applicationInfo?.children ?? [])}
+        iconSrc={SEARCH_ICON}
+        headline={t("Explore over 500 applications")}
+        subheading={t(
+          "Search for the application you need or browse by market category",
+        )}
+        placeholder={t("Enter a keyword")}
+        noResultsHtml={t.raw("No search results text") as string}
+      />
+    </SectionWrapper>
   );
 }
