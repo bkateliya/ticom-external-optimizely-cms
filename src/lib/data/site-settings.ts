@@ -29,12 +29,9 @@ import {
   getNormalizedFamilyInfo,
 } from "../api/normalized/productFamilies";
 import { getSilos } from "../api/cms-api";
-import { findAllBynderAssetsOnPage } from "./bynder";
-import { OptimizelyContentProps } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 
 type PathType = Parameters<GraphClient["getPath"]>["0"];
-export const populateSiteSettings = cache(async function (
-  pageContent: OptimizelyContentProps,
+async function populateSiteSettingsImpl(
   path: PathType,
   locale: string,
   // Site settings, breadcrumb and page title are locale-filtered, so they have
@@ -51,9 +48,6 @@ export const populateSiteSettings = cache(async function (
 
   const currentPage = items[items.length - 1];
 
-  const { bynderImageMap, bynderDocumentMap, bynderVideoMap } =
-    await findAllBynderAssetsOnPage(pageContent);
-
   setContext({
     locale,
     siteSettings,
@@ -61,11 +55,10 @@ export const populateSiteSettings = cache(async function (
     pageTitle: currentPage?.pageTitle,
     pageContentId: currentPage?._metadata.key,
     pageType: currentPage?._itemMetadata.type,
-    bynderImages: bynderImageMap,
-    bynderDocuments: bynderDocumentMap,
-    bynderVideos: bynderVideoMap,
   });
-});
+}
+
+export const populateSiteSettings = cache(populateSiteSettingsImpl);
 
 async function populatePageDataImpl(
   content: OptiComponentProps<CommonPageContractType>["content"],
@@ -73,6 +66,8 @@ async function populatePageDataImpl(
   if (!content) {
     return;
   }
+
+  setContextData("preFooter", content.preFooter);
 
   const productFamily = normalizeGenericContentToTyped(
     await cached.getReferencedContent(content.productFamily),

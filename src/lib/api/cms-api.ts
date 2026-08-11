@@ -1,3 +1,4 @@
+import { getLocale } from "next-intl/server";
 import { cache } from "react";
 import { SERVER_ENV_VARS } from "../env/server-env";
 
@@ -32,16 +33,18 @@ export const getProductFamily = cache(async function (familyId: string) {
   const url = `${BASE}/productfamily/${familyId}/all`;
   const headers = {
     Authorization: `Bearer ${await getBearerToken()}`,
+    'Content-Language': await getLocale(),
   };
   const response = await fetch(url, { headers });
 
   return (await response.json()) as Family;
 });
 
-export const getSilos = cache(async function () {
+export const getSilos = cache(async function (language?: string) {
   const url = `${BASE}/productfamily/silofamilies`;
   const headers = {
     Authorization: `Bearer ${await getBearerToken()}`,
+    'Content-Language': await getLocale(),
   };
   const response = await fetch(url, { headers });
 
@@ -49,10 +52,14 @@ export const getSilos = cache(async function () {
   return responseJson.content;
 });
 
-export const getApplication = cache(async function (applicationId: string) {
+export const getApplication = cache(async function (
+  applicationId: string,
+  language?: string,
+) {
   const url = `${BASE}/application/id/${applicationId}/all`;
   const headers = {
     Authorization: `Bearer ${await getBearerToken()}`,
+    'Content-Language': await getLocale(),
   };
   const response = await fetch(url, { headers });
 

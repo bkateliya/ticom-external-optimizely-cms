@@ -35,6 +35,7 @@ import { HierarchyNavigationComponentType, HierarchyNavigationItemComponentType 
 import { tabsComponents } from "./Tabs/types";
 import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
 import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
+import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading/GoldenSourcePageHeading.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -65,4 +66,5 @@ export const allComponentTypes = [
   ...tabsComponents,
   JumpLinkNavigationComponentType,
   JumpLinkTargetComponentType,
+  GoldenSourcePageHeadingComponentType,
 ];

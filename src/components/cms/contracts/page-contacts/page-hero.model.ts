@@ -3,6 +3,7 @@ import { HeroComponentType } from "@/components/cms/components/Hero/Hero.model";
 import { HomePageHeroComponentType } from "@/components/cms/components/HomePageHero/HomePageHero.model";
 import { KEY_PREFIX, DISPLAY_NAME_PREFIX } from "@/components/cms/constants.mjs";
 import { ContractContentType } from "@/lib/ts/opti";
+import { GoldenSourcePageHeadingComponentType } from "../../components/GoldenSourcePageHeading/GoldenSourcePageHeading.model";
 
 export const PageHeroContract = contract({
     key: `${KEY_PREFIX}PageHero_Contract`,
@@ -10,7 +11,7 @@ export const PageHeroContract = contract({
     properties: {
         hero: {
             type: "content",
-            allowedTypes: [HeroComponentType, HomePageHeroComponentType],
+            allowedTypes: [HeroComponentType, HomePageHeroComponentType, GoldenSourcePageHeadingComponentType],
             displayName: "Hero Section",
             isLocalized: true,
         },

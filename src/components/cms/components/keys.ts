@@ -37,6 +37,7 @@ export const AllComponentTypeKeyMap = {
   GeneralTabComponent: `${KEY_PREFIX}GeneralTab_Component`,
   JumpLinkNavigationComponent: `${KEY_PREFIX}JumpLinkNavigation_Component`,
   JumpLinkTargetComponent: `${KEY_PREFIX}JumpLinkTarget_Component`,
+  GoldenSourcePageHeading: `${KEY_PREFIX}GoldenSourcePageHeading_Component`,
 };
 
 /**
