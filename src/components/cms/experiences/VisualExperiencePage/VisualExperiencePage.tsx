@@ -8,6 +8,7 @@ import { SiteFrame } from "@/components/global/SiteFrame/SiteFrame";
 import { CommonPageHero } from "@/components/global/CommonPageHero";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { populatePageData } from "@/lib/data/site-settings";
+import { withSectionSeparators } from "@/components/cms/sections/section-separator";
 
 type Props = OptiComponentProps<typeof VisualExperiencePageType>;
 
@@ -27,7 +28,9 @@ export async function VisualExperiencePage({ content }: Props) {
       {/* <pre>Translation test: {t("Learn About")}</pre> */}
       <CommonPageHero content={content} />
 
-      <OptimizelyComposition nodes={content.composition.nodes ?? []} />
+      <OptimizelyComposition
+        nodes={withSectionSeparators(content.composition.nodes ?? [])}
+      />
     </SiteFrame>
   );
 }

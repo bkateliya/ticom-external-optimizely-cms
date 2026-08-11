@@ -4,6 +4,10 @@ import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimiz
 import { ThemedSection } from "@/components/ui/molecules/SectionWrapper/ThemedSection";
 import { PreambleSectionWrapper } from "@/components/ui/molecules/SectionWrapper/PreambleSectionWrapper";
 import { TextAlignment } from "@/components/ui/context/TextAlignmentContext";
+import {
+  hasSectionSeparator,
+  SECTION_SEPARATOR_CLASS,
+} from "../section-separator";
 
 export function GeneralSectionComponent({
   content,
@@ -14,7 +18,12 @@ export function GeneralSectionComponent({
   }
 
   return (
-    <div id={content.sectionId ?? undefined}>
+    <div
+      id={content.sectionId ?? undefined}
+      className={
+        hasSectionSeparator(content) ? SECTION_SEPARATOR_CLASS : undefined
+      }
+    >
       <ThemedSection
         content={content}
         fullHeight={content.sectionFullHeight ?? false}

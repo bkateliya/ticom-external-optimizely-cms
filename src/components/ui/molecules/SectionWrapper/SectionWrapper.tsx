@@ -53,6 +53,9 @@ export const SectionWrapper = ({
     "space-10",
     "py-16",
     "md:py-24",
+    // `seprater` sits on the section's outer element (see `GeneralSection`), so
+    // this has to be a descendant selector, not `&.seprater`.
+    "[.seprater_&]:pt-0",
     textAlignmentClassMap[textAlignment],
     className,
   );
