@@ -2,8 +2,7 @@ import { contract } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "@/components/cms/constants";
 import { PropertyTypes } from "@/lib/property-types";
 import { ContractContentType } from "@/lib/ts/opti";
-import { StandaloneComponentTypeKeys } from "@/components/cms/components/keys";
-import { sectionTypes } from "@/components/cms/sections/types";
+import { AllComponentTypeKeyMap } from "@/components/cms/components/keys";
 
 export const PreFooterContract = contract({
   key: `${KEY_PREFIX}PreFooter_Contract`,
@@ -16,7 +15,11 @@ export const PreFooterContract = contract({
       group: PropertyTypes.Content,
       items: {
         type: "content",
-        allowedTypes: [...sectionTypes, ...StandaloneComponentTypeKeys],
+        allowedTypes: [
+          AllComponentTypeKeyMap.ApplicationSearchBoxComponent,
+          AllComponentTypeKeyMap.FAQSearchBoxComponent,
+          AllComponentTypeKeyMap.BrowseVideosComponent,
+        ],
       },
     },
   },
