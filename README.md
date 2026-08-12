@@ -10,9 +10,6 @@ npm install --global corepack@latest
 corepack enable pnpm
 ```
 
-Corepack will pack the exact version of pnpm for the build container at `bin/corepack.tgz`.
-If the pnpm version needs to change, repack this with `corepack pack -o ./bin/corepack.tgz`.
-
 A Next.js application for Optimizely CMS with code-first content modeling and Graph content delivery
 
 Ensure that TI Proxy is being used

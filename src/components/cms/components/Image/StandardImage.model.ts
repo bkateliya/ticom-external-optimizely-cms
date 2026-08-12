@@ -3,12 +3,16 @@ import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants";
 import { ImageBaseContract } from "../../contracts/component-contracts/image.model";
 import { PropertyTypes } from "@/lib/property-types";
 import { AllComponentTypeKeyMap } from "../keys";
+import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 export const StandardImageComponentType = contentType({
   key: AllComponentTypeKeyMap.StandardImageComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Standard Image`,
   baseType: "_component",
-  extends: [ImageBaseContract],
+  extends: [
+    ImageBaseContract,
+    ...AllowIn.Groupings.Common,
+  ],
   properties: {
     caption: {
       type: "richText",

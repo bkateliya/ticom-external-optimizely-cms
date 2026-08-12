@@ -3,6 +3,7 @@ import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
 import { LinkElementType } from "../../elements/Link/Link.model";
 import { AllComponentTypeKeyMap } from "../keys";
+import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 export const HierarchyNavigationItemComponentType = contentType({
   key: AllComponentTypeKeyMap.HierarchyNavigationItemComponent,
@@ -31,6 +32,7 @@ export const HierarchyNavigationItemComponentType = contentType({
 export const HierarchyNavigationComponentType = contentType({
   key: AllComponentTypeKeyMap.HierarchyNavigationComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Hierarchy Navigation`,
+  extends: [AllowIn.Column],
   baseType: "_component",
   properties: {
     navigationItems: {

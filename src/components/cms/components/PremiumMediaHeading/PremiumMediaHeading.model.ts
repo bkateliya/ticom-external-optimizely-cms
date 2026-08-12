@@ -3,12 +3,14 @@ import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
 import { AllComponentTypeKeyMap } from "../keys";
 import { CtaLinkElementType } from "../../elements/CTALink/CTALink.model";
+import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 
 export const PremiumMediaHeadingComponentType = contentType({
   key: AllComponentTypeKeyMap.PremiumMediaHeadingComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Premium Media Heading`,
   baseType: "_component",
+  extends: [AllowIn.PageHeader],
   properties: {
     preHeadline: {
       type: "richText",

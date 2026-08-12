@@ -1,12 +1,13 @@
 import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants";
 import { AllComponentTypeKeyMap } from "../keys";
+import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 export const CodeEmbedComponentType = contentType({
   key: AllComponentTypeKeyMap.CodeEmbedComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Code Embed`,
   baseType: "_component",
-  compositionBehaviors: ["sectionEnabled", "elementEnabled"],
+  extends: [...AllowIn.Groupings.Common],
   properties: {
     code: {
       type: "richText",

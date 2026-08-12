@@ -17,4 +17,15 @@ export const SoftDeleteProperties = {
   // Soft Delete
   displayMode: "hidden",
   group: PropertyTypes.DeletedFields,
+  isRequired: false,
 };
+
+/**
+ * Use for fields that only exist because contract requires fields.
+ */
+export const ContractFlagProperties = {
+  type: "string",
+  displayMode: "hidden",
+  group: PropertyTypes.Settings,
+  indexingType: "disabled",
+} as const;

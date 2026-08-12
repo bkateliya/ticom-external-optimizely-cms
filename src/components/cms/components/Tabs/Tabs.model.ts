@@ -3,12 +3,14 @@ import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
 import { GeneralTabComponentType } from "./GeneralTab/GeneralTab.model";
 import { AllComponentTypeKeyMap } from "../keys";
 import { PropertyTypes } from "@/lib/property-types";
+import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 
 export const TabsComponentType = contentType({
   key: AllComponentTypeKeyMap.TabsComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Tabs`,
   baseType: "_component",
+  extends: [AllowIn.Section],
   properties: {
     allTabsShown: {
       displayName: "Enable All Tabs",
@@ -55,5 +57,4 @@ export const TabsComponentType = contentType({
       },
     },
   },
-  // compositionBehaviors: ["sectionEnabled"],
 });

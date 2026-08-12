@@ -1,8 +1,9 @@
 import { contentType } from "@optimizely/cms-sdk";
-import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
+import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
-import { AllComponentTypeKeyMap, StandaloneComponentTypeKeys } from "../keys";
+import { AllComponentTypeKeyMap } from "../keys";
 import { enumToOptions } from "@/lib/opti/enum-utils";
+import { AllowIn } from "@/components/cms/contracts/component-contracts/allow-in.model";
 
 const COLUMN_MAP = {
   "50-50-no-offset": "6/6",
@@ -45,7 +46,7 @@ export const ColumnGridColumnComponentType = contentType({
       group: "Content",
       items: {
         type: "content",
-        allowedTypes: [...StandaloneComponentTypeKeys],
+        allowedTypes: [AllowIn.Column],
       },
     },
   },
@@ -55,6 +56,9 @@ export const ColumnGridComponentType = contentType({
   key: AllComponentTypeKeyMap.ColumnGridComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Column Grid`,
   baseType: "_component",
+  extends: [
+    ...AllowIn.Groupings.Common
+  ],
   properties: {
     columnControl: {
       type: "string",
@@ -76,5 +80,4 @@ export const ColumnGridComponentType = contentType({
       },
     },
   },
-  // compositionBehaviors: ["sectionEnabled"],
 });

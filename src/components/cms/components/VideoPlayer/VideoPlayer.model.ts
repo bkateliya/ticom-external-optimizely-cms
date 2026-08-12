@@ -2,11 +2,13 @@ import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants";
 import { PropertyTypes } from "@/lib/property-types";
 import { AllComponentTypeKeyMap } from "../keys";
+import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 export const VideoPlayerComponentType = contentType({
   key: AllComponentTypeKeyMap.VideoPlayerComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Video Player`,
   baseType: "_component",
+  extends: [...AllowIn.Groupings.Common],
   properties: {
     videoPlayerType: {
       type: "string",

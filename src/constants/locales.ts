@@ -38,6 +38,13 @@ export function toAppLocale(languageCode: string | undefined | null): string {
     (SUPPORTED_LOCALES.includes(normalized) ? normalized : DEFAULT_LOCALE)
   );
 }
+
+// App URL slug -> the `langPref` TI's site search wants ("zh-cn" -> "zh-CN").
+export function toLangPref(slug: string): string {
+  const [language, region] = normalizeLocale(slug).split("-");
+  return region ? `${language}-${region.toUpperCase()}` : language;
+}
+
 const regionNameFormatter = new Intl.DisplayNames(["en"], { type: "region" });
 const languageNameFormatter = new Intl.DisplayNames(["en"], {
   type: "language",

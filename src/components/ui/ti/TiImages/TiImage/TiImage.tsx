@@ -12,6 +12,7 @@ export interface TiImageZoomChangeEventDetail {
 }
 
 export type TiImageProps = React.PropsWithChildren & {
+  className?: string;
   /** Property for image URL source */
   src: string;
   /** Property for alternate image src (large image) */
@@ -36,13 +37,11 @@ export type TiImageProps = React.PropsWithChildren & {
   hoverAnimation?: ImageHoverAnimation;
   /**
    * Optional caption content. Rendered into the underlying `<ti-image>` `caption`
-   * slot, wrapped in a `<div slot="caption">` for you — pass only the inner
-   * content, not the `slot` attribute. Should contain its own block element
-   * (e.g. a `<p>`), matching ti.com's caption markup so caption typography
-   * (`ti-image [slot="caption"] p`) applies correctly.
+   * slot, wrapped in a `<p slot="caption">` for you — pass only the inner content,
+   * not the `<p>` or the `slot` attribute. Accepts rich content such as links.
    *
    * @example
-   * <TiImage src="/foo.jpg" alt="Foo" caption={<p>Caption <a href="//www.ti.com">with link</a>.</p>} />
+   * <TiImage src="/foo.jpg" alt="Foo" caption={<>Caption <a href="//www.ti.com">with link</a>.</>} />
    */
   caption?: React.ReactNode;
   /**
@@ -60,6 +59,7 @@ export type TiImageProps = React.PropsWithChildren & {
 };
 
 export function TiImage({
+  className,
   src,
   srcLg,
   srcDefault,
@@ -81,6 +81,7 @@ export function TiImage({
   });
   return (
     <ti-image
+      className={className}
       ref={ref}
       src={src}
       src-lg={srcLg}
@@ -94,7 +95,7 @@ export function TiImage({
       zoom-download={zoomDownload}
       hover-animation={hoverAnimation}
     >
-      {caption && <div slot="caption">{caption}</div>}
+      {caption && <p slot="caption">{caption}</p>}
       {downloadLabel && <span slot="download-label">{downloadLabel}</span>}
       {children}
     </ti-image>

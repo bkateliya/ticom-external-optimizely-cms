@@ -9,8 +9,6 @@ import { AccordionComponent } from "./Accordion/Accordion";
 import { AccordionItem } from "./Accordion/AccordionItem";
 
 import { ComponentRegistry } from "@/lib/ts/component-props";
-import { PromoBlockComponentType } from "./PromoBlock/PromoBlock.model";
-import { PromoBlockComponent } from "./PromoBlock/index";
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
 import { CodeEmbedComponent } from "./CodeEmbed";
 import { CodeSnippetComponentType } from "./CodeSnippet/CodeSnippet.model";
@@ -38,6 +36,8 @@ import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model"
 import { ApplicationSearchBoxComponentType } from "./ApplicationSearchBox/ApplicationSearchBox.model";
 import { FAQSearchBoxComponentType } from "./FAQSearchBox/FAQSearchBox.model";
 import { FAQSearchBox } from "./FAQSearchBox/FAQSearchBox";
+import { BrowseVideosComponentType } from "./BrowseVideos/BrowseVideos.model";
+import { BrowseVideos } from "./BrowseVideos/BrowseVideos";
 import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { VideoPlayerComponent } from "./VideoPlayer/VideoPlayer";
 import {
@@ -56,7 +56,12 @@ import { JumpLinkNavigationComponent } from "./JumpLink/JumpLinkNavigation";
 import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
 import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
 import { JumpLinkTargetComponent } from "./JumpLink/JumpLinkTarget";
+import { ApplicationSearchBox } from "./ApplicationSearchBox/ApplicationSearchBox";
 import { SelectionToolComponent } from "./SelectionTool/SelectionTool";
+import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading/GoldenSourcePageHeading.model";
+import { GoldenSourcePageHeadingComponent } from "./GoldenSourcePageHeading/GoldenSourcePageHeading";
+import { ApiSwaggerComponentType } from "./ApiSwagger/ApiSwagger.model";
+import { ApiSwagger } from "./ApiSwagger/ApiSwagger";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -65,7 +70,6 @@ export const componentRegistry: ComponentRegistry = {
   [CtaLinkListComponentType.key]: CtaLinkList,
   [AccordionComponentType.key]: AccordionComponent,
   [AccordionPanelComponentType.key]: AccordionItem,
-  [PromoBlockComponentType.key]: PromoBlockComponent,
   [CodeEmbedComponentType.key]: CodeEmbedComponent,
   [CodeSnippetComponentType.key]: CodeSnippetComponent,
   [HomePageHeroSlideComponentType.key]: HomePageHeroSlideComponent,
@@ -79,10 +83,14 @@ export const componentRegistry: ComponentRegistry = {
   [PremiumMediaHeadingComponentType.key]: PremiumMediaHeadingComponent,
   [ApplicationSearchBoxComponentType.key]: NoPreviewComponent,
   [FAQSearchBoxComponentType.key]: FAQSearchBox,
+  [BrowseVideosComponentType.key]: BrowseVideos,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,
   [HierarchyNavigationComponentType.key]: HierarchyNavigation,
   [HierarchyNavigationItemComponentType.key]: NoPreviewComponent,
   ...tabsComponentRegistry,
   [JumpLinkNavigationComponentType.key]: JumpLinkNavigationComponent,
   [JumpLinkTargetComponentType.key]: JumpLinkTargetComponent,
+  [ApplicationSearchBoxComponentType.key]: ApplicationSearchBox,
+  [GoldenSourcePageHeadingComponentType.key]: GoldenSourcePageHeadingComponent,
+  [ApiSwaggerComponentType.key]:ApiSwagger,
 };

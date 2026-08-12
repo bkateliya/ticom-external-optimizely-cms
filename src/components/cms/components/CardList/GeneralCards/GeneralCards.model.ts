@@ -5,12 +5,14 @@ import {
   DISPLAY_NAME_PREFIX,
 } from "src/components/cms/constants.mjs";
 import { AllComponentTypeKeyMap } from "../../keys";
+import { AllowInCardContentContract } from "../CardContentContract.model";
+import { AllowIn } from "@/components/cms/contracts/component-contracts/allow-in.model";
 
 export const SingleGeneralCardComponentType = contentType({
   key: AllComponentTypeKeyMap.SingleGeneralCardComponent,
   displayName: `${DISPLAY_NAME_PREFIX}General Card`,
   baseType: "_component",
-  extends: [HeadlineContract, DeprecatedCtaListContract],
+  extends: [HeadlineContract, DeprecatedCtaListContract, ...AllowIn.Groupings.Common],
   properties: {},
 });
 
@@ -18,6 +20,7 @@ export const GeneralCardsComponentType = contentType({
   key: AllComponentTypeKeyMap.GeneralCardsComponent,
   displayName: `${DISPLAY_NAME_PREFIX}General Cards`,
   baseType: "_component",
+  extends: [AllowInCardContentContract],
   properties: {
     cards: {
       type: "array",
@@ -29,5 +32,4 @@ export const GeneralCardsComponentType = contentType({
       },
     },
   },
-  // compositionBehaviors: ["sectionEnabled"],
 });

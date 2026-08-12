@@ -44,6 +44,7 @@ export interface TiCardChangeEventDetail {
  * </TiCard>
  */
 export type TiCardProps = React.PropsWithChildren & {
+  className?: string;
   /** Color / style variant. Defaults to "primary". */
   appearance?: TiCardAppearance;
   /** Wide format: colored border on the left, card lays out as a block. */
@@ -59,6 +60,7 @@ export type TiCardProps = React.PropsWithChildren & {
 };
 
 export function TiCard({
+  className,
   appearance,
   wide,
   responsive,
@@ -73,6 +75,7 @@ export function TiCard({
   return (
     <ti-card
       ref={ref}
+      className={className}
       appearance={appearance}
       wide={wide}
       responsive={responsive}

@@ -2,13 +2,14 @@ import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "../../constants.mjs";
 import { SectionContracts } from "../../contracts/component-contracts/section.model";
 import { PropertyTypes } from "@/lib/property-types";
-import { StandaloneComponentTypeKeys } from "../../components/keys";
+import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 export const GeneralSectionComponentType = contentType({
   key: `${KEY_PREFIX}GeneralSection_Component`,
   displayName: `${DISPLAY_NAME_PREFIX}General Section`,
   baseType: "_component",
   extends: SectionContracts,
+  compositionBehaviors: ["sectionEnabled"],
   properties: {
     content: {
       type: "array",
@@ -16,9 +17,8 @@ export const GeneralSectionComponentType = contentType({
       group: PropertyTypes.Content,
       items: {
         type: "content",
-        allowedTypes: StandaloneComponentTypeKeys,
+        allowedTypes: [AllowIn.Section],
       },
     },
   },
-  compositionBehaviors: ["sectionEnabled"],
 });

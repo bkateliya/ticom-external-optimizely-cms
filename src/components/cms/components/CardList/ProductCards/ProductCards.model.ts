@@ -1,11 +1,13 @@
 import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX } from "src/components/cms/constants.mjs";
 import { AllComponentTypeKeyMap } from "../../keys";
+import { AllowInCardContentContract } from "../CardContentContract.model";
 
 export const ProductCardsComponentType = contentType({
   key: AllComponentTypeKeyMap.ProductCardsComponent,
   displayName: `${DISPLAY_NAME_PREFIX}ProductCards`,
   baseType: "_component",
+  extends: [AllowInCardContentContract],
   properties: {
     currency: {
       type: "string",

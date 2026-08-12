@@ -3,6 +3,7 @@
 // reflects the availability of the variables
 // "use client";
 
+import { PHASE_PRODUCTION_BUILD } from "next/constants";
 import { envToBool } from "./utils";
 
 const RequiredVariables: (keyof typeof SHARED_ENV_VARS)[] = [
@@ -23,6 +24,11 @@ export const SHARED_ENV_VARS = {
 
 // Define and immediate execute
 (function validateEnvVariables() {
+  // Skip validating when we are doing a production build
+  if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) {
+    return;
+  }
+
   const missingKeys = RequiredVariables.filter((key) => !SHARED_ENV_VARS[key]);
 
   if (missingKeys.length > 0) {

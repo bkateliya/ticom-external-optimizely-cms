@@ -1,3 +1,5 @@
+import { PHASE_PRODUCTION_BUILD } from "next/constants";
+
 const RequiredVariables: (keyof typeof SERVER_ENV_VARS)[] = [
   "OPTIMIZELY_CMS_URL",
   "OPTIMIZELY_GRAPH_GATEWAY",
@@ -12,7 +14,13 @@ export const SERVER_ENV_VARS = {
   OPTIMIZELY_CMS_URL: process.env.OPTIMIZELY_CMS_URL!,
   OPTIMIZELY_GRAPH_SINGLE_KEY: process.env.OPTIMIZELY_GRAPH_SINGLE_KEY!,
   OPTIMIZELY_GRAPH_GATEWAY: process.env.OPTIMIZELY_GRAPH_GATEWAY!,
-  OPTIMIZELY_GRAPH_HOST: process.env.OPTIMIZELY_GRAPH_HOST!.replace(/\/$/, ""), // Remove trailing slash
+  OPTIMIZELY_GRAPH_HOST: (process.env.OPTIMIZELY_GRAPH_HOST ?? "").replace(
+    /\/$/,
+    "",
+  ), // Remove trailing slash
+
+  
+  CMS_API_TIMEOUT_MS: parseInt(process.env.CMS_API_TIMEOUT_MS ?? "1000") || 1000,
 
   CMS_API_DOMAIN: process.env.CMS_API_DOMAIN,
   CMS_API_BEARER_TOKEN: process.env.CMS_API_BEARER_TOKEN,
@@ -28,6 +36,11 @@ export const SERVER_ENV_VARS = {
 
 // Define and immediate execute
 (function validateEnvVariables() {
+  // Skip validating if we are doing a production build
+  if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) {
+    return;
+  }
+
   const missingKeys = RequiredVariables.filter((key) => !SERVER_ENV_VARS[key]);
 
   if (missingKeys.length > 0) {

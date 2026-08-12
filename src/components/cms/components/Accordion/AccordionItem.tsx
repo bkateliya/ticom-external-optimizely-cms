@@ -1,42 +1,35 @@
-"use client";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { AccordionPanelComponentType } from "./Accordion.model";
 import { fieldFactory } from "@/components/ui/cms";
 import styles from "./styles-item.module.css";
-import { useHeadingLevel } from "@/components/utilities/HeadingLevelContext";
+import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 
 type AccordionItemProps = OptiComponentProps<
   typeof AccordionPanelComponentType
 >;
 
-export function AccordionItem({
-  content,
-  parentField,
-}: AccordionItemProps) {
-  const headingLevel = useHeadingLevel();
-
+export function AccordionItem({ content, parentField }: AccordionItemProps) {
   if (!content) {
     return null;
   }
 
-  const { WrappedTextField, WrappedRichTextField } = fieldFactory<
+  const { WrappedHeadingTextField } = fieldFactory<
     typeof AccordionPanelComponentType
   >(content, parentField);
 
   return (
     <ti-expansion-panel>
-      <WrappedTextField
+      <WrappedHeadingTextField
         slot="title"
         field="title"
-        as={"h" + headingLevel}
         className={styles.headingText}
       />
-      <WrappedRichTextField
-        slot="content"
-        field="content"
-        tabIndex={-1}
-        className={styles.richTextWrapper}
-      />
+
+      <div slot="content">
+        {content.innerComponents?.map((x, i) => (
+          <ExtendedOptimizelyComponent key={i} content={x} />
+        ))}
+      </div>
     </ti-expansion-panel>
-  )
+  );
 }

@@ -6,7 +6,6 @@
 
 export enum ButtonAppearance {
   ghost = "ghost",
-  link = "link",
   outline = "outline",
   solid = "solid",
 }

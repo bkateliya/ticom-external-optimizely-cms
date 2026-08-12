@@ -8,6 +8,7 @@ export interface OptiCardComponentProps<
   TContentType extends ContentTypes.AnyContentType,
 > extends OptiComponentProps<TContentType> {
   columnCount: number;
+  cardListDisplay?: "grid" | "carousel";
 }
 
 export async function CardListComponent({
@@ -25,7 +26,10 @@ export async function CardListComponent({
     <div>
       <Preamble content={content} parentField={parentField}>
         <ExtendedOptimizelyComponent
-          {...{ columnCount: content.columns }}
+          {...{
+            columnCount: content.columns,
+            cardListDisplay: content.cardListDisplay,
+          }}
           content={cardContent}
           parentField={parentField}
         />

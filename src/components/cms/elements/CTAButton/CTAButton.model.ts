@@ -19,7 +19,20 @@ export const CtaButtonElementType = contentType({
       displayName: "Button Appearance",
       group: "Content",
       sortOrder: -200,
-      enum: enumToOptions(ButtonAppearance, { withAuto: true }),
+      enum: [
+        {
+          displayName: "Solid",
+          value: ButtonAppearance.solid,
+        },
+        {
+          displayName: "Outline",
+          value: ButtonAppearance.outline,
+        },
+        {
+          displayName: "Ghost",
+          value: ButtonAppearance.ghost,
+        },
+      ],
     },
     ButtonColor: {
       type: "string",
@@ -27,7 +40,16 @@ export const CtaButtonElementType = contentType({
       displayName: "Button Color",
       group: "Content",
       sortOrder: -180,
-      enum: enumToOptions(ButtonColor, { withAuto: true }),
+      enum: [
+        {
+          displayName: "Primary",
+          value: ButtonColor.primary,
+        },
+        {
+          displayName: "Secondary",
+          value: ButtonColor.secondary,
+        },
+      ],
     },
     Icon: {
       type: "string",
