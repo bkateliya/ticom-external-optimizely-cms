@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import clsx from "clsx";
+import { tv } from "tailwind-variants";
 
 import { getContextLocale } from "@/lib/utils/server-utils";
 import { TiImage } from "@/components/ui/ti/TiImages/TiImage/TiImage";
@@ -20,6 +20,8 @@ const DLP_LOGO =
  * the requirements doc routes menu authoring through that existing component,
  * not through fields here.
  *
+ * Styling: all classes live in TAILWIND_VARIANTS below.
+ *
  * ponytail: skips the AEM source's pre-hydration `visibility` masking on the
  * logo/LLC widget (flash-of-unstyled-content polish, not a functional
  * requirement) — add if visual QA on the VM shows a noticeable flash.
@@ -27,46 +29,40 @@ const DLP_LOGO =
 export function DlpHeader() {
   const locale = getContextLocale();
 
+  const {
+    header,
+    topBar,
+    logoWrap,
+    logoLink,
+    logoInner,
+    llcWrap,
+    llcSidesheet,
+    navBar,
+  } = TAILWIND_VARIANTS();
+
   return (
-    <header
-      data-language={locale}
-      className="h-[102px] bg-black text-pl-text-color-primary-contrast max-md:h-[50px]"
-    >
-      <div className="mx-auto flex h-[50px] max-w-lg items-center justify-between gap-4 px-7 max-md:border-b max-md:border-pl-element-color-secondary max-md:pr-0 max-md:pl-4">
-        <div className="w-[350px] -translate-x-5">
+    <header data-language={locale} className={header()}>
+      <div className={topBar()}>
+        <div className={logoWrap()}>
           <NextLink
             href={`/${locale}/`}
-            className="flex h-[50px] w-full items-center"
+            className={logoLink()}
             data-navtitle="header_logo_link"
             data-lid="header_logo_link_home"
             aria-label="Home"
           >
-            <span className="block w-full">
+            <span className={logoInner()}>
               <TiImage src={DLP_LOGO} alt="Home" />
             </span>
           </NextLink>
         </div>
 
-        <div
-          className={clsx(
-            "flex h-full shrink-0 items-center border-x border-pl-element-color-secondary",
-            "has-[ti-header-llc-sidesheet:hover]:bg-pl-element-color-secondary",
-            "has-[ti-header-llc-sidesheet:focus]:bg-pl-element-color-secondary",
-          )}
-        >
-          <ti-header-llc-sidesheet
-            className={clsx(
-              "h-full text-pl-text-color-primary",
-              "[--tiHeader-llcSidesheet-button-text-color:white]",
-              "[--tiHeader-llcSidesheet-countryCurrency-display:none]",
-              "[--tiHeader-llcSidesheet-button-paddingInline:var(--spacing-4)]",
-              "max-md:[--tiHeader-llcSidesheet-preview-display:none]",
-            )}
-          />
+        <div className={llcWrap()}>
+          <ti-header-llc-sidesheet className={llcSidesheet()} />
         </div>
       </div>
 
-      <div className="h-[52px] [--_tiNavbar-borderColor:var(--pl-element-color-secondary)] [--tiStickyHeader-margin-block:0px] max-md:hidden">
+      <div className={navBar()}>
         <TiStickyHeader disableAnimation>
           <TiNavbar
             header
@@ -80,3 +76,60 @@ export function DlpHeader() {
     </header>
   );
 }
+
+const TAILWIND_VARIANTS = tv({
+  slots: {
+    // 102px total = 50px brand bar + 52px navbar; mobile drops the navbar.
+    header: [
+      "h-[102px]",
+      "bg-black",
+      "text-pl-text-color-primary-contrast",
+      "max-md:h-[50px]",
+    ],
+    topBar: [
+      "mx-auto",
+      "flex",
+      "h-[50px]",
+      "max-w-lg",
+      "items-center",
+      "justify-between",
+      "gap-4",
+      "px-7",
+      "max-md:border-b",
+      "max-md:border-pl-element-color-secondary",
+      "max-md:pr-0",
+      "max-md:pl-4",
+    ],
+    logoWrap: ["w-[350px]", "-translate-x-5"],
+    logoLink: ["flex", "h-[50px]", "w-full", "items-center"],
+    logoInner: ["block", "w-full"],
+    // Hover/focus highlight is driven by the nested Stencil element's own
+    // states, so it has to be a `has-[...]` selector on the wrapper.
+    llcWrap: [
+      "flex",
+      "h-full",
+      "shrink-0",
+      "items-center",
+      "border-x",
+      "border-pl-element-color-secondary",
+      "has-[ti-header-llc-sidesheet:hover]:bg-pl-element-color-secondary",
+      "has-[ti-header-llc-sidesheet:focus]:bg-pl-element-color-secondary",
+    ],
+    // TI's LLC side-sheet is themed through its own custom properties, not
+    // classes — hence the arbitrary `[--tiHeader-*]` values.
+    llcSidesheet: [
+      "h-full",
+      "text-pl-text-color-primary",
+      "[--tiHeader-llcSidesheet-button-text-color:white]",
+      "[--tiHeader-llcSidesheet-countryCurrency-display:none]",
+      "[--tiHeader-llcSidesheet-button-paddingInline:var(--spacing-4)]",
+      "max-md:[--tiHeader-llcSidesheet-preview-display:none]",
+    ],
+    navBar: [
+      "h-[52px]",
+      "[--_tiNavbar-borderColor:var(--pl-element-color-secondary)]",
+      "[--tiStickyHeader-margin-block:0px]",
+      "max-md:hidden",
+    ],
+  },
+});
