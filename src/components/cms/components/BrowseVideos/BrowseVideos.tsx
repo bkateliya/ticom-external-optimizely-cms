@@ -9,7 +9,8 @@ import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
 import { toLangPref } from "@/constants/locales";
 import { getApplication, getSilos } from "@/lib/api/cms-api";
 import { DEFAULT_APPLICATION_ID } from "@/lib/api/normalized/applications";
-
+import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
+import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 interface BrowseLink {
   href: string;
   /** Localized label — also the value the search is pre-filtered on. */
@@ -65,8 +66,8 @@ export async function BrowseVideos({
   ]);
 
   return (
-    <div className="pt-12 md:pt-16 pb-12 bg-pl-page-background-color-secondary">
-      <div className="container-lg">
+    <ThemeProvider theme="theme-grey">
+      <SectionWrapper>
         <div className="w-full">
           <div className="flex flex-col md:w-5/12">
             <DynamicHeading className="text-h3 font-light mb-4">
@@ -114,8 +115,8 @@ export async function BrowseVideos({
             </div>
           </HeadingLevelContext>
         </div>
-      </div>
-    </div>
+      </SectionWrapper>
+    </ThemeProvider>
   );
 }
 

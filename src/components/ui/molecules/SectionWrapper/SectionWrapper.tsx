@@ -53,6 +53,11 @@ export const SectionWrapper = ({
     "space-10",
     "py-16",
     "md:py-24",
+    // The separator classes sit on the section's outer element (see
+    // `GeneralSection`), so these are descendant selectors, not `&.seprater-*`.
+    // Which edge closes depends on which section of the pair carries the class.
+    "[.seprater-top_&]:pt-0",
+    "[.seprater-bottom_&]:pb-0",
     textAlignmentClassMap[textAlignment],
     className,
   );

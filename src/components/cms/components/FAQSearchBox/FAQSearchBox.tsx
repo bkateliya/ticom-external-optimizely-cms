@@ -4,6 +4,8 @@ import { OptiComponentProps } from "@/lib/ts/component-props";
 import { DynamicHeading } from "@/components/ui/Atoms/DynamicHeading";
 import { FAQSearchInput } from "./FAQSearchInput";
 import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
+import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
+import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 
 export async function FAQSearchBox({
   content,
@@ -28,17 +30,21 @@ export async function FAQSearchBox({
   );
   const searchPreFilter = t("FAQs,Ordering");
 
+  // `theme-grey` paints `--ti-section-background` — the same background a Grey
+  // section gets — rather than hardcoding the page background token.
   return (
-    <>
-      <DynamicHeading className="text-h3 font-light mb-6 text-center">
-        {t("Find answers to your ordering questions")}
-      </DynamicHeading>
-      <FAQSearchInput
-        className="mx-auto text-pl-input-element-color"
-        placeholder={t("Search ordering FAQs")}
-        baseUrl={searchBaseUrl}
-        preFilter={searchPreFilter}
-      />
-    </>
+    <ThemeProvider theme="theme-grey">
+      <SectionWrapper>
+        <DynamicHeading className="text-h3 font-light text-center">
+          {t("Find answers to your ordering questions")}
+        </DynamicHeading>
+        <FAQSearchInput
+          className="mx-auto text-pl-input-element-color"
+          placeholder={t("Search ordering FAQs")}
+          baseUrl={searchBaseUrl}
+          preFilter={searchPreFilter}
+        />
+      </SectionWrapper>
+    </ThemeProvider>
   );
 }
