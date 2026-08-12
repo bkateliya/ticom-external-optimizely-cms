@@ -1,9 +1,12 @@
 import { contentType } from "@optimizely/cms-sdk";
-import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
+import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
 import { DEFAULT_VALUE } from "@/lib/utils/default-utils";
-import { PreambleContracts } from "../../contracts/component-contracts/preamble.model";
 import { AllComponentTypeKeyMap } from "../keys";
+import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
+import { WithHeadlineContract } from "@/components/cms/contracts/component-contracts/headline.model";
+import { AllowIn } from "@/components/cms/contracts/component-contracts/allow-in.model";
+
 
 export const AccordionPanelComponentType = contentType({
   key: AllComponentTypeKeyMap.AccordionPanelComponent,
@@ -11,25 +14,40 @@ export const AccordionPanelComponentType = contentType({
   baseType: "_component",
   properties: {
     title: { type: "string", displayName: "Title" },
-    content: { type: "richText", displayName: "Content" },
+    innerComponents: {
+      type: "array",
+      displayName: "Content",
+      group: PropertyTypes.Content,
+      items: {
+        type: "content",
+        allowedTypes: [AllowIn.Accordion],
+      },
+    },
+    content: {
+      type: "richText",
+      displayName: "Content",      
+      ...SoftDeleteProperties,
+    },
     isExpanded: {
       type: "boolean",
       displayName: "Is Expanded",
       description: "Whether this panel is expanded by default",
-      group: PropertyTypes.Appearance,
+      ...SoftDeleteProperties,
     },
   },
 });
+
 
 export const AccordionComponentType = contentType({
   key: AllComponentTypeKeyMap.AccordionComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Accordion`,
   baseType: "_component",
-  extends: PreambleContracts,
+  extends: [WithHeadlineContract, ...AllowIn.Groupings.NonAccordion],
   properties: {
     accordionPanels: {
       displayName: "Accordion Panels",
       group: PropertyTypes.Content,
+
 
       type: "array",
       items: {
@@ -41,6 +59,7 @@ export const AccordionComponentType = contentType({
       displayName: "Minimal Appearance",
       group: PropertyTypes.Appearance,
 
+
       type: "string",
       format: "selectOne",
       enum: [
@@ -51,18 +70,23 @@ export const AccordionComponentType = contentType({
     autoCollapse: {
       type: "boolean",
       displayName: "Auto Collapse",
-      description: "Controls whether the accordion will automatically collapse open panels if a panel is open, giving it the ‘accordion’ behaviour. NOTE: This means that the accordion won’t have expand / collapse all since they are not applicable in this case. false means multiple panels can be open at the same time, and you get expand all and collapse all buttons. true means that only one panel can be open at a time, and the accordion will automatically open only the first panel onload. Opening another panel will close the current panel.",
-      group: PropertyTypes.Appearance,
+      description:
+        "Controls whether the accordion will automatically collapse open panels if a panel is open, giving it the ‘accordion’ behaviour. NOTE: This means that the accordion won’t have expand / collapse all since they are not applicable in this case. false means multiple panels can be open at the same time, and you get expand all and collapse all buttons. true means that only one panel can be open at a time, and the accordion will automatically open only the first panel onload. Opening another panel will close the current panel.",
+
+
+      ...SoftDeleteProperties,
     },
     autoScroll: {
       type: "boolean",
       displayName: "Auto Scroll",
-      description: "Causes the panel being opened to automatically smooth scroll into view. Note: only applies when using autoCollapse",
-      group: PropertyTypes.Appearance,
+      description:
+        "Causes the panel being opened to automatically smooth scroll into view. Note: only applies when using autoCollapse",
+      ...SoftDeleteProperties,
     },
     size: {
       displayName: "Size",
       group: PropertyTypes.Appearance,
+
 
       type: "string",
       format: "selectOne",
@@ -72,5 +96,4 @@ export const AccordionComponentType = contentType({
       ],
     },
   },
-  // compositionBehaviors: ["sectionEnabled"],
 });
