@@ -42,6 +42,7 @@ export type CarouselSlide = {
 export type TiCarouselProps = {
   /** The slides to render. */
   slides: CarouselSlide[];
+  className?: string;
   /** Spacing preset between slides. Defaults to "small". */
   gap?: CarouselGap;
   /** Which navigation UI to render. Defaults to "inline". */
@@ -64,6 +65,7 @@ export type TiCarouselProps = {
 
 export function TiCarousel({
   slides,
+  className,
   gap,
   navigation,
   peekAmount,
@@ -80,6 +82,7 @@ export function TiCarousel({
   return (
     <ti-carousel
       ref={ref}
+      className={className}
       gap={gap}
       navigation={navigation}
       peek-amount={peekAmount}

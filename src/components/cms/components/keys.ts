@@ -1,5 +1,4 @@
 import { KEY_PREFIX } from "../constants";
-import { ApplicationComponentTypeKeyMap } from "./application-components/keys";
 
 // This is in separate file to avoid circular reference when pushing types
 // Otherwise there's a confusing error about object is not iterable when doing an Opti push
@@ -15,13 +14,13 @@ export const AllComponentTypeKeyMap = {
   SingleGeneralCardComponent: `${KEY_PREFIX}GeneralCard_Component`,
   GeneralCardsComponent: `${KEY_PREFIX}GeneralCards_Component`,
   ProductCardsComponent: `${KEY_PREFIX}ProductCards_Component`,
-  PromoBlockComponent: `${KEY_PREFIX}PromoBlock_Component`,
   CodeEmbedComponent: `${KEY_PREFIX}CodeEmbed_Component`,
   CodeSnippetComponent: `${KEY_PREFIX}CodeSnippet_Component`,
   HomePageHeroSlideComponent: `${KEY_PREFIX}HomePageHeroSlide_Component`,
   HomePageHeroComponent: `${KEY_PREFIX}HomePageHero_Component`,
   ColumnGridColumnComponent: `${KEY_PREFIX}ColumnGridColumn_Component`,
   ColumnGridComponent: `${KEY_PREFIX}ColumnGrid_Component`,
+  NewProductsCardListComponent: `${KEY_PREFIX}NewProductsCardList_Component`,
   StandardImageComponent: `${KEY_PREFIX}StandardImage_Component`,
   HeadshotImageComponent: `${KEY_PREFIX}HeadshotImage_Component`,
   HorizontalRuleComponent: `${KEY_PREFIX}HorizontalRule_Component`,
@@ -37,32 +36,6 @@ export const AllComponentTypeKeyMap = {
   GeneralTabComponent: `${KEY_PREFIX}GeneralTab_Component`,
   JumpLinkNavigationComponent: `${KEY_PREFIX}JumpLinkNavigation_Component`,
   JumpLinkTargetComponent: `${KEY_PREFIX}JumpLinkTarget_Component`,
+  GoldenSourcePageHeading: `${KEY_PREFIX}GoldenSourcePageHeading_Component`,
+  ApiSwaggerComponent:`${KEY_PREFIX}ApiSwagger_Component`,
 };
-
-/**
- * Keys for components that can be used directly in a Section or a Column
- */
-export const StandaloneComponentTypeKeys = [
-  AllComponentTypeKeyMap.AccordionComponent,
-  AllComponentTypeKeyMap.ContentBlockComponent,
-  AllComponentTypeKeyMap.PromoBlockComponent,
-  AllComponentTypeKeyMap.CodeEmbedComponent,
-  AllComponentTypeKeyMap.CodeSnippetComponent,
-  AllComponentTypeKeyMap.CardListComponent,
-  AllComponentTypeKeyMap.SingleGeneralCardComponent,
-  AllComponentTypeKeyMap.ColumnGridComponent,
-  AllComponentTypeKeyMap.StandardImageComponent,
-  AllComponentTypeKeyMap.HeadshotImageComponent,
-  ApplicationComponentTypeKeyMap.ApplicationListing,
-  AllComponentTypeKeyMap.VideoPlayerComponent,
-  AllComponentTypeKeyMap.SelectionToolComponent,
-  AllComponentTypeKeyMap.PremiumMediaHeadingComponent,
-  AllComponentTypeKeyMap.HierarchyNavigationComponent,
-  AllComponentTypeKeyMap.HorizontalRuleComponent,
-  AllComponentTypeKeyMap.ApplicationSearchBoxComponent,
-  AllComponentTypeKeyMap.FAQSearchBoxComponent,
-  AllComponentTypeKeyMap.BrowseVideosComponent,
-  AllComponentTypeKeyMap.TabsComponent,
-  AllComponentTypeKeyMap.JumpLinkNavigationComponent,
-  AllComponentTypeKeyMap.JumpLinkTargetComponent,
-];

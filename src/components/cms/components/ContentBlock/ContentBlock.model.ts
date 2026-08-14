@@ -7,12 +7,18 @@ import {
   DeprecatedCtaListContract,
 } from "@/components/cms/contracts/component-contracts/cta-list.model";
 import { PropertyTypes } from "@/lib/property-types";
+import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 export const ContentBlockComponentType = contentType({
   key: AllComponentTypeKeyMap.ContentBlockComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Content Block`,
   baseType: "_component",
-  extends: [HeadlineContract, DeprecatedCtaListContract, CtaListContract],
+  extends: [
+    HeadlineContract,
+    DeprecatedCtaListContract,
+    CtaListContract,
+    ...AllowIn.Groupings.Common
+  ],
   properties: {
     image: { type: "contentReference", allowedTypes: ["_image"] },
     contentBlockDescription: {
@@ -23,5 +29,4 @@ export const ContentBlockComponentType = contentType({
       isLocalized: true,
     },
   },
-  compositionBehaviors: ["sectionEnabled"],
 });

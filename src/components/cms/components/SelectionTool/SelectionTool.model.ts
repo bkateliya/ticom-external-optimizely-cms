@@ -8,6 +8,7 @@ export const SelectionToolComponentType = contentType({
   key: AllComponentTypeKeyMap.SelectionToolComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Selection Tool`,
   baseType: "_component",
+  compositionBehaviors: ["sectionEnabled"],
   properties: {
     destinationId: {
       type: "string",

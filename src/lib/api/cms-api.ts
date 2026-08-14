@@ -1,17 +1,90 @@
+import { getLocale } from "next-intl/server";
 import { cache } from "react";
 import { SERVER_ENV_VARS } from "../env/server-env";
+import { DEFAULT_LOCALE } from "@/constants/locales";
 
 const BASE = !!SERVER_ENV_VARS.CMS_API_DOMAIN
   ? `${SERVER_ENV_VARS.CMS_API_DOMAIN}/cmsapi`
   : SERVER_ENV_VARS.WEB_SERVICE_DOMAIN;
 
+export const getProductFamily = cache(async function (familyId: string) {
+  const url = `${BASE}/productfamily/${familyId}/all`;
+  const options = await getRequestOptions();
+  const response = await fetch(url, options);
+
+  return (await response.json()) as Family;
+});
+
+export const getSilos = cache(async function () {
+  const url = `${BASE}/productfamily/silofamilies`;
+  const options = await getRequestOptions();
+  const response = await fetch(url, options);
+
+  const responseJson = (await response.json()) as { content: SiloFamily[] };
+  return responseJson.content;
+});
+
+export const getApplication = cache(async function (applicationId: string) {
+  const url = `${BASE}/application/id/${applicationId}/all`;
+  const options = await getRequestOptions();
+  const response = await fetch(url, options);
+
+  const responseJson = (await response.json()) as ApplicationResponse;
+  return responseJson;
+});
+
+function formatLanguageForFeaturedProducts(language: string) {
+  if (!language) language = DEFAULT_LOCALE;
+  const [part1, part2] = language.split("-", 2);
+  return `${part1.toLowerCase()}-${part2.toUpperCase()}`;
+}
+
+export interface GetFeaturedProductsParams {
+  language: string;
+  familyId?: number | null;
+}
+export const getFeaturedProducts = cache(async function ({
+  language,
+  familyId,
+}: GetFeaturedProductsParams) {
+  language = formatLanguageForFeaturedProducts(language);
+  const hasFamily = !!familyId && !isNaN(+familyId);
+  const url = hasFamily
+    ? `${BASE}/featuredproducts/featuredProducts/family/${familyId}?language=${encodeURIComponent(language)}`
+    : `${BASE}/featuredproducts/featuredProducts?language=${encodeURIComponent(language)}`;
+
+  const options = await getRequestOptions();
+  const response = await fetch(url, options);
+  const result = (await response.json()) as FeaturedProductsResponse;
+  if (
+    result.featuredProductInfo.errorList &&
+    result.featuredProductInfo.errorList.length > 0
+  ) {
+    console.warn(result.featuredProductInfo.errorList.join("\n"));
+  }
+  return result;
+});
+
+async function getRequestOptions(): Promise<RequestInit> {
+  const headers = {
+    Authorization: `Bearer ${await getBearerToken()}`,
+    "Content-Language": await getLocale(),
+  };
+  return {
+    headers,
+    signal: AbortSignal.timeout(SERVER_ENV_VARS.CMS_API_TIMEOUT_MS),
+  };
+}
+
 const getBearerToken = cache(async function () {
+  // If we already have a bearer token, we don't need to fetch one
   if (SERVER_ENV_VARS.CMS_API_BEARER_TOKEN) {
     return SERVER_ENV_VARS.CMS_API_BEARER_TOKEN;
   }
   const response = await fetch(
     `${SERVER_ENV_VARS.ACCESS_TOKEN_URL}?grant_type=client_credentials`,
     {
+      signal: AbortSignal.timeout(SERVER_ENV_VARS.CMS_API_TIMEOUT_MS),
       headers: {
         Authorization: `Basic ${btoa(`${SERVER_ENV_VARS.ACCESS_TOKEN_CLIENT_ID}:${SERVER_ENV_VARS.ACCESS_TOKEN_CLIENT_SECRET}`)}`,
       },
@@ -28,37 +101,6 @@ const getBearerToken = cache(async function () {
   return body.access_token;
 });
 
-export const getProductFamily = cache(async function (familyId: string) {
-  const url = `${BASE}/productfamily/${familyId}/all`;
-  const headers = {
-    Authorization: `Bearer ${await getBearerToken()}`,
-  };
-  const response = await fetch(url, { headers });
-
-  return (await response.json()) as Family;
-});
-
-export const getSilos = cache(async function () {
-  const url = `${BASE}/productfamily/silofamilies`;
-  const headers = {
-    Authorization: `Bearer ${await getBearerToken()}`,
-  };
-  const response = await fetch(url, { headers });
-
-  const responseJson = (await response.json()) as { content: SiloFamily[] };
-  return responseJson.content;
-});
-
-export const getApplication = cache(async function (applicationId: string) {
-  const url = `${BASE}/application/id/${applicationId}/all`;
-  const headers = {
-    Authorization: `Bearer ${await getBearerToken()}`,
-  };
-  const response = await fetch(url, { headers });
-
-  const responseJson = (await response.json()) as ApplicationResponse;
-  return responseJson;
-});
 export interface SiloFamily {
   familyId: number;
   parentId: number;
@@ -161,4 +203,35 @@ export interface ApplicationResponse {
   ancestors: Application[];
   children: Application[];
   similarAppList: Application[];
+}
+export interface FeaturedProductsPartNumberInformation {
+  id: number;
+  genericPartId: number;
+  genericPartNumber: string;
+  familyId: string;
+  familyName: string;
+  famileNameEn: string;
+  treeLevel: number;
+  deviceDescription: string;
+  releaseDate: string;
+  marketingStatusId: number;
+  marketingStatus: string;
+  marketingStatusDescription: string;
+  newFlag: boolean;
+  partImageAvailable: boolean;
+  partImageUrl: string;
+  selectionToolUrl: string;
+  currency: string;
+  approximatePrice: number | null;
+  displayQuantity: string;
+  datasheetAvailable: boolean;
+  datasheetUrl: string;
+  language: string;
+  gpnUrl: string;
+}
+export interface FeaturedProductsResponse {
+  featuredProductInfo: {
+    errorList?: string[] | null;
+    partNumberInformation?: FeaturedProductsPartNumberInformation[] | null;
+  };
 }

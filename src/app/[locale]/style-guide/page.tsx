@@ -316,7 +316,6 @@ const BUTTON_APPEARANCES: ButtonAppearance[] = [
   ButtonAppearance.solid,
   ButtonAppearance.outline,
   ButtonAppearance.ghost,
-  ButtonAppearance.link,
 ];
 
 // CTAs expose only primary and secondary — success/warning aren't offered.

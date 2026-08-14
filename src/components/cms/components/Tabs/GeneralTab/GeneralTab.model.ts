@@ -1,10 +1,8 @@
 import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX } from "src/components/cms/constants.mjs";
-import {
-  AllComponentTypeKeyMap,
-  StandaloneComponentTypeKeys,
-} from "../../keys";
+import { AllComponentTypeKeyMap } from "../../keys";
 import { PropertyTypes } from "@/lib/property-types";
+import { AllowIn } from "@/components/cms/contracts/component-contracts/allow-in.model";
 
 export const GeneralTabComponentType = contentType({
   key: AllComponentTypeKeyMap.GeneralTabComponent,
@@ -33,7 +31,7 @@ export const GeneralTabComponentType = contentType({
       group: PropertyTypes.Content,
       items: {
         type: "content",
-        allowedTypes: StandaloneComponentTypeKeys,
+        allowedTypes: [AllowIn.Tab],
       },
     },
   },

@@ -31,6 +31,10 @@ const TI_ASSETS = SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN + "/assets";
 export const SUBSITE_HEADER_CSS = `${TI_ASSETS}/style/ticom.header.subpage.css`;
 export const SUBSITE_HEADER_JS = `${TI_ASSETS}/js/ticom.header.subpage.js`;
 
+// Swagger UI theme override, per the API Swagger component's technical
+// requirements (same host/pattern as the subsite header assets above).
+export const SWAGGER_UI_CSS = `${TI_ASSETS}/style/ticom.swaggerui.css`;
+
 export const MODULE_BUNDLES = [
   `${TICOM}/ui-components/3.latest/ui-components.esm.js`,
   `${TICOM}/header-components/3.latest/header-components.esm.js`,

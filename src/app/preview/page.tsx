@@ -14,6 +14,9 @@ import { populateSiteSettings } from "@/lib/data/site-settings";
 import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 export { generateMetadata } from "./metadata";
 
+// Skip trying to statically prerender this because it needs a live Graph client
+export const dynamic = "force-dynamic";
+
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };

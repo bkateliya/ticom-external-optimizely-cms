@@ -4,7 +4,6 @@ import {
   AccordionPanelComponentType,
 } from "./Accordion/Accordion.model";
 
-import { PromoBlockComponentType } from "./PromoBlock/PromoBlock.model";
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
 import { CodeSnippetComponentType } from "./CodeSnippet/CodeSnippet.model";
 import {
@@ -21,6 +20,7 @@ import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
 import { applicationListingComponents } from "./application-components/types";
 import { imageComponentTypes } from "./Image/types";
 import { HorizontalRuleComponentType } from "./HorizontalRule/HorizontalRule.model";
+import { NewProductsCardListComponentType } from "./NewProductsCardList/NewProductsCardList.model";
 import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model";
 import { PremiumMediaHeadingComponentType } from "./PremiumMediaHeading/PremiumMediaHeading.model";
@@ -31,10 +31,15 @@ import {
   CtaButtonListComponentType,
   CtaLinkListComponentType,
 } from "./CtaList/CtaList.model";
-import { HierarchyNavigationComponentType, HierarchyNavigationItemComponentType } from "./HierarchyNavigation/HierarchyNavigation.model";
+import {
+  HierarchyNavigationComponentType,
+  HierarchyNavigationItemComponentType,
+} from "./HierarchyNavigation/HierarchyNavigation.model";
 import { tabsComponents } from "./Tabs/types";
 import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
 import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
+import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading/GoldenSourcePageHeading.model";
+import { ApiSwaggerComponentType } from "./ApiSwagger/ApiSwagger.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -43,13 +48,13 @@ export const allComponentTypes = [
   CtaLinkListComponentType,
   AccordionComponentType,
   AccordionPanelComponentType,
-  PromoBlockComponentType,
   CodeEmbedComponentType,
   CodeSnippetComponentType,
   HomePageHeroSlideComponentType,
   HomePageHeroComponentType,
   ColumnGridColumnComponentType,
   ColumnGridComponentType,
+  NewProductsCardListComponentType,
   SelectionToolComponentType,
   ...cardListComponents,
   ...applicationListingComponents,
@@ -65,4 +70,6 @@ export const allComponentTypes = [
   ...tabsComponents,
   JumpLinkNavigationComponentType,
   JumpLinkTargetComponentType,
+  GoldenSourcePageHeadingComponentType,
+  ApiSwaggerComponentType,
 ];

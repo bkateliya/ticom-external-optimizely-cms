@@ -61,11 +61,11 @@ export const Headline = ({
 
   return (
     <div
-      className={clsx(baseClassName, props.className, "gap-2 flex flex-col")}
+      className={clsx(baseClassName, props.className, "gap-1 flex flex-col")}
       {...props}
     >
       {content.eyebrow && (
-        <div className="mb-2">
+        <div>
           <WrappedTextField as="span" field="eyebrow" className="text-label" />
         </div>
       )}

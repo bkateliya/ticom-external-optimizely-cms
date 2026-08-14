@@ -9,8 +9,6 @@ import { LinkElement } from "./Link";
 import { LinkElementType } from "./Link/Link.model";
 import { ImageElement } from "./Image";
 import { ImageElementType } from "./Image/Image.model";
-import { PromoContentElementType } from "./PromoContent/PromoContent.model";
-import { PromoContentElement } from "./PromoContent";
 
 export const elementRegistry: ComponentRegistry = {
   [CtaButtonElementType.key]: CTAButtonElement,
@@ -18,5 +16,4 @@ export const elementRegistry: ComponentRegistry = {
   [LinkElementType.key]: LinkElement,
   [RichTextAreaElementType.key]: RichTextAreaElement,
   [ImageElementType.key]: ImageElement,
-  [PromoContentElementType.key]: PromoContentElement,
 };

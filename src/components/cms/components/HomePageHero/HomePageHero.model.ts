@@ -5,6 +5,7 @@ import { SlideshowComponentContract } from "@/components/cms/contracts/component
 import { AllComponentTypeKeyMap } from "../keys";
 import { HeadlineContract } from "../../contracts/component-contracts/headline.model";
 import { LinkContract } from "../../contracts/element-contracts/link.model";
+import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 export const HomePageHeroSlideComponentType = contentType({
   key: AllComponentTypeKeyMap.HomePageHeroSlideComponent,
@@ -44,7 +45,7 @@ export const HomePageHeroComponentType = contentType({
   key: AllComponentTypeKeyMap.HomePageHeroComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Home Page Hero`,
   baseType: "_component",
-  extends: [SlideshowComponentContract],
+  extends: [SlideshowComponentContract, AllowIn.HomePageHeader],
   properties: {
     slides: {
       type: "array",

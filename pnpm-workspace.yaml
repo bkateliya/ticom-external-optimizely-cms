@@ -10,3 +10,6 @@ ignoredBuiltDependencies:
   - unrs-resolver
 # Symlinks break Next.js standalone packaging
 nodeLinker: hoisted
+# pnpm 11 only reads this from a pnpm config file, not .npmrc. Keeps the inner
+# `pnpm run` calls in package.json scripts from auto-running `pnpm install`.
+verifyDepsBeforeRun: false

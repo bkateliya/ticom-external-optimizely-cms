@@ -6,15 +6,16 @@ import { CtaButtonElementType } from "@/components/cms/elements/CTAButton/CTABut
 import { normalizeUrl } from "@/lib/utils/link-utils";
 import { TifButtonProps } from "../ti/TiButton/TiButton";
 import { TifButton } from "@ticom/form-components/react";
-import { ButtonAppearance } from "@/components/ui/ti/enums";
+import { TiSvgIcon } from "../ti/TiSvgIcon";
+import { UiIcon } from "../ti/TiSvgIcon/SvgIconMapping";
 
 type LinkFieldContent = ContentProps<typeof CtaButtonElementType>["link"];
 
 export type LinkFieldProps<TContentType extends ContentTypes.AnyContentType> =
   CmsFieldProps<TContentType, LinkFieldContent> &
-  TifButtonProps & {
-    renderChildrenIfNoLink?: boolean;
-  };
+    TifButtonProps & {
+      renderChildrenIfNoLink?: boolean;
+    };
 
 export function LinkField<TContentType extends ContentTypes.AnyContentType>({
   cmsContent: content,
@@ -32,7 +33,7 @@ export function LinkField<TContentType extends ContentTypes.AnyContentType>({
 
   return (
     <div {...pa([parentField, "Url"].filter(Boolean).join("."))}>
-      <LinkFieldDirect {...props} link={value} appearance={ButtonAppearance.link} />
+      <LinkFieldDirect {...props} link={value} />
     </div>
   );
 }
@@ -61,7 +62,20 @@ export function LinkFieldDirect({
   if (!url) {
     return null;
   }
+  if (props.appearance) {
+    return <TifButton {...props} />;
+  }
+
   return (
-    <TifButton {...props} />
+    <a
+      href={url}
+      className="inline-flex items-center gap-1 text-body-md text-pl-link-color-primary no-underline"
+      data-cta-link
+    >
+      {props.iconName ? (
+        <TiSvgIcon icon={props.iconName as UiIcon} size="s" />
+      ) : null}
+      {link?.text}
+    </a>
   );
 }

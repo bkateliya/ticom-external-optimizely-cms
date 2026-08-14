@@ -34,7 +34,7 @@ export async function RootLayout({
         {/* <link type="text/css" href="https://www.ti.com/assets/style/ticom.global.portals.css" rel="stylesheet" /> */}
       </head>
       <body className={clsx(roboto.variable, DefaultTheme)}>
-        <div className="w-full overflow-hidden">
+        <div className="w-full">
           <ThemeProvider theme={DefaultTheme} applyToBody={true}>
             {/* TI front-end scripts — web-component bundles + header/footer init,
               loaded once for the whole page (see TiScripts). */}
