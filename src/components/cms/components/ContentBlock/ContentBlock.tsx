@@ -1,33 +1,43 @@
-import { damAssets } from "@optimizely/cms-sdk";
-
 import { ContentBlockComponentType } from "./ContentBlock.model";
-import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { OptiComponentProps } from "@/lib/ts/component-props";
-import { PreambleDirectHeadline } from "@/components/ui/molecules/SectionWrapper/Preamble";
+import { fieldFactory } from "@/components/ui/cms";
+import { Headline } from "@/components/ui/molecules/Headline/Headline";
+import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedNextImage";
+import { getStandardizedImage } from "@/lib/utils/image-utils";
 
 export function ContentBlockComponent({
   content,
+  parentField,
 }: OptiComponentProps<typeof ContentBlockComponentType>) {
   if (!content) {
     return null;
   }
 
-  const { src } = getPreviewUtils(content);
-  const { getAlt } = damAssets(content);
-  const imageUrl = src(content.image);
+  const { src, alt } = getStandardizedImage(content, content.image);
+
+  const { WrappedRichTextField } = fieldFactory<
+    typeof ContentBlockComponentType
+  >(content, parentField);
 
   return (
-    <PreambleDirectHeadline
-      content={content}
-      beforeElements={imageUrl && (
+    <div className="flex w-full flex-col gap-8">
+      {src && (
         <EnhancedNextImage
-          // fill
-          src={imageUrl}
-          alt={getAlt(content.image) ?? ""}
-
+          src={src}
+          alt={alt ?? ""}
           className="w-full h-auto object-contain"
         />
-      )} />
+      )}
+
+      <div className="flex w-full flex-col gap-8 md:max-w-2/3">
+        <Headline content={content} parentField={parentField} />
+        <WrappedRichTextField
+          field="contentBlockDescription"
+          className="text-body-lg"
+        />
+        <ExtendedOptimizelyComponent content={content.ctasList} />
+      </div>
+    </div>
   );
 }

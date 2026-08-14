@@ -1,7 +1,6 @@
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { AccordionPanelComponentType } from "./Accordion.model";
 import { fieldFactory } from "@/components/ui/cms";
-import styles from "./styles-item.module.css";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 
 type AccordionItemProps = OptiComponentProps<
@@ -22,7 +21,6 @@ export function AccordionItem({ content, parentField }: AccordionItemProps) {
       <WrappedHeadingTextField
         slot="title"
         field="title"
-        className={styles.headingText}
       />
 
       <div slot="content">

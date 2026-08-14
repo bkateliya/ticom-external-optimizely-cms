@@ -1,14 +1,13 @@
-import { damAssets } from "@optimizely/cms-sdk";
 import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 
 import styles from "./styles.module.css";
 import { HeroComponentType } from "./Hero.model";
-import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { fieldFactory } from "@/components/ui/cms";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { HeadlineComponentType } from "../../contracts/component-contracts/headline.model";
 import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedNextImage";
+import { getStandardizedImage } from "@/lib/utils/image-utils";
 
 export function HeroComponent({
   content,
@@ -18,9 +17,7 @@ export function HeroComponent({
     return null;
   }
 
-  const { src } = getPreviewUtils(content);
-  const { getAlt } = damAssets(content);
-  const imageUrl = src(content.image);
+  const { src, alt } = getStandardizedImage(content, content.image);
 
   const { WrappedTextField, WrappedRichTextField } = fieldFactory<
     typeof HeadlineComponentType
@@ -48,12 +45,9 @@ export function HeroComponent({
               />
             </div>
           </div>
-          {imageUrl && (
+          {src && (
             <div className={styles.image}>
-              <EnhancedNextImage
-                src={imageUrl}
-                alt={getAlt(content.image) ?? ""}
-              />
+              <EnhancedNextImage src={src} alt={alt ?? ""} />
             </div>
           )}
         </div>

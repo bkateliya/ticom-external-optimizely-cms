@@ -13,8 +13,8 @@ import { MainFooter } from "./MainFooter/MainFooter";
 import { MainFooterComponentType } from "./MainFooter/MainFooter.model";
 import { CreativeShowcaseFooter } from "./CreativeShowcaseFooter/CreativeShowcaseFooter";
 import { CreativeShowcaseFooterComponentType } from "./CreativeShowcaseFooter/CreativeShowcaseFooter.model";
-import { DlpHeader } from "./DlpHeader/DlpHeader";
-import { DlpHeaderComponentType } from "./DlpHeader/DlpHeader.model";
+import { DlpHeader } from "./ShowcaseHeader/DlpHeader";
+import { DlpHeaderComponentType } from "./ShowcaseHeader/ShowcaseHeader.model";
 import { SiteSettingsDataType } from "./SiteSettings/SiteSettings.model";
 import { NoPreviewComponent } from "@/components/ui/cms/NoPreviewComponent";
 

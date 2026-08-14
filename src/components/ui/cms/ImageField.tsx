@@ -1,10 +1,11 @@
-import { ContentTypes, damAssets } from "@optimizely/cms-sdk";
+import { ContentTypes } from "@optimizely/cms-sdk";
 
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import { CmsFieldProps } from "@/lib/ts/field-props";
 import { InferredContentReference } from "@/lib/ts/field-props";
 import EnhancedNextImage from "../Atoms/EnhancedNextImage/EnhancedNextImage";
 import { ImageProps } from "next/image";
+import { getStandardizedImage } from "@/lib/utils/image-utils";
 
 export type ImageFieldProps<TContentType extends ContentTypes.AnyContentType> =
   CmsFieldProps<TContentType, InferredContentReference> &
@@ -22,17 +23,16 @@ export function ImageField<TContentType extends ContentTypes.AnyContentType>({
   const { pa } = getPreviewUtils(content);
   const value = content[field] as InferredContentReference;
 
-  const { src } = getPreviewUtils(content);
-  const { getAlt } = damAssets(content);
-  const logoUrl = value ? src(value) : null;
-  if (!logoUrl) {
+  const { src, alt } = getStandardizedImage(content, value);
+
+  if (!src) {
     return null;
   }
 
   return (
     <EnhancedNextImage
-      src={logoUrl}
-      alt={getAlt(value) ?? ""}
+      src={src}
+      alt={alt ?? ""}
       {...props}
       {...pa([parentField, field].filter(Boolean).join("."))}
     />

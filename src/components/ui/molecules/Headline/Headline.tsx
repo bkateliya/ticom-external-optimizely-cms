@@ -13,9 +13,9 @@ export interface HeadlineStyleProps {
 }
 export interface HeadlineProps
   extends
-    OptionalOptiComponentProps<HeadlineContractContentType>,
-    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-    HeadlineStyleProps {}
+  OptionalOptiComponentProps<HeadlineContractContentType>,
+  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+  HeadlineStyleProps { }
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
   Left: "text-left",
@@ -73,10 +73,8 @@ export const Headline = ({
         <WrappedHeadingTextField
           headingSize={parseHeadlineSize({ content })}
           field="headline"
-          className={clsx({
-            "after:content-[''] after:block after:w-24 after:h-px after:mt-6 after:bg-[var(--ti-accent-color,var(--pl-border-color-accent))]":
-              redUnderline,
-            "after:mx-auto": redUnderline && textAlignment === "Center",
+          redUnderline={redUnderline}
+          className={clsx('text-inherit!', {
             "mb-0": !content.description,
           })}
         />

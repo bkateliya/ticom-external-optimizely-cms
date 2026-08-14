@@ -31,12 +31,17 @@ export function CTAButtonElement({ content }: Props) {
     content.ButtonColor,
   );
 
+  // The CMS "Open in" dropdown maps to `link.target` (`_blank`, `_self`, …).
+  const target = content.link?.target || undefined;
+
   return (
     <TiButton
       href={url}
       appearance={buttonAppearance}
       color={buttonColor}
       iconName={content.Icon ?? undefined}
+      target={target}
+      rel={target === "_blank" ? "noopener noreferrer" : undefined}
     >
       {content.link?.text}
     </TiButton>

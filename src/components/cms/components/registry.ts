@@ -56,6 +56,11 @@ import { JumpLinkNavigationComponent } from "./JumpLink/JumpLinkNavigation";
 import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
 import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
 import { JumpLinkTargetComponent } from "./JumpLink/JumpLinkTarget";
+import {
+  KeyCustomerMessageItemComponentType,
+  KeyCustomerMessagesComponentType,
+} from "./KeyCustomerMessages/KeyCustomerMessages.model";
+import { KeyCustomerMessages } from "./KeyCustomerMessages/KeyCustomerMessages";
 import { ApplicationSearchBox } from "./ApplicationSearchBox/ApplicationSearchBox";
 import { SelectionToolComponent } from "./SelectionTool/SelectionTool";
 import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading/GoldenSourcePageHeading.model";
@@ -81,7 +86,6 @@ export const componentRegistry: ComponentRegistry = {
   ...applicationListingComponentRegistry,
   ...imageComponentRegistry,
   [PremiumMediaHeadingComponentType.key]: PremiumMediaHeadingComponent,
-  [ApplicationSearchBoxComponentType.key]: NoPreviewComponent,
   [FAQSearchBoxComponentType.key]: FAQSearchBox,
   [BrowseVideosComponentType.key]: BrowseVideos,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,
@@ -90,6 +94,8 @@ export const componentRegistry: ComponentRegistry = {
   ...tabsComponentRegistry,
   [JumpLinkNavigationComponentType.key]: JumpLinkNavigationComponent,
   [JumpLinkTargetComponentType.key]: JumpLinkTargetComponent,
+  [KeyCustomerMessagesComponentType.key]: KeyCustomerMessages,
+  [KeyCustomerMessageItemComponentType.key]: NoPreviewComponent,
   [ApplicationSearchBoxComponentType.key]: ApplicationSearchBox,
   [GoldenSourcePageHeadingComponentType.key]: GoldenSourcePageHeadingComponent,
   [ApiSwaggerComponentType.key]:ApiSwagger,

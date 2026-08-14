@@ -20,14 +20,10 @@ import { BreadcrumbEntry } from "@/components/global/Breadcrumb/Breadcrumb.utils
 import { PageFolderType } from "@/components/cms/pages/PageFolder/PageFolder.model";
 import { ArticlePageType } from "@/components/cms/pages/Article/Article.model";
 import {
-  ApplicationInfo,
   DEFAULT_APPLICATION_ID,
   getNormalizedApplicationInfo,
 } from "../api/normalized/applications";
-import {
-  FamilyInfo,
-  getNormalizedFamilyInfo,
-} from "../api/normalized/productFamilies";
+import { getNormalizedFamilyInfo } from "../api/normalized/productFamilies";
 import { getSilos } from "../api/cms-api";
 import { findAllBynderAssetsOnPage } from "./bynder";
 import { OptimizelyContentProps } from "@/components/ui/cms/ExtendedOptimizelyComponent";
@@ -74,8 +70,6 @@ async function populatePageDataImpl(
     return;
   }
 
-  setContextData("preFooter", content.preFooter);
-
   const productFamily = normalizeGenericContentToTyped(
     await cached.getReferencedContent(content.productFamily),
     ProductFamilyType,
@@ -84,10 +78,8 @@ async function populatePageDataImpl(
   if (productFamily?.familyId) {
     setContextData("productFamily", productFamily);
     try {
-      const familyInfo: FamilyInfo = await getNormalizedFamilyInfo(
-        productFamily.familyId,
-      );
-      setContextData("familyInfo", familyInfo);
+      const familyInfo = await getNormalizedFamilyInfo(productFamily.familyId);
+      setContextData("familyInfo", familyInfo ?? undefined);
     } catch (error) {
       console.error("Get Family Info CMS API failed", error);
     }
@@ -112,10 +104,10 @@ async function populatePageDataImpl(
 
   // Even if no application ID is set, we still want to have the default one in most cases.
   try {
-    const applicationInfo: ApplicationInfo = await getNormalizedApplicationInfo(
+    const applicationInfo = await getNormalizedApplicationInfo(
       application?.applicationId ?? DEFAULT_APPLICATION_ID,
     );
-    setContextData("applicationInfo", applicationInfo);
+    setContextData("applicationInfo", applicationInfo ?? undefined);
   } catch (error) {
     console.error("Get Application CMS API failed", error);
   }

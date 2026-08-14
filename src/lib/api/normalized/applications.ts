@@ -23,6 +23,10 @@ export interface ApplicationInfo extends ApplicationWithSiblings {
 export async function getNormalizedApplicationInfo(applicationId: string) {
   const applicationResponse = await getApplication(applicationId);
 
+  if (!applicationResponse) {
+    return null;
+  }
+
   const itemMap = applicationResponse.AppHierarchyList.reduce(
     (prev, curr) => {
       prev[curr.childId] = curr;

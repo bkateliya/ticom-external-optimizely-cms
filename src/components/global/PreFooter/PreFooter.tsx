@@ -1,5 +1,6 @@
-import { getContextData } from "@optimizely/cms-sdk/react/server";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
+import { CommonPageContractType } from "@/components/cms/contracts/common";
+import { OptiComponentProps } from "@/lib/ts/component-props";
 
 /**
  * Renders the shared pre-footer content area (set per page via the
@@ -7,16 +8,16 @@ import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimiz
  * context, populated in `populatePageData`, so every page/experience that
  * goes through `SiteFrame` gets it without threading props.
  */
-export function PreFooter() {
-  const preFooter = getContextData("preFooter");
-
-  if (!preFooter?.length) {
+export function PreFooter({
+  content,
+}: OptiComponentProps<CommonPageContractType>) {
+  if (!content?.preFooter?.length) {
     return null;
   }
 
   return (
     <>
-      {preFooter.map((item, i) => (
+      {content.preFooter.map((item, i) => (
         <ExtendedOptimizelyComponent
           key={i}
           content={item}

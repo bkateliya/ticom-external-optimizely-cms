@@ -7,7 +7,6 @@ import { ApplicationType } from "@/components/cms/data/Application.model";
 import { ApplicationInfo } from "@/lib/api/normalized/applications";
 import { FamilyInfo } from "@/lib/api/normalized/productFamilies";
 import { SiloFamily } from "@/lib/api/cms-api";
-import { PreFooterContractContentType } from "@/components/cms/contracts/page-contacts/prefooter.model";
 
 import { BreadcrumbEntry } from "./Breadcrumb.utils";
 declare module "@optimizely/cms-sdk/react/server" {
@@ -16,7 +15,6 @@ declare module "@optimizely/cms-sdk/react/server" {
     bynderImages?: Record<string, BynderImage>;
     bynderDocuments?: Record<string, BynderDocument>;
     bynderVideos?: Record<string, BynderVideo>;
-    preFooter?: ContentProps<PreFooterContractContentType>["preFooter"];
     productFamily?: ContentProps<typeof ProductFamilyType> | null;
     familyInfo?: FamilyInfo;
     productSilos?: SiloFamily[];
