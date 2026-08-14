@@ -6,7 +6,7 @@ import { CommonPageContractType } from "@/components/cms/contracts/common";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 
 type Props = OptiComponentProps<CommonPageContractType> & React.PropsWithChildren;
-export async function SiteFrame({ children }: Props) {
+export async function SiteFrame({ content, children }: Props) {
   const siteSettings = getContextData("siteSettings");
 
   return (
@@ -18,7 +18,7 @@ export async function SiteFrame({ children }: Props) {
         <Breadcrumb />
         {children}
       </main>
-      <PreFooter />
+      <PreFooter content={content} />
       {siteSettings?.footer && (
         <ExtendedOptimizelyComponent content={siteSettings.footer} />
       )}

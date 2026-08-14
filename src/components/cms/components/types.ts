@@ -38,6 +38,7 @@ import {
 import { tabsComponents } from "./Tabs/types";
 import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
 import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
+import { KeyCustomerMessageItemComponentType, KeyCustomerMessagesComponentType } from "./KeyCustomerMessages/KeyCustomerMessages.model";
 import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading/GoldenSourcePageHeading.model";
 import { ApiSwaggerComponentType } from "./ApiSwagger/ApiSwagger.model";
 
@@ -70,6 +71,8 @@ export const allComponentTypes = [
   ...tabsComponents,
   JumpLinkNavigationComponentType,
   JumpLinkTargetComponentType,
+  KeyCustomerMessagesComponentType,
+  KeyCustomerMessageItemComponentType,
   GoldenSourcePageHeadingComponentType,
   ApiSwaggerComponentType,
 ];

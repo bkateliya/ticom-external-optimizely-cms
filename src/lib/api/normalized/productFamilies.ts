@@ -12,6 +12,9 @@ export interface FamilyInfo extends FamilyWithSiblings {
 export async function getNormalizedFamilyInfo(familyId: string) {
   const familyResponse = await getProductFamily(familyId);
 
+  if (!familyResponse) {
+    return null;
+  }
   const result: FamilyInfo = {
     ...familyResponse,
     ancestors: [],

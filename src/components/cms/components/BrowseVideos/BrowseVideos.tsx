@@ -58,7 +58,6 @@ export async function BrowseVideos({
 
   // The PIM API localizes off `Content-Language`, which wants the same
   // uppercased-region tag as `langPref`.
- 
 
   const [products, applications] = await Promise.all([
     getProductLinks(host),
@@ -98,10 +97,7 @@ export async function BrowseVideos({
                     {t("Products")}
                   </DynamicHeading>
 
-                  <BrowseLinkList
-                    links={products}
-                    className="md:columns-3"
-                  />
+                  <BrowseLinkList links={products} className="md:columns-3" />
                 </div>
               )}
               {applications.length > 0 && (
@@ -150,12 +146,13 @@ function BrowseLinkList({
  * returns the whole silo list, so the roots are the entries whose parent is not
  * itself a silo. Order is the service's own — it is already alphabetical.
  */
-async function getProductLinks(
-  host: string,
-): Promise<BrowseLink[]> {
+async function getProductLinks(host: string): Promise<BrowseLink[]> {
   const t = await getTranslations();
   try {
     const silos = await getSilos();
+    if (!silos) {
+      return [];
+    }
     const familyIds = new Set(
       silos.map((silo) => silo.familyId).filter(Boolean),
     );
@@ -185,18 +182,16 @@ async function getProductLinks(
  * i.e. the nodes with no parent. The application id is only there because the
  * endpoint demands one; the response carries the whole tree either way.
  */
-async function getApplicationLinks(
-  host: string,
-  
-): Promise<BrowseLink[]> {
+async function getApplicationLinks(host: string): Promise<BrowseLink[]> {
   const t = await getTranslations();
   try {
-    const { AppHierarchyList } = await getApplication(
-      DEFAULT_APPLICATION_ID,
-   
-    );
+    const applicationResult = await getApplication(DEFAULT_APPLICATION_ID);
 
-    return AppHierarchyList.filter(
+    if (!applicationResult) {
+      return [];
+    }
+
+    return applicationResult?.AppHierarchyList.filter(
       (market) => (market.parentAppId ?? 0) === 0,
     ).map((market) => ({
       text: market.sectionName,

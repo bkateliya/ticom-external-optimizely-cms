@@ -23,10 +23,10 @@ export async function GoldenSourcePageHeadingComponent({
     return null;
   } else if (application?.applicationId) {
     type = "application";
-    title = (await getApplication(application.applicationId)).appAreaName;
+    title = (await getApplication(application.applicationId))?.appAreaName;
   } else if (productFamily?.familyId) {
     type = "product";
-    title = (await getProductFamily(productFamily.familyId)).familyName;
+    title = (await getProductFamily(productFamily.familyId))?.familyName;
   }
 
   return (

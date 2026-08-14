@@ -16,14 +16,21 @@ export const HeadingSize = {
 
 export type HeadingSizeType = keyof typeof HeadingSize;
 
+const redUnderlineClass = clsx(
+  "after:content-[''] after:block after:w-24 after:h-px after:mt-6 after:bg-[var(--ti-accent-color,var(--pl-border-color-accent))]",
+  "[.text-center_&]:after:mx-auto",
+);
+
 export type HeadingFieldProps<
   TContentType extends ContentTypes.AnyContentType,
 > = Omit<CmsFieldElementProps<TContentType>, "as"> & {
   headingSize?: HeadingSizeType;
+  redUnderline?: boolean;
 };
 
 export function HeadingField<TContentType extends ContentTypes.AnyContentType>({
   headingSize,
+  redUnderline,
   ...props
 }: HeadingFieldProps<TContentType>) {
   const as = `h${useHeadingLevel()}`;
@@ -33,6 +40,7 @@ export function HeadingField<TContentType extends ContentTypes.AnyContentType>({
       className={clsx(
         props.className,
         HeadingSize[headingSize as HeadingSizeType] ?? null,
+        redUnderline && redUnderlineClass,
       )}
       as={as}
     />

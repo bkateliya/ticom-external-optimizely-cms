@@ -25,7 +25,6 @@ export function AccordionComponent({
         autoCollapse={content.autoCollapse ?? undefined}
         autoScroll={content.autoScroll ?? undefined}
         size={undefinedIfDefault(content.size as ExpansionPanelSize | undefined)}>
-
         {panels?.map((item, index) => (
           <AccordionItem
             key={index}

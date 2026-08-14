@@ -1,7 +1,6 @@
-import { damAssets } from "@optimizely/cms-sdk";
 import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 
-import { getContextData, getPreviewUtils } from "@optimizely/cms-sdk/react/server";
+import { getContextData } from "@optimizely/cms-sdk/react/server";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
@@ -14,6 +13,7 @@ import {
 } from "@/components/cms/contracts/component-contracts/section.model";
 
 import { ComponentTheme } from "@/components/ui/ti/enums";
+import { getStandardizedImage } from "@/lib/utils/image-utils";
 
 export function ThemedSection({
   content,
@@ -50,14 +50,13 @@ export function ThemedSection({
     ? content.backgroundSize || "full"
     : null;
 
-
   const isEditCanvas = getContextData("mode") === "edit";
 
   const fullHeightClassName = fullHeight
     ? clsx(
-      isEditCanvas ? "h-screen max-h-[900px]" : "h-screen",
-      "flex items-center",
-    )
+        isEditCanvas ? "h-screen max-h-[900px]" : "h-screen",
+        "flex items-center",
+      )
     : undefined;
 
   // The content is slotted *inside* `ti-slide` (see `BackgroundSlide`) rather
@@ -97,10 +96,8 @@ function BackgroundSlide({
   if (!content) {
     return children;
   }
-  const { src } = getPreviewUtils(content);
-  const { getAlt } = damAssets(content);
-  const imageUrl = src(content.backgroundImage);
-  if (!imageUrl) {
+  const { src, alt } = getStandardizedImage(content, content.backgroundImage);
+  if (!src) {
     return children;
   }
 
@@ -127,8 +124,8 @@ function BackgroundSlide({
     <ti-slide
       style={slideStyle}
       thumbnail-src=""
-      thumbnail-label={getAlt(content.backgroundImage) ?? ""}
-      background-image-src={imageUrl}
+      thumbnail-label={alt ?? ""}
+      background-image-src={src}
     >
       {children}
     </ti-slide>

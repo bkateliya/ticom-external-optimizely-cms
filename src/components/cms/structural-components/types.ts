@@ -5,7 +5,7 @@ import {
 } from "./ApiHeader/ApiHeader.model";
 
 import { CreativeShowcaseFooterComponentType } from "./CreativeShowcaseFooter/CreativeShowcaseFooter.model";
-import { DlpHeaderComponentType } from "./DlpHeader/DlpHeader.model";
+import { DlpHeaderComponentType } from "./ShowcaseHeader/ShowcaseHeader.model";
 import { MainFooterComponentType } from "./MainFooter/MainFooter.model";
 import { MainHeaderComponentType } from "./MainHeader/MainHeader.model";
 import { SiteSettingsDataType } from "./SiteSettings/SiteSettings.model";

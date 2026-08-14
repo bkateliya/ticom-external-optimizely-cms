@@ -27,5 +27,8 @@ export const ContractFlagProperties = {
   type: "string",
   displayMode: "hidden",
   group: PropertyTypes.Settings,
-  indexingType: "disabled",
+  // We can't disable indexing because
+  // that prevents types without any other fields
+  // from being queried properly
+  // indexingType: "disabled",
 } as const;

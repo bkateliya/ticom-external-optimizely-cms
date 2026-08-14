@@ -9,28 +9,21 @@ const BASE = !!SERVER_ENV_VARS.CMS_API_DOMAIN
 
 export const getProductFamily = cache(async function (familyId: string) {
   const url = `${BASE}/productfamily/${familyId}/all`;
-  const options = await getRequestOptions();
-  const response = await fetch(url, options);
 
-  return (await response.json()) as Family;
+  return await fetchData<Family>(url);
 });
 
 export const getSilos = cache(async function () {
   const url = `${BASE}/productfamily/silofamilies`;
-  const options = await getRequestOptions();
-  const response = await fetch(url, options);
 
-  const responseJson = (await response.json()) as { content: SiloFamily[] };
-  return responseJson.content;
+  const result = await fetchData<{ content: SiloFamily[] }>(url);
+  return result?.content;
 });
 
 export const getApplication = cache(async function (applicationId: string) {
   const url = `${BASE}/application/id/${applicationId}/all`;
-  const options = await getRequestOptions();
-  const response = await fetch(url, options);
 
-  const responseJson = (await response.json()) as ApplicationResponse;
-  return responseJson;
+  return await fetchData<ApplicationResponse>(url);
 });
 
 function formatLanguageForFeaturedProducts(language: string) {
@@ -53,17 +46,26 @@ export const getFeaturedProducts = cache(async function ({
     ? `${BASE}/featuredproducts/featuredProducts/family/${familyId}?language=${encodeURIComponent(language)}`
     : `${BASE}/featuredproducts/featuredProducts?language=${encodeURIComponent(language)}`;
 
-  const options = await getRequestOptions();
-  const response = await fetch(url, options);
-  const result = (await response.json()) as FeaturedProductsResponse;
-  if (
-    result.featuredProductInfo.errorList &&
-    result.featuredProductInfo.errorList.length > 0
-  ) {
-    console.warn(result.featuredProductInfo.errorList.join("\n"));
+  const result = await fetchData<FeaturedProductsResponse>(url);
+  if (!result || (result.featuredProductInfo.errorList?.length ?? 0) > 0) {
+    console.warn(result?.featuredProductInfo.errorList?.join("\n"));
   }
   return result;
 });
+
+async function fetchData<T>(url: string, optionsOverride: RequestInit = {}) {
+  try {
+    const baseOptions = await getRequestOptions();
+    const response = await fetch(url, { ...baseOptions, ...optionsOverride });
+
+    const responseJson = (await response.json()) as T;
+    return responseJson;
+  } catch (err) {
+    console.error(`Error loading ${url}:`);
+    console.error(err);
+    return null;
+  }
+}
 
 async function getRequestOptions(): Promise<RequestInit> {
   const headers = {
@@ -81,10 +83,9 @@ const getBearerToken = cache(async function () {
   if (SERVER_ENV_VARS.CMS_API_BEARER_TOKEN) {
     return SERVER_ENV_VARS.CMS_API_BEARER_TOKEN;
   }
-  const response = await fetch(
+  const body = await fetchData<{ access_token?: string }>(
     `${SERVER_ENV_VARS.ACCESS_TOKEN_URL}?grant_type=client_credentials`,
     {
-      signal: AbortSignal.timeout(SERVER_ENV_VARS.CMS_API_TIMEOUT_MS),
       headers: {
         Authorization: `Basic ${btoa(`${SERVER_ENV_VARS.ACCESS_TOKEN_CLIENT_ID}:${SERVER_ENV_VARS.ACCESS_TOKEN_CLIENT_SECRET}`)}`,
       },
@@ -92,13 +93,10 @@ const getBearerToken = cache(async function () {
     },
   );
 
-  const body = await response.json();
-
-  if (!body.access_token) {
+  if (!body?.access_token) {
     console.error("Invalid Token Response", body);
-    throw new Error(`Access token could not be retrieved`);
   }
-  return body.access_token;
+  return body?.access_token;
 });
 
 export interface SiloFamily {

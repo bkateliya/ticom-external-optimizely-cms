@@ -23,7 +23,7 @@ export async function VisualExperiencePage({ content }: Props) {
   }
 
   return (
-    <SiteFrame>
+    <SiteFrame content={content}>
       {/* <pre>Translation test: {t("Learn About")}</pre> */}
       <CommonPageHero content={content} />
 

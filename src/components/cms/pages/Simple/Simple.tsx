@@ -11,7 +11,7 @@ type Props = {
 export async function SimplePage({ content }: Props) {
   await populatePageData(content);
   return (
-    <SiteFrame>
+    <SiteFrame content={content}>
       <CommonPageHero content={content} />
     </SiteFrame>
   );

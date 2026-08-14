@@ -3,7 +3,10 @@ import { normalizeUrl } from "@/lib/utils/link-utils";
 import { TiImage } from "@/components/ui/ti/TiImages/TiImage/TiImage";
 import { StandardImageComponentType } from "./StandardImage.model";
 import { HeadshotImageComponentType } from "./HeadshotImage.model";
-import { getBynderImageFromContext } from "@/lib/data/bynder";
+import {
+  getBynderImageFromContext,
+  getBynderTransformUrl,
+} from "@/lib/data/bynder";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 
 export async function StandardImageView({
@@ -55,20 +58,24 @@ export function HeadshotImageView({
     return null;
   }
   const img = getBynderImageFromContext(content.bynderImage);
-  const imageUrl = img?.original;
+  const imageUrl = img && getBynderTransformUrl(img, "192x192");
   if (!imageUrl) {
     return null;
   }
-  // TODO: employeeName/employeeTitle come from Bynder DAM metadata, not CMS
-  // fields — render them here once the DAM metadata lookup is wired up.
 
   return (
-    <div className="float-left mb-4 w-44">
-      <TiImage
-        src={imageUrl}
-        alt={content.altText || img.property_alt_text}
-        ratio="square"
-      />
+    <div className="float-left mb-4 w-[174px]">
+      <TiImage src={imageUrl} alt={content.altText || img.property_alt_text} />
+      {(img.property_people || img.property_employee_title) && (
+        <div className="mt-4 text-sm leading-5">
+          {img.property_people && (
+            <div className="mb-2 font-semibold">{img.property_people}</div>
+          )}
+          {img.property_employee_title && (
+            <div>{img.property_employee_title}</div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -6,7 +6,7 @@ import {
 } from "@/components/cms/constants.mjs";
 import { MainHeaderComponentType } from "../MainHeader/MainHeader.model";
 import { ApiHeaderComponentType } from "../ApiHeader/ApiHeader.model";
-import { DlpHeaderComponentType } from "../DlpHeader/DlpHeader.model";
+import { DlpHeaderComponentType } from "../ShowcaseHeader/ShowcaseHeader.model";
 import { CreativeShowcaseFooterComponentType } from "../CreativeShowcaseFooter/CreativeShowcaseFooter.model";
 import { MainFooterComponentType } from "../MainFooter/MainFooter.model";
 

@@ -1,4 +1,5 @@
 .theme-black {
   --ti-section-background: #111111;
   --ti-text-color: var(--pl-text-color-primary-contrast);
+  --ti-accent-color: var(--pl-text-color-primary-contrast);
 }
