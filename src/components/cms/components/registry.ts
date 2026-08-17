@@ -67,6 +67,9 @@ import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading/
 import { GoldenSourcePageHeadingComponent } from "./GoldenSourcePageHeading/GoldenSourcePageHeading";
 import { ApiSwaggerComponentType } from "./ApiSwagger/ApiSwagger.model";
 import { ApiSwagger } from "./ApiSwagger/ApiSwagger";
+import { PartnerResourceFilterComponentType } from "./PartnerResourceFilter/PartnerResourceFilter.model";
+import { PartnerResourceFilterOptionComponentType } from "./PartnerResourceFilter/PartnerResourceFilterOption.model";
+import { PartnerResourceFilter } from "./PartnerResourceFilter/PartnerResourceFilter";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -99,4 +102,6 @@ export const componentRegistry: ComponentRegistry = {
   [ApplicationSearchBoxComponentType.key]: ApplicationSearchBox,
   [GoldenSourcePageHeadingComponentType.key]: GoldenSourcePageHeadingComponent,
   [ApiSwaggerComponentType.key]:ApiSwagger,
+  [PartnerResourceFilterComponentType.key]: PartnerResourceFilter,
+  [PartnerResourceFilterOptionComponentType.key]: NoPreviewComponent,
 };

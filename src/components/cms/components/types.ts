@@ -41,6 +41,8 @@ import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
 import { KeyCustomerMessageItemComponentType, KeyCustomerMessagesComponentType } from "./KeyCustomerMessages/KeyCustomerMessages.model";
 import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading/GoldenSourcePageHeading.model";
 import { ApiSwaggerComponentType } from "./ApiSwagger/ApiSwagger.model";
+import { PartnerResourceFilterComponentType } from "./PartnerResourceFilter/PartnerResourceFilter.model";
+import { PartnerResourceFilterOptionComponentType } from "./PartnerResourceFilter/PartnerResourceFilterOption.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -75,4 +77,6 @@ export const allComponentTypes = [
   KeyCustomerMessageItemComponentType,
   GoldenSourcePageHeadingComponentType,
   ApiSwaggerComponentType,
+  PartnerResourceFilterComponentType,
+  PartnerResourceFilterOptionComponentType,
 ];
