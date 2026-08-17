@@ -41,6 +41,8 @@ export const MODULE_BUNDLES = [
   `${TICOM}/feature-components/2.4.18/feature-components.esm.js`,
   `${TICOM}/selection-tool-components/1.latest/selection-tool-components.esm.js`,
   `${TICOM}/personalization-components/0.0.41/personalization-components.esm.js`,
+  // Defines <ti-import-details-main-wrapper> for Code Embed. A pasted embed
+  `${TICOM}/import-details-components/1.latest/import-details-components.esm.js`,
 ];
 
 // header-content is published under a TI-specific path segment that isn't the

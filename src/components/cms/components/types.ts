@@ -6,10 +6,7 @@ import {
 
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
 import { CodeSnippetComponentType } from "./CodeSnippet/CodeSnippet.model";
-import {
-  HomePageHeroComponentType,
-  HomePageHeroSlideComponentType,
-} from "./HomePageHero/HomePageHero.model";
+import { HomePageBannerComponentType } from "./HomePageBanner/HomePageBanner.model";
 import { cardListComponents } from "./CardList/types";
 
 import {
@@ -38,9 +35,24 @@ import {
 import { tabsComponents } from "./Tabs/types";
 import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
 import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
-import { KeyCustomerMessageItemComponentType, KeyCustomerMessagesComponentType } from "./KeyCustomerMessages/KeyCustomerMessages.model";
+import {
+  KeyCustomerMessageItemComponentType,
+  KeyCustomerMessagesComponentType,
+} from "./KeyCustomerMessages/KeyCustomerMessages.model";
 import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading/GoldenSourcePageHeading.model";
 import { ApiSwaggerComponentType } from "./ApiSwagger/ApiSwagger.model";
+import { PartnerResourceFilterComponentType } from "./PartnerResourceFilter/PartnerResourceFilter.model";
+import { PartnerResourceFilterOptionComponentType } from "./PartnerResourceFilter/PartnerResourceFilterOption.model";
+import {
+  LLCPromoComponentType,
+  LLCPromoMessageComponentType,
+  LLCPromoWarningComponentType,
+} from "./LLCPromo/LLCPromo.model";
+import { EventComponentType } from "./Event/Event.model";
+import {
+  ApplicationStoryComponentType,
+  FeaturedApplicationComponentType,
+} from "./FeaturedApplication/FeaturedApplication.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -51,8 +63,7 @@ export const allComponentTypes = [
   AccordionPanelComponentType,
   CodeEmbedComponentType,
   CodeSnippetComponentType,
-  HomePageHeroSlideComponentType,
-  HomePageHeroComponentType,
+  HomePageBannerComponentType,
   ColumnGridColumnComponentType,
   ColumnGridComponentType,
   NewProductsCardListComponentType,
@@ -75,4 +86,12 @@ export const allComponentTypes = [
   KeyCustomerMessageItemComponentType,
   GoldenSourcePageHeadingComponentType,
   ApiSwaggerComponentType,
+  PartnerResourceFilterComponentType,
+  PartnerResourceFilterOptionComponentType,
+  LLCPromoComponentType,
+  LLCPromoMessageComponentType,
+  LLCPromoWarningComponentType,
+  EventComponentType,
+  ApplicationStoryComponentType,
+  FeaturedApplicationComponentType,
 ];

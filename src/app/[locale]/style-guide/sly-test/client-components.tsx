@@ -133,7 +133,7 @@ export function SlideshowTest() {
                 Text
               </TiSlide>
             ),
-            isHidden: false,
+            slideVisibility: "Ended",
           },
           {
             element: (
@@ -146,7 +146,7 @@ export function SlideshowTest() {
                 adsadsada
               </TiSlide>
             ),
-            isHidden: false,
+            slideVisibility: "Ended",
           },
         ]}
         tiSlideshowChange={(e) => setState(e.detail)}

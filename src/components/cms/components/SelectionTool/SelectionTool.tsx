@@ -55,7 +55,7 @@ export async function SelectionToolComponent({
     : baseDomain;
 
   return (
-    <div className="w-full">
+    <div className="w-full md:px-4">
       <ti-selection-tool-wrapper
         destination-id={destinationId}
         destination-type={destinationTypeValue}
