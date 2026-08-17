@@ -1,33 +1,26 @@
-import { CodeEmbedComponentType } from "./CodeEmbed.model";
+import clsx from "clsx";
 
 import { OptiComponentProps } from "@/lib/ts/component-props";
 
-import { decode } from "html-entities";
+import { CodeEmbedComponentType } from "./CodeEmbed.model";
 
-type Props = OptiComponentProps<typeof CodeEmbedComponentType> & {};
-
-type OptiNode = NonNullable<
-  Required<Props>["content"]["code"]
->["json"]["children"][number];
-
-export function CodeEmbedComponent({ content }: Props) {
+export function CodeEmbedComponent({
+  content,
+}: OptiComponentProps<typeof CodeEmbedComponentType>) {
   if (!content) {
     return null;
   }
-  const rawHtml = content.codeString?.replace(/\u00a0/g, " ") || decode(RichTextToHtmlString(content.code?.json));
-  return <div className="code-embed" dangerouslySetInnerHTML={{ __html: rawHtml }} />;
-}
 
-function RichTextToHtmlString(content: OptiNode | undefined): string | null {
-  if (!content) {
+  const html = content.codeString?.replace(/\u00a0/g, " ") ?? "";
+
+  if (!html.trim()) {
     return null;
   }
-  if ("text" in content) {
-    return (content?.text as string | undefined)?.replaceAll("&nbsp;", " ") || "";
-  }
-  if ("children" in content) {
-    return content.children.map(RichTextToHtmlString).join("") || "";
-  } else {
-    throw new Error("Invalid node type");
-  }
+
+  return (
+    <div
+      className={clsx("code-embed", content.hideOnMobile && "max-md:hidden!")}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 }

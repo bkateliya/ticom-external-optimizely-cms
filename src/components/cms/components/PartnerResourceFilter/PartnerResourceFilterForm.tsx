@@ -65,7 +65,7 @@ export function PartnerResourceFilterForm({
         event.preventDefault();
         search();
       }}
-      className="grid grid-cols-1 items-end gap-4 md:grid-cols-4"
+      className="grid grid-cols-1 items-start gap-4 md:grid-cols-4 "
     >
       {fields.map((field, index) => (
         <ti-form-element key={field.facet} label-text={field.label}>

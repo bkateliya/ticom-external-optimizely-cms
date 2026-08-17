@@ -13,12 +13,8 @@ import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
 import { CodeEmbedComponent } from "./CodeEmbed";
 import { CodeSnippetComponentType } from "./CodeSnippet/CodeSnippet.model";
 import { CodeSnippetComponent } from "./CodeSnippet/CodeSnippet";
-import { HomePageHeroSlideComponent } from "./HomePageHero/HomePageHeroSlide";
-import {
-  HomePageHeroComponentType,
-  HomePageHeroSlideComponentType,
-} from "./HomePageHero/HomePageHero.model";
-import { HomePageHeroComponent } from "./HomePageHero/HomePageHero";
+import { HomePageBannerComponent } from "./HomePageBanner/HomePageBanner";
+import { HomePageBannerComponentType } from "./HomePageBanner/HomePageBanner.model";
 import { cardListComponentRegistry } from "./CardList/registry";
 import {
   ColumnGridColumnComponentType,
@@ -70,6 +66,16 @@ import { ApiSwagger } from "./ApiSwagger/ApiSwagger";
 import { PartnerResourceFilterComponentType } from "./PartnerResourceFilter/PartnerResourceFilter.model";
 import { PartnerResourceFilterOptionComponentType } from "./PartnerResourceFilter/PartnerResourceFilterOption.model";
 import { PartnerResourceFilter } from "./PartnerResourceFilter/PartnerResourceFilter";
+import {
+  LLCPromoComponentType,
+  LLCPromoMessageComponentType,
+  LLCPromoWarningComponentType,
+} from "./LLCPromo/LLCPromo.model";
+import { EventComponentType } from "./Event/Event.model";
+import {
+  ApplicationStoryComponentType,
+  FeaturedApplicationComponentType,
+} from "./FeaturedApplication/FeaturedApplication.model";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -80,8 +86,7 @@ export const componentRegistry: ComponentRegistry = {
   [AccordionPanelComponentType.key]: AccordionItem,
   [CodeEmbedComponentType.key]: CodeEmbedComponent,
   [CodeSnippetComponentType.key]: CodeSnippetComponent,
-  [HomePageHeroSlideComponentType.key]: HomePageHeroSlideComponent,
-  [HomePageHeroComponentType.key]: HomePageHeroComponent,
+  [HomePageBannerComponentType.key]: HomePageBannerComponent,
   [ColumnGridComponentType.key]: ColumnGridComponent,
   [ColumnGridColumnComponentType.key]: NoPreviewComponent,
   [SelectionToolComponentType.key]: SelectionToolComponent,
@@ -101,7 +106,13 @@ export const componentRegistry: ComponentRegistry = {
   [KeyCustomerMessageItemComponentType.key]: NoPreviewComponent,
   [ApplicationSearchBoxComponentType.key]: ApplicationSearchBox,
   [GoldenSourcePageHeadingComponentType.key]: GoldenSourcePageHeadingComponent,
-  [ApiSwaggerComponentType.key]:ApiSwagger,
+  [ApiSwaggerComponentType.key]: ApiSwagger,
   [PartnerResourceFilterComponentType.key]: PartnerResourceFilter,
   [PartnerResourceFilterOptionComponentType.key]: NoPreviewComponent,
+  [LLCPromoComponentType.key]: NoPreviewComponent,
+  [LLCPromoMessageComponentType.key]: NoPreviewComponent,
+  [LLCPromoWarningComponentType.key]: NoPreviewComponent,
+  [EventComponentType.key]: NoPreviewComponent,
+  [ApplicationStoryComponentType.key]: NoPreviewComponent,
+  [FeaturedApplicationComponentType.key]: NoPreviewComponent,
 };
