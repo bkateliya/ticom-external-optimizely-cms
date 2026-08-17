@@ -58,19 +58,19 @@ export async function PartnerResourceFilter({
   const viewAllUrl = `${searchBaseUrl}&preFilter=designResourceProvider_${encodeURIComponent(provider)}`;
 
   return (
-    <SectionWrapper>
-      <div className="flex flex-col justify-between gap-2 md:flex-row md:items-baseline">
+    <SectionWrapper className="[&_.space-y-4]:space-y-0">
+      <div className="flex flex-col justify-between gap-2 md:flex-row">
         <DynamicHeading className="text-h3 font-light">
           {t("Find partner resources and/or companies")}
         </DynamicHeading>
         <a
           href={viewAllUrl}
-          className="text-body-md text-pl-link-color-primary no-underline hover:underline"
+          className="text-body-md text-pl-link-color-primary no-underline hover:underline mb-6 md:mb-0 md:mt-2"
         >
           {t("View all partner resources")}
         </a>
       </div>
-      <div className="rounded-[2px] border border-[#e8e8e8] bg-[#f7f7f7] p-8 max-sm:px-6 max-sm:py-6">
+      <div className="rounded border border-pl-border-color-tertiary bg-pl-container-background-color-secondary p-6 md:p-8">
         <PartnerResourceFilterForm
           baseUrl={searchBaseUrl}
           provider={provider}
