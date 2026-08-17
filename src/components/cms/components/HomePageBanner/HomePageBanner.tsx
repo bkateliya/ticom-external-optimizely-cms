@@ -1,10 +1,7 @@
 "use server";
 
-import { HomePageHeroSlideComponentType } from "./HomePageHero.model";
-import {
-  getContextData,
-  getPreviewUtils,
-} from "@optimizely/cms-sdk/react/server";
+import { HomePageBannerComponentType } from "./HomePageBanner.model";
+import { getContextData } from "@optimizely/cms-sdk/react/server";
 import { fieldFactory } from "@/components/ui/cms";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { tv } from "tailwind-variants";
@@ -13,11 +10,13 @@ import { TiSlide } from "@/components/ui/ti/TiSlideshow/TiSlide";
 import NextLink from "next/link";
 import { TiButton } from "@/components/ui/ti/TiButton/TiButton";
 import { getLocale } from "next-intl/server";
+import { getSlideVisibility } from "../../experiences/HomeExperience/HomePageBannerCarousel";
+import { getStandardizedImage } from "@/lib/utils/image-utils";
 
-export async function HomePageHeroSlideComponent({
+export async function HomePageBannerComponent({
   content,
   parentField,
-}: OptiComponentProps<typeof HomePageHeroSlideComponentType>) {
+}: OptiComponentProps<typeof HomePageBannerComponentType>) {
   if (!content) {
     return null;
   }
@@ -29,16 +28,16 @@ export async function HomePageHeroSlideComponent({
     (!startDate || startDate <= new Date()) &&
     (!endDate || endDate >= new Date());
 
-  const { src } = getPreviewUtils(content);
-
-  const imageUrl = src(content.backgroundImage);
-
+  const { src, thumbnailSrc } = getStandardizedImage(
+    content,
+    content.backgroundImage,
+  );
   const {
     WrappedTextField,
     WrappedHeadingTextField,
     WrappedRichTextField,
-    // WrappedImageField,
-  } = fieldFactory<typeof HomePageHeroSlideComponentType>(content, parentField);
+    WrappedImageField,
+  } = fieldFactory<typeof HomePageBannerComponentType>(content, parentField);
 
   /*
    * Rendering
@@ -58,17 +57,17 @@ export async function HomePageHeroSlideComponent({
   const href = content.link?.url?.default ?? "";
   return (
     <TiSlide
-      thumbnailSrc={imageUrl ?? ""}
+      thumbnailSrc={thumbnailSrc ?? src ?? ""}
       thumbnailLabel={content.headline ?? undefined}
-      backgroundImageSrc={imageUrl}
+      backgroundImageSrc={src}
       // TODO validate logic
       data-lid={`promo_hb_mm_${locale}_${content.campaignAlias ? content.campaignAlias : ""}`}
     >
       <div className={gradientOverlay()} />
       {isPreview && (
         <div className={previewInfo({ slideVisible: isVisible })}>
-          Visible from: {startDate?.toLocaleString()} to:{" "}
-          {endDate?.toLocaleString()}
+          {getSlideVisibility(content)} : Visible from:{" "}
+          {startDate?.toLocaleString()} to: {endDate?.toLocaleString()}
         </div>
       )}
       <div className={slideContent()}>
@@ -85,9 +84,13 @@ export async function HomePageHeroSlideComponent({
               <WrappedRichTextField field="description" />
               <TiButton>{content.link?.text}</TiButton>
             </div>
-            {/* <div>
-              <WrappedImageField field="featuredImage" width={150} height={100}/>
-            </div> */}
+            <div>
+              <WrappedImageField
+                field="featuredImage"
+                width={150}
+                height={100}
+              />
+            </div>
           </NextLink>
         </div>
       </div>

@@ -1,8 +1,13 @@
 import "@/lib/opti/client-config";
-import { getClient } from "@optimizely/cms-sdk";
 import { PageContentContract } from "@/components/cms/contracts/page-contacts/page-content.model";
 import { NextRequest } from "next/server";
 import { GoldenSourcedDataContract } from "@/components/cms/contracts/page-contacts/golden-sourced.model";
+import {
+  COMMON_PAGINATION_FILTER,
+  COMMON_PAGINATION_QUERY,
+  getPaginatedResults,
+  ResultWithKey,
+} from "@/lib/graphql/graph-utils";
 
 export async function GET(request: NextRequest) {
   const category = request.nextUrl.searchParams.get("category");
@@ -99,12 +104,10 @@ interface ContentServiceResult {
   url: string;
 }
 
-const COMMON_QUERY = `$cursor: String, $limit: Int = 100`;
-const COMMON_FILTER = `limit: $limit, cursor: $cursor`;
-const GOLDEN_SOURCED_FAMILY_QUERY = `query(${COMMON_QUERY}) {
+const GOLDEN_SOURCED_FAMILY_QUERY = `query(${COMMON_PAGINATION_QUERY}) {
   data: TI_GoldenSourcedData_Contract(
     where: { productFamily: { key: { exist: true } } } 
-    ${COMMON_FILTER}
+    ${COMMON_PAGINATION_FILTER}
   ) {
     items {
       _metadata {
@@ -114,10 +117,10 @@ const GOLDEN_SOURCED_FAMILY_QUERY = `query(${COMMON_QUERY}) {
   }
 }`;
 
-const GOLDEN_SOURCED_APPLICATION_QUERY = `query(${COMMON_QUERY}) {
+const GOLDEN_SOURCED_APPLICATION_QUERY = `query(${COMMON_PAGINATION_QUERY}) {
   data: TI_GoldenSourcedData_Contract(
     where: { application: { key: { exist: true } } } 
-    ${COMMON_FILTER}
+    ${COMMON_PAGINATION_FILTER}
   ) {
     items {
       _metadata {
@@ -127,13 +130,13 @@ const GOLDEN_SOURCED_APPLICATION_QUERY = `query(${COMMON_QUERY}) {
   }
 }`;
 
-const GOLDEN_SOURCED_OTHER_QUERY = `query(${COMMON_QUERY}) {
+const GOLDEN_SOURCED_OTHER_QUERY = `query(${COMMON_PAGINATION_QUERY}) {
   data: TI_GoldenSourcedData_Contract(
     where: { 
       application: { key: { exist: false } }
       productFamily: { key: { exist: false } }
     } 
-    ${COMMON_FILTER}
+    ${COMMON_PAGINATION_FILTER}
   ) {
     items {
       _metadata {
@@ -143,7 +146,7 @@ const GOLDEN_SOURCED_OTHER_QUERY = `query(${COMMON_QUERY}) {
   }
 }`;
 
-const GOLDEN_SOURCED_KEY_QUERY = `query ($key: String, ${COMMON_QUERY}) {
+const GOLDEN_SOURCED_KEY_QUERY = `query ($key: String, ${COMMON_PAGINATION_QUERY}) {
   data: TI_GoldenSourcedData_Contract(
     where: { 
     _or: [
@@ -151,7 +154,7 @@ const GOLDEN_SOURCED_KEY_QUERY = `query ($key: String, ${COMMON_QUERY}) {
         { productFamily: { key: { eq: $key } } }
       ]
     }
-    ${COMMON_FILTER}
+    ${COMMON_PAGINATION_FILTER}
   ) {
     items {
       _metadata {
@@ -161,7 +164,7 @@ const GOLDEN_SOURCED_KEY_QUERY = `query ($key: String, ${COMMON_QUERY}) {
   }
 }`;
 
-const ALL_PAGE_QUERY = `query(${COMMON_QUERY}) {
+const ALL_PAGE_QUERY = `query(${COMMON_PAGINATION_QUERY}) {
   data: _Content(
     where: {
       _and: [
@@ -170,7 +173,7 @@ const ALL_PAGE_QUERY = `query(${COMMON_QUERY}) {
         }
       ]
     }
-    ${COMMON_FILTER}
+    ${COMMON_PAGINATION_FILTER}
   ) {
     items {
       _metadata {
@@ -180,8 +183,8 @@ const ALL_PAGE_QUERY = `query(${COMMON_QUERY}) {
   }
 }`;
 
-const GET_ALL_FAMILIES = `query (${COMMON_QUERY}) {
-  data: TI_ProductFamily_Data(${COMMON_FILTER}) {    
+const GET_ALL_FAMILIES = `query (${COMMON_PAGINATION_QUERY}) {
+  data: TI_ProductFamily_Data(${COMMON_PAGINATION_FILTER}) {    
     items {
       _metadata {
         displayName
@@ -208,8 +211,8 @@ async function getAllFamilies() {
   return { familyKeyToIdMap, familyIdToKeyMap };
 }
 
-const GET_ALL_APPLICATIONS = `query (${COMMON_QUERY}) {
-  data: TI_Application_Data(${COMMON_FILTER}) {    
+const GET_ALL_APPLICATIONS = `query (${COMMON_PAGINATION_QUERY}) {
+  data: TI_Application_Data(${COMMON_PAGINATION_FILTER}) {    
     items {
       _metadata {
         displayName
@@ -239,51 +242,6 @@ async function getAllApplications() {
   return { applicationKeyToIdMap, applicationIdToKeyMap };
 }
 
-interface ResultWithKey {
-  _metadata: {
-    key: string;
-  };
-}
-interface PaginatedResult<T extends ResultWithKey = ResultWithKey> {
-  data: {
-    items: ({
-      _metadata: {
-        key: string;
-      };
-    } & T)[];
-    cursor: string | undefined;
-  };
-}
-async function getPaginatedResults<TResult extends ResultWithKey>(
-  query: string,
-  params?: Record<string, unknown> | null,
-) {
-  //($cursor: String, $limit: Int = 100)
-  //(limit: $limit, cursor: $cursor)
-  if (!query.includes("cursor: $cursor")) {
-    throw Error(`Query does not contain cursor: $cursor.  ${query}`);
-  }
-  const client = getClient();
-  let hasNext = true;
-  let cursor = null;
-  const results: TResult[] = [];
-  let loopCount = 0;
-  while (hasNext) {
-    const dataResults = (await client.request(query, {
-      ...params,
-      cursor,
-    })) as PaginatedResult<TResult>;
-    cursor = dataResults.data.cursor;
-    hasNext = !!dataResults.data.cursor && dataResults.data.items.length > 0;
-    results.push(...dataResults.data.items);
-    loopCount++;
-    if (loopCount > 10) {
-      throw Error("Possible infinite loop");
-    }
-  }
-  return results;
-}
-
 interface PageContentResult extends ResultWithKey {
   _itemMetadata: {
     type: string;
@@ -310,10 +268,10 @@ interface GoldenSourcedResult extends ResultWithKey {
   productFamily?: { key: string };
 }
 
-const DATA_QUERY = `query PageData($keys: [String], ${COMMON_QUERY}) {
+const DATA_QUERY = `query PageData($keys: [String], ${COMMON_PAGINATION_QUERY}) {
   data: ${PageContentContract.key}(
     where: { _itemMetadata: { key: { in: $keys } } }
-    ${COMMON_FILTER}
+    ${COMMON_PAGINATION_FILTER}
   ) {
     cursor
     items {
@@ -339,10 +297,10 @@ const DATA_QUERY = `query PageData($keys: [String], ${COMMON_QUERY}) {
   }
 }`;
 
-const GOLDEN_SOURCED_QUERY = `query PageData($keys: [String], ${COMMON_QUERY}) {
+const GOLDEN_SOURCED_QUERY = `query PageData($keys: [String], ${COMMON_PAGINATION_QUERY}) {
   data: ${GoldenSourcedDataContract.key}(
     where: { _itemMetadata: { key: { in: $keys } } }
-    ${COMMON_FILTER}
+    ${COMMON_PAGINATION_FILTER}
   ) {
     cursor
     items {    

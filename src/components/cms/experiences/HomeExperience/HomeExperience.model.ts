@@ -2,12 +2,12 @@ import { contentType } from "@optimizely/cms-sdk";
 import {
   DISPLAY_NAME_PREFIX,
   KEY_PREFIX,
+  propertyGroupKeys,
 } from "@/components/cms/constants.mjs";
 import {
   CommonPageContracts,
   AllPageAndExperienceTypeKeys,
 } from "@/components/cms/contracts/common";
-import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 export const HomeExperienceType = contentType({
   baseType: "_experience",
@@ -16,11 +16,15 @@ export const HomeExperienceType = contentType({
   extends: [...CommonPageContracts],
   mayContainTypes: AllPageAndExperienceTypeKeys,
   properties: {
-    hero: {
-      type: "content",
-      displayName: "Page Header Selection",
-      isLocalized: true,
-      allowedTypes: [AllowIn.HomePageHeader],
+    homePageBannerMinSlides: {
+      type: "integer",
+      displayName: "Minimum number of banners (default 4)",
+      group: propertyGroupKeys.ComponentConfiguration,
+    },
+    homePageBannerMaxSlides: {
+      type: "integer",
+      displayName: "Maximum number of banners (default 5)",
+      group: propertyGroupKeys.ComponentConfiguration,
     },
   },
 });

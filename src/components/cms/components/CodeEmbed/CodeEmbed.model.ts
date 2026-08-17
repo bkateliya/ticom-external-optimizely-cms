@@ -2,6 +2,8 @@ import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants";
 import { AllComponentTypeKeyMap } from "../keys";
 import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
+import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
+import { PropertyTypes } from "@/lib/property-types";
 
 export const CodeEmbedComponentType = contentType({
   key: AllComponentTypeKeyMap.CodeEmbedComponent,
@@ -13,16 +15,22 @@ export const CodeEmbedComponentType = contentType({
       type: "richText",
       displayName: "Code",
       description: "The code to embed",
-      group: "Content",
       editorSettings: {
         preset: "minimal",
       },
+      ...SoftDeleteProperties,
     },
     codeString: {
       type: "string",
       displayName: "Code String",
       description: "The code to embed as a string",
-      group: "Content",
+      group: PropertyTypes.Content,
+    },
+    hideOnMobile: {
+      type: "boolean",
+      displayName: "Hide on mobile",
+      description: "Hide this embed on phone-sized screens.",
+      group: PropertyTypes.Content,
     },
   },
 });

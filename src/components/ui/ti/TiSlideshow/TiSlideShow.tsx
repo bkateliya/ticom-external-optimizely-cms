@@ -7,6 +7,8 @@ import React from "react";
 import { TiComponentPropsBase } from "../Common/base";
 import { CustomEventHandler, useEventListenerRef } from "../Common/events";
 
+export type SlideVisibility = "NotStarted" | "Visible" | "Ended" | "Expired";
+
 export const ThumbnailSizeOptions = ["large", "none", "small"] as const;
 
 export type ThumbnailSize = (typeof ThumbnailSizeOptions)[number];
@@ -47,7 +49,13 @@ export type TiSlideShowProps = TiComponentPropsBase & {
    * @param element - The slide element to display.
    * @param isHidden - Whether the slide element is hidden.  In preview mode we have an option to show hidden slides.
    */
-  slideElements: { element: React.ReactNode; isHidden: boolean }[];
+  slideElements: {
+    element: React.ReactNode;
+    slideVisibility: SlideVisibility;
+  }[];
+
+  minSlides?: number;
+  maxSlides?: number;
 
   tiSlideshowChange?: CustomEventHandler<SlideshowChangeEventDetail>;
 
@@ -66,6 +74,8 @@ export function TiSlideShow({
   slideDuration,
   thumbnailSize,
   slideElements,
+  minSlides = 0, // Default no min
+  maxSlides = 100, // Basically default no max
   tiMetricsAction,
   tiSlideshowChange,
   ref,
@@ -83,9 +93,21 @@ export function TiSlideShow({
     ref,
   );
 
-  const visibleSlideElements = slideElements.filter(
-    (slideElement) => !slideElement.isHidden || showHiddenSlides,
+  let visibleSlideElements = slideElements.filter(
+    (slideElement) =>
+      showHiddenSlides || slideElement.slideVisibility === "Visible",
   );
+  if (visibleSlideElements.length < minSlides) {
+    visibleSlideElements = slideElements.filter(
+      (slideElement) =>
+        showHiddenSlides ||
+        slideElement.slideVisibility === "Visible" ||
+        slideElement.slideVisibility === "Ended",
+    );
+  }
+  if (visibleSlideElements.length > maxSlides) {
+    visibleSlideElements = visibleSlideElements.slice(0, maxSlides);
+  }
   return (
     <SectionWrapper>
       {PreviewControls}
