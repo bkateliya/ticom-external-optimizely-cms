@@ -24,8 +24,20 @@ export interface TifButtonGroupProps
   color?: string;
   size?: string;
   theme?: string;
+  orientation?: string;
 }
 
 export declare const TifButtonGroup: React.ForwardRefExoticComponent<
   TifButtonGroupProps & React.RefAttributes<HTMLDivElement>
+>;
+
+export interface TifFormProps
+  extends React.FormHTMLAttributes<HTMLFormElement> {
+  appearance?: string;
+  size?: string;
+  theme?: string;
+}
+
+export declare const TifForm: React.ForwardRefExoticComponent<
+  TifFormProps & React.RefAttributes<HTMLFormElement>
 >;

@@ -17,6 +17,7 @@ import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
 import { applicationListingComponents } from "./application-components/types";
 import { imageComponentTypes } from "./Image/types";
 import { HorizontalRuleComponentType } from "./HorizontalRule/HorizontalRule.model";
+import { HorizontalRuleContentDividerComponentType } from "./HorizontalRuleContentDivider/HorizontalRuleContentDivider.model";
 import { NewProductsCardListComponentType } from "./NewProductsCardList/NewProductsCardList.model";
 import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model";
@@ -78,6 +79,7 @@ export const allComponentTypes = [
   ...applicationListingComponents,
   ...imageComponentTypes,
   HorizontalRuleComponentType,
+  HorizontalRuleContentDividerComponentType,
   VideoPlayerComponentType,
   PremiumMediaHeadingComponentType,
   ScrollingStoryVerticalComponentType,
