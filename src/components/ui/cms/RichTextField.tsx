@@ -5,7 +5,7 @@ import { ElementRendererProps, LinkElement, RichText, RichTextProps } from "@opt
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import NextLink from 'next/link';
 
-type RichTextFieldContent = { json: RichTextProps["content"] } | null;
+export type RichTextFieldContent = { json: RichTextProps["content"] } | null;
 
 export type RichTextFieldProps<
   TContentType extends ContentTypes.AnyContentType,

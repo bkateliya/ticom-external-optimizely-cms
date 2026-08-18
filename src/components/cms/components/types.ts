@@ -17,7 +17,6 @@ import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
 import { applicationListingComponents } from "./application-components/types";
 import { imageComponentTypes } from "./Image/types";
 import { HorizontalRuleComponentType } from "./HorizontalRule/HorizontalRule.model";
-import { HorizontalRuleContentDividerComponentType } from "./HorizontalRuleContentDivider/HorizontalRuleContentDivider.model";
 import { NewProductsCardListComponentType } from "./NewProductsCardList/NewProductsCardList.model";
 import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model";
@@ -54,6 +53,11 @@ import {
   ApplicationStoryComponentType,
   FeaturedApplicationComponentType,
 } from "./FeaturedApplication/FeaturedApplication.model";
+import { CodeFragmentComponentType } from "./CodeEmbed/CodeFragment.model";
+import {
+  ScrollingStoryVerticalComponentType,
+  ScrollingStoryVerticalContentComponentType,
+} from "./ScrollingStoryVertical/ScrollingStoryVertical.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -63,6 +67,7 @@ export const allComponentTypes = [
   AccordionComponentType,
   AccordionPanelComponentType,
   CodeEmbedComponentType,
+  CodeFragmentComponentType,
   CodeSnippetComponentType,
   HomePageBannerComponentType,
   ColumnGridColumnComponentType,
@@ -73,9 +78,10 @@ export const allComponentTypes = [
   ...applicationListingComponents,
   ...imageComponentTypes,
   HorizontalRuleComponentType,
-  HorizontalRuleContentDividerComponentType,
   VideoPlayerComponentType,
   PremiumMediaHeadingComponentType,
+  ScrollingStoryVerticalComponentType,
+  ScrollingStoryVerticalContentComponentType,
   ApplicationSearchBoxComponentType,
   FAQSearchBoxComponentType,
   HierarchyNavigationComponentType,

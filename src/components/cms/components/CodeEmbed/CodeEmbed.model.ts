@@ -4,6 +4,7 @@ import { AllComponentTypeKeyMap } from "../keys";
 import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 import { PropertyTypes } from "@/lib/property-types";
+import { CodeFragmentComponentType } from "./CodeFragment.model";
 
 export const CodeEmbedComponentType = contentType({
   key: AllComponentTypeKeyMap.CodeEmbedComponent,
@@ -24,13 +25,19 @@ export const CodeEmbedComponentType = contentType({
       type: "string",
       displayName: "Code String",
       description: "The code to embed as a string",
-      group: PropertyTypes.Content,
+      ...SoftDeleteProperties,
     },
     hideOnMobile: {
       type: "boolean",
       displayName: "Hide on mobile",
       description: "Hide this embed on phone-sized screens.",
       group: PropertyTypes.Content,
+    },
+    codeFragment: {
+      type: "contentReference",
+      displayName: "Code Fragment",
+      group: PropertyTypes.Content,
+      allowedTypes: [CodeFragmentComponentType],
     },
   },
 });

@@ -11,6 +11,8 @@ import { AccordionItem } from "./Accordion/AccordionItem";
 import { ComponentRegistry } from "@/lib/ts/component-props";
 import { CodeEmbedComponentType } from "./CodeEmbed/CodeEmbed.model";
 import { CodeEmbedComponent } from "./CodeEmbed";
+import { CodeFragmentComponentType } from "./CodeEmbed/CodeFragment.model";
+import { CodeFragmentComponent } from "./CodeEmbed/CodeFragment";
 import { CodeSnippetComponentType } from "./CodeSnippet/CodeSnippet.model";
 import { CodeSnippetComponent } from "./CodeSnippet/CodeSnippet";
 import { HomePageBannerComponent } from "./HomePageBanner/HomePageBanner";
@@ -71,13 +73,19 @@ import {
   LLCPromoMessageComponentType,
   LLCPromoWarningComponentType,
 } from "./LLCPromo/LLCPromo.model";
-import { HorizontalRuleContentDividerComponentType } from "./HorizontalRuleContentDivider/HorizontalRuleContentDivider.model";
-import { HorizontalRuleContentDividerComponent } from "./HorizontalRuleContentDivider/HorizontalRuleContentDivider";
 import { EventComponentType } from "./Event/Event.model";
 import {
   ApplicationStoryComponentType,
   FeaturedApplicationComponentType,
 } from "./FeaturedApplication/FeaturedApplication.model";
+import {
+  ScrollingStoryVerticalComponentType,
+  ScrollingStoryVerticalContentComponentType,
+} from "./ScrollingStoryVertical/ScrollingStoryVertical.model";
+import {
+  ScrollingStoryVerticalComponent,
+  ScrollingStoryVerticalContentComponent,
+} from "./ScrollingStoryVertical/ScrollingStoryVertical";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -87,6 +95,7 @@ export const componentRegistry: ComponentRegistry = {
   [AccordionComponentType.key]: AccordionComponent,
   [AccordionPanelComponentType.key]: AccordionItem,
   [CodeEmbedComponentType.key]: CodeEmbedComponent,
+  [CodeFragmentComponentType.key]: CodeFragmentComponent,
   [CodeSnippetComponentType.key]: CodeSnippetComponent,
   [HomePageBannerComponentType.key]: HomePageBannerComponent,
   [ColumnGridComponentType.key]: ColumnGridComponent,
@@ -96,6 +105,9 @@ export const componentRegistry: ComponentRegistry = {
   ...applicationListingComponentRegistry,
   ...imageComponentRegistry,
   [PremiumMediaHeadingComponentType.key]: PremiumMediaHeadingComponent,
+  [ScrollingStoryVerticalComponentType.key]: ScrollingStoryVerticalComponent,
+  [ScrollingStoryVerticalContentComponentType.key]:
+    ScrollingStoryVerticalContentComponent,
   [FAQSearchBoxComponentType.key]: FAQSearchBox,
   [BrowseVideosComponentType.key]: BrowseVideos,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,
@@ -111,8 +123,6 @@ export const componentRegistry: ComponentRegistry = {
   [ApiSwaggerComponentType.key]: ApiSwagger,
   [PartnerResourceFilterComponentType.key]: PartnerResourceFilter,
   [PartnerResourceFilterOptionComponentType.key]: NoPreviewComponent,
-  [HorizontalRuleContentDividerComponentType.key]:
-    HorizontalRuleContentDividerComponent,
   [LLCPromoComponentType.key]: NoPreviewComponent,
   [LLCPromoMessageComponentType.key]: NoPreviewComponent,
   [LLCPromoWarningComponentType.key]: NoPreviewComponent,

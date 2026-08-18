@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 
-import { getContextData } from "@optimizely/cms-sdk/react/server";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
@@ -14,6 +13,7 @@ import {
 
 import { ComponentTheme } from "@/components/ui/ti/enums";
 import { getStandardizedImage } from "@/lib/utils/image-utils";
+import { isEditMode } from "@/lib/opti/edit-helpers";
 
 export function ThemedSection({
   content,
@@ -50,7 +50,7 @@ export function ThemedSection({
     ? content.backgroundSize || "full"
     : null;
 
-  const isEditCanvas = getContextData("mode") === "edit";
+  const isEditCanvas = isEditMode();
 
   const fullHeightClassName = fullHeight
     ? clsx(

@@ -10,6 +10,10 @@ export function useContextLocale() {
   return useOptiContext().locale;
 }
 
+export function useIsEditMode() {
+  return useOptiContext().mode === "edit";
+}
+
 interface OptiContextProviderProps {
   contextData: ContextData;
   children: React.ReactNode;

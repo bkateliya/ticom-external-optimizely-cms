@@ -1,7 +1,9 @@
 "use client";
 
 import { useRef } from "react";
+import { TifForm } from '@ticom/form-components/react'
 import { TiButton } from "@/components/ui/ti/TiButton/TiButton";
+
 import {
   ButtonAppearance,
   ButtonColor,
@@ -60,12 +62,12 @@ export function PartnerResourceFilterForm({
   }
 
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        search();
-      }}
-      className="grid grid-cols-1 items-start gap-4 md:gap-14 md:grid-cols-4 "
+    <TifForm method="get" name="getForm" className="[&_.tifForm-layout]:grid-cols-1 [&_.tifForm-layout]:items-start [&_.tifForm-layout]:gap-4! [&_.tifForm-layout]:md:gap-14! [&_.tifForm-layout]:md:grid-cols-4"
+    // onSubmit={(event) => {
+    //     event.preventDefault();
+    //     search();
+    //   }}
+    
     >
       {fields.map((field, index) => (
         <ti-form-element key={field.facet} label-text={field.label}>
@@ -92,6 +94,6 @@ export function PartnerResourceFilterForm({
       >
         {submitLabel}
       </TiButton>
-    </form>
+    </TifForm>
   );
 }

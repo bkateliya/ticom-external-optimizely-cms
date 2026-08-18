@@ -49,15 +49,13 @@ export const CtaListContract = contract({
   },
 });
 
-
 export type CtaListContractContentType = ContractContentType<
   [typeof CtaListContract]
 >;
 
-
 export const CtaListOverrideLinksOnly = {
   ctasList: {
-    type: "content",
+    type: "content" as const,
 
     displayName: "CTA Link List",
     group: PropertyTypes.Content,
@@ -69,14 +67,13 @@ export const CtaListOverrideLinksOnly = {
 
 export const CtaListOverrideButtonsOnly = {
   ctasList: {
-    sortOrder: 50,
-    type: "content",
+    type: "content" as const,
 
     displayName: "CTA Button List",
     group: PropertyTypes.Content,
 
     allowedTypes: [CtaButtonListComponentType],
-
+    sortOrder: 50,
   },
 };
 
