@@ -71,6 +71,8 @@ import {
   LLCPromoMessageComponentType,
   LLCPromoWarningComponentType,
 } from "./LLCPromo/LLCPromo.model";
+import { HorizontalRuleContentDividerComponentType } from "./HorizontalRuleContentDivider/HorizontalRuleContentDivider.model";
+import { HorizontalRuleContentDividerComponent } from "./HorizontalRuleContentDivider/HorizontalRuleContentDivider";
 import { EventComponentType } from "./Event/Event.model";
 import {
   ApplicationStoryComponentType,
@@ -109,6 +111,8 @@ export const componentRegistry: ComponentRegistry = {
   [ApiSwaggerComponentType.key]: ApiSwagger,
   [PartnerResourceFilterComponentType.key]: PartnerResourceFilter,
   [PartnerResourceFilterOptionComponentType.key]: NoPreviewComponent,
+  [HorizontalRuleContentDividerComponentType.key]:
+    HorizontalRuleContentDividerComponent,
   [LLCPromoComponentType.key]: NoPreviewComponent,
   [LLCPromoMessageComponentType.key]: NoPreviewComponent,
   [LLCPromoWarningComponentType.key]: NoPreviewComponent,
