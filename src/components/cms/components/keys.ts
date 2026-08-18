@@ -27,6 +27,8 @@ export const AllComponentTypeKeyMap = {
   VideoPlayerComponent: `${KEY_PREFIX}VideoPlayer_Component`,
   SelectionToolComponent: `${KEY_PREFIX}SelectionTool_Component`,
   PremiumMediaHeadingComponent: `${KEY_PREFIX}PremiumMediaHeading_Component`,
+  ScrollingStoryVertical: `${KEY_PREFIX}ScrollingStoryVertical_Component`,
+  ScrollingStoryVerticalContent: `${KEY_PREFIX}ScrollingStoryVerticalContent_Component`,
   ApplicationSearchBoxComponent: `${KEY_PREFIX}ApplicationSearchBox_Component`,
   FAQSearchBoxComponent: `${KEY_PREFIX}FAQSearchBox_Component`,
   BrowseVideosComponent: `${KEY_PREFIX}BrowseVideos_Component`,
@@ -53,4 +55,7 @@ export const AllComponentTypeKeyMap = {
   FeaturedApplicationFolder:`${KEY_PREFIX}FeaturedApplication_Folder`,
   FeaturedApplicationComponent:`${KEY_PREFIX}FeaturedApplication_Component`,  
   ApplicationStoryComponent:`${KEY_PREFIX}ApplicationStory_Component`,
+  ApplicationSelectionToolComponent:`${KEY_PREFIX}ApplicationSelectionTool_Component`,
+  ReferenceDesignSearchComponent:`${KEY_PREFIX}ReferenceDesignSearch_Component`,
+  CodeFragmentComponent:`${KEY_PREFIX}CodeFragment_Component`,
 } as const;

@@ -1,6 +1,7 @@
 import "@/lib/opti/opti-init";
 import { getClient } from "@optimizely/cms-sdk";
 import {
+  getContext,
   OptimizelyComponent,
   withAppContext,
 } from "@optimizely/cms-sdk/react/server";
@@ -12,6 +13,7 @@ import { RootLayout } from "../RootLayout";
 import { toAppLocale } from "@/constants/locales";
 import { populateSiteSettings } from "@/lib/data/site-settings";
 import { SERVER_ENV_VARS } from "@/lib/env/server-env";
+import { OptiContextProvider } from "@/components/ui/context/OptiContext";
 export { generateMetadata } from "./metadata";
 
 // Skip trying to statically prerender this because it needs a live Graph client
@@ -40,8 +42,16 @@ export async function Page({ searchParams }: Props) {
 
   const metadata = response._metadata as
     { url?: { hierarchical?: string } } | undefined;
-  await populateSiteSettings(response, metadata?.url?.hierarchical ?? "", locale);
+  await populateSiteSettings(
+    response,
+    metadata?.url?.hierarchical ?? "",
+    locale,
+  );
 
+  const contextData = getContext();
+  if (!contextData) {
+    throw new Error("Context Data missing");
+  }
   return (
     <RootLayout locale={locale}>
       <Script
@@ -53,7 +63,9 @@ export async function Page({ searchParams }: Props) {
         }
       ></Script>
       <NextPreviewComponent />
-      <OptimizelyComponent content={response} />
+      <OptiContextProvider contextData={contextData}>
+        <OptimizelyComponent content={response} />
+      </OptiContextProvider>
     </RootLayout>
   );
 }

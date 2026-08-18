@@ -27,8 +27,7 @@ export async function StandardImageView({
     return null;
   }
 
-  const linkHref =
-    (content.link?.url?.base ?? "") + (content.link?.url?.default ?? "");
+  const linkHref = content.link?.url?.default ?? "";
   const href = linkHref ? (normalizeUrl(linkHref) ?? undefined) : undefined;
 
   return (

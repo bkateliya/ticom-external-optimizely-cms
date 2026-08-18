@@ -35,7 +35,7 @@ export async function FAQSearchBox({
   return (
     <ThemeProvider theme="theme-grey">
       <SectionWrapper className="py-12! md:py-16!">
-        <DynamicHeading className="text-h3 font-light text-center">
+        <DynamicHeading className="text-h3 font-light text-center mb-6!">
           {t("Find answers to your ordering questions")}
         </DynamicHeading>
         <FAQSearchInput

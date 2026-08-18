@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { createPortal } from "react-dom";
 import { tv } from "tailwind-variants";
 
 const MIN_CHARS = 2;
@@ -41,8 +40,6 @@ const style = tv({
     subheading: "mb-2 text-sm text-[var(--pl-text-color-primary)] max-sm:text-center",
     field:
       "relative w-full max-w-[768px] text-left [&_ti-search-field]:block! [&_ti-search-field]:w-full! [&_ti-search-field]:max-w-[768px]! [&_*]:max-w-[768px]!",
-    // Portaled to <body> so an ancestor's overflow can't clip it; positioned
-    // via inline style (fixed, under the field). High z-index beats the footer.
     panel:
       "ti_aem-application-SearchResults fixed z-[200] max-h-[500px] w-full max-w-[768px] overflow-y-auto bg-white py-4 leading-6 shadow-[0_0_1px_1px_rgba(0,0,0,0.05),0_2px_4px_-1px_rgba(0,0,0,0.16),0_4px_5px_0_rgba(0,0,0,0.1),0_1px_10px_0_rgba(0,0,0,0.08)] md:max-h-[530px]",
     market: "ml-6 block pb-0.5 pr-2 text-sm text-[#333] hover:bg-black/5",
@@ -198,8 +195,7 @@ export function ApplicationSearchBoxClient({
   }, [open]);
 
   const panel =
-    open && pos
-      ? createPortal(
+    open && pos ? (
           <div
             ref={panelRef}
             id="application-search-panel"
@@ -269,10 +265,8 @@ export function ApplicationSearchBoxClient({
                 </div>
               ))
             )}
-          </div>,
-          document.body,
-        )
-      : null;
+          </div>
+        ) : null;
 
   return (
     <div className={s.card()}>
@@ -299,6 +293,9 @@ export function ApplicationSearchBoxClient({
             ref={fieldRef}
             appearance="large"
             placeholder={placeholder}
+            aria-expanded={open ? "true" : "false"}
+            aria-controls="application-search-panel"
+            aria-autocomplete="list"
             className="ti_aem-application-SearchField ti-search-field-large block! w-full! max-w-[768px]!"
             style={{ width: "100%", maxWidth: "768px" }}
           ></ti-search-field>

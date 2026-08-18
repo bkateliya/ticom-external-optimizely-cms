@@ -53,6 +53,11 @@ import {
   ApplicationStoryComponentType,
   FeaturedApplicationComponentType,
 } from "./FeaturedApplication/FeaturedApplication.model";
+import { CodeFragmentComponentType } from "./CodeEmbed/CodeFragment.model";
+import {
+  ScrollingStoryVerticalComponentType,
+  ScrollingStoryVerticalContentComponentType,
+} from "./ScrollingStoryVertical/ScrollingStoryVertical.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -62,6 +67,7 @@ export const allComponentTypes = [
   AccordionComponentType,
   AccordionPanelComponentType,
   CodeEmbedComponentType,
+  CodeFragmentComponentType,
   CodeSnippetComponentType,
   HomePageBannerComponentType,
   ColumnGridColumnComponentType,
@@ -74,6 +80,8 @@ export const allComponentTypes = [
   HorizontalRuleComponentType,
   VideoPlayerComponentType,
   PremiumMediaHeadingComponentType,
+  ScrollingStoryVerticalComponentType,
+  ScrollingStoryVerticalContentComponentType,
   ApplicationSearchBoxComponentType,
   FAQSearchBoxComponentType,
   HierarchyNavigationComponentType,
