@@ -6,7 +6,7 @@ import React from "react";
 
 // Custom (web-component-specific) props that must NOT be forwarded to the DOM,
 // otherwise React emits unknown-attribute warnings. They are surfaced as data-*.
-const CUSTOM_PROPS = ["appearance", "color", "type", "size", "theme", "iconName", "iconPosition"];
+const CUSTOM_PROPS = ["appearance", "color", "type", "size", "theme", "iconName", "iconPosition", "orientation"];
 
 function splitProps(props) {
   const dataAttrs = {};
@@ -52,5 +52,23 @@ export const TifButtonGroup = React.forwardRef(function TifButtonGroup(props, re
     "div",
     { ref, "data-tif-button-group": "", ...dataAttrs, ...rest },
     children
+  );
+});
+
+// The real tif-form renders a <form> whose children sit in a `.tifForm-layout`
+// grid. Consumers style that layout through it (`[&_.tifForm-layout]:...`), so
+// the wrapper has to exist here too — with the grid display the real
+// component's stylesheet would otherwise supply.
+export const TifForm = React.forwardRef(function TifForm(props, ref) {
+  const { children, className, ...other } = props;
+  const { dataAttrs, rest } = splitProps(other);
+  return React.createElement(
+    "form",
+    { ref, className, "data-tif-form": "", ...dataAttrs, ...rest },
+    React.createElement(
+      "div",
+      { className: "tifForm-layout", style: { display: "grid" } },
+      children
+    )
   );
 });
