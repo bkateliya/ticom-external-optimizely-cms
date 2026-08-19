@@ -339,6 +339,6 @@
 "Share": "共享",
 "On this page": "本页内容",
 "Whats new": "新增内容",
-"© Copyright 1995-{year}": "© Copyright 1995-{year}",
-"Texas Instruments Incorporated All rights reserved": "Texas Instruments Incorporated。版权所有。"
+"CopyrightText": "© Copyright 1995-{year}",
+"CopyrightSuffixText": "Texas Instruments Incorporated。版权所有。"
 }

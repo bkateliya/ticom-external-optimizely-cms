@@ -35,6 +35,6 @@
 "noUpcomingEvents": "There are currently no upcoming events matching your search. Try removing filters to broaden your results.",
 "On this page":"On this page",
 "Whats new": "What's new",
-"© Copyright 1995-{year}": "© Copyright 1995-{year}",
-"Texas Instruments Incorporated All rights reserved": "Texas Instruments Incorporated. All rights reserved."
+"CopyrightText": "© Copyright 1995-{year}",
+"CopyrightSuffixText": "Texas Instruments Incorporated. All rights reserved."
 }
