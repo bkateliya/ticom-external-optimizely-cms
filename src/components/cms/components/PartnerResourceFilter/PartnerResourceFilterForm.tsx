@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { TifForm } from '@ticom/form-components/react'
+import { TifForm, TifFieldset, TifSelect } from "@ticom/form-components/react";
 import { TiButton } from "@/components/ui/ti/TiButton/TiButton";
 
 import {
@@ -10,7 +10,7 @@ import {
   ComponentSize,
 } from "@/components/ui/ti/enums";
 
-type TiSelectElement = HTMLElement & { value?: string };
+type SelectElement = HTMLElement & { value?: string };
 
 export interface PartnerResourceFilterField {
   facet: string;
@@ -26,8 +26,14 @@ export interface PartnerResourceFilterFormProps {
   submitLabel: string;
 }
 
-function toSelectCsv(values: string[]) {
-  return values.map((value) => value.replace(/,/g, "\\,")).join(",");
+function selectedValue(element: SelectElement | null) {
+  if (!element) {
+    return "";
+  }
+  if (typeof element.value === "string") {
+    return element.value;
+  }
+  return element.querySelector<HTMLSelectElement>("select")?.value ?? "";
 }
 
 export function PartnerResourceFilterForm({
@@ -37,13 +43,13 @@ export function PartnerResourceFilterForm({
   placeholderLabel,
   submitLabel,
 }: PartnerResourceFilterFormProps) {
-  const selectRefs = useRef<(TiSelectElement | null)[]>([]);
+  const selectRefs = useRef<(SelectElement | null)[]>([]);
 
   function search() {
     const preFilter = [
       ...fields.map(
         (field, index) =>
-          [field.facet, selectRefs.current[index]?.value ?? ""] as const,
+          [field.facet, selectedValue(selectRefs.current[index])] as const,
       ),
       ["designResourceProvider", provider] as const,
     ]
@@ -62,31 +68,34 @@ export function PartnerResourceFilterForm({
   }
 
   return (
-    <TifForm method="get" name="getForm" className="[&_.tifForm-layout]:grid-cols-1 [&_.tifForm-layout]:items-start [&_.tifForm-layout]:gap-4! [&_.tifForm-layout]:md:gap-14! [&_.tifForm-layout]:md:grid-cols-4"
-    // onSubmit={(event) => {
-    //     event.preventDefault();
-    //     search();
-    //   }}
-    
+    <TifForm
+      method="get"
+      name="getForm"
+      className="[&_.tifForm-layout]:grid-cols-1 [&_.tifForm-layout]:items-start [&_.tifForm-layout]:gap-4! [&_.tifForm-layout]:md:grid-cols-4 [&_.tifForm-layout]:md:gap-14!"
     >
       {fields.map((field, index) => (
-        <ti-form-element key={field.facet} label-text={field.label}>
-          <ti-select
-            ref={(element: TiSelectElement | null) => {
+        <TifFieldset key={field.facet}>
+          <span slot="label">{field.label}</span>
+          <TifSelect
+            ref={(element: SelectElement | null) => {
               selectRefs.current[index] = element;
             }}
-            className="u-fullWidth block w-full"
-            options={toSelectCsv(["", ...field.options])}
-            labels={toSelectCsv([placeholderLabel, ...field.options])}
-            value=""
-          ></ti-select>
-        </ti-form-element>
+            name={field.facet}
+            placeholder={placeholderLabel}
+          >
+            {field.options.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </TifSelect>
+        </TifFieldset>
       ))}
       <TiButton
         appearance={ButtonAppearance.solid}
         color={ButtonColor.primary}
-        size={ComponentSize.small}
-        className="w-full mt-2 md:mt-6"
+        size={ComponentSize.medium}
+        className="mt-2 w-full md:mt-8"
         onClick={(event) => {
           event.preventDefault();
           search();

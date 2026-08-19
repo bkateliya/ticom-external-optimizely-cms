@@ -5,7 +5,8 @@ import { ComponentTheme } from "@/components/ui/ti/enums";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { Themes } from "@/lib/themes";
 
-import { HorizontalRuleContentDividerComponentType } from "./HorizontalRuleContentDivider.model";
+import { HorizontalRuleContentDividerComponentType } from "@/components/cms/components/HorizontalRuleContentDivider/HorizontalRuleContentDivider.model";
+
 
 
 type DividerSpacing = "none" | "compact" | "comfortable";
