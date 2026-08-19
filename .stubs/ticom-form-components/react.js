@@ -72,3 +72,28 @@ export const TifForm = React.forwardRef(function TifForm(props, ref) {
     )
   );
 });
+
+// The real tif-fieldset takes its label / help / hint text from named slots, so
+// the stub keeps the slotted children as-is — they render as plain text here.
+export const TifFieldset = React.forwardRef(function TifFieldset(props, ref) {
+  const { children, ...other } = props;
+  const { dataAttrs, rest } = splitProps(other);
+  return React.createElement(
+    "fieldset",
+    { ref, "data-tif-fieldset": "", ...dataAttrs, ...rest },
+    children
+  );
+});
+
+// The real tif-select slots native <option> children into its own control and
+// renders `placeholder` as the empty-valued first option.
+export const TifSelect = React.forwardRef(function TifSelect(props, ref) {
+  const { children, placeholder, ...other } = props;
+  const { dataAttrs, rest } = splitProps(other);
+  return React.createElement(
+    "select",
+    { ref, "data-tif-select": "", ...dataAttrs, ...rest },
+    placeholder ? React.createElement("option", { value: "" }, placeholder) : null,
+    children
+  );
+});
