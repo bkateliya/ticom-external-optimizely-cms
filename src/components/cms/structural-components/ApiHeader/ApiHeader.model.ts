@@ -7,7 +7,7 @@ import { PropertyTypes } from "@/lib/property-types";
 
 export const ApiHeaderLevel2ComponentType = contentType({
   key: `${KEY_PREFIX}ApiHeaderLevel2_Component`,
-  displayName: `${DISPLAY_NAME_PREFIX}API Header Level 2 Link`,
+  displayName: `${DISPLAY_NAME_PREFIX}Subsite Header Level 2 Link`,
   baseType: "_component",
   properties: {
     level2Title: {
@@ -31,7 +31,7 @@ export const ApiHeaderLevel2ComponentType = contentType({
 
 export const ApiHeaderLevel1ComponentType = contentType({
   key: `${KEY_PREFIX}ApiHeaderLevel1_Component`,
-  displayName: `${DISPLAY_NAME_PREFIX}API Header Level 1 Menu`,
+  displayName: `${DISPLAY_NAME_PREFIX}Subsite Header Level 1 Menu`,
   baseType: "_component",
   properties: {
     level1Title: {
@@ -65,7 +65,7 @@ export const ApiHeaderLevel1ComponentType = contentType({
 
 export const ApiHeaderComponentType = contentType({
   key: `${KEY_PREFIX}ApiHeader_Component`,
-  displayName: `${DISPLAY_NAME_PREFIX}API Header`,
+  displayName: `${DISPLAY_NAME_PREFIX}Subsite Header`,
   baseType: "_component",
   properties: {
     level1Menus: {

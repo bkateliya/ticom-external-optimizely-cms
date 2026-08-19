@@ -8,7 +8,7 @@ import { LinkElementType } from "../../elements/Link/Link.model";
 
 export const CreativeShowcaseFooterComponentType = contentType({
   key: `${KEY_PREFIX}CreativeShowcaseFooter_Component`,
-  displayName: `${DISPLAY_NAME_PREFIX}Creative Showcase Footer`,
+  displayName: `${DISPLAY_NAME_PREFIX}Custom Site Footer`,
   baseType: "_component",
   properties: {
     importantInformation: {

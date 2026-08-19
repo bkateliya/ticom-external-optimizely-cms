@@ -123,10 +123,10 @@ export const componentRegistry: ComponentRegistry = {
   [ApplicationSearchBoxComponentType.key]: ApplicationSearchBox,
   [GoldenSourcePageHeadingComponentType.key]: GoldenSourcePageHeadingComponent,
   [ApiSwaggerComponentType.key]: ApiSwagger,
-  [PartnerResourceFilterComponentType.key]: PartnerResourceFilter,
-  [PartnerResourceFilterOptionComponentType.key]: NoPreviewComponent,
   [HorizontalRuleContentDividerComponentType.key]:
     HorizontalRuleContentDividerComponent,
+  [PartnerResourceFilterComponentType.key]: PartnerResourceFilter,
+  [PartnerResourceFilterOptionComponentType.key]: NoPreviewComponent,
   [LLCPromoComponentType.key]: NoPreviewComponent,
   [LLCPromoMessageComponentType.key]: NoPreviewComponent,
   [LLCPromoWarningComponentType.key]: NoPreviewComponent,
