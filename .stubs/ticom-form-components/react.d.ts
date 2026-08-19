@@ -41,3 +41,26 @@ export interface TifFormProps
 export declare const TifForm: React.ForwardRefExoticComponent<
   TifFormProps & React.RefAttributes<HTMLFormElement>
 >;
+
+export interface TifFieldsetProps
+  extends React.FieldsetHTMLAttributes<HTMLFieldSetElement> {
+  appearance?: string;
+  size?: string;
+  theme?: string;
+}
+
+export declare const TifFieldset: React.ForwardRefExoticComponent<
+  TifFieldsetProps & React.RefAttributes<HTMLFieldSetElement>
+>;
+
+export interface TifSelectProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  appearance?: string;
+  size?: string;
+  theme?: string;
+  placeholder?: string;
+}
+
+export declare const TifSelect: React.ForwardRefExoticComponent<
+  TifSelectProps & React.RefAttributes<HTMLSelectElement>
+>;

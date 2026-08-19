@@ -1,6 +1,7 @@
 import { ContentProps } from "@optimizely/cms-sdk";
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
 import NextLink from "next/link";
+import { getTranslations } from "next-intl/server";
 
 import { fieldFactory } from "@/components/ui/cms";
 import { OptiComponentProps } from "@/lib/ts/component-props";
@@ -13,17 +14,16 @@ import { CreativeShowcaseFooterComponentType } from "./CreativeShowcaseFooter.mo
 /** The logo points at the site root; it is brand chrome, not an authored field. */
 const TI_LOGO_HREF = "/";
 
-/** The placeholder authors write into the copyright label for the current year. */
-const CURRENT_YEAR_TOKEN = /\{\{\s*currentYear\s*\}\}/g;
-
-export function CreativeShowcaseFooter({
+export async function CreativeShowcaseFooter({
     content,
 }: OptiComponentProps<typeof CreativeShowcaseFooterComponentType>) {
     if (!content) {
         return null;
     }
 
-    const { WrappedRichTextField, WrappedTextField } = fieldFactory<
+    const t = await getTranslations();
+
+    const { WrappedRichTextField } = fieldFactory<
         typeof CreativeShowcaseFooterComponentType
     >(content);
 
@@ -82,44 +82,48 @@ export function CreativeShowcaseFooter({
                     </div>
                 )}
 
-                {(content?.copyrightLinkText || content?.copyrightSuffixText) && (
-                    <div className="ti_p-responsiveFooter-row">
-                        <div className="ti_p-responsiveFooter-col mod-full">
-                            <p className="ti_p-responsiveFooter-copyright">
-                                <CopyrightLink content={content} />{" "}
-                                <WrappedTextField field="copyrightSuffixText" />
-                            </p>
-                        </div>
+                <div className="ti_p-responsiveFooter-row">
+                    <div className="ti_p-responsiveFooter-col mod-full">
+                        <p className="ti_p-responsiveFooter-copyright">
+                            <CopyrightLink
+                                content={content}
+                                label={t("© Copyright 1995-{year}", {
+                                    year: String(new Date().getFullYear()),
+                                })}
+                            />{" "}
+                            {t(
+                                "Texas Instruments Incorporated All rights reserved",
+                            )}
+                        </p>
                     </div>
-                )}
+                </div>
             </div>
         </footer>
     );
 }
 
 /**
- * The copyright link, authored as a CMS link whose label carries the year as a
- * token — "© Copyright 1995-{{currentYear}}".
+ * The copyright statement's leading clause — "© Copyright 1995-2026". The label
+ * is translated, not authored; only the destination comes from the CMS link, so
+ * without one the clause still renders as plain text.
  */
 function CopyrightLink({
     content,
+    label,
 }: {
     content: ContentProps<typeof CreativeShowcaseFooterComponentType>;
+    label: string;
 }) {
     const link = content.copyrightLinkText;
     const href = link?.url?.default;
-    const label = link?.text?.replace(
-        CURRENT_YEAR_TOKEN,
-        String(new Date().getFullYear()),
-    );
 
-    if (!link || !href || !label) {
-        return null;
+    if (!link || !href) {
+        return label;
     }
 
     const url = normalizeUrl(href);
     if (!url) {
-        return null;
+        return label;
     }
 
     const { pa } = getPreviewUtils(content);
