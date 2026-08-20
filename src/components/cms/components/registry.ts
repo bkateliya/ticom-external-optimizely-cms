@@ -88,6 +88,14 @@ import {
   ScrollingStoryVerticalComponent,
   ScrollingStoryVerticalContentComponent,
 } from "./ScrollingStoryVertical/ScrollingStoryVertical";
+import {
+  ImageComparisonComponentType,
+  ImageComparisonItemComponentType,
+} from "./ImageComparison/ImageComparison.model";
+import {
+  ImageComparisonComponent,
+  ImageComparisonItemComponent,
+} from "./ImageComparison/ImageComparison";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -133,4 +141,6 @@ export const componentRegistry: ComponentRegistry = {
   [EventComponentType.key]: NoPreviewComponent,
   [ApplicationStoryComponentType.key]: NoPreviewComponent,
   [FeaturedApplicationComponentType.key]: NoPreviewComponent,
+  [ImageComparisonComponentType.key]: ImageComparisonComponent,
+  [ImageComparisonItemComponentType.key]: ImageComparisonItemComponent,
 };

@@ -5,6 +5,7 @@ import { useTheme } from "../../../context/BrandAndTheme/BrandAndThemeContext";
 import { ComponentTheme } from "@/components/ui/ti/enums";
 import { CustomEventHandler, useEventListenerRef } from "../../Common/events";
 import { TiImage, TiImageProps } from "./TiImage";
+import { tv } from "tailwind-variants";
 
 /** Image slot content: the props for a ti-image (slot is set internally). */
 export type TiImageComparisonImage = Omit<TiImageProps, "slot">;
@@ -29,10 +30,30 @@ export interface TiImageComparisonProps {
     leftLabel?: React.ReactNode;
     /** Optional label rendered over the right image. */
     rightLabel?: React.ReactNode;
-    /** Optional figcaption rendered below the comparison. */
+    /** Optional caption rendered below the comparison. May contain paragraphs. */
     caption?: React.ReactNode;
     /** Fired when the comparison divider moves. */
     tiImageComparisonChange?: CustomEventHandler<TiImageComparisonChangeEventDetail>;
+}
+
+/**
+ * Caption color per theme mode. The caption is slotted light DOM, so the
+ * `theme` attribute on the host element can't reach it — `[slot="caption"]` in
+ * hydration.css hardcodes the light-theme grey. Pick the color here the way
+ * HorizontalRuleContentDivider does; `!` is what beats that unlayered rule.
+ */
+const captionStyles = tv({
+    variants: {
+        mode: {
+            /* primitive: $polaris-palette-grey7 — no semantic --pl-* text token */
+            light: "text-[#555555]!",
+            dark: "text-pl-text-color-secondary-contrast!",
+        },
+    },
+});
+
+function toCaptionMode(mode: ComponentTheme) {
+    return mode === ComponentTheme.dark ? "dark" : "light";
 }
 
 export function TiImageComparison({
@@ -67,7 +88,17 @@ export function TiImageComparison({
             {leftLabel != null && <span slot="left-label">{leftLabel}</span>}
             <TiImage slot="right-image" {...rightImage} />
             {rightLabel != null && <span slot="right-label">{rightLabel}</span>}
-            {caption != null && <p slot="caption">{caption}</p>}
+            {/* A div, not a p: captions come from rich text, so the slot has to
+                hold paragraphs — which `[slot="caption"] p` in hydration.css
+                already styles, inheriting the color set here. */}
+            {caption != null && (
+                <div
+                    slot="caption"
+                    className={captionStyles({ mode: toCaptionMode(resolvedTheme) })}
+                >
+                    {caption}
+                </div>
+            )}
         </ti-image-comparison>
     );
 }

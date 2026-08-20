@@ -59,6 +59,10 @@ import {
   ScrollingStoryVerticalComponentType,
   ScrollingStoryVerticalContentComponentType,
 } from "./ScrollingStoryVertical/ScrollingStoryVertical.model";
+import {
+  ImageComparisonComponentType,
+  ImageComparisonItemComponentType,
+} from "./ImageComparison/ImageComparison.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -104,4 +108,6 @@ export const allComponentTypes = [
   EventComponentType,
   ApplicationStoryComponentType,
   FeaturedApplicationComponentType,
+  ImageComparisonComponentType,
+  ImageComparisonItemComponentType,
 ];

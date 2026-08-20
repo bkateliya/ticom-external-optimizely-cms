@@ -22,13 +22,16 @@ export function getStandardizedImage(
 
   const bynderImage = getBynderImageFromContext(imageField);
   if (bynderImage) {
+    // BynderImage's fields are a hand-written cast over the Graph response, so
+    // they are not as non-null as they claim: Graph returns null for any the
+    // asset doesn't have. Default here so callers get the string they expect.
     return {
       imageType: "bynder",
-      src: bynderImage.original,
+      src: bynderImage.original ?? "",
       thumbnailSrc: src(imageField) || "",
-      alt: bynderImage.property_alt_text,
-      width: bynderImage._imageMetadata.width,
-      height: bynderImage._imageMetadata.height,
+      alt: bynderImage.property_alt_text ?? "",
+      width: bynderImage._imageMetadata?.width,
+      height: bynderImage._imageMetadata?.height,
     };
   }
   return {
