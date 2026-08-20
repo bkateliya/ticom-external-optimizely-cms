@@ -337,5 +337,7 @@
 "Company culture": "企業文化",
 "Share": "共有",
 "On this page": "このページに含まれるもの",
-"Whats new": "最新情報"
+"Whats new": "最新情報",
+"CopyrightText-{year}": "© Copyright 1995-{year}",
+"CopyrightSuffixText": "Texas Instruments Incorporated. All rights reserved."
 }

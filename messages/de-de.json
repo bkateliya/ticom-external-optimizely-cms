@@ -336,5 +336,7 @@
 "Company culture": "Unternehmenskultur",
 "Share": "Teilen",
 "On this page": "Auf dieser Seite",
-"Whats new": "Neuigkeiten"
+"Whats new": "Neuigkeiten",
+"CopyrightText-{year}": "© Copyright 1995-{year}",
+"CopyrightSuffixText": "Texas Instruments Incorporated. All rights reserved."
 }

@@ -43,3 +43,8 @@ a {
 .ti_aem-ce *.u-header-5plus * {
     font-weight: 500 !important
 }
+
+.ti_p-col-sideNav-stickyContainer {
+    position: sticky;
+    top: 16px;
+}

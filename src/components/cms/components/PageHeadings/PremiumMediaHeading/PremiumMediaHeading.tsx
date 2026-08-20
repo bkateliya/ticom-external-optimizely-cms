@@ -5,7 +5,7 @@ import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedN
 import VideoSearchBar from "@/components/ui/Atoms/VideoSearchBar/VideoSearchBar";
 import VideoPlayer from "@/components/ui/Atoms/VideoPlayer/VideoPlayer";
 import { normalizeGenericArrayToTyped } from "@/lib/utils/content-type-utils";
-import { CtaButtonElementType } from "../../elements/CTAButton/CTAButton.model";
+import { CtaButtonElementType } from "../../../elements/CTAButton/CTAButton.model";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { getStandardizedImage } from "@/lib/utils/image-utils";
 
@@ -16,7 +16,7 @@ export function PremiumMediaHeadingComponent({
     return null;
   }
 
-  const { src, alt } = getStandardizedImage(content, content.image);
+  const { src, alt } = getStandardizedImage(content, content.bynderImage);
 
   const ctas = normalizeGenericArrayToTyped<typeof CtaButtonElementType>(
     content.ctaLinks,
@@ -29,9 +29,9 @@ export function PremiumMediaHeadingComponent({
   return (
     <div>
       Preheadline: <WrappedRichTextField field="preHeadline" />
-      Headline: {content.headline} <br />
+      Headline: {content.pageHeadline} <br />
       Tagline: <WrappedRichTextField field="tagline" />
-      Subheadline: <WrappedRichTextField field="subheadline" />
+      Subheadline: <WrappedRichTextField field="pageSubheadline" />
       {content.featureOptions === "image" && (
         <div>{src && <EnhancedNextImage src={src} alt={alt ?? ""} />}</div>
       )}

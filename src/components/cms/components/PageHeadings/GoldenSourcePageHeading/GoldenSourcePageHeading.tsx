@@ -1,10 +1,13 @@
 import { getContext } from "@optimizely/cms-sdk/react/server";
 import { getTranslations } from "next-intl/server";
-import { getApplication, getProductFamily } from "../../../../lib/api/cms-api";
+import { getApplication, getProductFamily } from "../../../../../lib/api/cms-api";
 import { fieldFactory } from "@/components/ui/cms";
 import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { DynamicHeading } from "@/components/ui/Atoms/DynamicHeading";
+import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
+import { TiButton } from "@/components/ui/ti/TiButton/TiButton";
+import { TifButtonGroup } from "@ticom/form-components/react";
 
 export async function GoldenSourcePageHeadingComponent({
   content
@@ -12,7 +15,7 @@ export async function GoldenSourcePageHeadingComponent({
   const { application, productFamily } = getContext() ?? {};
   const t = await getTranslations();
   const { WrappedRichTextField } = fieldFactory< typeof GoldenSourcePageHeadingComponentType>(content);
-  
+
 
   let type;
   let title;
@@ -30,32 +33,34 @@ export async function GoldenSourcePageHeadingComponent({
   }
 
   return (
-    <div>
-      <h1>Title: {title}</h1>
+    <SectionWrapper noPaddingTop noPaddingBottom>
+      <h1 className="mb-0">{title}</h1>
 
-    Subheadline: 
-    <DynamicHeading><WrappedRichTextField
-      field="subheadline"
-    /></DynamicHeading> 
+      <DynamicHeading className="mb-0 mt-6 md:mt-8"><WrappedRichTextField
+        field="subheadline"
+        className="text-h3 font-light"
+      /></DynamicHeading>
 
-      { type === 'application' ? 
-        <a href="#aem-application-Browse" >
-          <span>{ t('Browse applications') }</span>
-        </a> :
-        <a href="products" >
-          <span>{ t('View all products') }</span>
-        </a>
-      }
+      <TifButtonGroup className="mt-8 md:mt-10">
+        { type === 'application' ?
+          <TiButton href="#aem-application-Browse">
+            { t('Browse applications') }
+          </TiButton> :
+          <TiButton href="products">
+            { t('View all products') }
+          </TiButton>
+        }
 
-      { type === 'application' && (
-        content.secondaryCTA === 'video' ? 
-          <a href="" > 
-            <span>{ t('Watch the video') }</span>
-          </a> : content.secondaryCTA === 'selection' ? 
-          <a href="" > 
-            <span>{ t('View all products') }</span>
-          </a> : ''
-      )}
-    </div>
+        { type === 'application' && (
+          content.secondaryCTA === 'video' ?
+            <TiButton href="">
+              { t('Watch the video') }
+            </TiButton> : content.secondaryCTA === 'selection' ?
+            <TiButton href="">
+              { t('View all products') }
+            </TiButton> : ''
+        )}
+      </TifButtonGroup>
+    </SectionWrapper>
   );
 }

@@ -37,18 +37,6 @@ export function getBynderVideoFromContext(
   return bynderVideos?.[content?.key ?? ""];
 }
 
-/**
- * Builds a Bynder DAT preset URL from the base transform URL Optimizely Graph
- * returns (".../transform/{id}/{filename}"), inserting the named preset
- * (e.g. "195x195") configured in the Bynder portal right after "/transform/".
- */
-export function getBynderTransformUrl(
-  img: BynderImage,
-  preset: string,
-): string {
-  return img.transformBaseUrl.replace("/transform/", `/transform/${preset}/`);
-}
-
 export async function findAllBynderAssetsOnPage(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   page: any,
@@ -211,8 +199,7 @@ export interface BynderVideo extends IAssetItem {
   videoPreviewURL: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getRefIds(root: any, type: BynderAssetType) {
+function getRefIds(root: unknown, type: BynderAssetType) {
   const sourceRefs = deepSearch<InferredContentReference>(
     root,
     (x) => !!x?.url?.graph?.startsWith(`graph://ocp/${type}/`),

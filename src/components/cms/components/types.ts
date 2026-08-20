@@ -1,4 +1,4 @@
-import { HeroComponentType } from "./Hero/Hero.model";
+import { HeroComponentType } from "./PageHeadings/Hero/Hero.model";
 import {
   AccordionComponentType,
   AccordionPanelComponentType,
@@ -18,10 +18,11 @@ import { applicationListingComponents } from "./application-components/types";
 import { imageComponentTypes } from "./Image/types";
 import { HorizontalRuleComponentType } from "./HorizontalRule/HorizontalRule.model";
 import { HorizontalRuleContentDividerComponentType } from "./HorizontalRuleContentDivider/HorizontalRuleContentDivider.model";
+import { HorizontalRulePageDividerComponentType } from "./HorizontalRulePageDivider/HorizontalRulePageDivider.model";
 import { NewProductsCardListComponentType } from "./NewProductsCardList/NewProductsCardList.model";
 import { VideoPlayerComponentType } from "./VideoPlayer/VideoPlayer.model";
 import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model";
-import { PremiumMediaHeadingComponentType } from "./PremiumMediaHeading/PremiumMediaHeading.model";
+import { PremiumMediaHeadingComponentType } from "./PageHeadings/PremiumMediaHeading/PremiumMediaHeading.model";
 import { ApplicationSearchBoxComponentType } from "./ApplicationSearchBox/ApplicationSearchBox.model";
 import { FAQSearchBoxComponentType } from "./FAQSearchBox/FAQSearchBox.model";
 import { BrowseVideosComponentType } from "./BrowseVideos/BrowseVideos.model";
@@ -40,7 +41,7 @@ import {
   KeyCustomerMessageItemComponentType,
   KeyCustomerMessagesComponentType,
 } from "./KeyCustomerMessages/KeyCustomerMessages.model";
-import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading/GoldenSourcePageHeading.model";
+import { GoldenSourcePageHeadingComponentType } from "./PageHeadings/GoldenSourcePageHeading/GoldenSourcePageHeading.model";
 import { ApiSwaggerComponentType } from "./ApiSwagger/ApiSwagger.model";
 import { PartnerResourceFilterComponentType } from "./PartnerResourceFilter/PartnerResourceFilter.model";
 import { PartnerResourceFilterOptionComponentType } from "./PartnerResourceFilter/PartnerResourceFilterOption.model";
@@ -59,6 +60,8 @@ import {
   ScrollingStoryVerticalComponentType,
   ScrollingStoryVerticalContentComponentType,
 } from "./ScrollingStoryVertical/ScrollingStoryVertical.model";
+import { TeaserComponentType } from "./Teaser/Teaser.model";
+import { ArticlePageHeaderComponentType } from "./PageHeadings/ArticlePageHeading/ArticlePageHeading.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -67,6 +70,7 @@ export const allComponentTypes = [
   CtaLinkListComponentType,
   AccordionComponentType,
   AccordionPanelComponentType,
+  ArticlePageHeaderComponentType,
   CodeEmbedComponentType,
   CodeFragmentComponentType,
   CodeSnippetComponentType,
@@ -80,6 +84,7 @@ export const allComponentTypes = [
   ...imageComponentTypes,
   HorizontalRuleComponentType,
   HorizontalRuleContentDividerComponentType,
+  HorizontalRulePageDividerComponentType,
   VideoPlayerComponentType,
   PremiumMediaHeadingComponentType,
   ScrollingStoryVerticalComponentType,
@@ -104,4 +109,5 @@ export const allComponentTypes = [
   EventComponentType,
   ApplicationStoryComponentType,
   FeaturedApplicationComponentType,
+  TeaserComponentType,
 ];

@@ -5,6 +5,7 @@ import {
 } from "@/components/cms/constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
 import { LinkElementType } from "../../elements/Link/Link.model";
+import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 
 export const CreativeShowcaseFooterComponentType = contentType({
   key: `${KEY_PREFIX}CreativeShowcaseFooter_Component`,
@@ -38,8 +39,8 @@ export const CreativeShowcaseFooterComponentType = contentType({
     copyrightSuffixText: {
       type: "string",
       displayName: "Copyright Suffix Text",
-      group: PropertyTypes.Content,
       sortOrder: 40,
+      ...SoftDeleteProperties,
     },
   },
 });

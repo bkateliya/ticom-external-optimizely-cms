@@ -18,7 +18,7 @@ export const PreambleSectionWrapper = ({
   redUnderline,
 }: PreambleSectionWrapperProps) => {
   return (
-    <SectionWrapper textAlignment={textAlignment}>
+    <SectionWrapper>
       <Preamble
         content={content}
         parentField={parentField}

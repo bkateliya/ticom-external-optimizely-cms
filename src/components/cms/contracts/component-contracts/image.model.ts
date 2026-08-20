@@ -3,6 +3,7 @@ import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "@/components/cms/constants";
 import { PropertyTypes } from "@/lib/property-types";
 import { BynderImageStubModel } from "@/components/cms/media/graph/BynderStubs";
 import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
+import { ContractContentType } from "@/lib/ts/opti";
 
 export const ImageBaseContract = contract({
   key: `${KEY_PREFIX}ImageBase_Contract`,
@@ -14,13 +15,11 @@ export const ImageBaseContract = contract({
       displayName: "Image",
       ...SoftDeleteProperties,
     },
-
     bynderImage: {
       type: "contentReference",
-      // contentType: BynderImageStubModel,
       allowedTypes: [BynderImageStubModel],
       displayName: "Image",
-      group: "Content",
+      group: PropertyTypes.Content,
     },
     altText: {
       type: "string",
@@ -30,3 +29,8 @@ export const ImageBaseContract = contract({
     },
   },
 });
+
+/** For using contracts as component interfaces. */
+export type ImageBaseContractContentType = ContractContentType<
+  [typeof ImageBaseContract]
+>;

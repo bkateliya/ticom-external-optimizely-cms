@@ -20,6 +20,7 @@ export function GeneralSectionComponent({
         fullHeight={content.sectionFullHeight ?? false}
         narrow={content.sectionNarrow ?? false}
       >
+        <ExtendedOptimizelyComponent content={content.jumpNavTarget} />
         <PreambleSectionWrapper
           content={content}
           parentField={parentField}

@@ -5,9 +5,9 @@ import { HeroComponentType } from "./Hero.model";
 import { fieldFactory } from "@/components/ui/cms";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
-import { HeadlineComponentType } from "../../contracts/component-contracts/headline.model";
 import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedNextImage";
 import { getStandardizedImage } from "@/lib/utils/image-utils";
+import { ImageElement } from "@/components/cms/elements/ImageElement";
 
 export function HeroComponent({
   content,
@@ -16,11 +16,8 @@ export function HeroComponent({
   if (!content) {
     return null;
   }
-
-  const { src, alt } = getStandardizedImage(content, content.image);
-
   const { WrappedTextField, WrappedRichTextField } = fieldFactory<
-    typeof HeadlineComponentType
+    typeof HeroComponentType
   >(content, parentField);
 
   return (
@@ -29,27 +26,16 @@ export function HeroComponent({
         <div className={styles.container}>
           <div className={styles.content}>
             <div className={styles.text}>
-              <div className={styles.eyebrow}>
-                <WrappedTextField
-                  as="span"
-                  className={styles.eyebrowText}
-                  field="eyebrow"
-                />
-              </div>
               <div className={styles.titleContainer}>
-                <WrappedTextField as="h1" field="headline" />
+                <WrappedTextField as="h1" field="pageHeadline" />
               </div>
               <WrappedRichTextField
-                field="description"
+                field="pageSubheadline"
                 className={styles.description}
               />
             </div>
           </div>
-          {src && (
-            <div className={styles.image}>
-              <EnhancedNextImage src={src} alt={alt ?? ""} />
-            </div>
-          )}
+          <ImageElement content={content} />
         </div>
       </SectionWrapper>
     </ThemeProvider>

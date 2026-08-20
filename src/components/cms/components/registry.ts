@@ -1,5 +1,5 @@
-import { HeroComponent } from "./Hero/Hero";
-import { HeroComponentType } from "./Hero/Hero.model";
+import { HeroComponent } from "./PageHeadings/Hero/Hero";
+import { HeroComponentType } from "./PageHeadings/Hero/Hero.model";
 import {
   AccordionComponentType,
   AccordionPanelComponentType,
@@ -28,8 +28,8 @@ import { ContentBlockComponent } from "./ContentBlock/ContentBlock";
 import { ContentBlockComponentType } from "./ContentBlock/ContentBlock.model";
 import { applicationListingComponentRegistry } from "./application-components/registry";
 import { imageComponentRegistry } from "./Image/registry";
-import { PremiumMediaHeadingComponentType } from "./PremiumMediaHeading/PremiumMediaHeading.model";
-import { PremiumMediaHeadingComponent } from "./PremiumMediaHeading/PremiumMediaHeading";
+import { PremiumMediaHeadingComponentType } from "./PageHeadings/PremiumMediaHeading/PremiumMediaHeading.model";
+import { PremiumMediaHeadingComponent } from "./PageHeadings/PremiumMediaHeading/PremiumMediaHeading";
 import { SelectionToolComponentType } from "./SelectionTool/SelectionTool.model";
 import { ApplicationSearchBoxComponentType } from "./ApplicationSearchBox/ApplicationSearchBox.model";
 import { FAQSearchBoxComponentType } from "./FAQSearchBox/FAQSearchBox.model";
@@ -61,8 +61,8 @@ import {
 import { KeyCustomerMessages } from "./KeyCustomerMessages/KeyCustomerMessages";
 import { ApplicationSearchBox } from "./ApplicationSearchBox/ApplicationSearchBox";
 import { SelectionToolComponent } from "./SelectionTool/SelectionTool";
-import { GoldenSourcePageHeadingComponentType } from "./GoldenSourcePageHeading/GoldenSourcePageHeading.model";
-import { GoldenSourcePageHeadingComponent } from "./GoldenSourcePageHeading/GoldenSourcePageHeading";
+import { GoldenSourcePageHeadingComponentType } from "./PageHeadings/GoldenSourcePageHeading/GoldenSourcePageHeading.model";
+import { GoldenSourcePageHeadingComponent } from "./PageHeadings/GoldenSourcePageHeading/GoldenSourcePageHeading";
 import { ApiSwaggerComponentType } from "./ApiSwagger/ApiSwagger.model";
 import { ApiSwagger } from "./ApiSwagger/ApiSwagger";
 import { PartnerResourceFilterComponentType } from "./PartnerResourceFilter/PartnerResourceFilter.model";
@@ -75,6 +75,8 @@ import {
 } from "./LLCPromo/LLCPromo.model";
 import { HorizontalRuleContentDividerComponentType } from "./HorizontalRuleContentDivider/HorizontalRuleContentDivider.model";
 import { HorizontalRuleContentDividerComponent } from "./HorizontalRuleContentDivider/HorizontalRuleContentDivider";
+import { HorizontalRulePageDividerComponentType } from "./HorizontalRulePageDivider/HorizontalRulePageDivider.model";
+import { HorizontalRulePageDividerComponent } from "./HorizontalRulePageDivider/HorizontalRulePageDivider";
 import { EventComponentType } from "./Event/Event.model";
 import {
   ApplicationStoryComponentType,
@@ -88,6 +90,10 @@ import {
   ScrollingStoryVerticalComponent,
   ScrollingStoryVerticalContentComponent,
 } from "./ScrollingStoryVertical/ScrollingStoryVertical";
+import { TeaserComponentType } from "./Teaser/Teaser.model";
+import { TeaserComponent } from "./Teaser/Teaser";
+import { ArticlePageHeaderComponentType } from "./PageHeadings/ArticlePageHeading/ArticlePageHeading.model";
+import { ArticlePageHeaderComponent } from "./PageHeadings/ArticlePageHeading/ArticlePageHeading";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -98,6 +104,7 @@ export const componentRegistry: ComponentRegistry = {
   [AccordionPanelComponentType.key]: AccordionItem,
   [CodeEmbedComponentType.key]: CodeEmbedComponent,
   [CodeFragmentComponentType.key]: CodeFragmentComponent,
+  [ArticlePageHeaderComponentType.key]: ArticlePageHeaderComponent,
   [CodeSnippetComponentType.key]: CodeSnippetComponent,
   [HomePageBannerComponentType.key]: HomePageBannerComponent,
   [ColumnGridComponentType.key]: ColumnGridComponent,
@@ -125,6 +132,8 @@ export const componentRegistry: ComponentRegistry = {
   [ApiSwaggerComponentType.key]: ApiSwagger,
   [HorizontalRuleContentDividerComponentType.key]:
     HorizontalRuleContentDividerComponent,
+  [HorizontalRulePageDividerComponentType.key]:
+    HorizontalRulePageDividerComponent,
   [PartnerResourceFilterComponentType.key]: PartnerResourceFilter,
   [PartnerResourceFilterOptionComponentType.key]: NoPreviewComponent,
   [LLCPromoComponentType.key]: NoPreviewComponent,
@@ -133,4 +142,5 @@ export const componentRegistry: ComponentRegistry = {
   [EventComponentType.key]: NoPreviewComponent,
   [ApplicationStoryComponentType.key]: NoPreviewComponent,
   [FeaturedApplicationComponentType.key]: NoPreviewComponent,
+  [TeaserComponentType.key]: TeaserComponent,
 };

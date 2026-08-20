@@ -1,8 +1,10 @@
 import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants.mjs";
-import { AllComponentTypeKeyMap } from "../keys";
+import { AllComponentTypeKeyMap } from "../../keys";
 import { PropertyTypes } from "@/lib/property-types";
-import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
+import { AllowIn } from "../../../contracts/component-contracts/allow-in.model";
+import { BynderImageStubModel } from "@/components/cms/media/graph/BynderStubs";
+import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 
 export const GoldenSourcePageHeadingComponentType = contentType({
   key: AllComponentTypeKeyMap.GoldenSourcePageHeading,
@@ -30,10 +32,16 @@ export const GoldenSourcePageHeadingComponentType = contentType({
       ],
     },
     image: {
+      displayName: "[Obsolete] Image",
+      type: "contentReference",
+      allowedTypes: ["_image"],
+      ...SoftDeleteProperties,
+    },
+    bynderImage: {
       displayName: "Image",
       group: PropertyTypes.Appearance,
       type: "contentReference",
-      allowedTypes: ["_image"],
+      allowedTypes: [BynderImageStubModel],
     },
     videoId: {
       type: "string",

@@ -7,8 +7,8 @@ import { RichTextAreaElementType } from "./RichTextArea/RichTextArea.model";
 import { RichTextAreaElement } from "./RichTextArea";
 import { LinkElement } from "./Link";
 import { LinkElementType } from "./Link/Link.model";
-import { ImageElement } from "./Image";
-import { ImageElementType } from "./Image/Image.model";
+import { ImageElement } from "./ImageElement";
+import { ImageElementType } from "./ImageElement/ImageElement.model";
 
 export const elementRegistry: ComponentRegistry = {
   [CtaButtonElementType.key]: CTAButtonElement,

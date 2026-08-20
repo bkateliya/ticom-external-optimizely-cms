@@ -1,16 +1,17 @@
 import { contentType } from "@optimizely/cms-sdk";
-import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
+import { DISPLAY_NAME_PREFIX } from "../../../constants.mjs";
 import { PropertyTypes } from "@/lib/property-types";
-import { AllComponentTypeKeyMap } from "../keys";
-import { CtaLinkElementType } from "../../elements/CTALink/CTALink.model";
-import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
-
+import { AllComponentTypeKeyMap } from "../../keys";
+import { CtaLinkElementType } from "../../../elements/CTALink/CTALink.model";
+import { AllowIn } from "../../../contracts/component-contracts/allow-in.model";
+import { PageHeadingContract } from "../../../contracts/component-contracts/page-headings.model";
+import { ImageBaseContract } from "@/components/cms/contracts/component-contracts/image.model";
 
 export const PremiumMediaHeadingComponentType = contentType({
   key: AllComponentTypeKeyMap.PremiumMediaHeadingComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Premium Media Heading`,
   baseType: "_component",
-  extends: [AllowIn.PageHeader],
+  extends: [PageHeadingContract, ImageBaseContract, AllowIn.PageHeader],
   properties: {
     preHeadline: {
       type: "richText",
@@ -20,27 +21,11 @@ export const PremiumMediaHeadingComponentType = contentType({
       group: PropertyTypes.Content,
       isLocalized: true,
     },
-    headline: {
-      type: "string",
-      displayName: "Headline",
-      description: "Headline of the component",
-      maxLength: 60,
-      group: PropertyTypes.Content,
-      isLocalized: true,
-    },
     tagline: {
       type: "richText",
       displayName: "Tagline",
       description: "Tagline of the component",
       maxLength: 62,
-      group: PropertyTypes.Content,
-      isLocalized: true,
-    },
-    subheadline: {
-      type: "richText",
-      displayName: "Subheadline",
-      description: "Subheadline of the component",
-      maxLength: 160,
       group: PropertyTypes.Content,
       isLocalized: true,
     },
@@ -65,11 +50,6 @@ export const PremiumMediaHeadingComponentType = contentType({
         { value: "video", displayName: "Video" },
       ],
     },
-    image: { 
-      displayName: "Image",
-      type: "contentReference", 
-      allowedTypes: ["_image"]
-    },
     videoId: {
       type: "string",
       displayName: "Video ID",
@@ -79,13 +59,13 @@ export const PremiumMediaHeadingComponentType = contentType({
     },
     videoPlayerControls: {
       displayName: "Video player controls",
-      group: PropertyTypes.ComponentConfiguration ,
+      group: PropertyTypes.ComponentConfiguration,
       description: "If controls will be usable on player",
       type: "boolean",
     },
     searchBar: {
       displayName: "Search Bar",
-      group: PropertyTypes.ComponentConfiguration ,
+      group: PropertyTypes.ComponentConfiguration,
       type: "string",
       format: "selectOne",
       enum: [
