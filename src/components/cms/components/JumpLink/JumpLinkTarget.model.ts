@@ -10,7 +10,7 @@ export const JumpLinkTargetComponentType = contentType({
   properties: {
     jumpLink: {
       type: "string",
-      displayName: "Jump Link",
+      displayName: "Jump Link ID",
       group: PropertyTypes.Content,
       isRequired: true,
     },

@@ -4,6 +4,7 @@ export type TiSlideShowElement = HTMLElement & {
 };
 
 export type TiSlideProps = React.PropsWithChildren & {
+  style?: React.CSSProperties;
   /** URL for the thumbnail image shown in slideshow nav */
   thumbnailSrc: string;
   /** Optional label text for the thumbnail shown in slideshow nav */
@@ -30,11 +31,13 @@ export function TiSlide({
   videoStartsPaused,
   duration,
   children,
+  style,
   ref,
 }: TiSlideProps): React.ReactNode {
   return (
     <ti-slide
       ref={ref}
+      style={style}
       thumbnail-src={thumbnailSrc}
       thumbnail-label={thumbnailLabel}
       background-image-src={backgroundImageSrc}

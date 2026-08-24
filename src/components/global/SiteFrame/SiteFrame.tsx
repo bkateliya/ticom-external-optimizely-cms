@@ -14,7 +14,7 @@ export async function SiteFrame({ content, children }: Props) {
       {siteSettings?.header && (
         <ExtendedOptimizelyComponent content={siteSettings.header} />
       )}
-      <main className="">
+      <main className="relative">
         <Breadcrumb />
         {children}
       </main>

@@ -9,6 +9,8 @@ import { PreambleContracts } from "./preamble.model";
 import { ContractContentType } from "@/lib/ts/opti";
 import { HeadlineContract } from "./headline.model";
 import { DeprecatedCtaListContract } from "./cta-list.model";
+import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
+import { JumpLinkTargetComponentType } from "../../components/JumpLink/JumpLinkTarget.model";
 
 export const BackgroundColorSetting = contentType({
   key: `${KEY_PREFIX}BackgroundColor_Setting`,
@@ -106,6 +108,13 @@ export const SectionSettingsContract = contract({
       type: "string",
       displayName: "Section ID",
       description: "ID for use as anchor target or for other purposes",
+      ...SoftDeleteProperties,
+    },
+    jumpNavTarget: {
+      type: "content",
+      displayName: "Jump Nav Target",
+      group: PropertyTypes.Content,
+      allowedTypes: [JumpLinkTargetComponentType],
     },
     headlineAlignment: {
       type: "string",
@@ -133,13 +142,15 @@ export const SectionSettingsContract = contract({
     sectionFullHeight: {
       type: "boolean",
       displayName: "Section Full Height",
-      description: "If checked, the section will take up a full screen's height",
+      description:
+        "If checked, the section will take up a full screen's height",
       group: PropertyTypes.Appearance,
     },
     sectionNarrow: {
       type: "boolean",
       displayName: "Section Narrow",
-      description: "If checked, the section content will be more narrow and have more margin on the sides",
+      description:
+        "If checked, the section content will be more narrow and have more margin on the sides",
       group: PropertyTypes.Appearance,
     },
   },

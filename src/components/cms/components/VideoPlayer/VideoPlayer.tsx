@@ -16,12 +16,14 @@ export function VideoPlayerComponent({
 }: OptiComponentProps<typeof VideoPlayerComponentType>) {
   // Without the account/player ids the embed can only render a broken player
   // (`data-account` omitted, script URL 404s), so render nothing instead.
-  if (!content?.id || !BRIGHTCOVE_ACCOUNT || !BRIGHTCOVE_PLAYER) {
+  const videoId = content?.id?.trim();
+
+  if (!content || !videoId || !BRIGHTCOVE_ACCOUNT || !BRIGHTCOVE_PLAYER) {
     return null;
   }
 
   if (content.videoPlayerType === "videoPlaylist") {
-    return <VideoPlaylist id={content.id} account={BRIGHTCOVE_ACCOUNT} />;
+    return <VideoPlaylist id={videoId} account={BRIGHTCOVE_ACCOUNT} />;
   }
 
   return (
@@ -37,7 +39,7 @@ export function VideoPlayerComponent({
           data-player={BRIGHTCOVE_PLAYER}
           data-embed="default"
           data-application-id=""
-          data-video-id={content.id}
+          data-video-id={videoId}
         />
       </div>
       <Script

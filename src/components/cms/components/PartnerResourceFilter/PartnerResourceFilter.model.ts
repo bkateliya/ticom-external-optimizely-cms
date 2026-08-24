@@ -10,6 +10,12 @@ export const PartnerResourceFilterComponentType = contentType({
   baseType: "_component",
   compositionBehaviors: ["sectionEnabled"],
   properties: {
+    headline: {
+      type: "string",
+      displayName: "Headline",
+      group: PropertyTypes.Content,
+      isLocalized: true,
+    },
     resourceCategory: {
       type: "array",
       displayName: "Resource Category",

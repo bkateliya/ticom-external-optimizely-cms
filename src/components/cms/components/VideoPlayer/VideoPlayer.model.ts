@@ -30,6 +30,7 @@ export const VideoPlayerComponentType = contentType({
     id: {
       type: "string",
       displayName: "Brightcove ID",
+      isRequired: true,
       description: "Single Video ID or Video Playlist ID",
       group: PropertyTypes.Content,
       sortOrder: 11,

@@ -1,6 +1,5 @@
 "use client";
 
-import { TextAlignment } from "@/components/ui/context/TextAlignmentContext";
 import { createContext, useContext } from "react";
 import clsx from "clsx";
 
@@ -11,24 +10,18 @@ export interface SectionWrapperProps
   contained?: boolean;
   /** Optional. Constrain the content to the narrower `container-md` width. */
   narrow?: boolean;
-  textAlignment?: TextAlignment;
   noPaddingTop?: boolean;
   noPaddingBottom?: boolean;
   noPaddingSides?: boolean;
 }
 
-const textAlignmentClassMap: Record<TextAlignment, string> = {
-  Left: "text-left",
-  Center: "text-center",
-  Right: "text-right",
-};
-
 export const SectionWrapper = ({
   children,
-  textAlignment = "Left",
   className,
   contained = true,
   narrow = false,
+  noPaddingTop = false,
+  noPaddingBottom = false,
   ...props
 }: SectionWrapperProps) => {
   const { isInsideSectionWrapper } = useContext(SectionWrapperContext);
@@ -51,9 +44,8 @@ export const SectionWrapper = ({
     contained && (narrow ? "container-md" : "container-lg"),
     "mx-auto",
     "space-10",
-    "py-16",
-    "md:py-24",
-    textAlignmentClassMap[textAlignment],
+    !noPaddingTop && "pt-16 md:pt-24",
+    !noPaddingBottom && "pb-16 md:pb-24",
     className,
   );
 

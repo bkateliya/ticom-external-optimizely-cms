@@ -14,7 +14,7 @@ export function ContentBlockComponent({
     return null;
   }
 
-  const { src, alt } = getStandardizedImage(content, content.image);
+  const { src, alt } = getStandardizedImage(content, content.bynderImage);
 
   const { WrappedRichTextField } = fieldFactory<
     typeof ContentBlockComponentType

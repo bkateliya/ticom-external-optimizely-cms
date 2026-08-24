@@ -1,0 +1,27 @@
+/* ==========================================================================
+ * Breadcrumb — Dark hero context styles
+ * --------------------------------------------------------------------------
+ * Two signal classes set on the hero wrapper (PremiumMediaHeading etc.):
+ *
+ *   .breadcrumb-reversed  → inverts breadcrumb text to white (color only)
+ *   .breadcrumb-overlay   → floats breadcrumb absolutely over the hero
+ * ========================================================================== */
+
+/* Invert breadcrumb text colors for dark backgrounds */
+main:has(.breadcrumb-reversed) nav[aria-label="Breadcrumb"] {
+  --pl-text-color-primary: white;
+  --color-pl-text-color-primary: white;
+  --pl-text-color-secondary-contrast: rgba(255, 255, 255, 0.7);
+  --color-pl-text-color-secondary-contrast: rgba(255, 255, 255, 0.7);
+  color: white;
+}
+
+/* Float breadcrumb over the hero */
+main:has(.breadcrumb-overlay) nav[aria-label="Breadcrumb"] {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  margin-bottom: 0;
+  padding-top: 16px;
+}
+

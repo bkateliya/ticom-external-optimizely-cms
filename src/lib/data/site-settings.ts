@@ -27,6 +27,9 @@ import { getNormalizedFamilyInfo } from "../api/normalized/productFamilies";
 import { getSilos } from "../api/cms-api";
 import { findAllBynderAssetsOnPage } from "./bynder";
 import { OptimizelyContentProps } from "@/components/ui/cms/ExtendedOptimizelyComponent";
+import { PageContentContract } from "@/components/cms/contracts/page-contacts/page-content.model";
+import { PageHeadingContract } from "@/components/cms/contracts/component-contracts/page-headings.model";
+import { getExpandedContractTypes } from "../opti/opti-init-utils";
 
 type PathType = Parameters<GraphClient["getPath"]>["0"];
 export const populateSiteSettings = cache(async function (
@@ -54,7 +57,7 @@ export const populateSiteSettings = cache(async function (
     locale,
     siteSettings,
     breadcrumb,
-    pageTitle: currentPage?.pageTitle,
+    pageTitle: currentPage?.hero?.pageHeadline,
     pageContentId: currentPage?._metadata.key,
     pageType: currentPage?._itemMetadata.type,
     bynderImages: bynderImageMap,
@@ -126,7 +129,8 @@ async function getBreadcrumb(
       x._itemMetadata.type !== ArticlePageType.key,
   );
   return visibleItems.map((x, i) => ({
-    title: i === 0 ? t("Home") : x.navigationTitle || x.pageTitle,
+    title:
+      i === 0 ? t("Home") : ((x.navigationTitle || x.hero?.pageHeadline) ?? ""),
     // The items are in the content locale, which is the default locale on a page
     // that fell back — the crumbs must stay on the locale the visitor is browsing.
     url: withLocale(x._metadata.url.default, locale),
@@ -170,7 +174,7 @@ async function getItemsInPath(path: string | GraphReference, locale: string) {
   // header/footer SiteSettings silently disappear. Map slug -> code here.
   const graphLocale = toGraphLocale(locale);
 
-  const result = (await client.request(Query, {
+  const result = (await client.request(getQuery(), {
     keys: keyPath,
     locale: graphLocale,
   })) as ResultType;
@@ -186,13 +190,27 @@ async function getItemsInPath(path: string | GraphReference, locale: string) {
 
 const getItemsInPathCached = cache(getItemsInPath);
 
-const Query = `
+export function getPageHeadlineContractFragment() {
+  return `fragment pageHeading on I${PageHeadingContract.key} {
+  ${getExpandedContractTypes(PageHeadingContract.key).map(
+    (componentType) => `
+    ... on ${componentType.key} {
+    pageHeadline
+  }`,
+  )}
+}`;
+}
+function getQuery() {
+  return `
+${getPageHeadlineContractFragment()}
 query($keys: [String], $locale: String) {
-  TI_PageContent_Contract(
+  ${PageContentContract.key}(
     where: { _metadata: { key: { in: $keys }, locale: { eq: $locale } } }
   ) {
-    items {
-      pageTitle
+    items {      
+      hero {
+        ...pageHeading
+      }
       navigationTitle
       hideInNavigation
       siteSettingsOverride {
@@ -211,9 +229,12 @@ query($keys: [String], $locale: String) {
     }
   }
 }`;
+}
 
 type ResultItemType = {
-  pageTitle: string;
+  hero?: {
+    pageHeadline?: string;
+  };
   navigationTitle: string;
   hideInNavigation: boolean;
   siteSettingsOverride: {
