@@ -8,6 +8,7 @@ import {
   getPaginatedResults,
   ResultWithKey,
 } from "@/lib/graphql/graph-utils";
+import { getPageHeadlineContractFragment } from "@/lib/data/site-settings";
 
 export async function GET(request: NextRequest) {
   const category = request.nextUrl.searchParams.get("category");
@@ -54,9 +55,12 @@ export async function GET(request: NextRequest) {
   const results = await getPaginatedResults(query, vars);
   const keys = results.map((x) => x._metadata.key);
 
-  const finalItems = await getPaginatedResults<PageContentResult>(DATA_QUERY, {
-    keys,
-  });
+  const finalItems = await getPaginatedResults<PageContentResult>(
+    getDataQuery(),
+    {
+      keys,
+    },
+  );
 
   // We unfortunately cannot do this in a single query because they are different contracts
   const gsItems = await getPaginatedResults<GoldenSourcedResult>(
@@ -81,8 +85,8 @@ export async function GET(request: NextRequest) {
     hideinnavigation: x.hideInNavigation ?? false,
     language: x._metadata.locale.replace(/\-\w+\-/, "_").replace("-", "_"),
     navigationtitle:
-      x.navigationTitle || x.pageTitle || x._metadata.displayName,
-    pagename: x.pageTitle || x._metadata.displayName,
+      x.navigationTitle || x.hero?.pageHeadline || x._metadata.displayName,
+    pagename: x.hero?.pageHeadline || x._metadata.displayName,
     pagetype: x._itemMetadata.type,
     tags: [],
     url: `${x._metadata.url.base}${x._metadata.url.hierarchical}`,
@@ -256,7 +260,9 @@ interface PageContentResult extends ResultWithKey {
     };
   };
   navigationTitle: string;
-  pageTitle: string;
+  hero?: {
+    pageHeadline?: string;
+  };
   hideInNavigation: boolean;
 
   application?: { key: string };
@@ -268,7 +274,10 @@ interface GoldenSourcedResult extends ResultWithKey {
   productFamily?: { key: string };
 }
 
-const DATA_QUERY = `query PageData($keys: [String], ${COMMON_PAGINATION_QUERY}) {
+function getDataQuery() {
+  return `
+${getPageHeadlineContractFragment()}
+query PageData($keys: [String], ${COMMON_PAGINATION_QUERY}) {
   data: ${PageContentContract.key}(
     where: { _itemMetadata: { key: { in: $keys } } }
     ${COMMON_PAGINATION_FILTER}
@@ -288,14 +297,17 @@ const DATA_QUERY = `query PageData($keys: [String], ${COMMON_PAGINATION_QUERY}) 
         types
         key
       }
-        ... on ${PageContentContract.key} {
+      hero {
+        ...pageHeading
+      }
+      ... on ${PageContentContract.key} {
         navigationTitle
-        pageTitle
         hideInNavigation
       }
     }
   }
 }`;
+}
 
 const GOLDEN_SOURCED_QUERY = `query PageData($keys: [String], ${COMMON_PAGINATION_QUERY}) {
   data: ${GoldenSourcedDataContract.key}(

@@ -68,7 +68,6 @@ export const PreambleDirectHeadline = ({
     "flex",
     "flex-column",
     "bg-{var(--component-section-color-bg)}",
-    textAlignmentClassMap[textAlignment],
   );
 
   const hasHeaderContent = !!(
@@ -102,6 +101,8 @@ export const PreambleDirectHeadline = ({
               "w-full",
               "flex-col",
               "gap-8 md:max-w-2/3",
+
+              textAlignmentClassMap[textAlignment],
               {
                 "flex-col mx-auto": textAlignment === "Center",
               },

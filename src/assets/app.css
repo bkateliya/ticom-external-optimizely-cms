@@ -12,12 +12,15 @@
 
 /* Pre-hydration, breadcrumb scoped css, slotted content. */
 @import "./ti-css/hydration.css";
+@import "./ti-css/breadcrumb.css";
+@import "./ti-css/layout.css";
 
 :root,
 .theme-root {
   --color-text-default: var(--ti-text-color);
   --font-body: var(--font-roboto);
 }
+
 
 * {
   box-sizing: border-box
@@ -80,3 +83,4 @@
 }
 
 /* @import "./tw-theme"; */
+

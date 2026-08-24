@@ -13,6 +13,10 @@ export const remotePatterns: RemotePattern[] = [
     protocol: "https",
     hostname: "placehold.co",
   },
+  {
+    protocol: "https",
+    hostname: "dam.ti.com",
+  },
 ];
 
 export function isAllowedImageDomain(url: string): boolean {

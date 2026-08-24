@@ -16,18 +16,29 @@ import { ContentProperty } from "node_modules/@optimizely/cms-sdk/dist/cjs/model
 import { deepSearch } from "../utils/object-utils";
 import { ALLOW_IN_CONTRACT_KEY_PREFIX } from "@/components/cms/contracts/component-contracts/allow-in.model";
 
-const originalAllTypes = [
-  ...experienceTypes,
-  ...pageTypes,
-  ...allComponentTypes,
-  ...dataTypes,
-  ...structuralComponentTypes,
-  ...elementTypes,
-  ...sectionTypes,
-  ...contractComponentTypes,
-];
+let originalAllTypes: ContentTypes.AnyContentType[] | null = null;
+// This is a function instead of a const because
+// due to import order when it's a top level const
+// it can be loaded before the actually types are populated
+// resulting in a circular reference error
+function getOriginalAllTypes() {
+  if (!originalAllTypes) {
+    originalAllTypes = [
+      ...experienceTypes,
+      ...pageTypes,
+      ...allComponentTypes,
+      ...dataTypes,
+      ...structuralComponentTypes,
+      ...elementTypes,
+      ...sectionTypes,
+      ...contractComponentTypes,
+    ];
+  }
+  return originalAllTypes;
+}
 
 export function getAllTypesUpdated() {
+  const originalAllTypes = getOriginalAllTypes();
   // When AllowedTypes is a contract, we need to expand it to the proper allowed types
   // for the GraphQL queries to return the correct data.
   // If this is fixed in future Optimizely SDK versions this can be removed.
@@ -43,7 +54,7 @@ export function getAllTypesUpdated() {
       contentProperty.allowedTypes?.forEach((allowedType) => {
         // If the allowed type is an "Allow In" contract expand the contract
         if (toKey(allowedType)?.startsWith(ALLOW_IN_CONTRACT_KEY_PREFIX)) {
-          getAllowedTypes(allowedType as Contract).forEach((y) =>
+          getExpandedContractTypes(allowedType as Contract).forEach((y) =>
             newAllowedTypes.push(toKey(y)),
           );
         } else {
@@ -69,14 +80,14 @@ const expandedContractLookup: Record<
   ContentTypes.ComponentContentType[]
 > = {};
 
-function getAllowedTypes(
+export function getExpandedContractTypes(
   contract: Contract | string,
 ): ContentTypes.ComponentContentType[] {
   const key = toKey(contract);
   if (expandedContractLookup[key]) {
     return expandedContractLookup[key];
   }
-  expandedContractLookup[key] = originalAllTypes
+  expandedContractLookup[key] = getOriginalAllTypes()
     .filter((x) => x.baseType === "_component")
     .filter((x: ComponentContentType) => {
       if (!x.extends) {

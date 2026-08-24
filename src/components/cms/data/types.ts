@@ -7,6 +7,7 @@ import {
   DestinationTypeFolderType,
   DestinationTypeType,
 } from "./DestinationType.model";
+import { TaxonomyType } from "./Taxonomy.model";
 
 export const dataTypes = [
   ApplicationType,
@@ -15,4 +16,5 @@ export const dataTypes = [
   ProductFamilyFolderType,
   DestinationTypeType,
   DestinationTypeFolderType,
+  TaxonomyType,
 ];

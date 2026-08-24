@@ -1,14 +1,15 @@
 import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants.mjs";
-import { AllComponentTypeKeyMap } from "../keys";
+import { AllComponentTypeKeyMap } from "../../keys";
 import { PropertyTypes } from "@/lib/property-types";
-import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
+import { AllowIn } from "../../../contracts/component-contracts/allow-in.model";
+import { ImageBaseContract } from "@/components/cms/contracts/component-contracts/image.model";
 
 export const GoldenSourcePageHeadingComponentType = contentType({
   key: AllComponentTypeKeyMap.GoldenSourcePageHeading,
   displayName: `${DISPLAY_NAME_PREFIX}Golden Source Page Heading`,
   baseType: "_component",
-  extends: [AllowIn.PageHeader],
+  extends: [ImageBaseContract, AllowIn.PageHeader],
   properties: {
     subheadline: {
       type: "richText",
@@ -17,31 +18,39 @@ export const GoldenSourcePageHeadingComponentType = contentType({
       maxLength: 160,
       group: PropertyTypes.Content,
       isLocalized: true,
+      editorSettings: { preset: "minimal" },
     },
-    featureOptions: {
-      displayName: "Select background",
+    background: {
+      displayName: "Section background",
       group: PropertyTypes.Appearance,
       type: "string",
       format: "selectOne",
+      sortOrder: 10,
+      enum: [
+        { value: "white", displayName: "White (default)" },
+        { value: "grey", displayName: "Grey" },
+      ],
+    },
+    assetType: {
+      displayName: "Feature asset",
+      group: PropertyTypes.Appearance,
+      type: "string",
+      format: "selectOne",
+      sortOrder: 20,
       enum: [
         { value: "none", displayName: "None" },
         { value: "image", displayName: "Image" },
-        { value: "video", displayName: "Video" },
+        { value: "brightcove", displayName: "Video (Brightcove)" },
       ],
     },
-    image: {
-      displayName: "Image",
-      group: PropertyTypes.Appearance,
-      type: "contentReference",
-      allowedTypes: ["_image"],
-    },
-    videoId: {
+    featureVideoId: {
+      displayName: "Video ID (Brightcove)",
+      description: "Brightcove video ID — autoplays in the right column",
       type: "string",
-      group: PropertyTypes.Appearance,
-      displayName: "Background Video ID",
-      description: "Background Video ID",
       minLength: 13,
       maxLength: 13,
+      group: PropertyTypes.Appearance,
+      sortOrder: 40,
     },
     secondaryCTA: {
       displayName: "Select secondary CTA",

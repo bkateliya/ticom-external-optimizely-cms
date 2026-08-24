@@ -13,7 +13,7 @@ export function TiHeader({ locale }: { locale: string; }) {
       <header
         id="tiResponsiveHeader"
         data-language={locale}
-        className="ti_p-responsiveHeader ti_aem-ce"
+        className="ti_p-responsiveHeader"
       />
 
     </>

@@ -1,0 +1,22 @@
+/* ==========================================================================
+ * Theme — Layout
+ * --------------------------------------------------------------------------
+ * Global layout variables — header height, z-index layers, etc.
+ * Mobile-first: base values are mobile, desktop overrides in @media block.
+ * ========================================================================== */
+
+:root {
+  /* Global header height — used to offset full-viewport hero sections */
+  --ti-header-height: 88px;
+}
+
+@media (width >= 768px) {
+  :root {
+    --ti-header-height: 160px;
+  }
+}
+
+/* Remove TI global header bottom margin so content sits flush under it */
+body:has(.global-header-flush) .ti_p-responsiveHeader {
+  margin-bottom: 0 ;
+}

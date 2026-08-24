@@ -3,11 +3,11 @@ import { normalizeUrl } from "@/lib/utils/link-utils";
 import { TiImage } from "@/components/ui/ti/TiImages/TiImage/TiImage";
 import { StandardImageComponentType } from "./StandardImage.model";
 import { HeadshotImageComponentType } from "./HeadshotImage.model";
-import {
-  getBynderImageFromContext,
-  getBynderTransformUrl,
-} from "@/lib/data/bynder";
 import { OptiComponentProps } from "@/lib/ts/component-props";
+import {
+  getStandardizedImage,
+  getStandardizedImageFromContract,
+} from "@/lib/utils/image-utils";
 
 export async function StandardImageView({
   content,
@@ -21,23 +21,24 @@ export async function StandardImageView({
     typeof StandardImageComponentType
   >(content, parentField);
 
-  const img = getBynderImageFromContext(content.bynderImage);
-  const imageUrl = img?.original;
-  if (!imageUrl) {
+  const { src, alt } = getStandardizedImageFromContract(content);
+  if (!src) {
     return null;
   }
 
   const linkHref = content.link?.url?.default ?? "";
   const href = linkHref ? (normalizeUrl(linkHref) ?? undefined) : undefined;
+  const target = content.link?.target ?? undefined;
 
   return (
     <div
       className={content.enableBorder ? "border border-gray-300" : undefined}
     >
       <TiImage
-        src={imageUrl}
-        alt={content.altText || img.property_alt_text}
+        src={src}
+        alt={alt}
         href={href}
+        target={target}
         zoom={content.enableEnlarge ?? undefined}
         zoomCaption={content.enableEnlarge ?? undefined}
         caption={
@@ -56,22 +57,29 @@ export function HeadshotImageView({
   if (!content) {
     return null;
   }
-  const img = getBynderImageFromContext(content.bynderImage);
-  const imageUrl = img && getBynderTransformUrl(img, "192x192");
-  if (!imageUrl) {
+
+  const { src, alt, bynderImage } = getStandardizedImage(
+    content,
+    content.bynderImage,
+    { preset: "192x192" },
+  );
+  if (!src) {
     return null;
   }
 
   return (
     <div className="float-left mb-4 w-[174px]">
-      <TiImage src={imageUrl} alt={content.altText || img.property_alt_text} />
-      {(img.property_people || img.property_employee_title) && (
+      <TiImage src={src} alt={content.altText || alt} />
+      {(bynderImage?.property_people ||
+        bynderImage?.property_employee_title) && (
         <div className="mt-4 text-sm leading-5">
-          {img.property_people && (
-            <div className="mb-2 font-semibold">{img.property_people}</div>
+          {bynderImage?.property_people && (
+            <div className="mb-2 font-semibold">
+              {bynderImage?.property_people}
+            </div>
           )}
-          {img.property_employee_title && (
-            <div>{img.property_employee_title}</div>
+          {bynderImage?.property_employee_title && (
+            <div>{bynderImage?.property_employee_title}</div>
           )}
         </div>
       )}
