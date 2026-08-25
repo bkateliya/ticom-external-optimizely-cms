@@ -4,7 +4,7 @@ import { ContentTypes } from "@optimizely/cms-sdk";
 export type TextFieldProps<
   TContentType extends ContentTypes.AnyContentType,
   TElement extends React.ElementType = "span",
-> = CmsFieldElementProps<TContentType, TElement>;
+> = CmsFieldElementProps<TContentType, string | null, TElement>;
 
 export function TextField<
   TContentType extends ContentTypes.AnyContentType,

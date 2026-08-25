@@ -172,7 +172,7 @@
 "COMPANY BLOG": "블로그",
 "Browse applications": "애플리케이션 찾아보기",
 "View applications": "애플리케이션 보기",
-"Watch the video": "비디오 시청",
+"Watch video": "비디오 시청",
 "Search all applications": "전체 애플리케이션 검색",
 "Search over 500 applications across all markets": "전체 시장의 500여 종의 애플리케이션을 검색해보세요",
 "No search results text": "검색 결과가 없습니다. 다시 시도하거나 <a href=\"#\" data-lid=\"searchapplications-browse all markets and sectors\">전체 애플리케이션 시장 및 섹터를 둘러보세요.<\/a>",
@@ -213,7 +213,7 @@
 "Total quantity": "총 수량",
 "Shipping cost": "배송비",
 "Featured products": "주요 제품",
-"Browse videos": "동영상 둘러보기",
+"Browse videos": "주제별 비디오 찾아보기",
 "Presenter(s)": "발표자",
 "Approx. price": "대략적인 가격",
 "Data sheet": "데이터 시트",
@@ -335,5 +335,7 @@
 "View results": "결과 보기",
 "Company culture": "회사 문화",
 "Share": "공유",
-"On this page": "페이지 목차"
+"On this page": "페이지 목차",
+"CopyrightText-{year}": "© Copyright 1995-{year}",
+"CopyrightSuffixText": "Texas Instruments Incorporated. All rights reserved."
 }

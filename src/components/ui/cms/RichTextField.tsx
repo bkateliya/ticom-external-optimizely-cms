@@ -1,11 +1,20 @@
 import { CmsFieldProps } from "@/lib/ts/field-props";
 import { normalizeUrl } from "@/lib/utils/link-utils";
 import { ContentTypes } from "@optimizely/cms-sdk";
-import { ElementRendererProps, LinkElement, RichText, RichTextProps } from "@optimizely/cms-sdk/react/richText";
+import {
+  ElementRendererProps,
+  LinkElement,
+  RichText,
+  RichTextProps,
+} from "@optimizely/cms-sdk/react/richText";
 import { getPreviewUtils } from "@optimizely/cms-sdk/react/server";
-import NextLink from 'next/link';
+import NextLink from "next/link";
 
 export type RichTextFieldContent = { json: RichTextProps["content"] } | null;
+export type SimpleRichTextNode = {
+  text?: string;
+  children?: SimpleRichTextNode[];
+}
 
 export type RichTextFieldProps<
   TContentType extends ContentTypes.AnyContentType,
@@ -36,14 +45,17 @@ export function RichTextField<
       {...pa([parentField, field].filter(Boolean).join("."))}
       {...props}
       elements={{
-        link: LinkRenderer
+        link: LinkRenderer,
       }}
     />
   );
 }
 
-const LinkRenderer = ({ children, attributes, element }: ElementRendererProps) => {
-
+const LinkRenderer = ({
+  children,
+  attributes,
+  element,
+}: ElementRendererProps) => {
   const linkElement = element as LinkElement;
   const href = normalizeUrl(linkElement.url);
   if (!href) {

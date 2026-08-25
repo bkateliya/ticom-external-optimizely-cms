@@ -23,7 +23,7 @@ const redUnderlineClass = clsx(
 
 export type HeadingFieldProps<
   TContentType extends ContentTypes.AnyContentType,
-> = Omit<CmsFieldElementProps<TContentType>, "as"> & {
+> = Omit<CmsFieldElementProps<TContentType, string | null>, "as"> & {
   headingSize?: HeadingSizeType;
   redUnderline?: boolean;
 };

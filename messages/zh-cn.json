@@ -179,7 +179,7 @@
 "COMPANY BLOG": "公司博客",
 "View applications": "查看应用",
 "Browse applications": "浏览应用",
-"Watch the video": "观看视频",
+"Watch video": "观看视频",
 "Search all applications": "搜索所有应用",
 "Search over 500 applications across all markets": "搜索所有市场的 500 多个应用",
 "No search results text": "未搜索到结果。请重试或<a href=\"#\" data-lid=\"searchapplications-browse all markets and sectors\">浏览所有应用市场和行业。<\/a>",
@@ -217,7 +217,7 @@
 "Total quantity": "总数量",
 "Shipping cost": "运费",
 "Featured products": "精选产品",
-"Browse videos": "观看视频",
+"Browse videos": "按主题浏览视频",
 "Presenter(s)": "讲解人",
 "Search our video library": "搜索我们的视频库",
 "https://{}/product-category/overview.html": "https://{}/zh-cn/product-category/overview.html",
@@ -338,5 +338,7 @@
 "Company culture": "公司文化",
 "Share": "共享",
 "On this page": "本页内容",
-"Whats new": "新增内容"
+"Whats new": "新增内容",
+"CopyrightText-{year}": "© Copyright 1995-{year}",
+"CopyrightSuffixText": "Texas Instruments Incorporated。版权所有。"
 }
