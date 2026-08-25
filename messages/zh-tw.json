@@ -31,7 +31,7 @@
 "https://{0}/sitesearch/en-us/docs/universalsearch.tsp?langPref=en-US&searchTerm=%00&preFilter=applications_{1}": "https://{0}/sitesearch/zh-tw/docs/universalsearch.tsp?langPref=zh-TW&searchTerm=%00&preFilter=applications_{1};videos_視訊,視頻系列",
 "https://{0}/sitesearch/en-us/docs/universalsearch.tsp?langPref=en-US&searchTerm=%00&preFilter=latestVideo": "https://{0}/sitesearch/zh-tw/docs/universalsearch.tsp?langPref=zh-TW&searchTerm=%00&preFilter=latestVideo#f:videos=[視訊,視頻系列]",
 "Resources": "資源",
-"Browse videos": "瀏覽影片",
+"Browse videos": "依主題瀏覽影片",
 "Presenter(s)": "簡報者",
 "Search our video library":"搜尋我們的影片庫",
 "New": "全新推出",
@@ -205,8 +205,10 @@
 "Filter news releases": "篩選新聞稿",
 "View results": "檢視結果",
 "Company culture": "公司文化",
-"Watch the video": "觀看影片",
+"Watch video": "觀看影片",
 "Share": "分享",
 "On this page": "本頁內容",
-"Whats new": "新功能"
+"Whats new": "新功能",
+"CopyrightText-{year}": "© Copyright 1995-{year}",
+"CopyrightSuffixText": "Texas Instruments Incorporated.保留所有權利。"
 }

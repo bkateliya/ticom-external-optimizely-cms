@@ -14,7 +14,7 @@ export function ArticlePageHeaderComponent({
     return null;
   }
 
-  const { WrappedTextField } = fieldFactory<
+  const { WrappedTextField, WrappedRichTextField } = fieldFactory<
     typeof ArticlePageHeaderComponentType
   >(content, parentField);
 
@@ -24,7 +24,7 @@ export function ArticlePageHeaderComponent({
         <div>
           <WrappedTextField field="pageHeadline" as="h1" />
 
-          <WrappedTextField field="pageSubheadline" as="p" />
+          <WrappedRichTextField field="pageSubheadline" />
 
           {content.hideImage ? null : (
             <ImageElement

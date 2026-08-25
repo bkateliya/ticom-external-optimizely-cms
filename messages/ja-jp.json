@@ -175,7 +175,7 @@
 "COMPANY BLOG": "カンパニー・ブログ",
 "View applications": "アプリケーションの表示",
 "Browse applications": "アプリケーションを参照",
-"Watch the video": "ビデオを見る",
+"Watch video": "ビデオを見る",
 "Search all applications": "すべてのアプリケーションを検索",
 "Search over 500 applications across all markets": "全市場を対象とする 500 種類以上のアプリケーションの中から検索",
 "No search results text": "検索結果が見つかりませんでした。もう一度試すか、<a href=\"#\" data-lid=\"searchapplications-browse all markets and sectors\">すべてのアプリケーション市場とセクターをご覧ください。<\/a>",
@@ -216,7 +216,7 @@
 "Total quantity": "合計数量",
 "Shipping cost": "配送コスト",
 "Featured products": "主要製品",
-"Browse videos": "ビデオを視聴する",
+"Browse videos": "トピック別にビデオを参照する",
 "Presenter(s)": "講演者",
 "Search our video library": "TI のビデオ ライブラリを検索",
 "https://{}/product-category/overview.html": "https://{}/ja-jp/product-category/overview.html",
@@ -337,5 +337,7 @@
 "Company culture": "企業文化",
 "Share": "共有",
 "On this page": "このページに含まれるもの",
-"Whats new": "最新情報"
+"Whats new": "最新情報",
+"CopyrightText-{year}": "© Copyright 1995-{year}",
+"CopyrightSuffixText": "Texas Instruments Incorporated. All rights reserved."
 }

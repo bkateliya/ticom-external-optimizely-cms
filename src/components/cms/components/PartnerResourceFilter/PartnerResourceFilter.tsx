@@ -1,6 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { OptiComponentProps } from "@/lib/ts/component-props";
-import { DynamicHeading } from "@/components/ui/Atoms/DynamicHeading";
+import { fieldFactory } from "@/components/ui/cms";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { getSilos } from "@/lib/api/cms-api";
 import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
@@ -37,10 +37,15 @@ async function getProductCategories(): Promise<string[]> {
 
 export async function PartnerResourceFilter({
   content,
+  parentField,
 }: OptiComponentProps<typeof PartnerResourceFilterComponentType>) {
   if (!content) {
     return null;
   }
+
+  const { WrappedHeadingTextField } = fieldFactory<
+    typeof PartnerResourceFilterComponentType
+  >(content, parentField);
 
   const t = await getTranslations();
   const locale = await getLocale();
@@ -60,9 +65,10 @@ export async function PartnerResourceFilter({
   return (
     <SectionWrapper className="[&_.space-y-4]:space-y-0">
       <div className="flex flex-col justify-between gap-2 md:flex-row">
-        <DynamicHeading className="text-h3 font-light">
-          {t("Find partner resources and/or companies")}
-        </DynamicHeading>
+        <WrappedHeadingTextField
+          field="headline"
+          className="text-h3 font-light"
+        />
         <a
           href={viewAllUrl}
           className="text-body-md text-pl-link-color-primary no-underline hover:underline mb-6 md:mb-0 md:mt-2"

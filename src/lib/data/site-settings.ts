@@ -118,28 +118,31 @@ async function populatePageDataImpl(
 
 export const populatePageData = cache(populatePageDataImpl);
 
+function shouldShow(item: ResultItemType) {
+  return item._itemMetadata.type !== ArticlePageType.key;
+}
 async function getBreadcrumb(
   items: ResultItemType[],
   locale: string,
 ): Promise<BreadcrumbEntry[]> {
   const t = await getTranslations();
-  const visibleItems = items.filter(
-    (x) =>
-      // Don't show for Article Page
-      x._itemMetadata.type !== ArticlePageType.key,
-  );
-  return visibleItems.map((x, i) => ({
-    title:
-      i === 0 ? t("Home") : ((x.navigationTitle || x.hero?.pageHeadline) ?? ""),
-    // The items are in the content locale, which is the default locale on a page
-    // that fell back — the crumbs must stay on the locale the visitor is browsing.
-    url: withLocale(x._metadata.url.default, locale),
-    asSpan:
-      // Last entry should be span
-      i === visibleItems.length - 1 ||
-      // Folders should be span
-      x._itemMetadata.type === PageFolderType.key,
-  }));
+  return items
+    .map((x, i) => ({
+      hidden: !shouldShow(x),
+      title:
+        i === 0
+          ? t("Home")
+          : ((x.navigationTitle || x.hero?.pageHeadline) ?? ""),
+      // The items are in the content locale, which is the default locale on a page
+      // that fell back — the crumbs must stay on the locale the visitor is browsing.
+      url: withLocale(x._metadata.url.default, locale),
+      asSpan:
+        // Last entry should be span
+        i === items.length - 1 ||
+        // Folders should be span
+        x._itemMetadata.type === PageFolderType.key,
+    }))
+    .filter((x) => !x.hidden);
 }
 
 function getSiteSettings(items: ResultItemType[]) {

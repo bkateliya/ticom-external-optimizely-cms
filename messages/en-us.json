@@ -31,8 +31,11 @@
 "findYourProduct":"Find your product",
 "Download image":"Download image",
 "resourceType:referenceDesign": "Reference design",
+"Browse videos": "Browse videos by topic",
 "designResources:e2e": "E2E",
 "noUpcomingEvents": "There are currently no upcoming events matching your search. Try removing filters to broaden your results.",
 "On this page":"On this page",
-"Whats new": "What's new"
+"Whats new": "What's new",
+"CopyrightText-{year}": "© Copyright 1995-{year}",
+"CopyrightSuffixText": "Texas Instruments Incorporated. All rights reserved."
 }

@@ -5,8 +5,6 @@ import { HeroComponentType } from "./Hero.model";
 import { fieldFactory } from "@/components/ui/cms";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
-import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedNextImage";
-import { getStandardizedImage } from "@/lib/utils/image-utils";
 import { ImageElement } from "@/components/cms/elements/ImageElement";
 
 export function HeroComponent({

@@ -17,7 +17,7 @@ type AnyContentType = ContentTypes.AnyContentType;
  */
 export function normalizeGenericContentToTyped<T extends AnyContentType>(
   item: GenericContentType | undefined | null,
-): ContentPropsWithId<T>;
+): ContentPropsWithId<T> | null;
 export function normalizeGenericContentToTyped<T extends AnyContentType>(
   item: GenericContentType | undefined | null,
   onlyOfType?: T,

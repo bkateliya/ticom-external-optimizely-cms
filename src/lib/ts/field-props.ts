@@ -22,9 +22,10 @@ export type CmsFieldProps<
 };
 
 export type CmsFieldElementProps<
-  TContentType extends ContentTypes.AnyContentType,
+  TContentType extends ContentTypes.AnyContentType,/* The constraint type for the field, the field value must match this type */
+  TFieldConstraint = unknown,
   TElement extends React.ElementType = "span",
-> = CmsFieldProps<TContentType> & PolymorphicElementProps<TElement> & React.HTMLAttributes<TElement>;
+> = CmsFieldProps<TContentType, TFieldConstraint> & PolymorphicElementProps<TElement> & React.HTMLAttributes<TElement>;
 
 export type InferredContentReference = Parameters<
   ReturnType<typeof damAssets>["getAlt"]
