@@ -43,7 +43,6 @@ export function ImageComparisonItemComponent({
         ratio: IMAGE_RATIO,
         dataMetricsName: getMetricsName(rightImage.src),
       }}
-
       leftLabel={
         content.leftImageCaption?.json ? (
           <WrappedRichTextField field="leftImageCaption" />
@@ -52,6 +51,16 @@ export function ImageComparisonItemComponent({
       rightLabel={
         content.rightImageCaption?.json ? (
           <WrappedRichTextField field="rightImageCaption" />
+        ) : undefined
+      }
+      leftOverlay={
+        content.leftImageOverlay?.json ? (
+          <WrappedRichTextField field="leftImageOverlay" />
+        ) : undefined
+      }
+      rightOverlay={
+        content.rightImageOverlay?.json ? (
+          <WrappedRichTextField field="rightImageOverlay" />
         ) : undefined
       }
       caption={
