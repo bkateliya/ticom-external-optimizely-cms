@@ -54,6 +54,8 @@ import { JumpLinkNavigationComponent } from "./JumpLink/JumpLinkNavigation";
 import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
 import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
 import { JumpLinkTargetComponent } from "./JumpLink/JumpLinkTarget";
+import { JumpLinkNavigationHorizontalComponent } from "./JumpLink/JumpLinkNavigation";
+import { JumpLinkNavigationHorizontalComponentType } from "./JumpLink/JumpLinkNavigation.model";
 import {
   KeyCustomerMessageItemComponentType,
   KeyCustomerMessagesComponentType,
@@ -105,6 +107,20 @@ import { ArticlePageHeaderComponent } from "./PageHeadings/ArticlePageHeading/Ar
 import { ProductCategoryListingComponent } from "./ProductCategoryListing/ProductCategoryListing";
 import { ProductCategoryListingComponentType } from "./ProductCategoryListing/ProductCategoryListing.model";
 import { ProductCategoryListingOverrideComponentType } from "./ProductCategoryListing/ProductCategoryListingOverride.model";
+import {
+  ApplicationSelectionToolComponentType,
+  ReferenceDesignSearchComponentType,
+} from "./TeaserGoldenSourced/TeaserGoldenSourced.model";
+import {
+  ApplicationSelectionToolTeaser,
+  ReferenceDesignSearchTeaser,
+} from "./TeaserGoldenSourced/TeaserGoldenSourced";
+import {
+  PremiumInteractiveImageComponentType,
+  PremiumInteractiveImagePanelComponentType,
+} from "./PremiumInteractiveImage/PremiumInteractiveImage.model";
+import { PortfolioVisualizerComponentType } from "./PortfolioVisualizer/PortfolioVisualizer.model";
+
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -158,4 +174,10 @@ export const componentRegistry: ComponentRegistry = {
   [TeaserComponentType.key]: TeaserComponent,
   [ProductCategoryListingComponentType.key]: ProductCategoryListingComponent,
   [ProductCategoryListingOverrideComponentType.key]: NoPreviewComponent,
+  [ApplicationSelectionToolComponentType.key]: ApplicationSelectionToolTeaser,
+  [ReferenceDesignSearchComponentType.key]: ReferenceDesignSearchTeaser,
+  [PremiumInteractiveImageComponentType.key]: NoPreviewComponent,
+  [PremiumInteractiveImagePanelComponentType.key]: NoPreviewComponent,
+  [PortfolioVisualizerComponentType.key]: NoPreviewComponent,
+  [JumpLinkNavigationHorizontalComponentType.key]: JumpLinkNavigationHorizontalComponent,
 };

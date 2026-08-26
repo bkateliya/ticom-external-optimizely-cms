@@ -35,7 +35,10 @@ import {
   HierarchyNavigationItemComponentType,
 } from "./HierarchyNavigation/HierarchyNavigation.model";
 import { tabsComponents } from "./Tabs/types";
-import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
+import {
+  JumpLinkNavigationComponentType,
+  JumpLinkNavigationHorizontalComponentType,
+} from "./JumpLink/JumpLinkNavigation.model";
 import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
 import {
   KeyCustomerMessageItemComponentType,
@@ -68,6 +71,15 @@ import { TeaserComponentType } from "./Teaser/Teaser.model";
 import { ArticlePageHeaderComponentType } from "./PageHeadings/ArticlePageHeading/ArticlePageHeading.model";
 import { ProductCategoryListingOverrideComponentType } from "./ProductCategoryListing/ProductCategoryListingOverride.model";
 import { ProductCategoryListingComponentType } from "./ProductCategoryListing/ProductCategoryListing.model";
+import {
+  ApplicationSelectionToolComponentType,
+  ReferenceDesignSearchComponentType,
+} from "./TeaserGoldenSourced/TeaserGoldenSourced.model";
+import {
+  PremiumInteractiveImageComponentType,
+  PremiumInteractiveImagePanelComponentType,
+} from "./PremiumInteractiveImage/PremiumInteractiveImage.model";
+import { PortfolioVisualizerComponentType } from "./PortfolioVisualizer/PortfolioVisualizer.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -102,6 +114,7 @@ export const allComponentTypes = [
   BrowseVideosComponentType,
   ...tabsComponents,
   JumpLinkNavigationComponentType,
+  JumpLinkNavigationHorizontalComponentType,
   JumpLinkTargetComponentType,
   KeyCustomerMessagesComponentType,
   KeyCustomerMessageItemComponentType,
@@ -120,4 +133,9 @@ export const allComponentTypes = [
   TeaserComponentType,
   ProductCategoryListingComponentType,
   ProductCategoryListingOverrideComponentType,
+  ApplicationSelectionToolComponentType,
+  ReferenceDesignSearchComponentType,
+  PremiumInteractiveImageComponentType,
+  PremiumInteractiveImagePanelComponentType,
+  PortfolioVisualizerComponentType,
 ];

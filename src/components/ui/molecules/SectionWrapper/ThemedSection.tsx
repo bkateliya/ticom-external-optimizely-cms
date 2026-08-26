@@ -8,12 +8,16 @@ import clsx from "clsx";
 import {
   BackgroundColorSetting,
   BackgroundImageSetting,
+  BackgroundVideoSetting,
   SectionBackgroundContractContentType,
 } from "@/components/cms/contracts/component-contracts/section.model";
 
 import { ComponentTheme } from "@/components/ui/ti/enums";
 import { getStandardizedImage } from "@/lib/utils/image-utils";
 import { isEditMode } from "@/lib/opti/edit-helpers";
+import { getBynderVideoFromContext } from "@/lib/data/bynder";
+import { TiSlide } from "@/components/ui/ti/TiSlideshow/TiSlide";
+import { ContentProps } from "@optimizely/cms-sdk";
 
 export function ThemedSection({
   content,
@@ -38,13 +42,24 @@ export function ThemedSection({
     content.background,
     BackgroundImageSetting,
   );
+  const backgroundVideoSetting = normalizeGenericContentToTyped(
+    content.background,
+    BackgroundVideoSetting,
+  );
 
-  const hasBackground = !!(backgroundColorSetting || backgroundImageSetting);
+  const hasBackground = !!(
+    backgroundColorSetting ||
+    backgroundImageSetting ||
+    backgroundVideoSetting
+  );
 
   const theme =
     (backgroundColorSetting?.theme as Themes | undefined) || "custom";
-  const mode = backgroundImageSetting?.backgroundTheme as
-    ComponentTheme | undefined;
+  // A background video always keeps `ti-slide`'s default (black) overlay, so
+  // its content is treated as sitting on a dark background.
+  const mode = backgroundVideoSetting
+    ? ComponentTheme.dark
+    : (backgroundImageSetting?.backgroundTheme as ComponentTheme | undefined);
 
   const backgroundSize = hasBackground
     ? content.backgroundSize || "full"
@@ -61,9 +76,12 @@ export function ThemedSection({
 
   // The content is slotted *inside* `ti-slide` (see `BackgroundSlide`) rather
   // than rendered next to it, so the slide's own overlay layer lands between
-  // the background image and the content instead of on top of both.
+  // the background media and the content instead of on top of both.
   const body = (
-    <BackgroundSlide content={backgroundImageSetting ?? undefined}>
+    <BackgroundSlide
+      imageSetting={backgroundImageSetting ?? undefined}
+      videoSetting={backgroundVideoSetting ?? undefined}
+    >
       <ThemeProvider
         theme={theme}
         mode={mode}
@@ -83,21 +101,34 @@ export function ThemedSection({
 
 /**
  * Wraps the section content in a `ti-slide` when the section has a background
- * image. `ti-slide` paints the image, slots the content over it, and renders
- * its own gradient overlay in between — so we deliberately don't add an overlay
- * of our own (that gave a double overlay which also dimmed the content).
- * Without a background image the content passes through untouched.
+ * image or video. `ti-slide` paints the media, slots the content over it, and
+ * renders its own gradient overlay in between — so we deliberately don't add an
+ * overlay of our own (that gave a double overlay which also dimmed the
+ * content). Without background media the content passes through untouched.
  */
 function BackgroundSlide({
-  content,
+  imageSetting,
+  videoSetting,
   children,
-}: OptiComponentProps<typeof BackgroundImageSetting> &
-  React.PropsWithChildren) {
-  if (!content) {
+}: React.PropsWithChildren<{
+  imageSetting?: ContentProps<typeof BackgroundImageSetting>;
+  videoSetting?: ContentProps<typeof BackgroundVideoSetting>;
+}>) {
+  if (!imageSetting && !videoSetting) {
     return children;
   }
-  const { src, alt } = getStandardizedImage(content, content.backgroundImage);
-  if (!src) {
+
+  const { src: imageSrc, alt } = imageSetting
+    ? getStandardizedImage(imageSetting, imageSetting.backgroundImage)
+    : { src: undefined, alt: undefined };
+
+  // Bynder videos are resolved from the page-level asset context, the same way
+  // Bynder images are (see `findAllBynderAssetsOnPage`).
+  const videoSrc = videoSetting?.backgroundVideo
+    ? getBynderVideoFromContext(videoSetting.backgroundVideo)?.original
+    : undefined;
+
+  if (!imageSrc && !videoSrc) {
     return children;
   }
 
@@ -110,24 +141,27 @@ function BackgroundSlide({
     // taller than that.
     "--tiSlide-aspectRatio": "auto",
     // `ti-slide`'s overlay is a black gradient by default: a light image needs
-    // a white one, and `noOverlay` switches it off entirely.
-    ...(content.noOverlay
+    // a white one, and `noOverlay` switches it off entirely. A background video
+    // is left on the default overlay.
+    ...(imageSetting?.noOverlay
       ? { "--tiSlide-overlay-background": "none" }
-      : content.backgroundTheme === "light"
+      : imageSetting?.backgroundTheme === "light"
         ? { "--tiSlide-overlay-background-color-rgb": "255 255 255" }
         : {}),
   };
 
   return (
-    // `thumbnail-src` is only used by slideshow nav, so it stays empty for a
+    // `thumbnailSrc` is only used by slideshow nav, so it stays empty for a
     // lone slide.
-    <ti-slide
+    <TiSlide
       style={slideStyle}
-      thumbnail-src=""
-      thumbnail-label={alt ?? ""}
-      background-image-src={src}
+      thumbnailSrc=""
+      thumbnailLabel={alt ?? ""}
+      backgroundImageSrc={imageSrc}
+      backgroundVideoSrc={videoSrc}
+      showVideoControls={videoSetting?.videoPlayerControls ?? false}
     >
       {children}
-    </ti-slide>
+    </TiSlide>
   );
 }

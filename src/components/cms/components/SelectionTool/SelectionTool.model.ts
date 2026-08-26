@@ -3,12 +3,14 @@ import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants";
 import { PropertyTypes } from "@/lib/property-types";
 import { AllComponentTypeKeyMap } from "../keys";
 import { DestinationTypeType } from "../../data/DestinationType.model";
+import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 
 export const SelectionToolComponentType = contentType({
   key: AllComponentTypeKeyMap.SelectionToolComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Selection Tool`,
   baseType: "_component",
   compositionBehaviors: ["sectionEnabled"],
+  extends:[AllowIn.Main],
   properties: {
     destinationId: {
       type: "string",

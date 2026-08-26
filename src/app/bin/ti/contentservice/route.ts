@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
     pagename: x.hero?.pageHeadline || x._metadata.displayName,
     pagetype: x._itemMetadata.type,
     tags: [],
-    url: `${x._metadata.url.base}${x._metadata.url.hierarchical}`,
+    url: `${x._metadata.url.base}${x._metadata.url.hierarchical.replace(/\/$/, "")}`,
   }));
 
   return Response.json(finalResult);

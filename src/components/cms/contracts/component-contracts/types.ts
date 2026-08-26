@@ -1,6 +1,10 @@
 // import { DeprecatedCtaListComponentType } from "./cta-list.model";
 import { HeadlineComponentType } from "./headline.model";
-import { BackgroundColorSetting, BackgroundImageSetting } from "./section.model";
+import {
+  BackgroundColorSetting,
+  BackgroundImageSetting,
+  BackgroundVideoSetting,
+} from "./section.model";
 
 // These are techinically components but they are only used from within contracts not standalone
 export const contractComponentTypes = [
@@ -8,4 +12,5 @@ export const contractComponentTypes = [
   HeadlineComponentType,
   BackgroundColorSetting,
   BackgroundImageSetting,
+  BackgroundVideoSetting,
 ];

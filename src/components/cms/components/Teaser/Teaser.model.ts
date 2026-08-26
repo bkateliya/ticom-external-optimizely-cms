@@ -37,5 +37,15 @@ export const TeaserComponentType = contentType({
       allowedTypes: [CtaButtonElementType, CtaLinkElementType],
       isRequired: true,
     },
+    background: {
+      type: "string",
+      displayName: "Teaser Background",
+      format: "selectOne",
+      group: PropertyTypes.Appearance,
+      enum: [
+        { value: "grey", displayName: "Grey (default)" },
+        { value: "white", displayName: "White" },
+      ],
+    },
   },
 });
