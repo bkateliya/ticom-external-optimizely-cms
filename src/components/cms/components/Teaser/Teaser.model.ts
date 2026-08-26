@@ -37,5 +37,17 @@ export const TeaserComponentType = contentType({
       allowedTypes: [CtaButtonElementType, CtaLinkElementType],
       isRequired: true,
     },
+    // Grey is the default; the CMS rejects defaultValue, so unset falls back to
+    // grey in the component.
+    background: {
+      type: "string",
+      displayName: "Teaser Background",
+      format: "selectOne",
+      group: PropertyTypes.Appearance,
+      enum: [
+        { value: "grey", displayName: "Grey (default)" },
+        { value: "white", displayName: "White" },
+      ],
+    },
   },
 });

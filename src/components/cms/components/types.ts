@@ -35,7 +35,10 @@ import {
   HierarchyNavigationItemComponentType,
 } from "./HierarchyNavigation/HierarchyNavigation.model";
 import { tabsComponents } from "./Tabs/types";
-import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
+import {
+  JumpLinkNavigationComponentType,
+  JumpLinkNavigationHorizontalComponentType,
+} from "./JumpLink/JumpLinkNavigation.model";
 import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
 import {
   KeyCustomerMessageItemComponentType,
@@ -60,14 +63,15 @@ import {
   ScrollingStoryVerticalComponentType,
   ScrollingStoryVerticalContentComponentType,
 } from "./ScrollingStoryVertical/ScrollingStoryVertical.model";
-import {
-  ImageComparisonComponentType,
-  ImageComparisonItemComponentType,
-} from "./ImageComparison/ImageComparison.model";
 import { TeaserComponentType } from "./Teaser/Teaser.model";
 import { ArticlePageHeaderComponentType } from "./PageHeadings/ArticlePageHeading/ArticlePageHeading.model";
 import { ProductCategoryListingOverrideComponentType } from "./ProductCategoryListing/ProductCategoryListingOverride.model";
 import { ProductCategoryListingComponentType } from "./ProductCategoryListing/ProductCategoryListing.model";
+import {
+  ApplicationSelectionToolComponentType,
+  ReferenceDesignSearchComponentType,
+} from "./TeaserGoldenSourced/TeaserGoldenSourced.model";
+import { ViewMoreComponentType } from "./ViewMore/ViewMore.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -102,6 +106,7 @@ export const allComponentTypes = [
   BrowseVideosComponentType,
   ...tabsComponents,
   JumpLinkNavigationComponentType,
+  JumpLinkNavigationHorizontalComponentType,
   JumpLinkTargetComponentType,
   KeyCustomerMessagesComponentType,
   KeyCustomerMessageItemComponentType,
@@ -115,9 +120,10 @@ export const allComponentTypes = [
   EventComponentType,
   ApplicationStoryComponentType,
   FeaturedApplicationComponentType,
-  ImageComparisonComponentType,
-  ImageComparisonItemComponentType,
   TeaserComponentType,
   ProductCategoryListingComponentType,
   ProductCategoryListingOverrideComponentType,
+  ApplicationSelectionToolComponentType,
+  ReferenceDesignSearchComponentType,
+  ViewMoreComponentType,
 ];

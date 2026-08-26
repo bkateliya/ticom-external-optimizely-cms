@@ -3,18 +3,19 @@ import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants.mjs";
 import { PageTypeKeyMap } from "../keys";
 import {
   AllPageAndExperienceTypeKeys,
-  CommonPageContracts,
+  CommonPageOnlyContracts,
 } from "@/components/cms/contracts/common";
 import { TaxonomyType } from "../../data/Taxonomy.model";
 import { PropertyTypes } from "@/lib/property-types";
 import { ArticlePageHeaderComponentType } from "../../components/PageHeadings/ArticlePageHeading/ArticlePageHeading.model";
 import { getPageHeaderOverride } from "../../contracts/page-contacts/page-content.model";
 
+
 export const ArticlePageType = contentType({
   key: PageTypeKeyMap.ArticlePageTypeKey,
   displayName: `${DISPLAY_NAME_PREFIX}Article Page`,
   baseType: "_page",
-  extends: CommonPageContracts,
+  extends: CommonPageOnlyContracts,
   properties: {
     ...getPageHeaderOverride({
       pageHeaderAllowedTypes: [ArticlePageHeaderComponentType],

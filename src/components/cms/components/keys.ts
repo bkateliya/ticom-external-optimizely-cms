@@ -38,6 +38,7 @@ export const AllComponentTypeKeyMap = {
   TabsComponent: `${KEY_PREFIX}Tabs_Component`,
   GeneralTabComponent: `${KEY_PREFIX}GeneralTab_Component`,
   JumpLinkNavigationComponent: `${KEY_PREFIX}JumpLinkNavigation_Component`,
+  JumpLinkNavigationHorizontalComponent: `${KEY_PREFIX}JumpLinkNavigationHorizontal_Component`,
   JumpLinkTargetComponent: `${KEY_PREFIX}JumpLinkTarget_Component`,
   KeyCustomerMessagesComponent: `${KEY_PREFIX}KeyCustomerMessages_ComponentType`,
   KeyCustomerMessageItemComponent: `${KEY_PREFIX}KeyCustomerMessageItem_ComponentType`,

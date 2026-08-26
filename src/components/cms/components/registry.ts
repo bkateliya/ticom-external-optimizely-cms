@@ -51,8 +51,10 @@ import {
 } from "./HierarchyNavigation/HierarchyNavigation.model";
 import { HierarchyNavigation } from "./HierarchyNavigation/HierarchyNavigation";
 import { JumpLinkNavigationComponent } from "./JumpLink/JumpLinkNavigation";
+import { JumpLinkNavigationHorizontalComponent } from "./JumpLink/JumpLinkNavigation";
 import { JumpLinkTargetComponentType } from "./JumpLink/JumpLinkTarget.model";
 import { JumpLinkNavigationComponentType } from "./JumpLink/JumpLinkNavigation.model";
+import { JumpLinkNavigationHorizontalComponentType } from "./JumpLink/JumpLinkNavigation.model";
 import { JumpLinkTargetComponent } from "./JumpLink/JumpLinkTarget";
 import {
   KeyCustomerMessageItemComponentType,
@@ -90,14 +92,6 @@ import {
   ScrollingStoryVerticalComponent,
   ScrollingStoryVerticalContentComponent,
 } from "./ScrollingStoryVertical/ScrollingStoryVertical";
-import {
-  ImageComparisonComponentType,
-  ImageComparisonItemComponentType,
-} from "./ImageComparison/ImageComparison.model";
-import {
-  ImageComparisonComponent,
-  ImageComparisonItemComponent,
-} from "./ImageComparison/ImageComparison";
 import { TeaserComponentType } from "./Teaser/Teaser.model";
 import { TeaserComponent } from "./Teaser/Teaser";
 import { ArticlePageHeaderComponentType } from "./PageHeadings/ArticlePageHeading/ArticlePageHeading.model";
@@ -105,6 +99,16 @@ import { ArticlePageHeaderComponent } from "./PageHeadings/ArticlePageHeading/Ar
 import { ProductCategoryListingComponent } from "./ProductCategoryListing/ProductCategoryListing";
 import { ProductCategoryListingComponentType } from "./ProductCategoryListing/ProductCategoryListing.model";
 import { ProductCategoryListingOverrideComponentType } from "./ProductCategoryListing/ProductCategoryListingOverride.model";
+import {
+  ApplicationSelectionToolComponentType,
+  ReferenceDesignSearchComponentType,
+} from "./TeaserGoldenSourced/TeaserGoldenSourced.model";
+import {
+  ApplicationSelectionToolTeaser,
+  ReferenceDesignSearchTeaser,
+} from "./TeaserGoldenSourced/TeaserGoldenSourced";
+import { ViewMoreComponentType } from "./ViewMore/ViewMore.model";
+import { ViewMoreComponent } from "./ViewMore/ViewMore";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -135,6 +139,7 @@ export const componentRegistry: ComponentRegistry = {
   [HierarchyNavigationItemComponentType.key]: NoPreviewComponent,
   ...tabsComponentRegistry,
   [JumpLinkNavigationComponentType.key]: JumpLinkNavigationComponent,
+  [JumpLinkNavigationHorizontalComponentType.key]: JumpLinkNavigationHorizontalComponent,
   [JumpLinkTargetComponentType.key]: JumpLinkTargetComponent,
   [KeyCustomerMessagesComponentType.key]: KeyCustomerMessages,
   [KeyCustomerMessageItemComponentType.key]: NoPreviewComponent,
@@ -153,9 +158,10 @@ export const componentRegistry: ComponentRegistry = {
   [EventComponentType.key]: NoPreviewComponent,
   [ApplicationStoryComponentType.key]: NoPreviewComponent,
   [FeaturedApplicationComponentType.key]: NoPreviewComponent,
-  [ImageComparisonComponentType.key]: ImageComparisonComponent,
-  [ImageComparisonItemComponentType.key]: ImageComparisonItemComponent,
   [TeaserComponentType.key]: TeaserComponent,
   [ProductCategoryListingComponentType.key]: ProductCategoryListingComponent,
   [ProductCategoryListingOverrideComponentType.key]: NoPreviewComponent,
+  [ApplicationSelectionToolComponentType.key]: ApplicationSelectionToolTeaser,
+  [ReferenceDesignSearchComponentType.key]: ReferenceDesignSearchTeaser,
+  [ViewMoreComponentType.key]: ViewMoreComponent,
 };

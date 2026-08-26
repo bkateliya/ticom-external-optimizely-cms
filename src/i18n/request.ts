@@ -35,7 +35,7 @@ export function normalizeMessages(messages: Record<string, string>) {
     if (key.includes("{}")) {
       // We can't have an empty replace token, so we replace it with {value}
       const newKey = key.replaceAll("{}", "{value}");
-      messages[newKey] = newKey;
+      messages[newKey] = messages[key].replaceAll("{}", "{value}");
       // Remove the original key
       delete messages[key];
     }

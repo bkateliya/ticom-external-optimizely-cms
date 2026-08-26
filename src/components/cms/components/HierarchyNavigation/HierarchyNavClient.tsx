@@ -14,28 +14,18 @@ export type NavEntry =
   | ({ type: "link" } & NavLink)
   | { type: "group"; title: string; children: NavLink[] };
 
-/**
- * Styling for TI.com's `.ti_p-sideNav`, which this app doesn't ship as CSS.
- * Base slots are the mobile accordion-card look; `md:`/`xl:` overrides are the
- * desktop bordered list.
- *
- * The `!` on colour, border, background, alignment and layout is load-bearing:
- * TI's global CSS (present on the VM, not locally) styles every bare `<button>`
- * as a red "secondary button" and every `<a>` in link teal via *unlayered*
- * rules, which beat our *layered* utilities. A layered `!important` is what
- * wins them back — so the nav renders the same with or without that CSS.
- */
 const styles = tv(
   {
     slots: {
       root: "mb-6 xl:-mt-3",
-      list: "m-0 list-none p-0",
+      list: "m-0! list-none p-0",
       item: "md:border-b md:border-pl-divider-color-secondary",
       l1: [
         // Force our self-hosted Roboto so the button matches the links (and
         // live): TI's unlayered `button{font-family}` otherwise wins here.
         "font-[family-name:var(--font-body)]!",
         "flex! w-full flex-row items-center! justify-between! gap-2 rounded-none! text-left! text-sm leading-5",
+        "min-h-0!",
         "cursor-pointer appearance-none border-0!",
         "my-0.5 bg-pl-container-background-color-secondary! p-3! font-semibold",
         "hover:bg-pl-container-background-color-secondary-variant! hover:underline!",
@@ -43,7 +33,7 @@ const styles = tv(
       ],
       chevron: "size-[18px] shrink-0 transition-[rotate] duration-100",
       panel: "grid px-3 transition-[grid-template-rows] duration-100 md:px-0",
-      sublist: "m-0 min-h-0 list-none overflow-hidden md:ml-4",
+      sublist: "m-0! min-h-0 list-none overflow-hidden md:ml-4!",
       l2: "flex items-center py-2 text-sm leading-5 hover:underline! xl:mb-3 xl:py-0",
     },
     variants: {

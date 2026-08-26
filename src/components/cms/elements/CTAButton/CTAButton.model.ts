@@ -2,8 +2,6 @@ import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "../../constants.mjs";
 import { LinkContract } from "../../contracts/element-contracts/link.model";
 import { ButtonAppearance, ButtonColor } from "@/components/ui/ti/enums";
-import { UiIconList } from "@/components/ui/ti/TiSvgIcon/SvgIconMapping";
-import { enumToOptions } from "@/lib/opti/enum-utils";
 import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 
 export const CtaButtonElementType = contentType({
@@ -58,7 +56,16 @@ export const CtaButtonElementType = contentType({
       description: "Icon to display on the CTA",
       group: "Content",
       sortOrder: -100,
-      enum: enumToOptions(UiIconList),
+      // Restricted per FSD — CTA buttons only offer these seven icons.
+      enum: [
+        { displayName: "Download", value: "download" },
+        { displayName: "Filter", value: "filter" },
+        { displayName: "External link", value: "open-in-new" },
+        { displayName: "Info", value: "info-circle-outline" },
+        { displayName: "Mail to", value: "mail" },
+        { displayName: "PDF", value: "document-pdfAcrobat" },
+        { displayName: "GitHub", value: "github" },
+      ],
     },
     IsDownload: {
       type: "boolean",

@@ -34,7 +34,7 @@ export function ContentBlockComponent({
         <Headline content={content} parentField={parentField} />
         <WrappedRichTextField
           field="contentBlockDescription"
-          className="text-body-lg"
+          className="text-body-lg [&_ul]:ms-5 [&_ol]:ms-5"
         />
         <ExtendedOptimizelyComponent content={content.ctasList} />
       </div>

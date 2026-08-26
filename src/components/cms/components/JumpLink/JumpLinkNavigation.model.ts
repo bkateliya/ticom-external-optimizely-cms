@@ -10,3 +10,11 @@ export const JumpLinkNavigationComponentType = contentType({
   extends: [AllowIn.Column],
   properties: {},
 });
+
+export const JumpLinkNavigationHorizontalComponentType = contentType({
+  key: AllComponentTypeKeyMap.JumpLinkNavigationHorizontalComponent,
+  displayName: `${DISPLAY_NAME_PREFIX}Jump Link Navigation - Horizontal`,
+  baseType: "_component",
+  compositionBehaviors: ["sectionEnabled"],
+  properties: {},
+});
