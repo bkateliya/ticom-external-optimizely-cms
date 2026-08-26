@@ -163,9 +163,9 @@ export const SectionSettingsContract = contract({
     },
     headlineRedUnderline: {
       type: "boolean",
-      displayName: "Headline Red Underline",
+      displayName: "[Obsolete] Headline Red Underline",
       description: "If checked, the headline will have a red underline",
-      group: PropertyTypes.Appearance,
+      ...SoftDeleteProperties,
     },
     sectionFullHeight: {
       type: "boolean",

@@ -15,7 +15,6 @@ export const PreambleSectionWrapper = ({
   content,
   parentField,
   textAlignment,
-  redUnderline,
 }: PreambleSectionWrapperProps) => {
   return (
     <SectionWrapper>
@@ -23,7 +22,6 @@ export const PreambleSectionWrapper = ({
         content={content}
         parentField={parentField}
         textAlignment={textAlignment}
-        redUnderline={redUnderline}
       >
         {children}
       </Preamble>
