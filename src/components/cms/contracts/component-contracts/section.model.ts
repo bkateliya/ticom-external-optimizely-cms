@@ -11,6 +11,7 @@ import { HeadlineContract } from "./headline.model";
 import { DeprecatedCtaListContract } from "./cta-list.model";
 import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 import { JumpLinkTargetComponentType } from "../../components/JumpLink/JumpLinkTarget.model";
+import { BynderVideoStubModel } from "@/components/cms/media/graph/BynderStubs";
 
 export const BackgroundColorSetting = contentType({
   key: `${KEY_PREFIX}BackgroundColor_Setting`,
@@ -70,6 +71,29 @@ export const BackgroundImageSetting = contentType({
   },
 });
 
+export const BackgroundVideoSetting = contentType({
+  key: `${KEY_PREFIX}BackgroundVideo_Setting`,
+  displayName: `${DISPLAY_NAME_PREFIX}Background Video Setting`,
+  baseType: "_component",
+  properties: {
+    backgroundVideo: {
+      type: "contentReference",
+      displayName: "Video",
+      description: "Background video from the DAM, rendered by `ti-slide`.",
+      isRequired: true,
+      group: PropertyTypes.Appearance,
+      allowedTypes: [BynderVideoStubModel],
+    },
+    videoPlayerControls: {
+      type: "boolean",
+      displayName: "Video Play Controls",
+      description:
+        "If checked, the play/pause control is shown so visitors can stop the background video.",
+      group: PropertyTypes.Appearance,
+    },
+  },
+});
+
 export const SectionBackgroundContract = contract({
   key: `${KEY_PREFIX}SectionBackground_Contract`,
   displayName: `${DISPLAY_NAME_PREFIX}Section Background Contract`,
@@ -78,7 +102,11 @@ export const SectionBackgroundContract = contract({
       type: "content",
       displayName: "Section Background",
       group: PropertyTypes.Appearance,
-      allowedTypes: [BackgroundColorSetting, BackgroundImageSetting],
+      allowedTypes: [
+        BackgroundColorSetting,
+        BackgroundImageSetting,
+        BackgroundVideoSetting,
+      ],
     },
 
     backgroundSize: {
