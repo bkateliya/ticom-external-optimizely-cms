@@ -1,6 +1,7 @@
 import { getContextData } from "@optimizely/cms-sdk/react/server";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { Breadcrumb } from "@/components/global/Breadcrumb/Breadcrumb";
+import { Main } from "@/components/global/Main/Main";
 import { PreFooter } from "@/components/global/PreFooter/PreFooter";
 import { CommonPageContractType } from "@/components/cms/contracts/common";
 import { OptiComponentProps } from "@/lib/ts/component-props";
@@ -17,6 +18,7 @@ export async function SiteFrame({ content, children }: Props) {
       <main className="relative">
         <Breadcrumb />
         {children}
+        <Main content={content} />
       </main>
       <PreFooter content={content} />
       {siteSettings?.footer && (

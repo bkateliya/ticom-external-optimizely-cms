@@ -5,7 +5,21 @@ import { fieldFactory } from "@/components/ui/cms";
 import { parseHeadlineSize } from "@/components/ui/molecules/Headline/Headline";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { getBynderImageFromContext } from "@/lib/data/bynder";
-import clsx from "clsx";
+import { tv } from "tailwind-variants";
+
+const teaser = tv({
+  base: "flex flex-col items-center gap-6 border-solid px-4 py-6 text-pl-text-color-primary md:flex-row md:gap-4 md:p-8",
+  variants: {
+    background: {
+      grey: "rounded border border-pl-container-background-color-secondary-variant bg-pl-container-background-color-secondary",
+      white:
+        "border-y-0 border-r-0 border-l border-pl-border-color-primary bg-pl-container-background-color-primary",
+    },
+    hasText: {
+      true: "md:justify-between",
+    },
+  },
+});
 
 export function TeaserComponent({
   content,
@@ -27,13 +41,10 @@ export function TeaserComponent({
     content.teaserDescription
   );
 
+  const background = content.background === "white" ? "white" : "grey";
+
   return (
-    <div
-      className={clsx(
-        "flex flex-col items-center gap-6 rounded border border-solid border-pl-container-background-color-secondary-variant bg-pl-container-background-color-secondary px-4 py-6 text-pl-text-color-primary md:flex-row md:gap-4 md:p-8",
-        hasText && "md:justify-between",
-      )}
-    >
+    <div className={teaser({ background, hasText })}>
       {imageUrl && (
         <div className="w-28 shrink-0">
           <EnhancedNextImage

@@ -3,14 +3,14 @@ import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants.mjs";
 import { PageTypeKeyMap } from "../keys";
 import {
   AllPageAndExperienceTypeKeys,
-  CommonPageContracts,
+  CommonPageOnlyContracts,
 } from "@/components/cms/contracts/common";
 
 export const SimplePageType = contentType({
   key: PageTypeKeyMap.SimplePageTypeKey,
   displayName: `${DISPLAY_NAME_PREFIX}Simple Page`,
   baseType: "_page",
-  extends: CommonPageContracts,
+  extends: CommonPageOnlyContracts,
   properties: {},
   mayContainTypes: AllPageAndExperienceTypeKeys,
 });

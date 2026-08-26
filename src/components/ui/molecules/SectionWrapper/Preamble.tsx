@@ -36,11 +36,11 @@ export const Preamble = ({ content, ...props }: PreambleProps) => {
 
   const headline = normalizeGenericContentToTyped<typeof HeadlineComponentType>(
     content.headline,
-  );
-
-  if (!headline) {
-    return null;
-  }
+  ) ?? {
+    _id: content._id,
+    _metadata: content._metadata,
+    __typename: HeadlineComponentType.key,
+  };
 
   return (
     <PreambleDirectHeadline

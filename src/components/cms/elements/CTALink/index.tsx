@@ -52,7 +52,13 @@ export function CTALinkElement({ content }: Props) {
       className="inline-flex items-center gap-1 text-body-md text-pl-link-color-primary no-underline"
       data-cta-link
     >
-      {icon === "none" ? null : <TiSvgIcon icon={icon} size="s" />}
+      {icon === "none" ? null : (
+        <TiSvgIcon
+          icon={icon}
+          size="s"
+          className="fill-current [--ti-svg-icon-fill-color:currentColor]"
+        />
+      )}
       {content.link?.text}
     </a>
   );

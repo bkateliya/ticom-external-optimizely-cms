@@ -76,6 +76,16 @@ export const AllowInPrefooterContract = contract({
   },
 });
 
+export const AllowInMainContract = contract({
+  key: `${ALLOW_IN_CONTRACT_KEY_PREFIX}Main_Contract`,
+  displayName: `${DISPLAY_NAME_PREFIX}Allow In Main Contract`,
+  properties: {
+    metaAllowInMain: {
+      ...ContractFlagProperties,
+    },
+  },
+});
+
 /**
  * Helper for easier discoverabilty
  */
@@ -88,6 +98,7 @@ export const AllowIn = {
   HomePageHeader: AllowInHomePageHeaderContract,
   PageHeader: AllowInPageHeaderContract,
   Prefooter: AllowInPrefooterContract,
+  Main: AllowInMainContract,
 
   Groupings: {
     Common: [
