@@ -4,7 +4,7 @@ import { fieldFactory } from "@/components/ui/cms";
 import { Headline } from "@/components/ui/molecules/Headline/Headline";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedNextImage";
-import { getStandardizedImage } from "@/lib/utils/image-utils";
+import { getStandardizedImageFromContract } from "@/lib/utils/image-utils";
 
 export function ContentBlockComponent({
   content,
@@ -14,7 +14,7 @@ export function ContentBlockComponent({
     return null;
   }
 
-  const { src, alt } = getStandardizedImage(content, content.bynderImage);
+  const { src, alt } = getStandardizedImageFromContract(content);
 
   const { WrappedRichTextField } = fieldFactory<
     typeof ContentBlockComponentType

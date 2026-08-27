@@ -1,6 +1,7 @@
 import { contract } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX, KEY_PREFIX } from "@/components/cms/constants";
 import { PropertyTypes } from "@/lib/property-types";
+import { BynderImageStubModel } from "@/components/cms/media/graph/BynderStubs";
 
 export const SEOContract = contract({
   key: `${KEY_PREFIX}SEO_Contract`,
@@ -24,7 +25,7 @@ export const SEOContract = contract({
     },
     ogImage: {
       type: "contentReference",
-      allowedTypes: ["_image"],
+      allowedTypes: [BynderImageStubModel],
       displayName: "Open Graph Image",
       description: "Image for social media sharing",
       group: PropertyTypes.Seo,

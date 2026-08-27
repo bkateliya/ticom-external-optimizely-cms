@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { MODULE_BUNDLES, contentScripts } from "./TIScriptConstants";
 
 /**
  * Loads the TI front-end scripts client-side, mirroring the working reference
@@ -36,7 +35,19 @@ function injectScript(src: string, type?: string) {
 // DOMContentLoaded twice, racing the header/footer build.
 let initialized = false;
 
-export function TiScripts({ locale }: { locale: string }) {
+type TiScriptsProps = {
+  locale: string;
+  /** Resolved server-side from TIScriptConstants (see RootLayout) — this
+   * component never reads the TI base domain itself. */
+  moduleBundles: string[];
+  contentScriptUrls: string[];
+};
+
+export function TiScripts({
+  locale,
+  moduleBundles,
+  contentScriptUrls,
+}: TiScriptsProps) {
   useEffect(() => {
     if (initialized) return;
     initialized = true;
@@ -45,13 +56,13 @@ export function TiScripts({ locale }: { locale: string }) {
     // suppressed by an early handler in the root layout <head> (it must run
     // before Next registers its own, so it can't live here in an effect).
     (async () => {
-      await Promise.all(MODULE_BUNDLES.map((s) => injectScript(s, "module")));
+      await Promise.all(moduleBundles.map((s) => injectScript(s, "module")));
       // ensureTiGlobals();
-      await Promise.all(contentScripts(locale).map((s) => injectScript(s)));
+      await Promise.all(contentScriptUrls.map((s) => injectScript(s)));
       // Re-fire DOMContentLoaded so the header/footer init listeners run.
       document.dispatchEvent(new Event("DOMContentLoaded"));
     })();
-  }, [locale]);
+  }, [locale, moduleBundles, contentScriptUrls]);
 
   return null;
 }

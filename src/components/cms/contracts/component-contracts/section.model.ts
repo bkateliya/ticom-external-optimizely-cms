@@ -12,6 +12,7 @@ import { DeprecatedCtaListContract } from "./cta-list.model";
 import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 import { JumpLinkTargetComponentType } from "../../components/JumpLink/JumpLinkTarget.model";
 import { BynderVideoStubModel } from "@/components/cms/media/graph/BynderStubs";
+import { BynderImageStubModel } from "../../media/graph/BynderStubs";
 
 export const BackgroundColorSetting = contentType({
   key: `${KEY_PREFIX}BackgroundColor_Setting`,
@@ -42,7 +43,7 @@ export const BackgroundImageSetting = contentType({
       displayName: "Background Image",
       isRequired: true,
       group: PropertyTypes.Appearance,
-      allowedTypes: ["_image"],
+      allowedTypes: [BynderImageStubModel],
     },
     backgroundTheme: {
       type: "string",
@@ -163,7 +164,7 @@ export const SectionSettingsContract = contract({
     },
     headlineRedUnderline: {
       type: "boolean",
-      displayName: "[Obsolete] Headline Red Underline",
+      displayName: "Headline Red Underline",
       description: "If checked, the headline will have a red underline",
       ...SoftDeleteProperties,
     },

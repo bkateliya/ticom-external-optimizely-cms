@@ -3,6 +3,7 @@ import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
 import { AllComponentTypeKeyMap } from "../keys";
 import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 import { PropertyTypes } from "@/lib/property-types";
+import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 
 export const ViewMoreComponentType = contentType({
   key: AllComponentTypeKeyMap.ViewMoreComponent,
@@ -23,14 +24,11 @@ export const ViewMoreComponentType = contentType({
       group: PropertyTypes.Content,
       isRequired: true,
       isLocalized: true,
-
     },
     collapsedHeight: {
       type: "string",
       format: "selectOne",
       displayName: "Collapsed height",
-      group: PropertyTypes.Content,
-      isRequired: true,
       sortOrder:10,
       enum: [
         {
@@ -62,6 +60,16 @@ export const ViewMoreComponentType = contentType({
           displayName: "3",
         },
       ],
+      ...SoftDeleteProperties
+    },
+    content: {
+      type: "array",
+      displayName: "Content",
+      group: PropertyTypes.Content,
+      items: {
+        type: "content",
+        allowedTypes: [AllowIn.ViewMore],
+      },
     },
   },
 });

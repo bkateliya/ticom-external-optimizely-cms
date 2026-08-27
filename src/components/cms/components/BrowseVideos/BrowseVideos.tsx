@@ -5,7 +5,7 @@ import { OptiComponentProps } from "@/lib/ts/component-props";
 import { DynamicHeading } from "@/components/ui/Atoms/DynamicHeading";
 import { HeadingLevelContext } from "@/components/utilities/HeadingLevelContext";
 import { BrowseVideosSearchInput } from "./BrowseVideosSearchInput";
-import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 import { toLangPref } from "@/constants/locales";
 import { getApplication, getSilos } from "@/lib/api/cms-api";
 import { DEFAULT_APPLICATION_ID } from "@/lib/api/normalized/applications";
@@ -40,7 +40,7 @@ export async function BrowseVideos({
   const locale = await getLocale();
 
   // Remove the https://
-  const host = SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN.replace(
+  const host = SERVER_ENV_VARS.TICOM_BASE_DOMAIN.replace(
     /https?:\/\//,
     "",
   );
@@ -83,7 +83,7 @@ export async function BrowseVideos({
                 href={viewAllUrl}
                 data-lid="recentlyuploaded-view-all"
                 data-navtitle="watch-video"
-                className="text-body-md text-pl-link-color-primary no-underline hover:underline whitespace-nowrap"
+                className="text-body-md text-pl-link-color-primary no-underline hover:underline! whitespace-nowrap"
               >
                 {t("View all videos")}
               </NextLink>
@@ -131,7 +131,7 @@ function BrowseLinkList({
             href={link.href}
             data-lid={`browsevideos-${link.lid}`}
             data-navtitle="learn-more"
-            className="text-body-md text-pl-link-color-primary no-underline hover:underline"
+            className="text-body-md text-pl-link-color-primary no-underline hover:underline!"
           >
             {link.text}
           </NextLink>

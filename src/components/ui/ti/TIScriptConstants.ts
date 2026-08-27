@@ -1,19 +1,20 @@
-// This is in separate file so it can be imported from either client or server
+// Server-only: resolved URLs built here are threaded down to client components
+// as props (see RootLayout/TiScripts) rather than imported client-side, so the
+// base domain env variable itself never needs to reach the browser bundle.
 
 import { DEFAULT_LOCALE } from "@/constants/locales";
-import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 
 // Base URL for TI's @ticom asset host. Sourced from the environment so it can
 // be swapped per deployment (int vs. prod: https://www.ti.com/assets/js/@ticom).
-// Must be NEXT_PUBLIC_ since this file is imported client-side.
 export const TICOM =
-  SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN + "/assets/js/@ticom";
+  SERVER_ENV_VARS.TICOM_BASE_DOMAIN + "/assets/js/@ticom";
 
 // Global header stylesheet, served from the same @ticom host (no locale segment).
 export const GLOBAL_HEADER_CSS = `${TICOM}/header-content/1.latest/style/ticom.global.header.css`;
 
 // TI's plain asset root (…/assets), one level above the @ticom package host.
-const TI_ASSETS = SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN + "/assets";
+const TI_ASSETS = SERVER_ENV_VARS.TICOM_BASE_DOMAIN + "/assets";
 
 /**
  * The API/subsite header (AEM `subsiteHeader`) is a different component from the

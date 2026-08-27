@@ -13,9 +13,9 @@ export interface HeadlineStyleProps {
 }
 export interface HeadlineProps
   extends
-  OptionalOptiComponentProps<HeadlineContractContentType>,
-  Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
-  HeadlineStyleProps { }
+    OptionalOptiComponentProps<HeadlineContractContentType>,
+    Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+    HeadlineStyleProps {}
 
 const textAlignmentClassMap: Record<TextAlignment, string> = {
   Left: "text-left",
@@ -74,7 +74,7 @@ export const Headline = ({
           headingSize={parseHeadlineSize({ content })}
           field="headline"
           redUnderline={redUnderline}
-          className={clsx('text-inherit!', {
+          className={clsx("text-inherit!", {
             "mb-0": !content.description,
           })}
         />

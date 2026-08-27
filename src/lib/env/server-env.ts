@@ -1,4 +1,5 @@
 import { PHASE_PRODUCTION_BUILD } from "next/constants";
+import { envToBool } from "./utils";
 
 const RequiredVariables: (keyof typeof SERVER_ENV_VARS)[] = [
   "OPTIMIZELY_CMS_URL",
@@ -8,9 +9,16 @@ const RequiredVariables: (keyof typeof SERVER_ENV_VARS)[] = [
 
   "BRIGHTCOVE_ACCOUNT_ID",
   "BRIGHTCOVE_PLAYER_ID",
+
+  "TICOM_BASE_DOMAIN",
 ];
 
 export const SERVER_ENV_VARS = {
+  TICOM_BASE_DOMAIN: process.env.TICOM_BASE_DOMAIN!,
+
+  /** Whether to allow theme switching */
+  ALLOW_THEME_SWITCHING: envToBool(process.env.ALLOW_THEME_SWITCHING),
+
   OPTIMIZELY_CMS_URL: process.env.OPTIMIZELY_CMS_URL!,
   OPTIMIZELY_GRAPH_SINGLE_KEY: process.env.OPTIMIZELY_GRAPH_SINGLE_KEY!,
   OPTIMIZELY_GRAPH_GATEWAY: process.env.OPTIMIZELY_GRAPH_GATEWAY!,

@@ -47,15 +47,11 @@ export async function HomePageBannerCarouselComponent({
 
   return (
     <TiSlideShow
-      autoAdvance
-      fullBleed
       insetNavigation
       mobileAllowSwipe
       mobileHideChevrons
       showChevrons
-      // ti.com runs the home page carousel with label-only navigation: no
-      // thumbnail images, just the auto-advance progress bar over each label.
-      thumbnailSize="none"
+      showPauseButton
       isPreview={isPreview}
       minSlides={content.homePageBannerMinSlides || 4}
       maxSlides={content.homePageBannerMaxSlides || 5}

@@ -82,9 +82,9 @@ export function PartnerResourceFilterForm({
             }}
             name={field.facet}
           >
-            {/* A real option, not the `placeholder` prop, so the default stays
-                selectable and the facet can be cleared again. */}
-            <option value="">{placeholderLabel}</option>
+            <option value="" selected>
+              {placeholderLabel}
+            </option>
             {field.options.map((option) => (
               <option key={option} value={option}>
                 {option}

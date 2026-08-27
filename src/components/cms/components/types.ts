@@ -45,6 +45,7 @@ import {
   KeyCustomerMessagesComponentType,
 } from "./KeyCustomerMessages/KeyCustomerMessages.model";
 import { GoldenSourcePageHeadingComponentType } from "./PageHeadings/GoldenSourcePageHeading/GoldenSourcePageHeading.model";
+import { GenericPageHeadingComponentType } from "./PageHeadings/GenericPageHeading/GenericPageHeading.model";
 import { ApiSwaggerComponentType } from "./ApiSwagger/ApiSwagger.model";
 import { PartnerResourceFilterComponentType } from "./PartnerResourceFilter/PartnerResourceFilter.model";
 import { PartnerResourceFilterOptionComponentType } from "./PartnerResourceFilter/PartnerResourceFilterOption.model";
@@ -80,7 +81,6 @@ import {
   PremiumInteractiveImagePanelComponentType,
 } from "./PremiumInteractiveImage/PremiumInteractiveImage.model";
 import { PortfolioVisualizerComponentType } from "./PortfolioVisualizer/PortfolioVisualizer.model";
-import { ApplicationCategoryListComponentType } from "./ApplicationCategoryList/ApplicationCategoryList.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -120,6 +120,7 @@ export const allComponentTypes = [
   KeyCustomerMessagesComponentType,
   KeyCustomerMessageItemComponentType,
   GoldenSourcePageHeadingComponentType,
+  GenericPageHeadingComponentType,
   ApiSwaggerComponentType,
   PartnerResourceFilterComponentType,
   PartnerResourceFilterOptionComponentType,
@@ -139,5 +140,4 @@ export const allComponentTypes = [
   PremiumInteractiveImageComponentType,
   PremiumInteractiveImagePanelComponentType,
   PortfolioVisualizerComponentType,
-  ApplicationCategoryListComponentType,
 ];

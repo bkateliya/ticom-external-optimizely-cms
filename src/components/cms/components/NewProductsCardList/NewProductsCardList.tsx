@@ -12,7 +12,7 @@ import { TiCarousel } from "@/components/ui/ti/TiCarousel/TiCarousel";
 import { getLocale, getTranslations } from "next-intl/server";
 import { DEFAULT_LOCALE } from "@/constants/locales";
 import { tv } from "tailwind-variants";
-import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 import { TiSvgIcon } from "@/components/ui/ti/TiSvgIcon";
 
 function getNewProductsUrl(locale: string) {
@@ -20,8 +20,8 @@ function getNewProductsUrl(locale: string) {
   locale = locale.toLowerCase();
   const domain =
     locale === "zh-cn"
-      ? SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN // TODO: Chinese domain
-      : SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN;
+      ? SERVER_ENV_VARS.TICOM_BASE_DOMAIN // TODO: Chinese domain
+      : SERVER_ENV_VARS.TICOM_BASE_DOMAIN;
   if (locale === "en-us")
     return `${domain}/product-category/new-products.html?releasePeriod=364`;
   else

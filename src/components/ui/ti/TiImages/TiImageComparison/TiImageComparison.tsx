@@ -49,12 +49,6 @@ const captionStyles = tv({
   },
 });
 
-/**
- * Text overlaid on each image. ti.com styles these slots only from portals.css
- * (`.ti_p-featuredGallery-imageComparison-{left,right}TextOverlay`), which this
- * app doesn't load, so the values are ported literally here — including the
- * weight difference between the two sides, which is what ti.com ships.
- */
 const overlayStyles = tv({
   base: "text-[34px] text-white text-shadow-[1px_1px_5px_#000]",
   variants: {
@@ -100,22 +94,22 @@ export function TiImageComparison({
       <TiImage slot="left-image" {...leftImage} />
       {leftLabel != null && <span slot="left-label">{leftLabel}</span>}
       {leftOverlay != null && (
-        <span
+        <div
           slot="left-overlay-image"
           className={overlayStyles({ side: "left" })}
         >
           {leftOverlay}
-        </span>
+        </div>
       )}
       <TiImage slot="right-image" {...rightImage} />
       {rightLabel != null && <span slot="right-label">{rightLabel}</span>}
       {rightOverlay != null && (
-        <span
+        <div
           slot="right-overlay-image"
           className={overlayStyles({ side: "right" })}
         >
           {rightOverlay}
-        </span>
+        </div>
       )}
 
       {caption != null && (

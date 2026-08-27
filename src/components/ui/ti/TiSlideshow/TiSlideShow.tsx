@@ -26,9 +26,6 @@ export type TiSlideShowProps = TiComponentPropsBase & {
   isPreview: boolean;
   /**Property for enabling auto-advance timer feature */
   autoAdvance?: boolean;
-  /** Render edge-to-edge: drops the page container and the section's vertical
-   * padding so the slide background bleeds to the full width of its parent. */
-  fullBleed?: boolean;
   /**	Hide and disable the thumbnail navigation entirely when true. */
   hideNavigation?: boolean;
   /**When true, positions the thumbnail navigation inset over the slideshow canvas. */
@@ -68,7 +65,6 @@ export type TiSlideShowProps = TiComponentPropsBase & {
 export function TiSlideShow({
   isPreview,
   autoAdvance,
-  fullBleed,
   hideNavigation,
   insetNavigation,
   mobileAllowSwipe,
@@ -113,11 +109,7 @@ export function TiSlideShow({
     visibleSlideElements = visibleSlideElements.slice(0, maxSlides);
   }
   return (
-    <SectionWrapper
-      contained={!fullBleed}
-      noPaddingTop={fullBleed}
-      noPaddingBottom={fullBleed}
-    >
+    <SectionWrapper>
       {PreviewControls}
       {flattenedSlides || visibleSlideElements.length === 1 ? (
         <>

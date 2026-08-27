@@ -26,8 +26,6 @@ export interface TiSearchFieldProps
   placeholder?: string;
   /** Select the text content when the field is focused. */
   selectOnFocus?: boolean;
-  /** Render the field's clear ("X") button. */
-  hasClearbutton?: boolean;
   /** The value of the search. */
   value?: string;
   /** Fired on every change to the value of the field. */
@@ -63,7 +61,6 @@ export function TiSearchField({
   disabled,
   placeholder,
   selectOnFocus,
-  hasClearbutton,
   value,
   tiChange,
   tiFocus,
@@ -91,7 +88,6 @@ export function TiSearchField({
       disabled={disabled}
       placeholder={placeholder}
       select-on-focus={selectOnFocus}
-      has-clearbutton={hasClearbutton}
       value={value}
       {...props}
     ></ti-search-field>

@@ -65,6 +65,7 @@ import { ApplicationSearchBox } from "./ApplicationSearchBox/ApplicationSearchBo
 import { SelectionToolComponent } from "./SelectionTool/SelectionTool";
 import { GoldenSourcePageHeadingComponentType } from "./PageHeadings/GoldenSourcePageHeading/GoldenSourcePageHeading.model";
 import { GoldenSourcePageHeadingComponent } from "./PageHeadings/GoldenSourcePageHeading/GoldenSourcePageHeading";
+import { GenericPageHeadingComponentType } from "./PageHeadings/GenericPageHeading/GenericPageHeading.model";
 import { ApiSwaggerComponentType } from "./ApiSwagger/ApiSwagger.model";
 import { ApiSwagger } from "./ApiSwagger/ApiSwagger";
 import { PartnerResourceFilterComponentType } from "./PartnerResourceFilter/PartnerResourceFilter.model";
@@ -120,9 +121,6 @@ import {
   PremiumInteractiveImagePanelComponentType,
 } from "./PremiumInteractiveImage/PremiumInteractiveImage.model";
 import { PortfolioVisualizerComponentType } from "./PortfolioVisualizer/PortfolioVisualizer.model";
-import { ApplicationCategoryListComponentType } from "./ApplicationCategoryList/ApplicationCategoryList.model";
-import { ApplicationCategoryList } from "./ApplicationCategoryList/ApplicationCategoryList";
-
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -158,6 +156,7 @@ export const componentRegistry: ComponentRegistry = {
   [KeyCustomerMessageItemComponentType.key]: NoPreviewComponent,
   [ApplicationSearchBoxComponentType.key]: ApplicationSearchBox,
   [GoldenSourcePageHeadingComponentType.key]: GoldenSourcePageHeadingComponent,
+  [GenericPageHeadingComponentType.key]: NoPreviewComponent,
   [ApiSwaggerComponentType.key]: ApiSwagger,
   [HorizontalRuleContentDividerComponentType.key]:
     HorizontalRuleContentDividerComponent,
@@ -181,6 +180,6 @@ export const componentRegistry: ComponentRegistry = {
   [PremiumInteractiveImageComponentType.key]: NoPreviewComponent,
   [PremiumInteractiveImagePanelComponentType.key]: NoPreviewComponent,
   [PortfolioVisualizerComponentType.key]: NoPreviewComponent,
-  [JumpLinkNavigationHorizontalComponentType.key]: JumpLinkNavigationHorizontalComponent,
-  [ApplicationCategoryListComponentType.key]: ApplicationCategoryList,
+  [JumpLinkNavigationHorizontalComponentType.key]:
+    JumpLinkNavigationHorizontalComponent,
 };
