@@ -40,7 +40,10 @@ export function BrowseVideosSearchInput({
       const query = term.trim();
       // Nothing to search for — e.g. the field was just cleared.
       if (!query) return;
-      window.open(`${baseUrl}&searchTerm=${encodeURIComponent(query)}`, "_self");
+      window.open(
+        `${baseUrl}&searchTerm=${encodeURIComponent(query)}`,
+        "_self",
+      );
     },
     [baseUrl],
   );

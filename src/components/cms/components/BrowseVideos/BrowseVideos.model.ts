@@ -7,6 +7,6 @@ export const BrowseVideosComponentType = contentType({
   key: AllComponentTypeKeyMap.BrowseVideosComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Browse Videos`,
   baseType: "_component",
-  extends: [AllowIn.Prefooter],
+  extends: [AllowIn.Prefooter,AllowIn.Section],
   properties: {},
 });

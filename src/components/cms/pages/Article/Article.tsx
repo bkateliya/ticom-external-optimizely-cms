@@ -3,6 +3,7 @@ import { ArticlePageType } from "./Article.model";
 import { SiteFrame } from "@/components/global/SiteFrame/SiteFrame";
 import { CommonPageHero } from "@/components/global/CommonPageHero";
 import { populatePageData } from "@/lib/data/site-settings";
+import { JumpLinkStickyBehaviorProvider } from "@/components/cms/components/JumpLink/JumpLinkStickyBehaviorContext";
 
 type Props = {
   content: ContentProps<typeof ArticlePageType>;
@@ -11,9 +12,11 @@ type Props = {
 export async function ArticlePage({ content }: Props) {
   await populatePageData(content);
   return (
-    <SiteFrame content={content}>
-      <CommonPageHero content={content} />
-    </SiteFrame>
+    <JumpLinkStickyBehaviorProvider value="vertical">
+      <SiteFrame content={content}>
+        <CommonPageHero content={content} />
+      </SiteFrame>
+    </JumpLinkStickyBehaviorProvider>
   );
 }
 

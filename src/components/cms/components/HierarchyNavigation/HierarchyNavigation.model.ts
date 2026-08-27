@@ -32,7 +32,7 @@ export const HierarchyNavigationItemComponentType = contentType({
 export const HierarchyNavigationComponentType = contentType({
   key: AllComponentTypeKeyMap.HierarchyNavigationComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Hierarchy Navigation`,
-  extends: [AllowIn.Column],
+  extends: [AllowIn.Main],
   baseType: "_component",
   properties: {
     navigationItems: {

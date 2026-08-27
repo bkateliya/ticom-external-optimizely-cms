@@ -121,6 +121,8 @@ import {
   PremiumInteractiveImagePanelComponentType,
 } from "./PremiumInteractiveImage/PremiumInteractiveImage.model";
 import { PortfolioVisualizerComponentType } from "./PortfolioVisualizer/PortfolioVisualizer.model";
+import { ApplicationCategoryListComponentType } from "./ApplicationCategoryList/ApplicationCategoryList.model";
+import { ApplicationCategoryList } from "./ApplicationCategoryList/ApplicationCategoryList";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -180,6 +182,6 @@ export const componentRegistry: ComponentRegistry = {
   [PremiumInteractiveImageComponentType.key]: NoPreviewComponent,
   [PremiumInteractiveImagePanelComponentType.key]: NoPreviewComponent,
   [PortfolioVisualizerComponentType.key]: NoPreviewComponent,
-  [JumpLinkNavigationHorizontalComponentType.key]:
-    JumpLinkNavigationHorizontalComponent,
+  [JumpLinkNavigationHorizontalComponentType.key]: JumpLinkNavigationHorizontalComponent,
+  [ApplicationCategoryListComponentType.key]: ApplicationCategoryList,
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import {
   JumpLinkNavigationComponentType,
@@ -6,11 +8,13 @@ import {
 import { JumpNavVertical } from "@/components/ui/molecules/JumpNavVertical";
 import { TiStickyHeader } from "@/components/ui/ti/TiStickyHeader/TiStickyHeader";
 import { TiNavbar } from "@/components/ui/ti/TiNavbar/TiNavbar";
+import { useJumpLinkStickyBehavior } from "./JumpLinkStickyBehaviorContext";
 
 export function JumpLinkNavigationComponent({}: OptiComponentProps<
   typeof JumpLinkNavigationComponentType
 >) {
-  return <JumpNavVertical stickyBehavior="horizontal" />;
+  const stickyBehavior = useJumpLinkStickyBehavior();
+  return <JumpNavVertical stickyBehavior={stickyBehavior} />;
 }
 
 // ti-navbar auto-populates its items from every [navbar-id] target on the page

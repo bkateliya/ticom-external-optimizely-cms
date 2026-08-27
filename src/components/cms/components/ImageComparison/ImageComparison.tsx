@@ -21,11 +21,6 @@ export function ImageComparisonItemComponent({
   content,
   hoistCaption,
 }: OptiComponentProps<typeof ImageComparisonItemComponentType> & {
-  /**
-   * Inside a slideshow, ti-slideshow clones the slide's `[slot="caption"]` into
-   * its own caption row — so hand it the caption there instead of rendering the
-   * comparison's figcaption, which would show the same text twice.
-   */
   hoistCaption?: boolean;
 }) {
   if (!content) {

@@ -81,6 +81,7 @@ import {
   PremiumInteractiveImagePanelComponentType,
 } from "./PremiumInteractiveImage/PremiumInteractiveImage.model";
 import { PortfolioVisualizerComponentType } from "./PortfolioVisualizer/PortfolioVisualizer.model";
+import { ApplicationCategoryListComponentType } from "./ApplicationCategoryList/ApplicationCategoryList.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -140,4 +141,5 @@ export const allComponentTypes = [
   PremiumInteractiveImageComponentType,
   PremiumInteractiveImagePanelComponentType,
   PortfolioVisualizerComponentType,
+  ApplicationCategoryListComponentType,
 ];
