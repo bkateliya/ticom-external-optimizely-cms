@@ -63,6 +63,7 @@ export const PreambleDirectHeadline = ({
   textAlignment = "Left",
   content,
   parentField,
+  redUnderline,
 }: PreambleDirectHeadlineProps) => {
   if (!content) {
     return null;
@@ -116,6 +117,7 @@ export const PreambleDirectHeadline = ({
               content={content}
               parentField={parentField}
               textAlignment={textAlignment}
+              redUnderline={redUnderline}
             />
 
             <ExtendedOptimizelyComponent content={content.ctasList} />

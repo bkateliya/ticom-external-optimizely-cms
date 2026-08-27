@@ -9,6 +9,7 @@ import { fieldFactory } from "@/components/ui/cms";
 
 export interface HeadlineStyleProps {
   textAlignment?: TextAlignment;
+  redUnderline?: boolean;
 }
 export interface HeadlineProps
   extends
@@ -32,6 +33,7 @@ export function parseHeadlineSize({
 
 export const Headline = ({
   textAlignment = "Left",
+  redUnderline,
   content,
   parentField,
   ...props
@@ -71,6 +73,7 @@ export const Headline = ({
         <WrappedHeadingTextField
           headingSize={parseHeadlineSize({ content })}
           field="headline"
+          redUnderline={redUnderline}
           className={clsx('text-inherit!', {
             "mb-0": !content.description,
           })}

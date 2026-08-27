@@ -1,11 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
-import {
-  TiSearchField,
-  TiSearchFieldChangeEventDetail,
-} from "@/components/ui/ti/TiSearchField/TiSearchField";
-import { CustomEventHandler } from "@/components/ui/ti/Common/events";
+import { useCallback } from "react";
+import { TiSearchField } from "@/components/ui/ti/TiSearchField/TiSearchField";
+import { useSearchFieldSubmit } from "@/components/ui/ti/TiSearchField/useSearchFieldSubmit";
 
 export interface FAQSearchInputProps {
   /** Placeholder text for the field. */
@@ -37,8 +34,6 @@ export function FAQSearchInput({
   preFilter,
   className,
 }: FAQSearchInputProps) {
-  const fieldRef = useRef<HTMLElement>(null);
-
   const search = useCallback(
     (term: string) => {
       const query = encodeURIComponent(term.trim());
@@ -47,41 +42,13 @@ export function FAQSearchInput({
     [baseUrl, preFilter],
   );
 
-  // Read the current value directly off the web component.
-  const readValue = useCallback(
-    () =>
-      (fieldRef.current as (HTMLElement & { value?: string }) | null)?.value ??
-      "",
-    [],
-  );
-
-  // Search button click.
-  const handleSubmit: CustomEventHandler<TiSearchFieldChangeEventDetail> =
-    useCallback(
-      (event) => search(event.detail?.value ?? readValue()),
-      [search, readValue],
-    );
-
-  // The submit event covers the search button but not Enter, so add a native
-  // keyup listener on the element for that (matches the reference behavior).
-  useEffect(() => {
-    const el = fieldRef.current;
-    if (!el) return;
-
-    const onKeyUp = (event: KeyboardEvent) => {
-      if (event.key === "Enter") search(readValue());
-    };
-
-    el.addEventListener("keyup", onKeyUp);
-    return () => el.removeEventListener("keyup", onKeyUp);
-  }, [search, readValue]);
+  const submitProps = useSearchFieldSubmit(search);
 
   return (
     <TiSearchField
-      elementRef={fieldRef}
+      {...submitProps}
       className={className}
       placeholder={placeholder}
-      tiSearchFieldSubmit={handleSubmit}
     />
   );
 }

@@ -120,6 +120,8 @@ import {
   PremiumInteractiveImagePanelComponentType,
 } from "./PremiumInteractiveImage/PremiumInteractiveImage.model";
 import { PortfolioVisualizerComponentType } from "./PortfolioVisualizer/PortfolioVisualizer.model";
+import { ApplicationCategoryListComponentType } from "./ApplicationCategoryList/ApplicationCategoryList.model";
+import { ApplicationCategoryList } from "./ApplicationCategoryList/ApplicationCategoryList";
 
 
 export const componentRegistry: ComponentRegistry = {
@@ -180,4 +182,5 @@ export const componentRegistry: ComponentRegistry = {
   [PremiumInteractiveImagePanelComponentType.key]: NoPreviewComponent,
   [PortfolioVisualizerComponentType.key]: NoPreviewComponent,
   [JumpLinkNavigationHorizontalComponentType.key]: JumpLinkNavigationHorizontalComponent,
+  [ApplicationCategoryListComponentType.key]: ApplicationCategoryList,
 };

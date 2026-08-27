@@ -24,6 +24,7 @@ export function GeneralSectionComponent({
         <PreambleSectionWrapper
           content={content}
           parentField={parentField}
+          redUnderline={false}
           textAlignment={content.headlineAlignment as TextAlignment}
         >
           {content.content?.map((x, i) => (

@@ -81,8 +81,10 @@ export function PartnerResourceFilterForm({
               selectRefs.current[index] = element;
             }}
             name={field.facet}
-            placeholder={placeholderLabel}
           >
+            {/* A real option, not the `placeholder` prop, so the default stays
+                selectable and the facet can be cleared again. */}
+            <option value="">{placeholderLabel}</option>
             {field.options.map((option) => (
               <option key={option} value={option}>
                 {option}
