@@ -19,7 +19,15 @@ const IMAGE_RATIO = "rectangle";
 
 export function ImageComparisonItemComponent({
   content,
-}: OptiComponentProps<typeof ImageComparisonItemComponentType>) {
+  hoistCaption,
+}: OptiComponentProps<typeof ImageComparisonItemComponentType> & {
+  /**
+   * Inside a slideshow, ti-slideshow clones the slide's `[slot="caption"]` into
+   * its own caption row — so hand it the caption there instead of rendering the
+   * comparison's figcaption, which would show the same text twice.
+   */
+  hoistCaption?: boolean;
+}) {
   if (!content) {
     return null;
   }
@@ -29,46 +37,51 @@ export function ImageComparisonItemComponent({
   const leftImage = getStandardizedImage(content, content.leftImage);
   const rightImage = getStandardizedImage(content, content.rightImage);
 
+  const caption = content.comparisonCaption?.json ? (
+    <WrappedRichTextField field="comparisonCaption" />
+  ) : undefined;
+
   return (
-    <TiImageComparison
-      leftImage={{
-        src: leftImage.src ?? "",
-        alt: content.leftImageAltText || leftImage.alt,
-        ratio: IMAGE_RATIO,
-        dataMetricsName: getMetricsName(leftImage.src),
-      }}
-      rightImage={{
-        src: rightImage.src ?? "",
-        alt: content.rightImageAltText || rightImage.alt,
-        ratio: IMAGE_RATIO,
-        dataMetricsName: getMetricsName(rightImage.src),
-      }}
-      leftLabel={
-        content.leftImageCaption?.json ? (
-          <WrappedRichTextField field="leftImageCaption" />
-        ) : undefined
-      }
-      rightLabel={
-        content.rightImageCaption?.json ? (
-          <WrappedRichTextField field="rightImageCaption" />
-        ) : undefined
-      }
-      leftOverlay={
-        content.leftImageOverlay?.json ? (
-          <WrappedRichTextField field="leftImageOverlay" />
-        ) : undefined
-      }
-      rightOverlay={
-        content.rightImageOverlay?.json ? (
-          <WrappedRichTextField field="rightImageOverlay" />
-        ) : undefined
-      }
-      caption={
-        content.comparisonCaption?.json ? (
-          <WrappedRichTextField field="comparisonCaption" />
-        ) : undefined
-      }
-    />
+    <>
+      <TiImageComparison
+        leftImage={{
+          src: leftImage.src ?? "",
+          alt: content.leftImageAltText || leftImage.alt,
+          ratio: IMAGE_RATIO,
+          dataMetricsName: getMetricsName(leftImage.src),
+        }}
+        rightImage={{
+          src: rightImage.src ?? "",
+          alt: content.rightImageAltText || rightImage.alt,
+          ratio: IMAGE_RATIO,
+          dataMetricsName: getMetricsName(rightImage.src),
+        }}
+        leftLabel={
+          content.leftImageCaption?.json ? (
+            <WrappedRichTextField field="leftImageCaption" />
+          ) : undefined
+        }
+        rightLabel={
+          content.rightImageCaption?.json ? (
+            <WrappedRichTextField field="rightImageCaption" />
+          ) : undefined
+        }
+        leftOverlay={
+          content.leftImageOverlay?.json ? (
+            <WrappedRichTextField field="leftImageOverlay" />
+          ) : undefined
+        }
+        rightOverlay={
+          content.rightImageOverlay?.json ? (
+            <WrappedRichTextField field="rightImageOverlay" />
+          ) : undefined
+        }
+        caption={hoistCaption ? undefined : caption}
+      />
+      {/* Direct child of ti-slide: the slot name matches no ti-slide slot, so it
+          stays hidden here and only ti-slideshow's caption row renders it. */}
+      {hoistCaption && caption && <div slot="caption">{caption}</div>}
+    </>
   );
 }
 
@@ -97,13 +110,13 @@ export function ImageComparisonComponent({
   return (
     <TiSlideShow
       isPreview={isPreview}
-      showChevrons
-      mobileHideChevrons
       thumbnailSize="small"
       slideElements={items.map((item) => ({
         element: (
           <TiSlide key={item._id} thumbnailSrc={getThumbnailSrc(item)}>
-            <ExtendedOptimizelyComponent content={item} />
+            {/* Rendered directly rather than through the registry so the slide
+                can opt into the slideshow's own caption row. */}
+            <ImageComparisonItemComponent content={item} hoistCaption />
           </TiSlide>
         ),
         slideVisibility: "Visible",

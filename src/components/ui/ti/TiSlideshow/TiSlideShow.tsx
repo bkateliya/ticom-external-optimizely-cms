@@ -121,6 +121,9 @@ export function TiSlideShow({
         </>
       ) : (
         <ti-slideshow
+          // TI's slideshow only paints the active thumbnail red under a light
+          // color-scheme; pin it to the accent red for every theme.
+          className="[--tiSlideshow-thumbnail-borderColor--active:var(--pl-border-color-accent)] [--tiSlideshow-thumbnail-progressColor--active:var(--pl-border-color-accent)]"
           ref={ref}
           auto-advance={autoAdvance}
           hide-navigation={hideNavigation}
