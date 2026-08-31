@@ -44,6 +44,7 @@ export const AllComponentTypeKeyMap = {
   KeyCustomerMessagesComponent: `${KEY_PREFIX}KeyCustomerMessages_ComponentType`,
   KeyCustomerMessageItemComponent: `${KEY_PREFIX}KeyCustomerMessageItem_ComponentType`,
   GoldenSourcePageHeading: `${KEY_PREFIX}GoldenSourcePageHeading_Component`,
+  GenericPageHeadingComponent: `${KEY_PREFIX}GenericPageHeading_Component`,
   ApiSwaggerComponent: `${KEY_PREFIX}ApiSwagger_Component`,
   PartnerResourceFilterComponent: `${KEY_PREFIX}PartnerResourceFilter_Component`,
   PartnerResourceFilterOptionComponent: `${KEY_PREFIX}PartnerResourceFilterOption_Component`,
@@ -70,4 +71,5 @@ export const AllComponentTypeKeyMap = {
   ProductCategoryListingOverrideComponent: `${KEY_PREFIX}ProductCategoryListingOverride_Component`,
   PortfolioVisualizerComponent: `${KEY_PREFIX}PortfolioVisualizer_Component`,
   JumpLinkNavigationHorizontalComponent: `${KEY_PREFIX}JumpLinkNavigationHorizontal_Component`,
+  ShipRateTablesComponent: `${KEY_PREFIX}ShipRateTables_Component`,
 } as const;

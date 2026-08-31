@@ -17,6 +17,8 @@ import {
   ApiHeaderLevel1ComponentType,
   ApiHeaderLevel2ComponentType,
 } from "./ApiHeader.model";
+import { parseSecurableLink } from "@/lib/utils/secure-link-utils";
+import { SecurableElement } from "@/components/utilities/SecurableElement";
 
 type Level1 = ContentProps<typeof ApiHeaderLevel1ComponentType>;
 type Level2 = ContentProps<typeof ApiHeaderLevel2ComponentType>;
@@ -49,7 +51,6 @@ function linkTarget(link: Level1["level1URL"] | Level2["level2URL"]) {
   };
 }
 
-
 export function ApiHeader({
   content,
   parentField,
@@ -59,9 +60,9 @@ export function ApiHeader({
   }
 
   const locale = getContextLocale();
-  const menus = normalizeGenericArrayToTyped<typeof ApiHeaderLevel1ComponentType>(
-    content.level1Menus,
-  );
+  const menus = normalizeGenericArrayToTyped<
+    typeof ApiHeaderLevel1ComponentType
+  >(content.level1Menus);
 
   return (
     <>
@@ -88,7 +89,11 @@ export function ApiHeader({
           </a>
           <ul className="ti_header-top-llc" role="menu">
             <li className="ti_header-top-llc-item" role="none">
-              <ti-login locale={locale} data-di-mask="" data-lid="header-login" />
+              <ti-login
+                locale={locale}
+                data-di-mask=""
+                data-lid="header-login"
+              />
             </li>
             <li className="ti_header-top-llc-item" role="none">
               <ti-header-llc-sidesheet />
@@ -179,11 +184,10 @@ export function ApiHeader({
   );
 }
 
-
 function Level1Item({ content }: { content: Level1 }) {
-  const links = normalizeGenericArrayToTyped<typeof ApiHeaderLevel2ComponentType>(
-    content.level2Links,
-  );
+  const links = normalizeGenericArrayToTyped<
+    typeof ApiHeaderLevel2ComponentType
+  >(content.level2Links);
   const title = content.level1Title;
   const { pa } = getPreviewUtils(content);
 
@@ -205,7 +209,11 @@ function Level1Item({ content }: { content: Level1 }) {
         </button>
         {/* Must stay the button's immediate next sibling — subpage.js finds it
             with nextElementSibling. */}
-        <ul className="ti_header-navlist-sublist" role="menu" aria-hidden="true">
+        <ul
+          className="ti_header-navlist-sublist"
+          role="menu"
+          aria-hidden="true"
+        >
           {links.map((link) => (
             <Level2Item key={link._id} content={link} />
           ))}
@@ -216,31 +224,33 @@ function Level1Item({ content }: { content: Level1 }) {
 
   const href = menuHref(content.level1URL);
 
+  const secure = parseSecurableLink(href);
   return (
-    <li className="ti_header-navlist-item" role="none">
-      {href ? (
-        <a
-          className="ti_header-navlist-item-link"
-          data-lid={NAV_LID}
-          data-navtitle={title}
-          href={href}
-          {...linkTarget(content.level1URL)}
-          role="menuitem"
-          {...pa("level1Title")}
-        >
-          {title}
-        </a>
-      ) : (
-        // No URL and no children: `:not(span)` in TI's CSS drops the hover
-        // affordance, so a span reads as the non-interactive label it is.
-        <span className="ti_header-navlist-item-link" {...pa("level1Title")}>
-          {title}
-        </span>
-      )}
-    </li>
+    <SecurableElement securableUrl={secure}>
+      <li className="ti_header-navlist-item">
+        {secure?.updatedUrl ? (
+          <a
+            className="ti_header-navlist-item-link"
+            data-lid={NAV_LID}
+            data-navtitle={title}
+            href={secure?.updatedUrl}
+            {...linkTarget(content.level1URL)}
+            role="menuitem"
+            {...pa("level1Title")}
+          >
+            {title}
+          </a>
+        ) : (
+          // No URL and no children: `:not(span)` in TI's CSS drops the hover
+          // affordance, so a span reads as the non-interactive label it is.
+          <span className="ti_header-navlist-item-link" {...pa("level1Title")}>
+            {title}
+          </span>
+        )}
+      </li>
+    </SecurableElement>
   );
 }
-
 function Level2Item({ content }: { content: Level2 }) {
   const href = menuHref(content.level2URL);
   const title = content.level2Title;
@@ -248,20 +258,22 @@ function Level2Item({ content }: { content: Level2 }) {
   if (!title || !href) {
     return null;
   }
-
+  const secure = parseSecurableLink(href);
   return (
-    <li className="ti_header-navlist-subitem">
-      <a
-        className="ti_header-navlist-subitem-link"
-        data-lid={NAV_LID}
-        data-navtitle={title}
-        href={href}
-        {...linkTarget(content.level2URL)}
-        role="menuitem"
-        {...getPreviewUtils(content).pa("level2Title")}
-      >
-        {title}
-      </a>
-    </li>
+    <SecurableElement securableUrl={secure}>
+      <li className="ti_header-navlist-subitem">
+        <a
+          className="ti_header-navlist-subitem-link"
+          data-lid={NAV_LID}
+          data-navtitle={title}
+          href={secure?.updatedUrl}
+          {...linkTarget(content.level2URL)}
+          role="menuitem"
+          {...getPreviewUtils(content).pa("level2Title")}
+        >
+          {title}
+        </a>
+      </li>
+    </SecurableElement>
   );
 }

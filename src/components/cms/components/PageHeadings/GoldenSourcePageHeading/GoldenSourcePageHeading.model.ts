@@ -3,13 +3,16 @@ import { DISPLAY_NAME_PREFIX } from "@/components/cms/constants.mjs";
 import { AllComponentTypeKeyMap } from "../../keys";
 import { PropertyTypes } from "@/lib/property-types";
 import { AllowIn } from "../../../contracts/component-contracts/allow-in.model";
-import { ImageBaseContract } from "@/components/cms/contracts/component-contracts/image.model";
+import { CtaButtonElementType } from "../../../elements/CTAButton/CTAButton.model";
+import { StandardImageComponentType } from "../../Image/StandardImage.model";
+import { VideoPlayerComponentType } from "../../VideoPlayer/VideoPlayer.model";
+import { CtaVideoElementType } from "../../../elements/CTAVideoModal/CTAVideoModal.model";
 
 export const GoldenSourcePageHeadingComponentType = contentType({
   key: AllComponentTypeKeyMap.GoldenSourcePageHeading,
   displayName: `${DISPLAY_NAME_PREFIX}Golden Source Page Heading`,
   baseType: "_component",
-  extends: [ImageBaseContract, AllowIn.PageHeader],
+  extends: [AllowIn.PageHeader],
   properties: {
     subheadline: {
       type: "richText",
@@ -31,46 +34,23 @@ export const GoldenSourcePageHeadingComponentType = contentType({
         { value: "grey", displayName: "Grey" },
       ],
     },
-    assetType: {
+    featureAsset: {
       displayName: "Feature asset",
+      description: "Add either a Standard Image or a Video Player (Single Video type only — Video Playlist is not supported here)",
+      type: "content",
+      allowedTypes: [StandardImageComponentType, VideoPlayerComponentType],
       group: PropertyTypes.Appearance,
-      type: "string",
-      format: "selectOne",
       sortOrder: 20,
-      enum: [
-        { value: "none", displayName: "None" },
-        { value: "image", displayName: "Image" },
-        { value: "brightcove", displayName: "Video (Brightcove)" },
-      ],
     },
-    featureVideoId: {
-      displayName: "Video ID (Brightcove)",
-      description: "Brightcove video ID — autoplays in the right column",
-      type: "string",
-      minLength: 13,
-      maxLength: 13,
-      group: PropertyTypes.Appearance,
-      sortOrder: 40,
-    },
-    secondaryCTA: {
-      displayName: "Select secondary CTA",
-      description: "Only works if applicaton property is set",
+    ctaLinks: {
+      displayName: "CTA Links",
       group: PropertyTypes.ComponentConfiguration,
-      type: "string",
-      format: "selectOne",
-      enum: [
-        { value: "none", displayName: "None" },
-        { value: "video", displayName: "Video" },
-        { value: "selection", displayName: "Product Selection" },
-      ],
-    },
-    ctaVideoId: {
-      type: "string",
-      group: PropertyTypes.ComponentConfiguration,
-      displayName: "CTA Video ID",
-      description: "CTA Video ID",
-      minLength: 13,
-      maxLength: 13,
+      type: "array",
+      maxItems: 2,
+      items: {
+        type: "content",
+        allowedTypes: [CtaButtonElementType, CtaVideoElementType],
+      },
     },
   },
   // compositionBehaviors: ["sectionEnabled"],

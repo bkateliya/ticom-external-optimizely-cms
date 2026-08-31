@@ -5,7 +5,7 @@ import { OptiComponentProps } from "@/lib/ts/component-props";
 import { DynamicHeading } from "@/components/ui/Atoms/DynamicHeading";
 import { HeadingLevelContext } from "@/components/utilities/HeadingLevelContext";
 import { BrowseVideosSearchInput } from "./BrowseVideosSearchInput";
-import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 import { toLangPref } from "@/constants/locales";
 import { getApplication, getSilos } from "@/lib/api/cms-api";
 import { DEFAULT_APPLICATION_ID } from "@/lib/api/normalized/applications";
@@ -40,10 +40,7 @@ export async function BrowseVideos({
   const locale = await getLocale();
 
   // Remove the https://
-  const host = SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN.replace(
-    /https?:\/\//,
-    "",
-  );
+  const host = SERVER_ENV_VARS.TICOM_BASE_DOMAIN.replace(/https?:\/\//, "");
 
   // The catalog entries carry the localized video facet values; the search term
   // is appended by the client field.
@@ -75,7 +72,7 @@ export async function BrowseVideos({
 
             <div className="flex flex-row items-center gap-x-6  mb-8">
               <BrowseVideosSearchInput
-                className="w-full text-pl-input-element-color"
+                className="w-full text-pl-input-element-color max-w-[285px]"
                 placeholder={t("Search")}
                 baseUrl={searchUrl}
               />
@@ -83,7 +80,7 @@ export async function BrowseVideos({
                 href={viewAllUrl}
                 data-lid="recentlyuploaded-view-all"
                 data-navtitle="watch-video"
-                className="text-body-md text-pl-link-color-primary no-underline hover:underline whitespace-nowrap"
+                className="text-body-md text-pl-link-color-primary no-underline hover:underline! whitespace-nowrap"
               >
                 {t("View all videos")}
               </NextLink>
@@ -97,7 +94,10 @@ export async function BrowseVideos({
                     {t("Products")}
                   </DynamicHeading>
 
-                  <BrowseLinkList links={products} className="md:columns-3" />
+                  <BrowseLinkList
+                    links={products}
+                    className="columns-2 md:columns-3"
+                  />
                 </div>
               )}
               {applications.length > 0 && (
@@ -124,14 +124,14 @@ function BrowseLinkList({
   className?: string;
 }) {
   return (
-    <ul className={`columns-1 gap-x-[56px] list-none ${className ?? ""}`}>
+    <ul className={`md:gap-x-[56px] list-none ${className ?? ""}`}>
       {links.map((link) => (
         <li key={link.href} className="break-inside-avoid mb-2">
           <NextLink
             href={link.href}
             data-lid={`browsevideos-${link.lid}`}
             data-navtitle="learn-more"
-            className="text-body-md text-pl-link-color-primary no-underline hover:underline"
+            className="text-body-md text-pl-link-color-primary no-underline hover:underline!"
           >
             {link.text}
           </NextLink>

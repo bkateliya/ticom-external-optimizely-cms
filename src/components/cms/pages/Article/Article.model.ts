@@ -20,11 +20,11 @@ export const ArticlePageType = contentType({
       pageHeaderAllowedTypes: [ArticlePageHeaderComponentType],
     }),
     showStickyNav: {
-      type: "content",
-      displayName: "Category (Choose From Assets, do not create new block)",
-      allowedTypes: [TaxonomyType],
-      group: PropertyTypes.Seo,
+      type: "boolean",
+      displayName: "Show Sticky Side Nav",
+      group: PropertyTypes.ComponentConfiguration,
     },
+
     category: {
       type: "content",
       displayName: "Category (Choose From Assets, do not create new block)",
@@ -60,6 +60,35 @@ export const ArticlePageType = contentType({
       displayName: "Expiration date",
       description: "This is the date that the article expires",
       group: PropertyTypes.Seo,
+    },
+    schemaType: {
+      type: "string",
+      displayName: "Schema Type",
+      description:
+        "Controls the Schema.org type for SEO. Blog = BlogPosting, News release = NewsArticle, Other = Article.",
+      format: "selectOne",
+      enum: [
+        {
+          value: "Blog",
+          displayName: "Blog",
+        },
+        {
+          value: "News",
+          displayName: "News release",
+        },
+        {
+          value: "Other",
+          displayName: "Other",
+        },
+      ],
+      group: PropertyTypes.Seo,
+    },
+    dateline: {
+      type: "string",
+      displayName: "Dateline",
+      description:
+        "This is the city, state or country of origin and the date the article was published (ex: DALLAS, July 16, 2026)",
+      group: PropertyTypes.Content,
     },
   },
   mayContainTypes: AllPageAndExperienceTypeKeys,

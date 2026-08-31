@@ -1,6 +1,6 @@
 {
   "name": "@ticom/optimizely-cms",
-  "version":"0.1.4",
+  "version":"0.1.19",
   "scripts": {
     "with-proxy": "cross-env NODE_USE_ENV_PROXY=1 http_proxy=http://wwwgate.ti.com:80 HTTPS_PROXY=http://wwwgate.ti.com:80 NO_PROXY=localhost,127.0.0.1,.ti.com",
     "next:dev": "pnpm run with-proxy next dev -p 3000",

@@ -44,12 +44,16 @@ export function CTALinkElement({ content }: Props) {
   // The CMS has no default value for properties, so the standard icon is applied here.
   const icon = (content.Icon ?? CTA_LINK_ICONS.standard) as UiIcon | "none";
 
+  // The CMS "Open in" dropdown maps to `link.target` (`_blank`, `_self`, …).
+  const target = content.link?.target || undefined;
+
   return (
     <a
       // The download api route gets around the download attribute only working same-domain
       href={content.IsDownload ? `/api/download?url=${encodeURI(url)}` : url}
+      target={target}
       download={content.IsDownload ? getUrlFileName(url) : undefined}
-      className="inline-flex items-center gap-1 text-body-md text-pl-link-color-primary no-underline"
+      className="inline-flex items-center gap-1 text-body-md text-pl-link-color-primary no-underline hover:underline"
       data-cta-link
     >
       {icon === "none" ? null : (

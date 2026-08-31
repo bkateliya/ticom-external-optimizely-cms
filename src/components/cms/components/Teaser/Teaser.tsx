@@ -4,22 +4,9 @@ import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedN
 import { fieldFactory } from "@/components/ui/cms";
 import { parseHeadlineSize } from "@/components/ui/molecules/Headline/Headline";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
+import { CtaButtonElementType } from "@/components/cms/elements/CTAButton/CTAButton.model";
 import { getBynderImageFromContext } from "@/lib/data/bynder";
-import { tv } from "tailwind-variants";
-
-const teaser = tv({
-  base: "flex flex-col items-center gap-6 border-solid px-4 py-6 text-pl-text-color-primary md:flex-row md:gap-4 md:p-8",
-  variants: {
-    background: {
-      grey: "rounded border border-pl-container-background-color-secondary-variant bg-pl-container-background-color-secondary",
-      white:
-        "border-y-0 border-r-0 border-l border-pl-border-color-primary bg-pl-container-background-color-primary",
-    },
-    hasText: {
-      true: "md:justify-between",
-    },
-  },
-});
+import clsx from "clsx";
 
 export function TeaserComponent({
   content,
@@ -41,10 +28,17 @@ export function TeaserComponent({
     content.teaserDescription
   );
 
-  const background = content.background === "white" ? "white" : "grey";
+  // Live customCTATeaser makes the CTA button full-width on mobile; a CTA *link*
+  // stays inline-left. `__typename` is the content-type key the CMS returns.
+  const ctaIsButton = content.cta?.__typename === CtaButtonElementType.key;
 
   return (
-    <div className={teaser({ background, hasText })}>
+    <div
+      className={clsx(
+        "flex flex-col items-center gap-6 rounded border border-solid border-pl-container-background-color-secondary-variant bg-pl-container-background-color-secondary px-4 py-6 text-pl-text-color-primary md:flex-row md:gap-4 md:p-8",
+        hasText && "md:justify-between",
+      )}
+    >
       {imageUrl && (
         <div className="w-28 shrink-0">
           <EnhancedNextImage
@@ -64,16 +58,22 @@ export function TeaserComponent({
           <WrappedHeadingTextField
             field="headline"
             headingSize={parseHeadlineSize({ content }) || 5}
-            className="mb-0"
+            className="mb-0 text-center md:text-left"
           />
           <WrappedRichTextField
             field="teaserDescription"
-            className="text-body-md"
+            className="text-body-md [&_p]:mb-6 [&_ul]:mb-6 [&_ol]:mb-6 [&_ul]:ms-5 [&_ol]:ms-5 [&>*:last-child]:mb-0"
           />
         </div>
       )}
 
-      <div className="w-full shrink-0 md:w-auto">
+      <div
+        className={clsx(
+          "w-full shrink-0 md:w-auto",
+          ctaIsButton &&
+            "flex justify-center [&>*]:w-full! md:block md:[&>*]:w-auto!",
+        )}
+      >
         <ExtendedOptimizelyComponent content={content.cta} />
       </div>
     </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import {
   JumpLinkNavigationComponentType,
@@ -10,7 +12,7 @@ import { TiNavbar } from "@/components/ui/ti/TiNavbar/TiNavbar";
 export function JumpLinkNavigationComponent({}: OptiComponentProps<
   typeof JumpLinkNavigationComponentType
 >) {
-  return <JumpNavVertical stickyBehavior="horizontal" />;
+  return <JumpNavVertical stickyBehavior={"horizontal"} />;
 }
 
 // ti-navbar auto-populates its items from every [navbar-id] target on the page

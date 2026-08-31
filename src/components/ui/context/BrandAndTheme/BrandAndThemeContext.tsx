@@ -15,7 +15,6 @@ import style from "./BrandAndThemeContext.module.css";
 import { ThemeSelector, ThemeSettingToggle } from "./BrandSelector";
 
 import { ComponentTheme } from "@/components/ui/ti/enums";
-import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
 
 function getModeFromTheme(
   theme: Themes | undefined | "custom",
@@ -54,6 +53,12 @@ type ThemeProviderProps = HTMLAttributes<HTMLDivElement> & {
    * Note: other attributes will be ignored if this is set
    */
   applyToBody?: boolean;
+  /**
+   * Optional. Whether the theme-switching toggle is enabled for this deployment.
+   * Resolved server-side (SERVER_ENV_VARS.ALLOW_THEME_SWITCHING) and passed down,
+   * since this is a client component and can't read env vars itself.
+   */
+  themeSwitchingEnabled?: boolean;
 };
 
 export const ThemeProvider = ({
@@ -61,6 +66,7 @@ export const ThemeProvider = ({
   theme,
   mode,
   applyToBody,
+  themeSwitchingEnabled = false,
   ...props
 }: ThemeProviderProps) => {
   const [selectedTheme, setSelectedTheme] = useState<Themes>();
@@ -99,7 +105,7 @@ export const ThemeProvider = ({
     // Don't render an additional div if we're applying to the body
     return (
       <ThemeContext.Provider value={themeSetting}>
-        {SHARED_ENV_VARS.NEXT_PUBLIC_ALLOW_THEME_SWITCHING && (
+        {themeSwitchingEnabled && (
           <ThemeSettingToggle
             allowThemeSwitching={allowThemeSwitching ?? false}
             setAllowThemeSwitching={setAllowThemeSwitching}

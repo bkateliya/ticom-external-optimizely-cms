@@ -3,7 +3,7 @@ import { OptiComponentProps } from "@/lib/ts/component-props";
 import { fieldFactory } from "@/components/ui/cms";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { getSilos } from "@/lib/api/cms-api";
-import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 import {
   GenericContentType,
   normalizeGenericArrayToTyped,
@@ -51,7 +51,7 @@ export async function PartnerResourceFilter({
   const locale = await getLocale();
   const productCategories = await getProductCategories();
 
-  const host = SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN.replace(
+  const host = SERVER_ENV_VARS.TICOM_BASE_DOMAIN.replace(
     /https?:\/\//,
     "",
   );

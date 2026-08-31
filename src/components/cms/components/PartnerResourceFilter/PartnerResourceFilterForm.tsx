@@ -81,8 +81,10 @@ export function PartnerResourceFilterForm({
               selectRefs.current[index] = element;
             }}
             name={field.facet}
-            placeholder={placeholderLabel}
           >
+            <option value="" selected>
+              {placeholderLabel}
+            </option>
             {field.options.map((option) => (
               <option key={option} value={option}>
                 {option}

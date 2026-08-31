@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { TifButton } from "@ticom/form-components/react";
 import { ButtonAppearance } from "@/components/ui/ti/enums";
+import { useTheme } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 import TiSvgIcon from "@/components/ui/ti/TiSvgIcon/TiSvgIcon";
 
 type TiSlideElement = HTMLElement & {
@@ -14,7 +15,6 @@ type TiSlideElement = HTMLElement & {
 type Props = {
   videoId: string;
   appearance?: ButtonAppearance;
-  theme?: "light" | "dark";
   accountId: string;
   playerId: string;
 };
@@ -22,10 +22,10 @@ type Props = {
 export function WatchVideoModalButton({
   videoId,
   appearance = ButtonAppearance.solid,
-  theme = "dark",
   accountId,
   playerId,
 }: Props) {
+  const { mode: theme } = useTheme();
   const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
   // Captured on open because close fires from a portal (document.body), outside the ti-slide tree.

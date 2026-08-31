@@ -86,6 +86,16 @@ export const AllowInMainContract = contract({
   },
 });
 
+export const AllowInViewMoreContract = contract({
+  key: `${ALLOW_IN_CONTRACT_KEY_PREFIX}ViewMore_Contract`,
+  displayName: `${DISPLAY_NAME_PREFIX}Allow In View More Contract`,
+  properties: {
+    metaAllowInViewMore: {
+      ...ContractFlagProperties,
+    },
+  },
+});
+
 /**
  * Helper for easier discoverabilty
  */
@@ -99,6 +109,7 @@ export const AllowIn = {
   PageHeader: AllowInPageHeaderContract,
   Prefooter: AllowInPrefooterContract,
   Main: AllowInMainContract,
+  ViewMore: AllowInViewMoreContract,
 
   Groupings: {
     Common: [

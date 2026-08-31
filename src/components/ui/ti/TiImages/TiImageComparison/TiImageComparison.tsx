@@ -26,10 +26,14 @@ export interface TiImageComparisonProps {
   leftImage: TiImageComparisonImage;
   /** Image shown on the right of the divider. */
   rightImage: TiImageComparisonImage;
-  /** Optional label rendered over the left image. */
+  /** Optional label rendered under the left image. */
   leftLabel?: React.ReactNode;
-  /** Optional label rendered over the right image. */
+  /** Optional label rendered under the right image. */
   rightLabel?: React.ReactNode;
+  /** Optional text overlaid on the left image. */
+  leftOverlay?: React.ReactNode;
+  /** Optional text overlaid on the right image. */
+  rightOverlay?: React.ReactNode;
   /** Optional caption rendered below the comparison. May contain paragraphs. */
   caption?: React.ReactNode;
   /** Fired when the comparison divider moves. */
@@ -41,6 +45,16 @@ const captionStyles = tv({
     mode: {
       light: "",
       dark: "[&_*]:text-white",
+    },
+  },
+});
+
+const overlayStyles = tv({
+  base: "text-[34px] text-white text-shadow-[1px_1px_5px_#000]",
+  variants: {
+    side: {
+      left: "font-semibold",
+      right: "font-semibold",
     },
   },
 });
@@ -57,6 +71,8 @@ export function TiImageComparison({
   rightImage,
   leftLabel,
   rightLabel,
+  leftOverlay,
+  rightOverlay,
   caption,
   tiImageComparisonChange,
 }: TiImageComparisonProps) {
@@ -77,8 +93,24 @@ export function TiImageComparison({
     >
       <TiImage slot="left-image" {...leftImage} />
       {leftLabel != null && <span slot="left-label">{leftLabel}</span>}
+      {leftOverlay != null && (
+        <div
+          slot="left-overlay-image"
+          className={overlayStyles({ side: "left" })}
+        >
+          {leftOverlay}
+        </div>
+      )}
       <TiImage slot="right-image" {...rightImage} />
       {rightLabel != null && <span slot="right-label">{rightLabel}</span>}
+      {rightOverlay != null && (
+        <div
+          slot="right-overlay-image"
+          className={overlayStyles({ side: "right" })}
+        >
+          {rightOverlay}
+        </div>
+      )}
 
       {caption != null && (
         <div

@@ -3,20 +3,20 @@ import { VisualExperiencePage } from "./VisualExperiencePage/VisualExperiencePag
 import { VisualExperiencePageType } from "./VisualExperiencePage/VisualExperiencePage.model";
 import { HomeExperienceType } from "./HomeExperience/HomeExperience.model";
 import { HomeExperience } from "./HomeExperience/HomeExperience";
-import { FaqExperiencePage } from "./FaqExperience/FaqExperience";
-import { FaqExperiencePageType } from "./FaqExperience/FaqExperience.model";
+import { HierarchyNavigationExperiencePage } from "./HierarchyNavigationExperience/HierarchyNavigationExperience";
+import { HierarchyNavigationExperiencePageType } from "./HierarchyNavigationExperience/HierarchyNavigationExperience.model";
 import { SimpleExperiencePageType } from "./SimpleExperience/SimpleExperience.model";
 import { SimpleExperiencePage } from "./SimpleExperience/SimpleExperience";
 
 export const experienceTypes = [
   VisualExperiencePageType,
-  FaqExperiencePageType,
+  HierarchyNavigationExperiencePageType,
   HomeExperienceType,
   SimpleExperiencePageType,
 ] as const;
 
 export const experienceRegistry: ComponentRegistry = {
-  [FaqExperiencePageType.key]: FaqExperiencePage,
+  [HierarchyNavigationExperiencePageType.key]: HierarchyNavigationExperiencePage,
   [VisualExperiencePageType.key]: VisualExperiencePage,
   [HomeExperienceType.key]: HomeExperience,
   [SimpleExperiencePageType.key]: SimpleExperiencePage,

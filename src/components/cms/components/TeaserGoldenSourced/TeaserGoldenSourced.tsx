@@ -4,12 +4,12 @@ import { tv } from "tailwind-variants";
 import { DynamicHeading } from "@/components/ui/Atoms/DynamicHeading";
 import { ButtonAppearance, ButtonColor } from "@/components/ui/ti/enums";
 import { TiButton } from "@/components/ui/ti/TiButton/TiButton";
-import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 import { cleanLegacyUrl, normalizeUrl } from "@/lib/utils/link-utils";
 
-const ICON_BASE = `${SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN}/content/dam/ticom/images/icons/illustrative-icons`;
+const ICON_BASE = `${SERVER_ENV_VARS.TICOM_BASE_DOMAIN}/content/dam/ticom/images/icons/illustrative-icons`;
 
-const REFERENCE_DESIGN_SEARCH_URL = `${SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN}/reference-designs/index.html#search?applid=`;
+const REFERENCE_DESIGN_SEARCH_URL = `${SERVER_ENV_VARS.TICOM_BASE_DOMAIN}/reference-designs/index.html#search?applid=`;
 
 const style = tv({
   slots: {

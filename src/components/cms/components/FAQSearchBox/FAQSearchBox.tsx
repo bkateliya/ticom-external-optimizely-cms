@@ -3,7 +3,7 @@ import { FAQSearchBoxComponentType } from "./FAQSearchBox.model";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { DynamicHeading } from "@/components/ui/Atoms/DynamicHeading";
 import { FAQSearchInput } from "./FAQSearchInput";
-import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 
@@ -18,7 +18,7 @@ export async function FAQSearchBox({
   const locale = await getLocale();
 
   // Remove the https://
-  const host = SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN.replace(
+  const host = SERVER_ENV_VARS.TICOM_BASE_DOMAIN.replace(
     /https?:\/\//,
     "",
   );

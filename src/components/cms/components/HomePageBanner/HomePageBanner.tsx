@@ -13,6 +13,7 @@ import { getLocale } from "next-intl/server";
 import { getSlideVisibility } from "../../experiences/HomeExperience/HomePageBannerCarousel";
 import { getStandardizedImage } from "@/lib/utils/image-utils";
 import { isEditMode } from "@/lib/opti/edit-helpers";
+import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 
 export async function HomePageBannerComponent({
   content,
@@ -33,12 +34,8 @@ export async function HomePageBannerComponent({
     content,
     content.backgroundImage,
   );
-  const {
-    WrappedTextField,
-    WrappedHeadingTextField,
-    WrappedRichTextField,
-    WrappedImageField,
-  } = fieldFactory<typeof HomePageBannerComponentType>(content, parentField);
+  const { WrappedTextField, WrappedHeadingTextField, WrappedRichTextField } =
+    fieldFactory<typeof HomePageBannerComponentType>(content, parentField);
 
   /*
    * Rendering
@@ -111,12 +108,13 @@ export async function HomePageBannerComponent({
         </div>
         {content.featuredImage && (
           <div className={featuredColumn()}>
-            <WrappedImageField
+            <ExtendedOptimizelyComponent content={content.featuredImage} />
+            {/* <WrappedImageField
               className={featuredImage()}
               field="featuredImage"
               width={500}
               height={300}
-            />
+            /> */}
           </div>
         )}
       </div>
@@ -124,12 +122,7 @@ export async function HomePageBannerComponent({
   );
 }
 
-/**
- * Ports the ti.com `.ti_p-slideContent--largeBanner` rules (from
- * ticom.global.portals.css, which this app doesn't load) onto the theme tokens.
- * The gradient over the background image is supplied by `ti-slide` itself, so
- * there is deliberately no overlay element here.
- */
+// TODO clean up theses styles. Some of theses classes don't exist.
 const TAILWIND_VARIANTS = tv({
   slots: {
     previewInfo: [

@@ -8,8 +8,8 @@ import {
 } from "@/components/cms/contracts/component-contracts/cta-list.model";
 import { PropertyTypes } from "@/lib/property-types";
 import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
-import { BynderImageStubModel } from "@/components/cms/media/graph/BynderStubs";
 import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
+import { ImageBaseContract } from "../../contracts/component-contracts/image.model";
 
 export const ContentBlockComponentType = contentType({
   key: AllComponentTypeKeyMap.ContentBlockComponent,
@@ -19,6 +19,7 @@ export const ContentBlockComponentType = contentType({
     HeadlineContract,
     DeprecatedCtaListContract,
     CtaListContract,
+    ImageBaseContract,
     ...AllowIn.Groupings.Common
   ],
   properties: {
@@ -27,12 +28,6 @@ export const ContentBlockComponentType = contentType({
       allowedTypes: ["_image"],
       displayName: "[Obsolete] Image",
       ...SoftDeleteProperties,
-    },
-    bynderImage: {
-      type: "contentReference",
-      allowedTypes: [BynderImageStubModel],
-      displayName: "Image",
-      group: "Content",
     },
     contentBlockDescription: {
       type: "richText",

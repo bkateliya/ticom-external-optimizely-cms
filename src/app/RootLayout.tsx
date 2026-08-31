@@ -1,13 +1,19 @@
 import "@/app/instrumentation";
 import "@/lib/opti/opti-init";
 
+import { connection } from "next/server";
 import { roboto } from "@/assets/fonts/index";
 import { DefaultTheme } from "@/components/ui/context/BrandAndTheme/consts";
 import { ThemeProvider } from "@/components/ui/context/BrandAndTheme/BrandAndThemeContext";
 import { NextIntlClientProvider } from "next-intl";
-import { GLOBAL_HEADER_CSS } from "@/components/ui/ti/TIScriptConstants";
+import {
+  GLOBAL_HEADER_CSS,
+  MODULE_BUNDLES,
+  contentScripts,
+} from "@/components/ui/ti/TIScriptConstants";
 import { TiScripts } from "@/components/ui/ti/TiScripts";
 import { HeadingLevelContext } from "@/components/utilities/HeadingLevelContext";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 
 import clsx from "clsx";
 import "@/assets/app.css";
@@ -19,6 +25,14 @@ export async function RootLayout({
   children: React.ReactNode;
   locale: string;
 }>) {
+  // Opts this layout (and every route using it) into per-request rendering, so
+  // the server-only env vars read below (TICOM_BASE_DOMAIN, ALLOW_THEME_SWITCHING)
+  // are resolved at runtime rather than frozen by prerender. This is required as
+  // TI's build-once-deploy-anywhere architecture can't bake different NEXT_PUBLIC_
+  // values into artifacts for different environments, there is only one artifact
+  // for all environments.
+  await connection();
+
   return (
     <html lang={locale}>
       <head>
@@ -35,10 +49,18 @@ export async function RootLayout({
       </head>
       <body className={clsx(roboto.variable, DefaultTheme)}>
         <div className="w-full">
-          <ThemeProvider theme={DefaultTheme} applyToBody={true}>
+          <ThemeProvider
+            theme={DefaultTheme}
+            applyToBody={true}
+            themeSwitchingEnabled={SERVER_ENV_VARS.ALLOW_THEME_SWITCHING}
+          >
             {/* TI front-end scripts — web-component bundles + header/footer init,
               loaded once for the whole page (see TiScripts). */}
-            <TiScripts locale={locale} />
+            <TiScripts
+              locale={locale}
+              moduleBundles={MODULE_BUNDLES}
+              contentScriptUrls={contentScripts(locale)}
+            />
             <NextIntlClientProvider>
               {/* Hero is hard-coded as H1 so others should start at H2  */}
               <HeadingLevelContext headingLevel={2}>{children}</HeadingLevelContext>

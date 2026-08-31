@@ -1,12 +1,16 @@
 import NextLink from "next/link";
 import { tv } from "tailwind-variants";
 
+import { OptiComponentProps } from "@/lib/ts/component-props";
+import { getStandardizedImage } from "@/lib/utils/image-utils";
 import { getContextLocale } from "@/lib/utils/server-utils";
 import { TiImage } from "@/components/ui/ti/TiImages/TiImage/TiImage";
 import { TiStickyHeader } from "@/components/ui/ti/TiStickyHeader/TiStickyHeader";
 import { TiNavbar } from "@/components/ui/ti/TiNavbar/TiNavbar";
 
-/** Fixed DLP brand mark, ported from the AEM source — not a CMS field, same treatment as ApiHeader's TI_LOGO. */
+import { DlpHeaderComponentType } from "./ShowcaseHeader.model";
+
+/** Fallback DLP brand mark, ported from the AEM source — used when no logo is authored. */
 const DLP_LOGO =
   "https://www.ti.com/content/dam/ticom/images/identities/ti-brand/ti-dlp-logo-hz-1c-white.svg";
 
@@ -19,8 +23,16 @@ const DLP_LOGO =
  * (the same mechanism JumpLinkNavigation's "chapternav" uses), so menu
  * authoring happens there, not through fields here.
  */
-export function DlpHeader() {
+export function DlpHeader({
+  content,
+}: OptiComponentProps<typeof DlpHeaderComponentType>) {
   const locale = getContextLocale();
+
+  const { src, alt } = content
+    ? getStandardizedImage(content, content.logo)
+    : { src: "", alt: "" };
+  const logoSrc = src || DLP_LOGO;
+  const logoAlt = content?.logoAltText || alt || "Home";
 
   const {
     header,
@@ -45,7 +57,7 @@ export function DlpHeader() {
             aria-label="Home"
           >
             <span className={logoInner()}>
-              <TiImage src={DLP_LOGO} alt="Home" />
+              <TiImage src={logoSrc} alt={logoAlt} />
             </span>
           </NextLink>
         </div>

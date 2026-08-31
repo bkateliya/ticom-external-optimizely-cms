@@ -41,8 +41,13 @@ export function FAQSearchInput({
 
   const search = useCallback(
     (term: string) => {
-      const query = encodeURIComponent(term.trim());
-      window.open(`${baseUrl}${query}&preFilter=support_${preFilter}`, "_self");
+      const query = term.trim();
+      // Nothing to search for — e.g. the field was just cleared.
+      if (!query) return;
+      window.open(
+        `${baseUrl}${encodeURIComponent(query)}&preFilter=support_${preFilter}`,
+        "_self",
+      );
     },
     [baseUrl, preFilter],
   );
@@ -69,7 +74,11 @@ export function FAQSearchInput({
     if (!el) return;
 
     const onKeyUp = (event: KeyboardEvent) => {
-      if (event.key === "Enter") search(readValue());
+      if (event.key !== "Enter" || event.isComposing) return;
+      // Shadow-DOM events bubble out of the host, so Enter on the clear or
+      // search button lands here too — only the text input submits.
+      if (!(event.composedPath()[0] instanceof HTMLInputElement)) return;
+      search(readValue());
     };
 
     el.addEventListener("keyup", onKeyUp);

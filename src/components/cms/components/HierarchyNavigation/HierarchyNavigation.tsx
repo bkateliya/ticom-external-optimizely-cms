@@ -11,6 +11,7 @@ import {
 import { HierarchyNavClient, NavEntry, NavLink } from "./HierarchyNavClient";
 import { LinkElementType } from "@/components/cms/elements/Link/Link.model";
 import { ContentProps } from "@optimizely/cms-sdk";
+import { parseSecurableLink } from "@/lib/utils/secure-link-utils";
 
 /**
  * Hierarchy (side) navigation. Renders the author's `navigationItems` as a
@@ -24,14 +25,18 @@ import { ContentProps } from "@optimizely/cms-sdk";
 
 // Use `url.default` (locale-aware relative path), not `url.base`, which would
 // bake the current host into every href.
-function toNavLink(linkElement: ContentProps<typeof LinkElementType>): NavLink | null {
+function toNavLink(
+  linkElement: ContentProps<typeof LinkElementType>,
+): NavLink | null {
   const link = linkElement.link;
   const href = link?.url?.default ?? "";
   if (!href) return null;
   const url = normalizeUrl(href);
   if (!url) return null;
+  const secure = parseSecurableLink(url);
+  if (!secure) return null;
   return {
-    href: url,
+    securableUrl: secure,
     text: link?.text || url,
     target: link?.target ?? undefined,
     title: link?.title ?? undefined,

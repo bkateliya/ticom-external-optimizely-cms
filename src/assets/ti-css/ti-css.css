@@ -1,5 +1,6 @@
-a {
-    text-decoration: none;
+header a,
+footer a {
+  text-decoration: none;
 }
 
 .ti_aem-ce h1,
@@ -8,7 +9,7 @@ a {
 .ti_aem-ce h4,
 .ti_aem-ce h5,
 .ti_aem-ce h6 {
-    font-weight: 400 !important
+  font-weight: 400 !important;
 }
 
 .ti_aem-ce .title h1,
@@ -29,22 +30,22 @@ a {
 .ti_aem-ce * h4,
 .ti_aem-ce * h5,
 .ti_aem-ce * h6 {
-    font-weight: 400 !important
+  font-weight: 400 !important;
 }
 
 .ti_aem-ce .title.u-header-5plus,
 .ti_aem-ce .ti_aem-title.u-header-5plus,
 .ti_aem-ce *.u-header-5plus {
-    font-weight: 500 !important
+  font-weight: 500 !important;
 }
 
 .ti_aem-ce .title.u-header-5plus *,
 .ti_aem-ce .ti_aem-title.u-header-5plus *,
 .ti_aem-ce *.u-header-5plus * {
-    font-weight: 500 !important
+  font-weight: 500 !important;
 }
 
 .ti_p-col-sideNav-stickyContainer {
-    position: sticky;
-    top: 16px;
+  position: sticky;
+  top: 16px;
 }

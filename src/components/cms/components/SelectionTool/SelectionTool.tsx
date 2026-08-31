@@ -3,7 +3,7 @@ import { getLocale } from "next-intl/server";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { cached } from "@/lib/data/opti";
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
-import { SHARED_ENV_VARS } from "@/lib/env/shared-env";
+import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 import { DestinationTypeType } from "@/components/cms/data/DestinationType.model";
 import { SelectionToolComponentType } from "./SelectionTool.model";
 
@@ -49,7 +49,7 @@ export async function SelectionToolComponent({
   // (it prepends the scheme itself), so `domain` must be a bare host. The shared
   // env holds a full origin (e.g. https://www-uat.itg.ti.com) — pass just its
   // host. CORS for non-prod hosts is handled by TI's infra, not this app.
-  const baseDomain = SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN;
+  const baseDomain = SERVER_ENV_VARS.TICOM_BASE_DOMAIN;
   const domain = baseDomain.includes("://")
     ? new URL(baseDomain).host
     : baseDomain;

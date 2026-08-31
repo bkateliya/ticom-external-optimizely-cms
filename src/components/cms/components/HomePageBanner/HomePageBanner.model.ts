@@ -6,6 +6,8 @@ import {
 import { AllComponentTypeKeyMap } from "../keys";
 import { HeadlineContract } from "../../contracts/component-contracts/headline.model";
 import { LinkContract } from "../../contracts/element-contracts/link.model";
+import { BynderImageStubModel } from "@/components/cms/media/graph/BynderStubs";
+import { ImageElementType } from "../../elements/ImageElement/ImageElement.model";
 
 export const HomePageBannerComponentType = contentType({
   key: AllComponentTypeKeyMap.HomePageBannerComponent,
@@ -34,7 +36,7 @@ export const HomePageBannerComponentType = contentType({
     },
     backgroundImage: {
       type: "contentReference",
-      allowedTypes: ["_image"],
+      allowedTypes: [BynderImageStubModel],
       displayName: "Background Image",
       description: "Select a custom banner or textured background image",
       group: "Content",
@@ -42,8 +44,8 @@ export const HomePageBannerComponentType = contentType({
       isRequired: true,
     },
     featuredImage: {
-      type: "contentReference",
-      allowedTypes: ["_image"],
+      type: "content",
+      allowedTypes: [ImageElementType],
       displayName: "Featured Image",
       description: "Featured image is optional for textured backgrounds",
       group: "Content",

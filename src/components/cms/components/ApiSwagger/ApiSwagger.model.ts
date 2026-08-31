@@ -9,7 +9,7 @@ export const ApiSwaggerComponentType = contentType({
   key: AllComponentTypeKeyMap.ApiSwaggerComponent,
   displayName: `${DISPLAY_NAME_PREFIX}API Swagger`,
   baseType: "_component",
-  extends: [...AllowIn.Groupings.Common],
+  extends: [AllowIn.Main],
   properties: {
     yamlFile: {
       type: "contentReference",

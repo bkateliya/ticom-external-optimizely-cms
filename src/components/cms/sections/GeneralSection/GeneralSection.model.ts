@@ -8,7 +8,7 @@ export const GeneralSectionComponentType = contentType({
   key: `${KEY_PREFIX}GeneralSection_Component`,
   displayName: `${DISPLAY_NAME_PREFIX}General Section`,
   baseType: "_component",
-  extends: SectionContracts,
+  extends: [...SectionContracts, AllowIn.Main],
   compositionBehaviors: ["sectionEnabled"],
   properties: {
     content: {

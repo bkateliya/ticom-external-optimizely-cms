@@ -2,7 +2,7 @@ import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 
 import { NextRequest, NextResponse } from "next/server";
-import { SHARED_ENV_VARS } from "./lib/env/shared-env";
+import { SERVER_ENV_VARS } from "./lib/env/server-env";
 
 const nextIntlMiddleware = createMiddleware(routing);
 
@@ -28,7 +28,7 @@ export const config = {
 async function rewriteTiComPath(pathname: string) {
   // We can't use a normal rewrite because the proxy gives an SSL error
   const rewriteUrl = new URL(
-    `${SHARED_ENV_VARS.NEXT_PUBLIC_TICOM_BASE_DOMAIN}${pathname}`,
+    `${SERVER_ENV_VARS.TICOM_BASE_DOMAIN}${pathname}`,
   );
 
   const response = await fetch(rewriteUrl);
