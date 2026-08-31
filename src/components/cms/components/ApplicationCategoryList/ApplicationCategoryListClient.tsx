@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
+import NextLink from "next/link";
 import clsx from "clsx";
 import { tv } from "tailwind-variants";
 import { DynamicHeading } from "@/components/ui/Atoms/DynamicHeading";
@@ -9,7 +10,6 @@ import { TiSvgIcon } from "@/components/ui/ti/TiSvgIcon";
 export interface CategoryChildLink {
   id: number;
   text: string;
-  /** English label, so `data-lid` stays stable across locales. */
   lid: string;
   href: string;
 }
@@ -27,7 +27,7 @@ export interface CategoryLink extends Omit<CategoryChildLink, "href"> {
 const style = tv(
   {
     slots: {
-      header: "mb-8 flex items-baseline justify-between gap-4",
+      header: "mb-6 md:mb-8 flex items-baseline justify-between gap-4",
       // text-h3 is 28px/300 on desktop, the live heading size (h2 is 34px).
       heading: "m-0 text-h3 font-light text-pl-text-color-primary",
       // Tailwind's preflight is off (assets/app.css), so buttons keep their UA chrome.
@@ -135,7 +135,7 @@ export function ApplicationCategoryListClient({
               if (!link.children.length) {
                 return (
                   <li key={link.id} className={clsx(s.flatItem(), s.rowRule())}>
-                    <a
+                    <NextLink
                       href={link.href ?? ""}
                       className={clsx(
                         s.rowLabel(),
@@ -145,7 +145,7 @@ export function ApplicationCategoryListClient({
                       data-navtitle="learn-more"
                     >
                       {link.text}
-                    </a>
+                    </NextLink>
                   </li>
                 );
               }
@@ -170,8 +170,6 @@ export function ApplicationCategoryListClient({
                       data-lid={`browseapplications-${link.lid}`}
                     >
                       <span className={s.rowLabel()}>{link.text}</span>
-                      {/* Rotate the wrapper: `ti-svg-icon` is a custom element,
-                          so its own display is not ours to rely on. */}
                       <span
                         className={clsx(
                           s.chevron(),
@@ -185,9 +183,6 @@ export function ApplicationCategoryListClient({
                         />
                       </span>
                     </button>
-
-                    {/* `inert`: the links stay in the DOM for the height
-                        transition, so keep them out of the tab order. */}
                     <div
                       id={panelId}
                       inert={!isExpanded}
@@ -200,14 +195,14 @@ export function ApplicationCategoryListClient({
                         <ul className={s.childList()}>
                           {link.children.map((child) => (
                             <li key={child.id} className={s.childItem()}>
-                              <a
+                              <NextLink
                                 href={child.href}
                                 className={s.childLink()}
                                 data-lid={`browseapplications-${child.lid}`}
                                 data-navtitle="learn-more"
                               >
                                 {child.text}
-                              </a>
+                              </NextLink>
                             </li>
                           ))}
 
@@ -218,7 +213,7 @@ export function ApplicationCategoryListClient({
                                 "ti_aem-application-CategoriesListing-learnmore",
                               )}
                             >
-                              <a
+                              <NextLink
                                 href={link.href}
                                 className={s.learnMoreLink()}
                                 data-lid={`browseapplications-learn-more${link.lid}`}
@@ -230,7 +225,7 @@ export function ApplicationCategoryListClient({
                                   iconStyle="secondary"
                                 />{" "}
                                 <span>{learnMoreLabel}</span>
-                              </a>
+                              </NextLink>
                             </li>
                           )}
                         </ul>

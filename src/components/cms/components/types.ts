@@ -81,7 +81,9 @@ import {
   PremiumInteractiveImagePanelComponentType,
 } from "./PremiumInteractiveImage/PremiumInteractiveImage.model";
 import { PortfolioVisualizerComponentType } from "./PortfolioVisualizer/PortfolioVisualizer.model";
+import { ShipRateTablesComponentType } from "./ShipRateTables/ShipRateTables.model";
 import { ApplicationCategoryListComponentType } from "./ApplicationCategoryList/ApplicationCategoryList.model";
+import { ViewMoreComponentType } from "./ViewMore/ViewMore.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -141,5 +143,7 @@ export const allComponentTypes = [
   PremiumInteractiveImageComponentType,
   PremiumInteractiveImagePanelComponentType,
   PortfolioVisualizerComponentType,
+  ShipRateTablesComponentType,
   ApplicationCategoryListComponentType,
+  ViewMoreComponentType,
 ];

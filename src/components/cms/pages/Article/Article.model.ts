@@ -61,6 +61,28 @@ export const ArticlePageType = contentType({
       description: "This is the date that the article expires",
       group: PropertyTypes.Seo,
     },
+    schemaType: {
+      type: "string",
+      displayName: "Schema Type",
+      description:
+        "Controls the Schema.org type for SEO. Blog = BlogPosting, News release = NewsArticle, Other = Article.",
+      format: "selectOne",
+      enum: [
+        {
+          value: "Blog",
+          displayName: "Blog",
+        },
+        {
+          value: "News",
+          displayName: "News release",
+        },
+        {
+          value: "Other",
+          displayName: "Other",
+        },
+      ],
+      group: PropertyTypes.Seo,
+    },
     dateline: {
       type: "string",
       displayName: "Dateline",

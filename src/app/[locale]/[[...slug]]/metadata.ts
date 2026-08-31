@@ -10,10 +10,13 @@ import { CommonPageContractType } from "@/components/cms/contracts/common";
 import { OptiComponentProps } from "@/lib/ts/component-props";
 import { PageHeadingContractContentType } from "@/components/cms/contracts/component-contracts/page-headings.model";
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
+import { ArticlePageType } from "@/components/cms/pages/Article/Article.model";
+import { TaxonomyType } from "@/components/cms/data/Taxonomy.model";
 import {
-  RichTextFieldContent,
-  SimpleRichTextNode,
-} from "@/components/ui/cms/RichTextField";
+  richTextToPlainText,
+  toIsoDate,
+  truncateString,
+} from "@/lib/utils/content-format-utils";
 
 type Props = {
   params: Promise<{ locale: string; slug?: string[] }>;
@@ -61,6 +64,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: url?.default
       ? buildAlternates(url.base ?? "", url.default, locale)
       : undefined,
+    openGraph: getArticleOpenGraph(content),
+  };
+}
+
+// Article pages carry content-specific OpenGraph tags (og:type=article plus the
+// article:* set), sourced from page properties. Other page types get none.
+function getArticleOpenGraph(
+  content: OptiComponentProps<CommonPageContractType>["content"],
+): Metadata["openGraph"] {
+  const article = normalizeGenericContentToTyped(content, ArticlePageType);
+  if (!article) {
+    return undefined;
+  }
+
+  // `category`'s allowed type (Taxonomy) is expanded inline by the SDK, so its
+  // `value` is read by casting the field — the same way `hero` is read above —
+  // not via getReferencedContent (a type:"content" field carries no key).
+  const category = normalizeGenericContentToTyped(article.category, TaxonomyType);
+
+  return {
+    type: "article",
+    // Next drops any of these from the output when undefined.
+    publishedTime: toIsoDate(article.datePublished),
+    modifiedTime: toIsoDate(article.dateUpdated),
+    expirationTime: toIsoDate(article.dateExpire),
+    authors: article.author || undefined,
+    section: category?.value?.trim() || undefined,
   };
 }
 
@@ -70,42 +100,4 @@ function getPageHeading(
   return normalizeGenericContentToTyped<PageHeadingContractContentType>(
     content?.hero,
   );
-}
-
-function richTextToPlainText(
-  richText: RichTextFieldContent | null | undefined,
-  maxLength?: number,
-) {
-  const fullString =
-    richText?.json?.children.map(parseRichTextNode).join(" ").trim() ?? "";
-
-  return truncateString(fullString, maxLength);
-}
-
-function truncateString(
-  fullString: string | null | undefined,
-  maxLength?: number,
-) {
-  if (!maxLength) {
-    return fullString;
-  }
-  const split = fullString?.split(" ") ?? [];
-  let finalString = "";
-  for (let i = 0; i < split.length; i++) {
-    const element = split[i];
-    finalString += " " + element;
-    if (finalString.length >= maxLength) {
-      return finalString;
-    }
-  }
-  return finalString;
-}
-
-function parseRichTextNode(node: SimpleRichTextNode): string {
-  const children = node.children ?? [];
-  const textArray = [
-    node.text?.trim(),
-    ...children.map(parseRichTextNode),
-  ].filter(Boolean);
-  return textArray.join(" ").trim();
 }

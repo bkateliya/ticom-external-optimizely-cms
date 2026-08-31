@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { tv } from "tailwind-variants";
+import { SecurableElement } from "@/components/utilities/SecurableElement";
+import { SecurableUrl } from "@/lib/utils/secure-link-utils";
 
 export type NavLink = {
-  href: string;
+  securableUrl: SecurableUrl;
   text: string;
   target?: string | null;
   title?: string | null;
@@ -75,7 +77,8 @@ const pathKey = (u: string) => {
 export function HierarchyNavClient({ entries }: { entries: NavEntry[] }) {
   const currentKey = pathKey(usePathname());
   const isActiveLink = (link: NavLink) =>
-    link.target !== "_blank" && pathKey(link.href) === currentKey;
+    link.target !== "_blank" &&
+    pathKey(link.securableUrl.originalUrl) === currentKey;
 
   // Start with the active page's section expanded; authors can toggle any
   // number of sections open from there.
@@ -98,9 +101,80 @@ export function HierarchyNavClient({ entries }: { entries: NavEntry[] }) {
       return next;
     });
 
-  const anchor = (link: NavLink, className: string) => (
+  return (
+    <nav role="navigation" aria-label="Section navigation" className={root()}>
+      <ul role="menu" className={list()}>
+        {entries.map((entry, i) => (
+          <SecurableElement
+            key={i}
+            securableUrl={entry.type === "link" ? entry.securableUrl : null}
+          >
+            <li role="presentation" className={item()}>
+              {entry.type === "link" ? (
+                <NavAnchor
+                  link={entry}
+                  className={l1({ active: isActiveLink(entry) })}
+                />
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    aria-expanded={open.has(i)}
+                    aria-controls={`hierarchy-nav-panel-${i}`}
+                    onClick={() => toggle(i)}
+                    className={l1()}
+                  >
+                    {entry.title}
+                    {/* Inline SVG, not <ti-svg-icon>: the chevron must render
+                      even when TI's web-component runtime fails to load. */}
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                      className={chevron({ open: open.has(i) })}
+                    >
+                      <path d="m4 6 4 4 4-4" />
+                    </svg>
+                  </button>
+                  <div
+                    id={`hierarchy-nav-panel-${i}`}
+                    aria-hidden={!open.has(i)}
+                    className={panel({ open: open.has(i) })}
+                  >
+                    <ul className={sublist()}>
+                      {entry.children.map((child, j) => (
+                        <SecurableElement
+                          securableUrl={child.securableUrl}
+                          key={j}
+                        >
+                          <li role="presentation">
+                            <NavAnchor
+                              link={child}
+                              className={l2({ active: isActiveLink(child) })}
+                            />
+                          </li>
+                        </SecurableElement>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              )}
+            </li>
+          </SecurableElement>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+function NavAnchor({ link, className }: { link: NavLink; className: string }) {
+  return (
     <a
-      href={link.href}
+      href={link.securableUrl.updatedUrl}
       role="menuitem"
       target={link.target || undefined}
       rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
@@ -109,58 +183,5 @@ export function HierarchyNavClient({ entries }: { entries: NavEntry[] }) {
     >
       {link.text}
     </a>
-  );
-
-  return (
-    <nav role="navigation" aria-label="Section navigation" className={root()}>
-      <ul role="menu" className={list()}>
-        {entries.map((entry, i) => (
-          <li key={i} role="presentation" className={item()}>
-            {entry.type === "link" ? (
-              anchor(entry, l1({ active: isActiveLink(entry) }))
-            ) : (
-              <>
-                <button
-                  type="button"
-                  aria-expanded={open.has(i)}
-                  aria-controls={`hierarchy-nav-panel-${i}`}
-                  onClick={() => toggle(i)}
-                  className={l1()}
-                >
-                  {entry.title}
-                  {/* Inline SVG, not <ti-svg-icon>: the chevron must render
-                      even when TI's web-component runtime fails to load. */}
-                  <svg
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                    className={chevron({ open: open.has(i) })}
-                  >
-                    <path d="m4 6 4 4 4-4" />
-                  </svg>
-                </button>
-                <div
-                  id={`hierarchy-nav-panel-${i}`}
-                  aria-hidden={!open.has(i)}
-                  className={panel({ open: open.has(i) })}
-                >
-                  <ul className={sublist()}>
-                    {entry.children.map((child, j) => (
-                      <li key={j} role="presentation">
-                        {anchor(child, l2({ active: isActiveLink(child) }))}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-    </nav>
   );
 }

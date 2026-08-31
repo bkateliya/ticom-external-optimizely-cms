@@ -5,9 +5,11 @@ import { ButtonAppearance, ButtonColor } from "@/components/ui/ti/enums";
 import { getEnumOrUndefinedForAuto } from "@/lib/opti/enum-utils";
 import { TiButton } from "@/components/ui/ti/TiButton/TiButton";
 
-type Props = OptiComponentProps<typeof CtaButtonElementType>;
+type Props = OptiComponentProps<typeof CtaButtonElementType> & {
+  appearance?: ButtonAppearance;
+};
 
-export function CTAButtonElement({ content }: Props) {
+export function CTAButtonElement({ content, appearance: appearanceOverride }: Props) {
   if (!content) {
     return null;
   }
@@ -23,7 +25,7 @@ export function CTAButtonElement({ content }: Props) {
     return null;
   }
 
-  const buttonAppearance = getEnumOrUndefinedForAuto<ButtonAppearance>(
+  const buttonAppearance = appearanceOverride ?? getEnumOrUndefinedForAuto<ButtonAppearance>(
     content.Variant,
   );
 

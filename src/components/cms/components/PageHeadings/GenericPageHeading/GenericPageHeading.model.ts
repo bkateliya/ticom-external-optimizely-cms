@@ -6,33 +6,14 @@ import { AllowIn } from "../../../contracts/component-contracts/allow-in.model";
 import { CtaButtonElementType } from "../../../elements/CTAButton/CTAButton.model";
 import { VideoPlayerComponentType } from "../../VideoPlayer/VideoPlayer.model";
 import { ImageElementType } from "../../../elements/ImageElement/ImageElement.model";
+import { PageHeadingContract } from "@/components/cms/contracts/component-contracts/page-headings.model";
 
 export const GenericPageHeadingComponentType = contentType({
   key: AllComponentTypeKeyMap.GenericPageHeadingComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Generic Page Heading`,
   baseType: "_component",
-  extends: [AllowIn.PageHeader],
+  extends: [AllowIn.PageHeader, PageHeadingContract],
   properties: {
-    headline: {
-      type: "string",
-      displayName: "Headline",
-      description: "Headline of the component",
-      maxLength: 60,
-      group: PropertyTypes.Content,
-      isLocalized: true,
-      isRequired: true,
-      sortOrder: 10,
-    },
-    subheadline: {
-      type: "richText",
-      displayName: "Subheadline",
-      description: "Subheadline of the component",
-      maxLength: 160,
-      group: PropertyTypes.Content,
-      isLocalized: true,
-      sortOrder: 20,
-      editorSettings: { preset: "minimal" },
-    },
     primaryCTA: {
       type: "content",
       displayName: "Primary CTA",

@@ -1,7 +1,6 @@
 import { getContext } from "@optimizely/cms-sdk/react/server";
 import { getTranslations } from "next-intl/server";
 import type { ApplicationWithChildrenAndParent } from "@/lib/api/normalized/applications";
-import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 import { cleanLegacyUrl, normalizeUrl } from "@/lib/utils/link-utils";
 import {
   ApplicationCategoryListClient,
@@ -9,14 +8,6 @@ import {
   type CategoryLink,
 } from "./ApplicationCategoryListClient";
 
-/**
- * "Browse applications" — the applications below the current one, alphabetized and
- * split over three columns. Ported from AEM's `ApplicationListing.java`.
- *
- * Not authorable: the hierarchy comes from the page's application id, and its MSE
- * level decides the shape — landing and sector pages also list the grandchildren
- * as collapsible sub-lists (AEM's `showSubnav`), market and category pages don't.
- */
 export async function ApplicationCategoryList() {
   const { application, applicationInfo } = getContext() ?? {};
   const t = await getTranslations();
@@ -50,15 +41,13 @@ export async function ApplicationCategoryList() {
   }
 
   return (
-    <SectionWrapper className="ti_aem-application-CategoriesListing">
-      <ApplicationCategoryListClient
-        columns={splitIntoColumns(links)}
-        heading={t("Browse applications")}
-        expandAllLabel={t("Expand all")}
-        collapseAllLabel={t("Collapse all")}
-        learnMoreLabel={t("Learn more")}
-      />
-    </SectionWrapper>
+    <ApplicationCategoryListClient
+      columns={splitIntoColumns(links)}
+      heading={t("Browse applications")}
+      expandAllLabel={t("Expand all")}
+      collapseAllLabel={t("Collapse all")}
+      learnMoreLabel={t("Learn more")}
+    />
   );
 }
 
@@ -124,15 +113,10 @@ function uniqueById<T extends { childId: number }>(items: T[]): T[] {
   return [...new Map(items.map((item) => [item.childId, item])).values()];
 }
 
-/** AEM sorted with `compareToIgnoreCase`, on the localized label. */
 function byText(a: { text: string }, b: { text: string }) {
   return a.text.localeCompare(b.text, undefined, { sensitivity: "base" });
 }
 
-/**
- * AEM's column split (`getLinksColumn1..3`), kept verbatim so the columns break at
- * the same items as live: each takes the ceiling of the remainder over three.
- */
 function splitIntoColumns<T>(items: T[]): [T[], T[], T[]] {
   const total = items.length;
   const col1 = Math.ceil(total / 3);

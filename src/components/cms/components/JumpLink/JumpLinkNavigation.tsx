@@ -8,13 +8,11 @@ import {
 import { JumpNavVertical } from "@/components/ui/molecules/JumpNavVertical";
 import { TiStickyHeader } from "@/components/ui/ti/TiStickyHeader/TiStickyHeader";
 import { TiNavbar } from "@/components/ui/ti/TiNavbar/TiNavbar";
-import { useJumpLinkStickyBehavior } from "./JumpLinkStickyBehaviorContext";
 
 export function JumpLinkNavigationComponent({}: OptiComponentProps<
   typeof JumpLinkNavigationComponentType
 >) {
-  const stickyBehavior = useJumpLinkStickyBehavior();
-  return <JumpNavVertical stickyBehavior={stickyBehavior} />;
+  return <JumpNavVertical stickyBehavior={"horizontal"} />;
 }
 
 // ti-navbar auto-populates its items from every [navbar-id] target on the page

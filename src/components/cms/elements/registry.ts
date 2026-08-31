@@ -9,10 +9,13 @@ import { LinkElement } from "./Link";
 import { LinkElementType } from "./Link/Link.model";
 import { ImageElement } from "./ImageElement";
 import { ImageElementType } from "./ImageElement/ImageElement.model";
+import { CtaVideoElement } from "./CTAVideoModal";
+import { CtaVideoElementType } from "./CTAVideoModal/CTAVideoModal.model";
 
 export const elementRegistry: ComponentRegistry = {
   [CtaButtonElementType.key]: CTAButtonElement,
   [CtaLinkElementType.key]: CTALinkElement,
+  [CtaVideoElementType.key]: CtaVideoElement,
   [LinkElementType.key]: LinkElement,
   [RichTextAreaElementType.key]: RichTextAreaElement,
   [ImageElementType.key]: ImageElement,

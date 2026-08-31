@@ -10,13 +10,13 @@ export const MainContract = contract({
   properties: {
     main: {
       type: "array",
-      displayName: "Main",
+      displayName: "Main Content",
       description:
         "Main body content for the page",
       group: PropertyTypes.Content,
       items: {
         type: "content",
-        allowedTypes: [AllowIn.Section,AllowIn.Main],
+        allowedTypes: [AllowIn.Main],
       },
     },
   },

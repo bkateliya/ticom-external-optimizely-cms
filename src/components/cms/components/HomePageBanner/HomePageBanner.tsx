@@ -7,11 +7,12 @@ import { OptiComponentProps } from "@/lib/ts/component-props";
 import { tv } from "tailwind-variants";
 import { parseHeadlineSize } from "@/components/ui/molecules/Headline/Headline";
 import { TiSlide } from "@/components/ui/ti/TiSlideshow/TiSlide";
-import NextLink from "next/link";
-import { TiButton } from "@/components/ui/ti/TiButton/TiButton";
+import { TifButton } from "@ticom/form-components/react";
+import { ButtonAppearance } from "@/components/ui/ti/enums";
 import { getLocale } from "next-intl/server";
 import { getSlideVisibility } from "../../experiences/HomeExperience/HomePageBannerCarousel";
 import { getStandardizedImage } from "@/lib/utils/image-utils";
+import { isEditMode } from "@/lib/opti/edit-helpers";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 
 export async function HomePageBannerComponent({
@@ -33,11 +34,8 @@ export async function HomePageBannerComponent({
     content,
     content.backgroundImage,
   );
-  const {
-    WrappedTextField,
-    WrappedHeadingTextField,
-    WrappedRichTextField,
-} = fieldFactory<typeof HomePageBannerComponentType>(content, parentField);
+  const { WrappedTextField, WrappedHeadingTextField, WrappedRichTextField } =
+    fieldFactory<typeof HomePageBannerComponentType>(content, parentField);
 
   /*
    * Rendering
@@ -45,25 +43,40 @@ export async function HomePageBannerComponent({
 
   const {
     previewInfo,
-    base,
+    slideContent,
+    column,
+    text,
     eyebrow,
     heading,
-    gradientOverlay,
-    slideContent,
-    wrapper,
+    paragraph,
+    featuredColumn,
+    featuredImage,
   } = TAILWIND_VARIANTS();
+
+  // The banner fills the viewport below the global header (ti.com drives this
+  // with --tiSlide-height rather than an aspect ratio). The CMS edit canvas
+  // renders the page in an iframe, so 100dvh refers to the iframe there —
+  // pin a fixed height instead (same approach as PremiumMediaHeading).
+  const isEditCanvas = isEditMode();
+  const slideStyle = {
+    "--tiSlide-aspectRatio": "auto",
+    "--tiSlide-height": isEditCanvas
+      ? "700px"
+      : "calc(100dvh - var(--ti-header-height, 0px))",
+    "--tiSlide-minHeight": isEditCanvas ? "700px" : "560px",
+  } as React.CSSProperties;
 
   const locale = await getLocale();
   const href = content.link?.url?.default ?? "";
   return (
     <TiSlide
+      style={slideStyle}
       thumbnailSrc={thumbnailSrc ?? src ?? ""}
       thumbnailLabel={content.headline ?? undefined}
       backgroundImageSrc={src}
       // TODO validate logic
       data-lid={`promo_hb_mm_${locale}_${content.campaignAlias ? content.campaignAlias : ""}`}
     >
-      <div className={gradientOverlay()} />
       {isPreview && (
         <div className={previewInfo({ slideVisible: isVisible })}>
           {getSlideVisibility(content)} : Visible from:{" "}
@@ -71,24 +84,39 @@ export async function HomePageBannerComponent({
         </div>
       )}
       <div className={slideContent()}>
-        <div className={base()}>
-          <NextLink href={href}>
-            <div className={wrapper()}>
-              <WrappedTextField as="p" className={eyebrow()} field="eyebrow" />
-              <WrappedHeadingTextField
-                className={heading()}
-                field="headline"
-                headingSize={parseHeadlineSize({ content: content })}
-              />
+        <div className={column()}>
+          <div className={text()}>
+            <WrappedTextField as="p" className={eyebrow()} field="eyebrow" />
+            <WrappedHeadingTextField
+              className={heading()}
+              field="headline"
+              headingSize={parseHeadlineSize({ content: content })}
+            />
 
-              <WrappedRichTextField field="description" />
-              <TiButton>{content.link?.text}</TiButton>
-            </div>
-            <div className="h-[100px] w-[150px]">
-              <ExtendedOptimizelyComponent content={content.featuredImage} />
-            </div>
-          </NextLink>
+            <WrappedRichTextField field="description" className={paragraph()} />
+
+            {href && content.link?.text && (
+              <TifButton
+                href={href}
+                appearance={ButtonAppearance.outline}
+                theme="dark"
+              >
+                {content.link.text}
+              </TifButton>
+            )}
+          </div>
         </div>
+        {content.featuredImage && (
+          <div className={featuredColumn()}>
+            <ExtendedOptimizelyComponent content={content.featuredImage} />
+            {/* <WrappedImageField
+              className={featuredImage()}
+              field="featuredImage"
+              width={500}
+              height={300}
+            /> */}
+          </div>
+        )}
       </div>
     </TiSlide>
   );
@@ -98,58 +126,99 @@ export async function HomePageBannerComponent({
 const TAILWIND_VARIANTS = tv({
   slots: {
     previewInfo: [
+      "absolute",
+      "inset-x-0",
+      "top-0",
+      "z-20",
       "text-center",
       "p-4",
       "rounded-md",
       "text-white",
-      "z-1",
-      "relative",
     ],
-    base: ["text-white", "w-full"],
-    cta: [],
+    // The inline padding reserves the chevron gutter (16 + 40 + 16) and the
+    // block-end padding the inset thumbnail nav (92 + 24), so the max width is
+    // the 1184px content grid plus a chevron gutter on each side.
+    slideContent: [
+      "relative",
+      "z-10",
+      "box-border",
+      "mx-auto",
+      "flex",
+      "h-full",
+      "w-full",
+      "max-w-[1328px]",
+      "flex-col",
+      "justify-between",
+      "gap-4",
+      "px-4",
+      "pt-4",
+      "pb-[80px]",
+      "text-white",
+      "md:flex-row",
+      "md:justify-start",
+      "md:gap-7",
+      "md:px-[72px]",
+      "md:pt-8",
+      "md:pb-[116px]",
+    ],
+    column: [
+      "flex",
+      "h-full",
+      "min-w-0",
+      "grow-0",
+      "basis-full",
+      "flex-col",
+      "items-center",
+      "justify-center",
+      "md:flex-1",
+    ],
+    text: ["w-full", "max-w-[874px]", "self-start"],
     eyebrow: [
       "text-sm",
       "font-bold",
-      "text-uppercase",
+      "uppercase",
       "leading-[120%]",
-      "letter-spacing-0.12px",
+      "tracking-[0.12px]",
+      "mb-2",
     ],
     heading: [
-      "text-5xl",
-      "font-bold",
-      "md:leading-[48px]",
-      "leading-[38px]",
-      "line-clamp-1",
+      "text-white",
+      "text-balance",
+      "font-normal",
+      "text-[34px]",
+      "leading-[48px]",
+      "mt-0",
+      "mb-6",
+      "md:text-[56px]",
+      "md:leading-[72px]",
+      "md:mb-8",
     ],
-    gradientOverlay: [
-      "absolute",
-      "top-0",
-      // "z-10",
-      "bg-gradient-to-r",
-      "from-black",
-      "from-30%",
-      "to-transparent",
-      "w-full",
-      "h-full",
+    paragraph: [
+      "text-balance",
+      "font-light",
+      "text-[18px]",
+      "leading-[28px]",
+      "mb-4",
+      "md:text-[24px]",
+      "md:leading-[32px]",
+      "md:mb-8",
     ],
-    slideContent: [
-      "p-16",
-      "relative",
+    featuredColumn: [
       "flex",
-      "w-full",
-      "z-10",
-      "md:box-border",
-      "md:text-left",
       "h-full",
-      "overflow-auto",
-      "items-stretch",
-      "justify-start",
-      "md:items-center",
+      "min-w-0",
+      "grow-0",
+      "basis-full",
+      "items-center",
+      "justify-center",
+      "md:flex-1",
     ],
-    wrapper: [
-      "flex",
-      "flex-col",
-      "gap-component-carousel-content-spacing-vertical",
+    featuredImage: [
+      "h-auto",
+      "w-auto",
+      "max-h-[300px]",
+      "max-w-full",
+      "object-contain",
     ],
   },
   variants: {
