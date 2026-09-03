@@ -11,9 +11,15 @@ import { PreviewParams } from "@optimizely/cms-sdk";
 import { OptimizelyContentProps } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { RootLayout } from "../RootLayout";
 import { toAppLocale } from "@/constants/locales";
-import { populateSiteSettings } from "@/lib/data/site-settings";
+import {
+  populatePageData,
+  populateSiteSettings,
+} from "@/lib/data/site-settings";
 import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 import { OptiContextProvider } from "@/components/ui/context/OptiContext";
+import { CommonPageContractType } from "@/components/cms/contracts/common";
+import { OptiComponentProps } from "@/lib/ts/component-props";
+import { DataLayer } from "@/components/ui/scripts/DataLayer";
 export { generateMetadata } from "./metadata";
 
 // Skip trying to statically prerender this because it needs a live Graph client
@@ -32,7 +38,8 @@ export async function Page({ searchParams }: Props) {
   }
   const response = (await client.getPreviewContent(
     previewParams,
-  )) as OptimizelyContentProps;
+  )) as OptimizelyContentProps &
+    OptiComponentProps<CommonPageContractType>["content"];
 
   // The CMS preview passes the content locale as a Graph Language Code
   // (e.g. "zh-Hans-CN"), not our URL slug ("zh-cn"). Comparing it against
@@ -48,6 +55,7 @@ export async function Page({ searchParams }: Props) {
     locale,
   );
 
+  await populatePageData(response);
   const contextData = getContext();
   if (!contextData) {
     throw new Error("Context Data missing");
@@ -64,6 +72,7 @@ export async function Page({ searchParams }: Props) {
       ></Script>
       <NextPreviewComponent />
       <OptiContextProvider contextData={contextData}>
+        <DataLayer content={response} locale={locale} />
         <OptimizelyComponent content={response} />
       </OptiContextProvider>
     </RootLayout>

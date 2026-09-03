@@ -46,6 +46,8 @@ export type TiSlideShowProps = TiComponentPropsBase & {
   /**	Property for thumbnail size, small or large. */
   thumbnailSize?: ThumbnailSize;
 
+  sectionClass?: string;
+
   /**
    * The slide elements to display in the carousel.
    * We pass these as props to keep parent and slide components as server components.
@@ -69,6 +71,7 @@ export function TiSlideShow({
   isPreview,
   autoAdvance,
   fullBleed,
+  sectionClass,
   hideNavigation,
   insetNavigation,
   mobileAllowSwipe,
@@ -117,6 +120,7 @@ export function TiSlideShow({
       contained={!fullBleed}
       noPaddingTop={fullBleed}
       noPaddingBottom={fullBleed}
+      className={sectionClass}
     >
       {PreviewControls}
       {flattenedSlides || visibleSlideElements.length === 1 ? (

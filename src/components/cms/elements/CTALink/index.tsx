@@ -4,7 +4,11 @@ import { getUrlFileName, normalizeUrl } from "@/lib/utils/link-utils";
 import { TiSvgIcon } from "@/components/ui/ti/TiSvgIcon";
 import type { UiIcon } from "@/components/ui/ti/TiSvgIcon/SvgIconMapping";
 
-type Props = OptiComponentProps<typeof CtaLinkElementType>;
+type Props = OptiComponentProps<typeof CtaLinkElementType> & {
+  dataLid?: string;
+
+  dataNavtitle?: string;
+};
 
 /**
  * Inline-link CTA. Renders a plain anchor with a leading `ti-svg-icon`, matching
@@ -20,7 +24,7 @@ type Props = OptiComponentProps<typeof CtaLinkElementType>;
  * as a button, which this one never is. `sectionCtaLink` on live uses a trailing
  * chevron and a bold label instead — pending a UX call on standardising it.
  */
-export function CTALinkElement({ content }: Props) {
+export function CTALinkElement({ content, dataLid, dataNavtitle }: Props) {
   if (!content) {
     return null;
   }
@@ -53,8 +57,10 @@ export function CTALinkElement({ content }: Props) {
       href={content.IsDownload ? `/api/download?url=${encodeURI(url)}` : url}
       target={target}
       download={content.IsDownload ? getUrlFileName(url) : undefined}
-      className="inline-flex items-center gap-1 text-body-md text-pl-link-color-primary no-underline hover:underline"
+      className="inline-flex items-center gap-1 text-body-md text-pl-link-color-primary no-underline"
       data-cta-link
+      data-lid={dataLid}
+      data-navtitle={dataNavtitle}
     >
       {icon === "none" ? null : (
         <TiSvgIcon

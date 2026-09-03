@@ -8,7 +8,7 @@ import { ApplicationInfo } from "@/lib/api/normalized/applications";
 import { FamilyInfo } from "@/lib/api/normalized/productFamilies";
 import { SiloFamily } from "@/lib/api/cms-api";
 
-import { BreadcrumbEntry } from "./Breadcrumb.utils";
+import { BreadcrumbEntry } from "@/components/global/Breadcrumb/Breadcrumb.utils.ts";
 declare module "@optimizely/cms-sdk/react/server" {
   export interface ContextData extends BaseContextData {
     siteSettings: ContentProps<typeof SiteSettingsDataType>;

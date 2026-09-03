@@ -17,10 +17,11 @@ import { SERVER_ENV_VARS } from "@/lib/env/server-env";
 
 import clsx from "clsx";
 import "@/assets/app.css";
+import { JsonLdSchema } from "@/components/ui/Atoms/JsonLd";
 
 export async function RootLayout({
   children,
-  locale
+  locale,
 }: Readonly<{
   children: React.ReactNode;
   locale: string;
@@ -46,6 +47,25 @@ export async function RootLayout({
           only those Event-reason rejections while real errors pass through.
         */}
         {/* <link type="text/css" href="https://www.ti.com/assets/style/ticom.global.portals.css" rel="stylesheet" /> */}
+        <JsonLdSchema
+          data={{
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Texas Instruments",
+            url: "https://www.ti.com",
+            logo: "https://www.ti.com/images/ti-logo.png",
+            contactPoint: {
+              "@type": "ContactPoint",
+              telephone: "+1-972-995-2011",
+              contactType: "customer support",
+            },
+            sameAs: [
+              "https://www.linkedin.com/company/texas-instruments",
+              "https://twitter.com/TXInstruments",
+              "https://www.youtube.com/user/texasinstruments",
+            ],
+          }}
+        />
       </head>
       <body className={clsx(roboto.variable, DefaultTheme)}>
         <div className="w-full">
@@ -63,7 +83,9 @@ export async function RootLayout({
             />
             <NextIntlClientProvider>
               {/* Hero is hard-coded as H1 so others should start at H2  */}
-              <HeadingLevelContext headingLevel={2}>{children}</HeadingLevelContext>
+              <HeadingLevelContext headingLevel={2}>
+                {children}
+              </HeadingLevelContext>
             </NextIntlClientProvider>
           </ThemeProvider>
         </div>

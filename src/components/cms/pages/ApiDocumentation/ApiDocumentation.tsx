@@ -2,7 +2,6 @@ import { ContentProps } from "@optimizely/cms-sdk";
 import { ApiDocumentationPageType } from "./ApiDocumentation.model";
 import { SiteFrame } from "@/components/global/SiteFrame/SiteFrame";
 import { CommonPageHero } from "@/components/global/CommonPageHero";
-import { populatePageData } from "@/lib/data/site-settings";
 import { ReusableColumnGrid } from "../../components/ColumnGrid/ReusableColumnGrid";
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { cached } from "@/lib/data/opti";
@@ -15,8 +14,6 @@ type Props = {
 };
 
 export async function ApiDocumentationPage({ content }: Props) {
-  await populatePageData(content);
-
   const nav = normalizeGenericContentToTyped(
     await cached.getReferencedContent(content.hierarchyNav),
   );

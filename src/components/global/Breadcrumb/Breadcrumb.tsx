@@ -2,6 +2,7 @@ import { TiSvgIcon } from "@/components/ui/ti/TiSvgIcon";
 import { getTranslations } from "next-intl/server";
 import { tv } from "tailwind-variants";
 import { getBreadcrumb } from "./Breadcrumb.utils";
+import { JsonLdSchema } from "@/components/ui/Atoms/JsonLd";
 
 /**
  * Breadcrumb:
@@ -42,25 +43,21 @@ export async function Breadcrumb() {
     dropdownLink,
   } = TAILWIND_VARIANTS();
 
-  const jsonLd = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: breadcrumbs.map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: item.title,
-      item: item.url,
-    })),
-  }).replace(/</g, "\\u003c");
-
   return (
     <nav aria-label="Breadcrumb" className={nav()}>
       <div className={container()}>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: jsonLd }}
+        <JsonLdSchema
+          data={{
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: breadcrumbs.map((item, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: item.title,
+              item: item.url,
+            })),
+          }}
         />
-
         {/* Mobile: plain, scrollable breadcrumb — no dropdowns (matches live). */}
         <ol className={mobileList()}>
           {breadcrumbs.map((item) => (
@@ -75,7 +72,6 @@ export async function Breadcrumb() {
             </li>
           ))}
         </ol>
-
         {/* Desktop: TI Stencil breadcrumb, with sibling dropdowns (parametric
             icon only on product families). Hidden on mobile. */}
         <ti-breadcrumb className={desktop()} data-lid="breadcrumb">

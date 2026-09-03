@@ -11,9 +11,9 @@ import { TifButton } from "@ticom/form-components/react";
 import { ButtonAppearance } from "@/components/ui/ti/enums";
 import { getLocale } from "next-intl/server";
 import { getSlideVisibility } from "../../experiences/HomeExperience/HomePageBannerCarousel";
+
 import { getStandardizedImage } from "@/lib/utils/image-utils";
 import { isEditMode } from "@/lib/opti/edit-helpers";
-import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 
 export async function HomePageBannerComponent({
   content,
@@ -33,9 +33,11 @@ export async function HomePageBannerComponent({
   const { src, thumbnailSrc } = getStandardizedImage(
     content,
     content.backgroundImage,
+    { preset: "2200x880" },
   );
-  const { WrappedTextField, WrappedHeadingTextField, WrappedRichTextField } =
-    fieldFactory<typeof HomePageBannerComponentType>(content, parentField);
+  const { WrappedHeadingTextField, WrappedRichTextField } = fieldFactory<
+    typeof HomePageBannerComponentType
+  >(content, parentField);
 
   /*
    * Rendering
@@ -46,11 +48,9 @@ export async function HomePageBannerComponent({
     slideContent,
     column,
     text,
-    eyebrow,
+
     heading,
     paragraph,
-    featuredColumn,
-    featuredImage,
   } = TAILWIND_VARIANTS();
 
   // The banner fills the viewport below the global header (ti.com drives this
@@ -68,11 +68,12 @@ export async function HomePageBannerComponent({
 
   const locale = await getLocale();
   const href = content.link?.url?.default ?? "";
+
   return (
     <TiSlide
       style={slideStyle}
       thumbnailSrc={thumbnailSrc ?? src ?? ""}
-      thumbnailLabel={content.headline ?? undefined}
+      thumbnailLabel={content.eyebrow ?? undefined}
       backgroundImageSrc={src}
       // TODO validate logic
       data-lid={`promo_hb_mm_${locale}_${content.campaignAlias ? content.campaignAlias : ""}`}
@@ -86,7 +87,6 @@ export async function HomePageBannerComponent({
       <div className={slideContent()}>
         <div className={column()}>
           <div className={text()}>
-            <WrappedTextField as="p" className={eyebrow()} field="eyebrow" />
             <WrappedHeadingTextField
               className={heading()}
               field="headline"
@@ -106,17 +106,6 @@ export async function HomePageBannerComponent({
             )}
           </div>
         </div>
-        {content.featuredImage && (
-          <div className={featuredColumn()}>
-            <ExtendedOptimizelyComponent content={content.featuredImage} />
-            {/* <WrappedImageField
-              className={featuredImage()}
-              field="featuredImage"
-              width={500}
-              height={300}
-            /> */}
-          </div>
-        )}
       </div>
     </TiSlide>
   );
@@ -135,9 +124,6 @@ const TAILWIND_VARIANTS = tv({
       "rounded-md",
       "text-white",
     ],
-    // The inline padding reserves the chevron gutter (16 + 40 + 16) and the
-    // block-end padding the inset thumbnail nav (92 + 24), so the max width is
-    // the 1184px content grid plus a chevron gutter on each side.
     slideContent: [
       "relative",
       "z-10",
@@ -164,23 +150,18 @@ const TAILWIND_VARIANTS = tv({
     column: [
       "flex",
       "h-full",
+      "w-full",
       "min-w-0",
       "grow-0",
-      "basis-full",
+      // "basis-full",
       "flex-col",
       "items-center",
       "justify-center",
-      "md:flex-1",
+      // "md:flex-1",
+      "max-w-[874px]",
     ],
     text: ["w-full", "max-w-[874px]", "self-start"],
-    eyebrow: [
-      "text-sm",
-      "font-bold",
-      "uppercase",
-      "leading-[120%]",
-      "tracking-[0.12px]",
-      "mb-2",
-    ],
+
     heading: [
       "text-white",
       "text-balance",
@@ -196,12 +177,11 @@ const TAILWIND_VARIANTS = tv({
     paragraph: [
       "text-balance",
       "font-light",
-      "text-[18px]",
-      "leading-[28px]",
-      "mb-4",
-      "md:text-[24px]",
-      "md:leading-[32px]",
-      "md:mb-8",
+      "text-lg",
+      "leading-md",
+      "md:text-2xl",
+      "md:leading-2xl",
+      "mb-8",
     ],
     featuredColumn: [
       "flex",

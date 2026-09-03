@@ -72,4 +72,9 @@ export const AllComponentTypeKeyMap = {
   PortfolioVisualizerComponent: `${KEY_PREFIX}PortfolioVisualizer_Component`,
   JumpLinkNavigationHorizontalComponent: `${KEY_PREFIX}JumpLinkNavigationHorizontal_Component`,
   ShipRateTablesComponent: `${KEY_PREFIX}ShipRateTables_Component`,
+  SlideWithCardComponent: `${KEY_PREFIX}SlideWithCard_Component`,
+  SlideWithImageComponent: `${KEY_PREFIX}SlideWithImage_Component`,
+  SlideshowComponent: `${KEY_PREFIX}Slideshow_Component`,
+  CarouselWithChipsComponent: `${KEY_PREFIX}CarouselWithChips_Component`,
+  VideoTranscriptComponent: `${KEY_PREFIX}VideoTranscript_Component`,
 } as const;

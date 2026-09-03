@@ -62,7 +62,7 @@ export async function BrowseVideos({
   ]);
 
   return (
-    <ThemeProvider theme="theme-grey">
+    <ThemeProvider theme="theme-grey" className="hidden md:block">
       <SectionWrapper className="py-12! md:py-16!">
         <div className="w-full">
           <div className="flex flex-col md:w-5/12">

@@ -13,9 +13,10 @@ export function ImageElement({ content, externalImageSrc }: Props) {
   }
 
   const { src, alt } = getStandardizedImageFromContract(content);
-  if (!src) {
+  const resolvedSrc = src || externalImageSrc;
+  if (!resolvedSrc) {
     return null;
   }
 
-  return <TiImage src={externalImageSrc || src} alt={alt} />;
+  return <TiImage src={resolvedSrc} alt={alt} />;
 }
