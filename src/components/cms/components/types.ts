@@ -65,6 +65,10 @@ import {
   ScrollingStoryVerticalContentComponentType,
 } from "./ScrollingStoryVertical/ScrollingStoryVertical.model";
 import {
+  ScrollingStoryHorizontalComponentType,
+  ScrollingStoryHorizontalContentComponentType,
+} from "./HorizontalScrollingStory/HorizontalScrollingStory.model";
+import {
   ImageComparisonComponentType,
   ImageComparisonItemComponentType,
 } from "./ImageComparison/ImageComparison.model";
@@ -117,6 +121,8 @@ export const allComponentTypes = [
   PremiumMediaHeadingComponentType,
   ScrollingStoryVerticalComponentType,
   ScrollingStoryVerticalContentComponentType,
+  ScrollingStoryHorizontalComponentType,
+  ScrollingStoryHorizontalContentComponentType,
   ApplicationSearchBoxComponentType,
   FAQSearchBoxComponentType,
   HierarchyNavigationComponentType,

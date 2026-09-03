@@ -94,6 +94,11 @@ import {
   ScrollingStoryVerticalContentComponent,
 } from "./ScrollingStoryVertical/ScrollingStoryVertical";
 import {
+  ScrollingStoryHorizontalComponentType,
+  ScrollingStoryHorizontalContentComponentType,
+} from "./HorizontalScrollingStory/HorizontalScrollingStory.model";
+import { ScrollingStoryHorizontalComponent } from "./HorizontalScrollingStory/HorizontalScrollingStory";
+import {
   ImageComparisonComponentType,
   ImageComparisonItemComponentType,
 } from "./ImageComparison/ImageComparison.model";
@@ -162,6 +167,10 @@ export const componentRegistry: ComponentRegistry = {
   [ScrollingStoryVerticalComponentType.key]: ScrollingStoryVerticalComponent,
   [ScrollingStoryVerticalContentComponentType.key]:
     ScrollingStoryVerticalContentComponent,
+  [ScrollingStoryHorizontalComponentType.key]: ScrollingStoryHorizontalComponent,
+  // Stories are rendered by the parent — the image is positioned against the
+  // parent's grid, so a slide cannot stand on its own.
+  [ScrollingStoryHorizontalContentComponentType.key]: NoPreviewComponent,
   [FAQSearchBoxComponentType.key]: FAQSearchBox,
   [BrowseVideosComponentType.key]: BrowseVideos,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,

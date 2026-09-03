@@ -77,4 +77,6 @@ export const AllComponentTypeKeyMap = {
   SlideshowComponent: `${KEY_PREFIX}Slideshow_Component`,
   CarouselWithChipsComponent: `${KEY_PREFIX}CarouselWithChips_Component`,
   VideoTranscriptComponent: `${KEY_PREFIX}VideoTranscript_Component`,
+  ScrollingStoryHorizontalContentComponent: `${KEY_PREFIX}ScrollingStoryHorizontalContent_Component`,
+  ScrollingStoryHorizontalComponent: `${KEY_PREFIX}ScrollingStoryHorizontal_Component`,
 } as const;
