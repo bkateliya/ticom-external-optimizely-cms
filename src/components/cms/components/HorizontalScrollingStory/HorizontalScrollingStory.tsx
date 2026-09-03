@@ -164,14 +164,14 @@ function StoryPage({
       <WrappedTextField
         as="div"
         field="highlight"
-        className="mt-1 mb-6 text-[34px] leading-[34px] font-thin text-pl-element-color-secondary-lighter"
+        className="mt-1 mb-6 text-[34px] leading-[34px] font-thin "
       />
       <WrappedHeadingTextField
         field="headline"
         id={headlineId}
-        className="mb-4 text-[24px] leading-[32px] font-normal text-balance text-pl-text-color-primary"
+        className="mb-4 text-[24px] leading-[32px] font-normal text-balance"
       />
-      <div className="text-[16px] leading-[24px] text-pretty text-pl-text-color-primary [&>p]:mb-6 [&>p:last-of-type]:mb-0">
+      <div className="text-[16px] leading-[24px] text-pretty [&>p]:mb-6 [&>p:last-of-type]:mb-0">
         <WrappedRichTextField field="description" />
       </div>
       {ctas.length > 0 && (

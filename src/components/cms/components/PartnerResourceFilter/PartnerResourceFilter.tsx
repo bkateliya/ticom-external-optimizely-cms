@@ -76,7 +76,7 @@ export async function PartnerResourceFilter({
           {t("View all partner resources")}
         </a>
       </div>
-      <div className="rounded border border-pl-border-color-tertiary bg-pl-container-background-color-secondary p-6 md:p-8">
+      <div className="border border-pl-border-color-tertiary bg-pl-container-background-color-secondary p-4 md:p-8">
         <PartnerResourceFilterForm
           baseUrl={searchBaseUrl}
           provider={provider}

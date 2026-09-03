@@ -136,7 +136,6 @@ import { ViewMoreComponent } from "./ViewMore/ViewMore";
 import { PremiumInteractiveImageComponent } from "./PremiumInteractiveImage/PremiumInteractiveImage";
 
 import { PortfolioVisualizerComponent } from "./PortfolioVisualizer/PortfolioVisualizer";
-import { VideoTranscriptComponentType } from "./VideoTranscript/VideoTranscript.model";
 import { SlideWithImageComponentType } from "./SlideWithImage/SlideWithImage.model";
 import { SlideshowComponentType } from "./Slideshow/Slideshow.model";
 
@@ -168,8 +167,6 @@ export const componentRegistry: ComponentRegistry = {
   [ScrollingStoryVerticalContentComponentType.key]:
     ScrollingStoryVerticalContentComponent,
   [ScrollingStoryHorizontalComponentType.key]: ScrollingStoryHorizontalComponent,
-  // Stories are rendered by the parent — the image is positioned against the
-  // parent's grid, so a slide cannot stand on its own.
   [ScrollingStoryHorizontalContentComponentType.key]: NoPreviewComponent,
   [FAQSearchBoxComponentType.key]: FAQSearchBox,
   [BrowseVideosComponentType.key]: BrowseVideos,
@@ -212,7 +209,6 @@ export const componentRegistry: ComponentRegistry = {
   [ShipRateTablesComponentType.key]: ShipRateTablesComponent,
   [ApplicationCategoryListComponentType.key]: ApplicationCategoryList,
   [ViewMoreComponentType.key]: ViewMoreComponent,
-  [VideoTranscriptComponentType.key]: NoPreviewComponent,
   [SlideWithImageComponentType.key]: NoPreviewComponent,
   [SlideshowComponentType.key]: NoPreviewComponent,
   [SlideWithCardComponentType.key]: SlideWithCardComponent,
