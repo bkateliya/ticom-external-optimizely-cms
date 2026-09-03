@@ -39,6 +39,15 @@ export type ImageMapPin = {
   target?: string;
   /** Selected modifier for the pin. */
   selected?: boolean;
+  /** `data-lid` link id, required for metrics tracking. */
+  dataLid?: string;
+  /** `data-navtitle` link text, required for metrics tracking. */
+  dataNavtitle?: string;
+  /**
+   * Index (1-based) of the page a sibling `ti-slide-panel` should switch to
+   * when this pin is selected, instead of the pin linking out via `href`.
+   */
+  targetPanel?: number | string;
 };
 
 export type TiImageMapProps = {
@@ -90,6 +99,9 @@ export function TiImageMap({
           href={pin.href}
           target={pin.target}
           selected={pin.selected}
+          dataLid={pin.dataLid}
+          dataNavtitle={pin.dataNavtitle}
+          dataTargetPanel={pin.targetPanel}
         >
           {pin.label}
         </TiPin>

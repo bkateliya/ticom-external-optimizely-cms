@@ -11,6 +11,10 @@ import {
 import { JumpNavVertical } from "@/components/ui/molecules/JumpNavVertical";
 import { Main } from "@/components/global/Main/Main";
 import { ArticleSchema } from "./ArticleSchema";
+import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
+import { formatEyebrowDate } from "@/lib/utils/content-format-utils";
+import { TaxonomyType } from "../../data/Taxonomy.model";
+import { getLocale } from "next-intl/server";
 
 type Props = {
   content: ContentProps<typeof ArticlePageType>;
@@ -19,8 +23,28 @@ type Props = {
 export async function ArticlePage({ content }: Props) {
   await populatePageData(content);
 
+  const locale = await getLocale();
+
+  const category = normalizeGenericContentToTyped(
+    content.category,
+    TaxonomyType,
+  );
+  const eyebrowText = !content.hideEyebrow
+    ? [
+        formatEyebrowDate(content.datePublished, locale),
+        category?.value?.trim(),
+      ]
+        .filter(Boolean)
+        .join(" | ")
+    : "";
+
   const mainContent = [
     <CommonPageHero key="pageHeading" content={content} />,
+    eyebrowText && (
+      <p key="eyebrow" className="text-label uppercase">
+        {eyebrowText}
+      </p>
+    ),
     content.dateline && (
       <p key="dateline" className="text-body-sm font-semibold">
         {content.dateline}
@@ -49,4 +73,3 @@ export async function ArticlePage({ content }: Props) {
     </SiteFrame>
   );
 }
-

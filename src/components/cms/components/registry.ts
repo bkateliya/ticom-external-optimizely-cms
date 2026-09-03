@@ -128,7 +128,17 @@ import { ApplicationCategoryList } from "./ApplicationCategoryList/ApplicationCa
 import { GenericPageHeadingComponent } from "./PageHeadings/GenericPageHeading/GenericPageHeading";
 import { ViewMoreComponentType } from "./ViewMore/ViewMore.model";
 import { ViewMoreComponent } from "./ViewMore/ViewMore";
+import { PremiumInteractiveImageComponent } from "./PremiumInteractiveImage/PremiumInteractiveImage";
 
+import { PortfolioVisualizerComponent } from "./PortfolioVisualizer/PortfolioVisualizer";
+import { VideoTranscriptComponentType } from "./VideoTranscript/VideoTranscript.model";
+import { SlideWithImageComponentType } from "./SlideWithImage/SlideWithImage.model";
+import { SlideshowComponentType } from "./Slideshow/Slideshow.model";
+
+import { SlideWithCardComponentType } from "./SlideWithCard/SlideWithCard.model";
+import { SlideWithCardComponent } from "./SlideWithCard/SlideWithCard";
+import { CarouselWithChipsComponentType } from "./CarouselWithChips/CarouselWithChips.model";
+import { CarouselWithChipsComponent } from "./CarouselWithChips/CarouselWithChips";
 
 export const componentRegistry: ComponentRegistry = {
   [HeroComponentType.key]: HeroComponent,
@@ -185,12 +195,17 @@ export const componentRegistry: ComponentRegistry = {
   [ProductCategoryListingOverrideComponentType.key]: NoPreviewComponent,
   [ApplicationSelectionToolComponentType.key]: ApplicationSelectionToolTeaser,
   [ReferenceDesignSearchComponentType.key]: ReferenceDesignSearchTeaser,
-  [PremiumInteractiveImageComponentType.key]: NoPreviewComponent,
+  [PremiumInteractiveImageComponentType.key]: PremiumInteractiveImageComponent,
   [PremiumInteractiveImagePanelComponentType.key]: NoPreviewComponent,
-  [PortfolioVisualizerComponentType.key]: NoPreviewComponent,
+  [PortfolioVisualizerComponentType.key]: PortfolioVisualizerComponent,
   [JumpLinkNavigationHorizontalComponentType.key]:
     JumpLinkNavigationHorizontalComponent,
   [ShipRateTablesComponentType.key]: ShipRateTablesComponent,
   [ApplicationCategoryListComponentType.key]: ApplicationCategoryList,
   [ViewMoreComponentType.key]: ViewMoreComponent,
+  [VideoTranscriptComponentType.key]: NoPreviewComponent,
+  [SlideWithImageComponentType.key]: NoPreviewComponent,
+  [SlideshowComponentType.key]: NoPreviewComponent,
+  [SlideWithCardComponentType.key]: SlideWithCardComponent,
+  [CarouselWithChipsComponentType.key]: CarouselWithChipsComponent,
 };

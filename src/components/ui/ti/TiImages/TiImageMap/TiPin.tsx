@@ -54,6 +54,12 @@ export type TiPinProps = React.PropsWithChildren & {
   dataLid?: string;
   /** `data-navtitle` link text, required for metrics tracking. */
   dataNavtitle?: string;
+  /**
+   * `data-target-panel` — index (1-based) of the page a sibling `ti-slide-panel`
+   * should switch to when this pin is selected, instead of the pin linking out
+   * via `href`. Used by Premium Interactive Image.
+   */
+  dataTargetPanel?: number | string;
   /** Fired when the pin's selected state changes. */
   tiPinChange?: CustomEventHandler<TiPinChangeEventDetail>;
 };
@@ -69,6 +75,7 @@ export function TiPin({
   selected,
   dataLid,
   dataNavtitle,
+  dataTargetPanel,
   tiPinChange,
   children,
 }: TiPinProps): React.ReactNode {
@@ -88,6 +95,7 @@ export function TiPin({
       selected={selected}
       data-lid={dataLid}
       data-navtitle={dataNavtitle}
+      data-target-panel={dataTargetPanel}
     >
       {children}
     </ti-pin>

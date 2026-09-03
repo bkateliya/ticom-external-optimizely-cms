@@ -19,6 +19,7 @@ import {
 import { AllComponentTypeKeyMap } from "../../components/keys";
 import { cached } from "@/lib/data/opti";
 import { HomeExperienceType } from "./HomeExperience.model";
+import { appendBynderAssets } from "@/lib/data/bynder";
 
 export async function HomePageBannerCarouselComponent({
   content,
@@ -45,6 +46,9 @@ export async function HomePageBannerCarouselComponent({
     ),
   );
 
+  // Because the bynder images aren't on the page object, the cache won't have them yet, so add them to the cache
+  await appendBynderAssets(slides);
+
   return (
     <TiSlideShow
       autoAdvance
@@ -69,6 +73,7 @@ export async function HomePageBannerCarouselComponent({
         ),
         slideVisibility: getSlideVisibility(slide),
       }))}
+      sectionClass="-mt-4"
     />
   );
 }

@@ -8,7 +8,11 @@ import { ImageBaseContractContentType } from "@/components/cms/contracts/compone
 /**
  * Add known image presets here
  * */
-export type ImagePreset = "192x192";
+export type ImagePreset =
+ // Square (1:1)
+  | "192x192"
+  // Standard (21:9)
+  | "2200x880";
 
 export interface StandardizedImage {
   imageType: "bynder" | "optimizely";
@@ -53,7 +57,7 @@ export function getStandardizedImage(
       imageType: "bynder",
       src: preset
         ? getBynderTransformUrl(bynderImage, preset)
-        : bynderImage.original,
+        : bynderImage.original || bynderImage.transformBaseUrl,
       thumbnailSrc: src(imageField) || "",
       alt: bynderImage.property_alt_text,
       width: bynderImage._imageMetadata.width,

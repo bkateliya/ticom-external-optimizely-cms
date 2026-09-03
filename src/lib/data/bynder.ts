@@ -12,7 +12,15 @@ export function getBynderImageFromContext(
       "Bynder images not found in context, ensure that findAllBynderAssetsOnPage has been called",
     );
   }
-  return bynderImages?.[content?.key ?? ""];
+
+  const result = bynderImages?.[content?.key ?? ""];
+
+  if (referenceIsBynderType(content, "BynderImage") && !result) {
+    throw Error(
+      "BynderImage not found in cache.  If this data was dynamically loaded and not part of the page, call `appendBynderAssets` with the asset first",
+    );
+  }
+  return result;
 }
 export function getBynderDocumentFromContext(
   content: InferredContentReference,
@@ -23,7 +31,15 @@ export function getBynderDocumentFromContext(
       "Bynder documents not found in context, ensure that findAllBynderAssetsOnPage has been called",
     );
   }
-  return bynderDocuments?.[content?.key ?? ""];
+
+  const result = bynderDocuments?.[content?.key ?? ""];
+
+  if (referenceIsBynderType(content, "BynderDocument") && !result) {
+    throw Error(
+      "BynderDocument not found in cache.  If this data was dynamically loaded and not part of the page, call `appendBynderAssets` with the asset first",
+    );
+  }
+  return result;
 }
 export function getBynderVideoFromContext(
   content: InferredContentReference,
@@ -34,7 +50,42 @@ export function getBynderVideoFromContext(
       "Bynder videoss not found in context, ensure that findAllBynderAssetsOnPage has been called",
     );
   }
-  return bynderVideos?.[content?.key ?? ""];
+
+  const result = bynderVideos?.[content?.key ?? ""];
+
+  if (referenceIsBynderType(content, "BynderVideo") && !result) {
+    throw Error(
+      "BynderVideo not found in cache.  If this data was dynamically loaded and not part of the page, call `appendBynderAssets` with the asset first",
+    );
+  }
+  return result;
+}
+
+export async function appendBynderAssets(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any,
+) {
+  const { bynderImageMap, bynderDocumentMap, bynderVideoMap } =
+    await findAllBynderAssetsOnPage(data);
+
+  const {
+    bynderImages = {},
+    bynderDocuments = {},
+    bynderVideos = {},
+  } = getContext() ?? {};
+
+  for (const key in bynderImageMap) {
+    if (!Object.hasOwn(bynderImageMap, key)) continue;
+    bynderImages[key] = bynderImageMap[key];
+  }
+  for (const key in bynderDocumentMap) {
+    if (!Object.hasOwn(bynderDocumentMap, key)) continue;
+    bynderDocuments[key] = bynderDocumentMap[key];
+  }
+  for (const key in bynderVideoMap) {
+    if (!Object.hasOwn(bynderVideoMap, key)) continue;
+    bynderVideos[key] = bynderVideoMap[key];
+  }
 }
 
 export async function findAllBynderAssetsOnPage(
@@ -197,6 +248,13 @@ export interface BynderVideo extends IAssetItem {
   isPublic: 0 | 1;
   original: string;
   videoPreviewURL: string;
+}
+
+function referenceIsBynderType(
+  content: InferredContentReference,
+  type: BynderAssetType,
+) {
+  return (content?.url.graph?.indexOf(`/${type}/`) ?? -1) > -1;
 }
 
 function getRefIds(root: unknown, type: BynderAssetType) {

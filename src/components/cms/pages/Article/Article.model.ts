@@ -24,18 +24,25 @@ export const ArticlePageType = contentType({
       displayName: "Show Sticky Side Nav",
       group: PropertyTypes.ComponentConfiguration,
     },
+    hideEyebrow: {
+      type: "boolean",
+      displayName: "Hide Eyebrow",
+      group: PropertyTypes.ComponentConfiguration,
+    },
 
     category: {
       type: "content",
       displayName: "Category (Choose From Assets, do not create new block)",
       allowedTypes: [TaxonomyType],
       group: PropertyTypes.Seo,
+      isRequired: true,
     },
     articleYear: {
       type: "content",
       displayName: "Year (Choose From Assets, do not create new block)",
       allowedTypes: [TaxonomyType],
       group: PropertyTypes.Seo,
+      isRequired: true,
     },
     datePublished: {
       type: "dateTime",

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getPageContent } from "@/lib/data/opti";
+import { getPageContent, getPageHeading } from "@/lib/data/opti";
 import { withLocale } from "@/lib/utils/link-utils";
 import {
   DEFAULT_LOCALE,
@@ -8,7 +8,6 @@ import {
 } from "@/constants/locales";
 import { CommonPageContractType } from "@/components/cms/contracts/common";
 import { OptiComponentProps } from "@/lib/ts/component-props";
-import { PageHeadingContractContentType } from "@/components/cms/contracts/component-contracts/page-headings.model";
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
 import { ArticlePageType } from "@/components/cms/pages/Article/Article.model";
 import { TaxonomyType } from "@/components/cms/data/Taxonomy.model";
@@ -81,7 +80,10 @@ function getArticleOpenGraph(
   // `category`'s allowed type (Taxonomy) is expanded inline by the SDK, so its
   // `value` is read by casting the field — the same way `hero` is read above —
   // not via getReferencedContent (a type:"content" field carries no key).
-  const category = normalizeGenericContentToTyped(article.category, TaxonomyType);
+  const category = normalizeGenericContentToTyped(
+    article.category,
+    TaxonomyType,
+  );
 
   return {
     type: "article",
@@ -92,12 +94,4 @@ function getArticleOpenGraph(
     authors: article.author || undefined,
     section: category?.value?.trim() || undefined,
   };
-}
-
-function getPageHeading(
-  content: OptiComponentProps<CommonPageContractType>["content"],
-) {
-  return normalizeGenericContentToTyped<PageHeadingContractContentType>(
-    content?.hero,
-  );
 }

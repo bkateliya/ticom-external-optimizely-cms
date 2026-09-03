@@ -35,7 +35,7 @@ export const TeaserComponentType = contentType({
       displayName: "CTA",
       group: PropertyTypes.Content,
       allowedTypes: [CtaButtonElementType, CtaLinkElementType],
-      isRequired: true,
+      isRequired: false,
     },
     background: {
       type: "string",

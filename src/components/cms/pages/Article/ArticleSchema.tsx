@@ -7,6 +7,7 @@ import {
   richTextToPlainText,
   toIsoDate,
 } from "@/lib/utils/content-format-utils";
+import { JsonLdSchema } from "@/components/ui/Atoms/JsonLd";
 
 // Keyed by the CMS `schemaType` enum value (see Article.model.ts), mapping to
 // the schema.org @type it produces: Blog -> BlogPosting, News -> NewsArticle.
@@ -43,13 +44,14 @@ export function ArticleSchema({
 
   // image is intentionally left out for now: the hero image is Bynder-resolved
   // (VM-only) via the shared asset map — wire it in once that path is proven.
-  const jsonLd = JSON.stringify({
-    "@context": "https://schema.org",
+  const jsonLd = {
+    "@context": "https://schema.org" as const,
     "@type": schemaType,
     headline: hero?.pageHeadline || undefined,
     description: richTextToPlainText(hero?.pageSubheadline) || undefined,
     url: url.default ? `${url.base ?? ""}${url.default}` : undefined,
     datePublished: toIsoDate(content.datePublished),
+    dateline: content.dateline || undefined,
     dateModified: toIsoDate(content.dateUpdated),
     articleSection: category?.value?.trim() || undefined,
     // News releases are authored by TI itself; blogs credit the named author.
@@ -66,12 +68,7 @@ export function ArticleSchema({
         url: "https://www.ti.com/assets/images/ti-logo.png",
       },
     },
-  }).replace(/</g, "\\u003c");
+  };
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: jsonLd }}
-    />
-  );
+  return <JsonLdSchema data={jsonLd} />;
 }

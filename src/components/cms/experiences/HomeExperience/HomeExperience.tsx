@@ -3,7 +3,6 @@ import { HomeExperienceType } from "./HomeExperience.model";
 import { CommonPageHero } from "@/components/global/CommonPageHero";
 import { SiteFrame } from "@/components/global/SiteFrame/SiteFrame";
 import { OptimizelyComposition } from "@optimizely/cms-sdk/react/server";
-import { populatePageData } from "@/lib/data/site-settings";
 import { HomePageBannerCarouselComponent } from "./HomePageBannerCarousel";
 
 type Props = {
@@ -11,8 +10,6 @@ type Props = {
 };
 
 export async function HomeExperience({ content }: Props) {
-  await populatePageData(content);
-
   if (!content) {
     return null;
   }

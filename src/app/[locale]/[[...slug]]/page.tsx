@@ -7,8 +7,9 @@ import {
 import { redirect, RedirectType } from "next/navigation";
 import { getPageContent } from "@/lib/data/opti";
 import { SUPPORTED_LOCALES } from "@/constants/locales";
-import { populateSiteSettings } from "@/lib/data/site-settings";
+import { populatePageData, populateSiteSettings } from "@/lib/data/site-settings";
 import { OptiContextProvider } from "@/components/ui/context/OptiContext";
+import { DataLayer } from "@/components/ui/scripts/DataLayer";
 export { generateMetadata } from "./metadata";
 type Props = {
   params: Promise<{
@@ -39,12 +40,14 @@ async function Page({ params }: Props) {
 
   await populateSiteSettings(mainContent, path, locale, contentLocale);
 
+  await populatePageData(mainContent);
   const contextData = getContext();
   if (!contextData) {
     throw new Error("Context Data missing");
   }
   return (
     <OptiContextProvider contextData={contextData}>
+      <DataLayer content={mainContent} locale={contentLocale} />
       <OptimizelyComponent content={mainContent} />
     </OptiContextProvider>
   );
