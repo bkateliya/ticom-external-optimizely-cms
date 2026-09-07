@@ -69,7 +69,7 @@ export function TeaserComponent({
             />
             <WrappedRichTextField
               field="teaserDescription"
-              className="text-body-lg"
+              className="text-body-lg [&_p]:mb-6 [&_ul]:mb-6 [&_ol]:mb-6 [&_ul]:ms-5 [&_ol]:ms-5 [&>*:last-child]:mb-0"
             />
           </div>
         </SectionWrapper>
@@ -102,7 +102,7 @@ export function TeaserComponent({
           />
           <WrappedRichTextField
             field="teaserDescription"
-            className="text-body-md"
+            className="text-body-md [&_p]:mb-6 [&_ul]:mb-6 [&_ol]:mb-6 [&_ul]:ms-5 [&_ol]:ms-5 [&>*:last-child]:mb-0"
           />
         </div>
       )}

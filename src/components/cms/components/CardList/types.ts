@@ -1,11 +1,11 @@
-
 import { CardListComponentType } from "./CardList.model";
 import { ProductCardsComponentType } from "./ProductCards/ProductCards.model";
-import { SingleGeneralCardComponentType, GeneralCardsComponentType } from "./GeneralCards/GeneralCards.model";
+import { MixedCardListComponentType } from "./MixedCardList/MixedCardList.model";
+import { AuthoredCardComponentType } from "./AuthoredCard/AuthoredCard.model";
 
 export const cardListComponents = [
   CardListComponentType,
   ProductCardsComponentType,
-  GeneralCardsComponentType,
-  SingleGeneralCardComponentType,
+  MixedCardListComponentType,
+  AuthoredCardComponentType,
 ];

@@ -12,6 +12,7 @@ export function ViewMoreComponent({
 
   return (
     <TiViewMore
+      className="text-body-md"
       collapsedHeight={0}
       expandActionLabel={content.expandActionLabel ?? undefined}
       collapseActionLabel={content.collapseActionLabel ?? undefined}

@@ -96,6 +96,16 @@ export const AllowInViewMoreContract = contract({
   },
 });
 
+export const AllowInMixedCardListContract = contract({
+  key: `${ALLOW_IN_CONTRACT_KEY_PREFIX}MixedCardList_Contract`,
+  displayName: `${DISPLAY_NAME_PREFIX}Allow In Mixed Card List Contract`,
+  properties: {
+    metaAllowInMixedCardList: {
+      ...ContractFlagProperties,
+    },
+  },
+});
+
 /**
  * Helper for easier discoverabilty
  */
@@ -110,6 +120,8 @@ export const AllowIn = {
   Prefooter: AllowInPrefooterContract,
   Main: AllowInMainContract,
   ViewMore: AllowInViewMoreContract,
+
+  MixedCardList: AllowInMixedCardListContract,
 
   Groupings: {
     Common: [

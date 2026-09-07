@@ -5,7 +5,11 @@ import { TiPortfolioViewer } from "@/components/ui/ti/TiPortfolioViewer/TiPortfo
 import { PortfolioVisualizerComponentType } from "./PortfolioVisualizer.model";
 
 const portfolioVisualizer = tv({
-  base: "hidden md:block",
+  // ti-portfolio-viewer sizes the SVG to the host width but keeps the asset's
+  // own fixed height, so under ~1024px the diagram letterboxes into a band of
+  // dead space and its labels shrink past legibility. AEM avoided that by
+  // hiding it on phones; we hold it at width and scroll instead.
+  base: "overflow-x-auto",
   variants: {
     bordered: {
       true: "border border-pl-border-color-primary p-8",
@@ -26,9 +30,8 @@ export function PortfolioVisualizerComponent({
   }
 
   return (
-    <TiPortfolioViewer
-      svgUrl={svgUrl}
-      className={portfolioVisualizer({ bordered: !content.removeBorder })}
-    />
+    <div className={portfolioVisualizer({ bordered: !content.removeBorder })}>
+      <TiPortfolioViewer svgUrl={svgUrl} className="min-w-[1024px] md:min-w-0" />
+    </div>
   );
 }

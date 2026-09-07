@@ -20,7 +20,7 @@ export const ContentBlockComponentType = contentType({
     DeprecatedCtaListContract,
     CtaListContract,
     ImageBaseContract,
-    ...AllowIn.Groupings.Common
+    ...AllowIn.Groupings.Common,
   ],
   properties: {
     image: {
@@ -35,6 +35,9 @@ export const ContentBlockComponentType = contentType({
       description: "Rich text content",
       group: PropertyTypes.Content,
       isLocalized: true,
+      editorSettings: {
+        preset: "expanded",
+      },
     },
   },
 });

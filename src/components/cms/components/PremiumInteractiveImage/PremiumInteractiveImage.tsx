@@ -52,6 +52,10 @@ export async function PremiumInteractiveImageComponent({
     typeof PremiumInteractiveImagePanelComponentType
   >(content.panels);
 
+  // Dots only, no floating label/line — matches live's own pins (every one sets
+  // --ti-pin-label-opacity:0), and the panel text already carries the label copy.
+  // The pixel line-height/line-width authored per pin are for desktop image sizes;
+  // with the label hidden they no longer overflow above a narrower mobile image.
   const pins: ImageMapPin[] = panels.map((panel, index) => ({
     positionHorizontal: `${panel.panelPinX ?? 0}%`,
     positionVertical: `${panel.panelPinY ?? 0}%`,
@@ -62,6 +66,7 @@ export async function PremiumInteractiveImageComponent({
     targetPanel: index + 1,
     dataLid: ANALYTICS_LID,
     dataNavtitle: panel.panelTitle ?? undefined,
+    hideLabel: true,
   }));
 
   const relatedResourcesLabel = t("Related resources");
@@ -69,7 +74,7 @@ export async function PremiumInteractiveImageComponent({
   return (
     <PremiumInteractiveImageTheme>
       <div className="flex flex-col gap-6 md:flex-row md:items-stretch md:gap-7">
-        <div className="md:order-1 md:w-1/4 md:shrink-0">
+        <div className="order-2 md:order-1 md:w-1/4 md:shrink-0">
           <TiSlidePanel>
             <div>
               <div className="mb-6">
@@ -99,7 +104,7 @@ export async function PremiumInteractiveImageComponent({
             ))}
           </TiSlidePanel>
         </div>
-        <div className="md:order-2 md:flex-1">
+        <div className="order-1 md:order-2 md:flex-1">
           <TiImageMap endImageSrc={src} alt={alt} pins={pins} />
         </div>
       </div>

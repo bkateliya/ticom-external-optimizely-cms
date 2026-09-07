@@ -1,20 +1,12 @@
 import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimizelyComponent";
 import { OptiComponentProps } from "@/lib/ts/component-props";
-import { ContentTypes } from "@optimizely/cms-sdk";
 import { CardListComponentType } from "./CardList.model";
 import { Preamble } from "@/components/ui/molecules/SectionWrapper/Preamble";
-
-export interface OptiCardComponentProps<
-  TContentType extends ContentTypes.AnyContentType,
-> extends OptiComponentProps<TContentType> {
-  columnCount: number;
-  cardListDisplay?: "grid" | "carousel";
-}
 
 export async function CardListComponent({
   content,
   parentField,
-}: OptiCardComponentProps<typeof CardListComponentType>) {
+}: OptiComponentProps<typeof CardListComponentType>) {
   if (!content) {
     return null;
   }

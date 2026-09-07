@@ -62,7 +62,7 @@ export function ScrollingStoryHorizontalComponent({
       />
       <WrappedHeadingTextField
         field="headline"
-        className="mb-0 text-[28px] leading-[36px] font-semibold text-pl-text-color-secondary md:text-[34px] md:leading-[40px]"
+        className="mb-0 text-[28px] leading-[36px] font-semibold  md:text-[34px] md:leading-[40px]"
       />
     </div>
   );

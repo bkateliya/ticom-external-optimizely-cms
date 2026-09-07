@@ -9,6 +9,10 @@ import { TiNavbar } from "@/components/ui/ti/TiNavbar/TiNavbar";
 import { useTranslations } from "next-intl";
 
 const FOOTER_SELECTOR = "#tiResponsiveFooter";
+const STICKY_TOP_OFFSET = 16;
+const BOTTOM_GAP = 24;
+const UNPINNED_STYLE = { position: "", top: "", left: "", width: "" };
+
 interface JumpNavVerticalProps {
   stickyBehavior: "vertical" | "horizontal";
 }
@@ -26,10 +30,6 @@ export function JumpNavVertical({ stickyBehavior }: JumpNavVerticalProps) {
   const verticalWrapperRef = useRef<HTMLDivElement>(null);
   const verticalInnerRef = useRef<HTMLDivElement>(null);
   const [verticalWrapperHeight, setVerticalWrapperHeight] = useState<number>();
-  const [verticalFixedRect, setVerticalFixedRect] = useState<{
-    left: number;
-    width: number;
-  } | null>(null);
 
   // Side nav is hidden below md, so there's nothing to pin on mobile.
   const [isMobile, setIsMobile] = useState(false);
@@ -53,6 +53,46 @@ export function JumpNavVertical({ stickyBehavior }: JumpNavVerticalProps) {
       .getElementById(hash)
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
+
+  // Checks whether the side nav has scrolled past the top offset, and uses
+  // that for both Vertical's pin and Horizontal's swap to the bar. We
+  // position the bar ourselves instead of letting it stick itself
+  const updatePinPosition = useCallback(() => {
+    const inner = verticalInnerRef.current;
+    const wrapper = verticalWrapperRef.current;
+    if (!inner) return;
+
+    let showStickyBar = isMobile;
+    let pinStyle = UNPINNED_STYLE;
+
+    if (!isMobile && wrapper) {
+      const rect = wrapper.getBoundingClientRect();
+
+      if (isHorizontal) {
+        // Swap to the sticky bar only once the nav has fully scrolled
+        // past the offset, not as soon as its top edge reaches it.
+        showStickyBar = rect.bottom <= STICKY_TOP_OFFSET;
+      } else if (rect.top <= STICKY_TOP_OFFSET) {
+        const footer = document.querySelector<HTMLElement>(FOOTER_SELECTOR);
+        const navHeight = inner.getBoundingClientRect().height || rect.height;
+        const top = footer
+          ? Math.min(
+              STICKY_TOP_OFFSET,
+              footer.getBoundingClientRect().top - navHeight - BOTTOM_GAP,
+            )
+          : STICKY_TOP_OFFSET;
+        pinStyle = {
+          position: "fixed",
+          top: `${top}px`,
+          left: `${rect.left}px`,
+          width: `${rect.width}px`,
+        };
+      }
+    }
+
+    setStickyHeaderVisible(showStickyBar);
+    Object.assign(inner.style, pinStyle);
+  }, [isHorizontal, isMobile]);
 
   useEffect(() => {
     function syncWithHash() {
@@ -115,49 +155,17 @@ export function JumpNavVertical({ stickyBehavior }: JumpNavVerticalProps) {
     return () => observer.disconnect();
   }, [hasTargets]);
 
-  // Checks whether the side nav has scrolled past the top offset, and uses
-  // that for both Vertical's pin and Horizontal's swap to the bar. We
-  // position the bar ourselves instead of letting it stick itself, since
-  // it lives in a grid column and can't tell it's not full page width.
   useEffect(() => {
-    // No side nav on mobile, so just show the bar.
-    if (isMobile) {
-      setStickyHeaderVisible(true);
-      setVerticalFixedRect(null);
-      return;
-    }
-
-    const wrapper = verticalWrapperRef.current;
-    if (!wrapper) return;
-
-    const STICKY_TOP_OFFSET = 16;
-
-    const update = () => {
-      const rect = wrapper.getBoundingClientRect();
-      const pastPinPoint = rect.top <= STICKY_TOP_OFFSET;
-
-      if (isHorizontal) {
-        setStickyHeaderVisible(pastPinPoint);
-        setVerticalFixedRect(null);
-        return;
-      }
-
-      setStickyHeaderVisible(false);
-      setVerticalFixedRect(
-        pastPinPoint ? { left: rect.left, width: rect.width } : null,
-      );
+    let frameId: number;
+    const loop = () => {
+      updatePinPosition();
+      frameId = requestAnimationFrame(loop);
     };
-
-    update();
-    window.addEventListener("scroll", update);
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
+    frameId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(frameId);
     // hasTargets has to stay in the deps — the ref isn't attached until
     // hasTargets is true and the component actually renders something.
-  }, [isHorizontal, isMobile, hasTargets]);
+  }, [updatePinPosition, hasTargets]);
 
   if (!hasTargets) {
     return null;
@@ -179,14 +187,7 @@ export function JumpNavVertical({ stickyBehavior }: JumpNavVerticalProps) {
         <div
           ref={verticalInnerRef}
           style={
-            verticalFixedRect
-              ? {
-                  position: "fixed",
-                  top: 16,
-                  left: verticalFixedRect.left,
-                  width: verticalFixedRect.width,
-                }
-              : undefined
+            isHorizontal && showStickyBar ? { display: "none" } : undefined
           }
         >
           <TiSideNav

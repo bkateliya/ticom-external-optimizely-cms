@@ -117,6 +117,19 @@ export function PremiumInteractiveImageTheme({
         ],
       )}
     >
+      {/*
+        ti-pin re-asserts --ti-pin-label-opacity: 1 on itself on every render, so a
+        React inline style can't override it — only an !important stylesheet rule
+        beats that. Each pin's line-height/line-width is authored in px for the
+        desktop image; below md the same px pushes the label+line above a much
+        narrower mobile image, so the label (and its line, a pseudo-element of the
+        label — hiding one hides both) is hidden there and the dot stays put.
+      */}
+      <style>{`
+        @media (max-width: 767.98px) {
+          ti-pin { --ti-pin-label-opacity: 0 !important; }
+        }
+      `}</style>
       {children}
     </div>
   );

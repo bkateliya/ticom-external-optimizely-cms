@@ -47,6 +47,8 @@ export type TiViewMoreProps = React.PropsWithChildren & {
   expandAriaLabel?: string;
   /** Aria-label for the collapse control. */
   collapseAriaLabel?: string;
+  /** Class applied to the `ti-view-more` host. */
+  className?: string;
   /** Fired when the content is expanded or collapsed. */
   tiViewMoreChange?: CustomEventHandler<TiViewMoreChangeEventDetail>;
 };
@@ -59,6 +61,7 @@ export function TiViewMore({
   collapseActionLabel,
   expandAriaLabel,
   collapseAriaLabel,
+  className,
   tiViewMoreChange,
   children,
 }: TiViewMoreProps): React.ReactNode {
@@ -68,6 +71,7 @@ export function TiViewMore({
   return (
     <ti-view-more
       ref={ref}
+      className={className}
       collapsed-height={collapsedHeight}
       is-expanded={isExpanded}
       use-button={useButton}

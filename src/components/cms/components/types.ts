@@ -93,6 +93,7 @@ import { SlideshowComponentType } from "./Slideshow/Slideshow.model";
 
 import { SlideWithCardComponentType } from "./SlideWithCard/SlideWithCard.model";
 import { CarouselWithChipsComponentType } from "./CarouselWithChips/CarouselWithChips.model";
+import { EventsResultListComponentType } from "./EventsResultList/EventsResultList.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -161,4 +162,5 @@ export const allComponentTypes = [
   SlideshowComponentType,
   SlideWithCardComponentType,
   CarouselWithChipsComponentType,
+  EventsResultListComponentType,
 ];
