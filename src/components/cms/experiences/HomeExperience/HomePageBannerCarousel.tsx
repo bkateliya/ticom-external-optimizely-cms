@@ -106,6 +106,7 @@ const HOME_PAGE_BANNER_QUERY = `query(${COMMON_PAGINATION_QUERY}, $now: Date) {
         { showOnHomePage: { eq: true } }
       ]
     }
+    orderBy: { startDate: DESC }
     ${COMMON_PAGINATION_FILTER}
   ) {
     items {

@@ -104,13 +104,14 @@ export function TiSlideShow({
     (slideElement) =>
       showHiddenSlides || slideElement.slideVisibility === "Visible",
   );
-  if (visibleSlideElements.length < minSlides) {
-    visibleSlideElements = slideElements.filter(
-      (slideElement) =>
-        showHiddenSlides ||
-        slideElement.slideVisibility === "Visible" ||
-        slideElement.slideVisibility === "Ended",
-    );
+  if (!showHiddenSlides && visibleSlideElements.length < minSlides) {
+    // Add only as many ended slides as the minimum is short.
+    visibleSlideElements = [
+      ...visibleSlideElements,
+      ...slideElements
+        .filter((slideElement) => slideElement.slideVisibility === "Ended")
+        .slice(0, minSlides - visibleSlideElements.length),
+    ];
   }
   if (visibleSlideElements.length > maxSlides) {
     visibleSlideElements = visibleSlideElements.slice(0, maxSlides);
