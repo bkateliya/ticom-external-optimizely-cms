@@ -20,6 +20,7 @@ import {
   TiImageMap,
 } from "@/components/ui/ti/TiImages/TiImageMap/TiImageMap";
 import { TiSlidePanel } from "@/components/ui/ti/TiSlidePanel/TiSlidePanel";
+import { HeadingLevelContext } from "@/components/utilities/HeadingLevelContext";
 import { PremiumInteractiveImageTheme } from "./PremiumInteractiveImageTheme";
 
 type PanelContentProps = ContentProps<
@@ -27,6 +28,29 @@ type PanelContentProps = ContentProps<
 > & { _id: string };
 
 const ANALYTICS_LID = "premiuminteractive";
+
+/* Sizes/weights/margins below come off `.ti_p-premiumInteractiveImg` on ti.com.
+   They are `!`-guarded because TI's global stylesheet restyles bare
+   h2/h3/h6/p/ul *unlayered* — an unguarded utility applies locally and then
+   loses on the VM. text-h3 and text-h4 are TI's h2 and h3 element sizes; our
+   scale is one step up from the element scale. */
+
+/* The rule under the title is TI's `::before` (3em wide, 24px below the text),
+   rebuilt as `after:` so it flows instead of needing position/padding. The
+   colour is read as a raw var, not `bg-pl-*`: Tailwind's --color-* alias
+   resolves at :root, so the theme's darkBG override wouldn't reach it. */
+const sectionTitleClassName =
+  "text-h3! mb-8! text-center font-light! text-balance after:mx-auto after:mt-6 after:block after:h-px after:w-[3em] after:bg-[var(--pl-border-color-accent)] after:content-['']";
+
+const panelTitleClassName = "text-h4! mb-6! font-light! md:mb-4!";
+
+const bodyClassName = "text-body-md mb-6!";
+
+const relatedTitleClassName =
+  "text-body-md/7! mb-6! font-semibold! md:mb-3! md:text-body-md/5!";
+
+const relatedListClassName =
+  "mb-8! ms-0! list-none [&>li]:mb-4! md:mb-6! md:[&>li]:mb-2!";
 
 export async function PremiumInteractiveImageComponent({
   content,
@@ -44,7 +68,7 @@ export async function PremiumInteractiveImageComponent({
   const locale = await getLocale();
   const t = await getTranslations({ locale });
 
-  const { WrappedTextField } = fieldFactory<
+  const { WrappedTextField, WrappedHeadingTextField } = fieldFactory<
     typeof PremiumInteractiveImageComponentType
   >(content, parentField);
 
@@ -52,10 +76,6 @@ export async function PremiumInteractiveImageComponent({
     typeof PremiumInteractiveImagePanelComponentType
   >(content.panels);
 
-  // Dots only, no floating label/line — matches live's own pins (every one sets
-  // --ti-pin-label-opacity:0), and the panel text already carries the label copy.
-  // The pixel line-height/line-width authored per pin are for desktop image sizes;
-  // with the label hidden they no longer overflow above a narrower mobile image.
   const pins: ImageMapPin[] = panels.map((panel, index) => ({
     positionHorizontal: `${panel.panelPinX ?? 0}%`,
     positionVertical: `${panel.panelPinY ?? 0}%`,
@@ -66,13 +86,16 @@ export async function PremiumInteractiveImageComponent({
     targetPanel: index + 1,
     dataLid: ANALYTICS_LID,
     dataNavtitle: panel.panelTitle ?? undefined,
-    hideLabel: true,
   }));
 
   const relatedResourcesLabel = t("Related resources");
 
   return (
     <PremiumInteractiveImageTheme>
+      <WrappedHeadingTextField
+        field="sectionTitle"
+        className={sectionTitleClassName}
+      />
       <div className="flex flex-col gap-6 md:flex-row md:items-stretch md:gap-7">
         <div className="order-2 md:order-1 md:w-1/4 md:shrink-0">
           <TiSlidePanel>
@@ -81,7 +104,7 @@ export async function PremiumInteractiveImageComponent({
                 <WrappedTextField
                   as="p"
                   field="componentIntro1"
-                  className="text-body-md"
+                  className={bodyClassName}
                 />
               </div>
               <div
@@ -91,17 +114,19 @@ export async function PremiumInteractiveImageComponent({
                 <WrappedTextField
                   as="p"
                   field="componentIntro2"
-                  className="text-body-md"
+                  className={bodyClassName}
                 />
               </div>
             </div>
-            {panels.map((panel) => (
-              <PanelPage
-                key={panel._id}
-                panel={panel}
-                relatedResourcesLabel={relatedResourcesLabel}
-              />
-            ))}
+            <HeadingLevelContext headingLevel="increment">
+              {panels.map((panel) => (
+                <PanelPage
+                  key={panel._id}
+                  panel={panel}
+                  relatedResourcesLabel={relatedResourcesLabel}
+                />
+              ))}
+            </HeadingLevelContext>
           </TiSlidePanel>
         </div>
         <div className="order-1 md:order-2 md:flex-1">
@@ -146,23 +171,22 @@ function PanelPage({
 
   return (
     <div>
-      <div className="mb-6 flex flex-col gap-4">
+      <div className="mb-6">
         <WrappedHeadingTextField
           field="panelTitle"
-          headingSize={3}
-          className="mb-0"
+          className={panelTitleClassName}
         />
         {panel.panelSubtitle && (
           <WrappedTextField
             as="p"
             field="panelSubtitle"
-            className="text-body-md text-pl-text-color-secondary"
+            className={bodyClassName}
           />
         )}
         <WrappedTextField
           as="p"
           field="panelDescription"
-          className="text-body-md"
+          className={bodyClassName}
         />
         {cta && (
           <CTALinkElement
@@ -177,8 +201,8 @@ function PanelPage({
           data-pii-page-lower
           className="border-t border-pl-divider-color-primary pt-6"
         >
-          <h6>{relatedResourcesLabel}</h6>
-          <ul className="flex flex-col gap-2">
+          <h6 className={relatedTitleClassName}>{relatedResourcesLabel}</h6>
+          <ul className={relatedListClassName}>
             {links.map((link) => (
               <li key={link.id}>
                 <a

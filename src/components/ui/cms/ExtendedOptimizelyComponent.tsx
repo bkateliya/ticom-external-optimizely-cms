@@ -11,6 +11,7 @@ export interface ExtendedOptimizelyComponentProps extends Omit<
 > {
   content?: OptimizelyContentProps | null;
   parentField?: string;
+  className?: string;
 }
 /**
  * Allows us to pass additional props without TypeScript complaining.

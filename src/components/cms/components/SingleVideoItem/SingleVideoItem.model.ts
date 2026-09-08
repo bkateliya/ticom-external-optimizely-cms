@@ -53,6 +53,7 @@ export const SingleVideoItemComponentType = contentType({
       displayName: "Published Date",
       group: PropertyTypes.Seo,
       isLocalized: false,
+      indexingType:"queryable",
     },
     state: {
       type: "string",

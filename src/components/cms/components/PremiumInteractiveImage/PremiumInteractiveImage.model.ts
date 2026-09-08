@@ -31,6 +31,7 @@ export const PremiumInteractiveImagePanelComponentType = contentType({
     panelTitle: {
       type: "string",
       displayName: "Panel Title",
+      description: "Max 50 characters",
       maxLength: 50,
       isRequired: true,
       group: PropertyTypes.Content,
@@ -124,6 +125,16 @@ export const PremiumInteractiveImageComponentType = contentType({
   baseType: "_component",
   extends: [AllowIn.Section],
   properties: {
+    sectionTitle: {
+      type: "string",
+      displayName: "Section Title",
+      description: "Max 75 characters",
+      maxLength: 75,
+      isRequired: true,
+      group: PropertyTypes.Content,
+      sortOrder: 10,
+      isLocalized: true,
+    },
     componentIntro1: {
       type: "string",
       displayName: "Component Intro 1",
@@ -137,6 +148,7 @@ export const PremiumInteractiveImageComponentType = contentType({
     componentIntro2: {
       type: "string",
       displayName: "Component Intro 2",
+      description: "Max 75 characters",
       maxLength: 75,
       isRequired: true,
       group: PropertyTypes.Content,

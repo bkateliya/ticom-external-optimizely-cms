@@ -80,4 +80,5 @@ export const AllComponentTypeKeyMap = {
   SingleVideoItemComponent: `${KEY_PREFIX}SingleVideoItem_Component`,
   ScrollingStoryHorizontalContentComponent:`${KEY_PREFIX}ScrollingStoryHorizontalContent_Component`,
   ScrollingStoryHorizontalComponent:`${KEY_PREFIX}ScrollingStoryHorizontal_Component`,
+  RecentVideoCardListComponent:`${KEY_PREFIX}RecentVideoCardList_Component`,
 } as const;

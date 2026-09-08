@@ -80,9 +80,9 @@ const slideWithCard = tv({
     linkWrapper: "absolute inset-0 z-[1]",
     content: [
       "relative box-border mt-[200px] w-full bg-pl-container-background-color-primary p-6 text-pl-text-color-secondary",
-      "md:absolute md:bottom-0 md:left-0 md:mt-0 md:min-h-[272px] md:w-[358px]",
+      "md:absolute md:bottom-0 md:left-0 md:mt-0 md:h-[272px] md:w-[358px]",
     ],
-    inner: "flex flex-col md:min-h-[272px]",
+    inner: "flex h-full flex-col",
     cta: "mt-auto",
   },
   variants: {
