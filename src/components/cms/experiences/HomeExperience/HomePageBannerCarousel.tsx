@@ -30,7 +30,7 @@ export async function HomePageBannerCarouselComponent({
   }
 
   const results = await getPaginatedResults(HOME_PAGE_BANNER_QUERY, {
-    now: new Date().toDateString(),
+    now: new Date().toISOString(),
   });
 
   const keys = results.map((x) => x._metadata.key);
