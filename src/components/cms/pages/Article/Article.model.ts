@@ -97,6 +97,19 @@ export const ArticlePageType = contentType({
         "This is the city, state or country of origin and the date the article was published (ex: DALLAS, July 16, 2026)",
       group: PropertyTypes.Content,
     },
+    prnId: {
+      type: "string",
+      format: "shortString",
+      displayName: "PR Newswire ID",
+      indexingType: "queryable",
+      displayMode: "hidden",
+    },
+    prnLastModified: {
+      type: "integer",
+      displayName: "PR Newswire Last Modified",
+      indexingType: "queryable",
+      displayMode: "hidden",
+    },
   },
   mayContainTypes: AllPageAndExperienceTypeKeys,
 });

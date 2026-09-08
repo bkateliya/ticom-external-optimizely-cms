@@ -30,7 +30,7 @@ export async function HomePageBannerCarouselComponent({
   }
 
   const results = await getPaginatedResults(HOME_PAGE_BANNER_QUERY, {
-    now: new Date().toDateString(),
+    now: new Date().toISOString(),
   });
 
   const keys = results.map((x) => x._metadata.key);
@@ -106,6 +106,7 @@ const HOME_PAGE_BANNER_QUERY = `query(${COMMON_PAGINATION_QUERY}, $now: Date) {
         { showOnHomePage: { eq: true } }
       ]
     }
+    orderBy: { startDate: DESC }
     ${COMMON_PAGINATION_FILTER}
   ) {
     items {

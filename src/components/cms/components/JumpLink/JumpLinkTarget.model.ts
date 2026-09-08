@@ -13,8 +13,11 @@ export const JumpLinkTargetComponentType = contentType({
     jumpLink: {
       type: "string",
       displayName: "Jump Link ID",
+      description:
+        "Only lowercase letters, numbers, and hyphens are allowed",
       group: PropertyTypes.Content,
       isRequired: true,
+      pattern: "^[a-z0-9-]+$",
     },
     jumpLinkText: {
       type: "string",

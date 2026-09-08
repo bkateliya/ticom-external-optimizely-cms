@@ -104,13 +104,15 @@ export function TiSlideShow({
     (slideElement) =>
       showHiddenSlides || slideElement.slideVisibility === "Visible",
   );
-  if (visibleSlideElements.length < minSlides) {
-    visibleSlideElements = slideElements.filter(
-      (slideElement) =>
-        showHiddenSlides ||
-        slideElement.slideVisibility === "Visible" ||
-        slideElement.slideVisibility === "Ended",
-    );
+  if (!showHiddenSlides && visibleSlideElements.length < minSlides) {
+    // The minimum is a floor, not a cap: once we're short, bring back every
+    // ended (but not expired) slide and let maxSlides do the trimming.
+    visibleSlideElements = [
+      ...visibleSlideElements,
+      ...slideElements.filter(
+        (slideElement) => slideElement.slideVisibility === "Ended",
+      ),
+    ];
   }
   if (visibleSlideElements.length > maxSlides) {
     visibleSlideElements = visibleSlideElements.slice(0, maxSlides);

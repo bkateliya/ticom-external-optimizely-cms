@@ -65,6 +65,10 @@ import {
   ScrollingStoryVerticalContentComponentType,
 } from "./ScrollingStoryVertical/ScrollingStoryVertical.model";
 import {
+  ScrollingStoryHorizontalComponentType,
+  ScrollingStoryHorizontalContentComponentType,
+} from "./HorizontalScrollingStory/HorizontalScrollingStory.model";
+import {
   ImageComparisonComponentType,
   ImageComparisonItemComponentType,
 } from "./ImageComparison/ImageComparison.model";
@@ -84,12 +88,12 @@ import { PortfolioVisualizerComponentType } from "./PortfolioVisualizer/Portfoli
 import { ShipRateTablesComponentType } from "./ShipRateTables/ShipRateTables.model";
 import { ApplicationCategoryListComponentType } from "./ApplicationCategoryList/ApplicationCategoryList.model";
 import { ViewMoreComponentType } from "./ViewMore/ViewMore.model";
-import { VideoTranscriptComponentType } from "./VideoTranscript/VideoTranscript.model";
 import { SlideWithImageComponentType } from "./SlideWithImage/SlideWithImage.model";
 import { SlideshowComponentType } from "./Slideshow/Slideshow.model";
 
 import { SlideWithCardComponentType } from "./SlideWithCard/SlideWithCard.model";
 import { CarouselWithChipsComponentType } from "./CarouselWithChips/CarouselWithChips.model";
+import { EventsResultListComponentType } from "./EventsResultList/EventsResultList.model";
 
 export const allComponentTypes = [
   HeroComponentType,
@@ -117,6 +121,8 @@ export const allComponentTypes = [
   PremiumMediaHeadingComponentType,
   ScrollingStoryVerticalComponentType,
   ScrollingStoryVerticalContentComponentType,
+  ScrollingStoryHorizontalComponentType,
+  ScrollingStoryHorizontalContentComponentType,
   ApplicationSearchBoxComponentType,
   FAQSearchBoxComponentType,
   HierarchyNavigationComponentType,
@@ -152,9 +158,9 @@ export const allComponentTypes = [
   ShipRateTablesComponentType,
   ApplicationCategoryListComponentType,
   ViewMoreComponentType,
-  VideoTranscriptComponentType,
   SlideWithImageComponentType,
   SlideshowComponentType,
   SlideWithCardComponentType,
   CarouselWithChipsComponentType,
+  EventsResultListComponentType,
 ];

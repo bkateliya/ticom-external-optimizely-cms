@@ -11,8 +11,9 @@ import { ImageBaseContractContentType } from "@/components/cms/contracts/compone
 export type ImagePreset =
  // Square (1:1)
   | "192x192"
-  // Standard (21:9)
-  | "2200x880";
+  | "2200x880"
+  // Standard (16:9)
+  | "1280x720";
 
 export interface StandardizedImage {
   imageType: "bynder" | "optimizely";

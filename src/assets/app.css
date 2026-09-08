@@ -15,12 +15,18 @@
 @import "./ti-css/breadcrumb.css";
 @import "./ti-css/layout.css";
 
+/* Selection Tool styles */
+@import "./ti-css/selectionTool.css";
+
+/* Code Embed styles */
+@import "./ti-css/codeEmbed.css";
+
+
 :root,
 .theme-root {
   --color-text-default: var(--ti-text-color);
   --font-body: var(--font-roboto);
 }
-
 
 * {
   box-sizing: border-box

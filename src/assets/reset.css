@@ -3,3 +3,13 @@ body,
     margin: 0;
     padding: 0
 }
+
+/* default link styles */
+:where(a) {
+    text-decoration: none;
+    color: var(--pl-link-color-primary, #007c8c);
+}
+
+:where(a:hover) {
+    text-decoration: underline;
+}

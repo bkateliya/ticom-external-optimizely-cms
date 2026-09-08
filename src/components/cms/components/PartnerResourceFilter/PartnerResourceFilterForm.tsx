@@ -71,16 +71,28 @@ export function PartnerResourceFilterForm({
     <TifForm
       method="get"
       name="getForm"
-      className="[&_.tifForm-layout]:grid-cols-1 [&_.tifForm-layout]:items-start [&_.tifForm-layout]:gap-4! [&_.tifForm-layout]:md:grid-cols-4 [&_.tifForm-layout]:md:gap-14!"
+      use-custom-layout
+      className="
+        [&_.tifForm-layout-custom]:flex
+        [&_.tifForm-layout-custom]:flex-col
+        [&_.tifForm-layout-custom]:items-start
+        [&_.tifForm-layout-custom]:gap-6
+        [&_.tifForm-layout-custom]:md:grid
+        [&_.tifForm-layout-custom]:md:items-end
+        [&_.tifForm-layout-custom]:md:grid-cols-[repeat(3,minmax(0,1fr))_auto]
+        [&_.tifForm-layout-custom]:md:gap-7
+      "
     >
       {fields.map((field, index) => (
-        <TifFieldset key={field.facet}>
+        <TifFieldset key={field.facet} className="w-full">
           <span slot="label">{field.label}</span>
           <TifSelect
             ref={(element: SelectElement | null) => {
               selectRefs.current[index] = element;
             }}
             name={field.facet}
+            size={ComponentSize.small}
+            className="w-full"
           >
             <option value="" selected>
               {placeholderLabel}
@@ -96,8 +108,8 @@ export function PartnerResourceFilterForm({
       <TiButton
         appearance={ButtonAppearance.solid}
         color={ButtonColor.primary}
-        size={ComponentSize.medium}
-        className="mt-2 w-full md:mt-8"
+        size={ComponentSize.small}
+        className="w-full self-end"
         onClick={(event) => {
           event.preventDefault();
           search();

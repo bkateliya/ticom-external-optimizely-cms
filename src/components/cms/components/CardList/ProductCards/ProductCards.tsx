@@ -1,13 +1,12 @@
 import { ProductCardsComponentType } from "./ProductCards.model";
 import { getProducts } from "@/lib/api/product-api";
-import { OptiCardComponentProps } from "../CardList";
 import { DynamicHeading } from "@/components/ui/Atoms/DynamicHeading";
 import EnhancedNextImage from "@/components/ui/Atoms/EnhancedNextImage/EnhancedNextImage";
+import { OptiComponentProps } from "@/lib/ts/component-props";
 
 export async function ProductCardsComponent({
   content,
-  columnCount,
-}: OptiCardComponentProps<typeof ProductCardsComponentType>) {
+}: OptiComponentProps<typeof ProductCardsComponentType>) {
   if (!content) {
     return null;
   }
@@ -30,7 +29,7 @@ export async function ProductCardsComponent({
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+        gridTemplateColumns: `repeat(${3}, 1fr)`,
         gap: "1rem",
       }}
     >
@@ -42,10 +41,7 @@ export async function ProductCardsComponent({
           <p>
             {product.approximatePrice} {product.currency}
           </p>
-          <EnhancedNextImage
-            src={product.partImageUrl}
-            alt={product.altText}
-          />
+          <EnhancedNextImage src={product.partImageUrl} alt={product.altText} />
         </div>
       ))}
     </div>

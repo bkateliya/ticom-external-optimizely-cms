@@ -93,7 +93,12 @@ export function TiCarousel({
       theme={theme}
     >
       {slides.map((slide, i) => (
-        <div key={i} data-carousel-title={slide.title}>
+        // ti-carousel sizes each slide from flex-basis and cancels its own
+        // 16px slot padding with a negative margin — that only adds up if the
+        // slide is content-box. Our global `* { box-sizing: border-box }` makes
+        // it 32px narrow and drifts it left, so the last slide stops short of
+        // the right edge instead of sitting flush against it.
+        <div key={i} className="box-content!" data-carousel-title={slide.title}>
           {slide.content}
         </div>
       ))}

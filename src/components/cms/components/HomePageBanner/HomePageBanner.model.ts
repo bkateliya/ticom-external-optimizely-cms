@@ -8,6 +8,7 @@ import { HeadlineContract } from "../../contracts/component-contracts/headline.m
 import { LinkContract } from "../../contracts/element-contracts/link.model";
 import { BynderImageStubModel } from "@/components/cms/media/graph/BynderStubs";
 import { ImageElementType } from "../../elements/ImageElement/ImageElement.model";
+import { SoftDeleteProperties } from "@/lib/opti/field-model-utils";
 
 export const HomePageBannerComponentType = contentType({
   key: AllComponentTypeKeyMap.HomePageBannerComponent,
@@ -48,8 +49,8 @@ export const HomePageBannerComponentType = contentType({
       allowedTypes: [ImageElementType],
       displayName: "Featured Image",
       description: "Featured image is optional for textured backgrounds",
-      group: "Content",
       isLocalized: true,
+      ...SoftDeleteProperties,
     },
     campaignAlias: {
       type: "string",

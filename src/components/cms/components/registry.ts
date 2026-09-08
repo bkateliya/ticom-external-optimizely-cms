@@ -94,6 +94,11 @@ import {
   ScrollingStoryVerticalContentComponent,
 } from "./ScrollingStoryVertical/ScrollingStoryVertical";
 import {
+  ScrollingStoryHorizontalComponentType,
+  ScrollingStoryHorizontalContentComponentType,
+} from "./HorizontalScrollingStory/HorizontalScrollingStory.model";
+import { ScrollingStoryHorizontalComponent } from "./HorizontalScrollingStory/HorizontalScrollingStory";
+import {
   ImageComparisonComponentType,
   ImageComparisonItemComponentType,
 } from "./ImageComparison/ImageComparison.model";
@@ -129,11 +134,14 @@ import { GenericPageHeadingComponent } from "./PageHeadings/GenericPageHeading/G
 import { ViewMoreComponentType } from "./ViewMore/ViewMore.model";
 import { ViewMoreComponent } from "./ViewMore/ViewMore";
 import { PremiumInteractiveImageComponent } from "./PremiumInteractiveImage/PremiumInteractiveImage";
+import { EventsResultListComponentType } from "./EventsResultList/EventsResultList.model";
+import { EventsResultList } from "./EventsResultList/EventsResultList";
 
 import { PortfolioVisualizerComponent } from "./PortfolioVisualizer/PortfolioVisualizer";
-import { VideoTranscriptComponentType } from "./VideoTranscript/VideoTranscript.model";
 import { SlideWithImageComponentType } from "./SlideWithImage/SlideWithImage.model";
+import { SlideWithImageComponent } from "./SlideWithImage/SlideWithImage";
 import { SlideshowComponentType } from "./Slideshow/Slideshow.model";
+import { SlideshowComponent } from "./Slideshow/Slideshow";
 
 import { SlideWithCardComponentType } from "./SlideWithCard/SlideWithCard.model";
 import { SlideWithCardComponent } from "./SlideWithCard/SlideWithCard";
@@ -162,6 +170,8 @@ export const componentRegistry: ComponentRegistry = {
   [ScrollingStoryVerticalComponentType.key]: ScrollingStoryVerticalComponent,
   [ScrollingStoryVerticalContentComponentType.key]:
     ScrollingStoryVerticalContentComponent,
+  [ScrollingStoryHorizontalComponentType.key]: ScrollingStoryHorizontalComponent,
+  [ScrollingStoryHorizontalContentComponentType.key]: NoPreviewComponent,
   [FAQSearchBoxComponentType.key]: FAQSearchBox,
   [BrowseVideosComponentType.key]: BrowseVideos,
   [VideoPlayerComponentType.key]: VideoPlayerComponent,
@@ -203,9 +213,9 @@ export const componentRegistry: ComponentRegistry = {
   [ShipRateTablesComponentType.key]: ShipRateTablesComponent,
   [ApplicationCategoryListComponentType.key]: ApplicationCategoryList,
   [ViewMoreComponentType.key]: ViewMoreComponent,
-  [VideoTranscriptComponentType.key]: NoPreviewComponent,
-  [SlideWithImageComponentType.key]: NoPreviewComponent,
-  [SlideshowComponentType.key]: NoPreviewComponent,
+  [SlideWithImageComponentType.key]: SlideWithImageComponent,
+  [SlideshowComponentType.key]: SlideshowComponent,
   [SlideWithCardComponentType.key]: SlideWithCardComponent,
   [CarouselWithChipsComponentType.key]: CarouselWithChipsComponent,
+  [EventsResultListComponentType.key]: EventsResultList,
 };

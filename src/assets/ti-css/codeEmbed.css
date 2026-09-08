@@ -1,0 +1,495 @@
+/* ==========================================================================
+ * Code Embed Styles
+ * Missing styles required for code embed components
+ * ========================================================================== */
+
+/* --------------------------------------------------------------------------
+ * rf signal chain diagram svg
+ * -------------------------------------------------------------------------- */
+
+.ti_aem-borderContainer {
+  border: 1px solid #ccc;
+  padding: 32px;
+  margin-bottom: 96px;
+}
+
+.ti_aem-rf-diagram {
+    text, #shape72-245, #group35-149, #group40-159, #shape18-63, #shape17-58, #shape43-166, #shape20-73, #shape19-68 {
+        pointer-events: none;
+    }
+    .st1:hover {fill:#E5F7FA; cursor: pointer;}
+    .st19:hover, .st8:hover {fill:#bee7ec; cursor: pointer;}
+    .st1 {fill:#f5feff;stroke:#555555;stroke-dasharray:7,5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+    .st2 {fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+    .st3 {fill:#000000;font-family:Roboto;font-size:0.874992em}
+    .st4 {font-size:1em}
+    .st5 {marker-end:url(#mrkr20-19);marker-start:url(#mrkr20-17);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+    .st6 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.22935779816514}
+    .st7 {fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+    .st8 {fill:#d9f1f4;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+    .st9 {fill:#000000;font-family:Roboto;font-size:1.00001em}
+    .st10 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+    .st11 {marker-end:url(#mrkr4-43);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+    .st12 {marker-end:url(#mrkr13-101);marker-start:url(#mrkr13-99);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+    .st13 {marker-end:url(#mrkr10-130);marker-start:url(#mrkr4-128);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+    .st14 {marker-end:url(#mrkr10-130);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+    .st15 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+    .st16 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2}
+    .st17 {fill:#ffffff;stroke:#555555;stroke-dasharray:7,5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+    .st18 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+    .st19 {fill:#d9f1f4;stroke:#555555;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+    .st20 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+    .st21 {width: 100%; fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+}
+
+/* --------------------------------------------------------------------------
+ * calculator applications
+ * -------------------------------------------------------------------------- */
+
+.code-embed .calc {
+  font-family: "Roboto", "Helvetica Neue", "Arial Nova", "Nimbus Sans", "Arial",
+    sans-serif;
+  margin-top: -24px;
+}
+.code-embed .calc input,
+.code-embed .calc select {
+  --ti_c-base-input-backgroundColor: var(--pl-input-background-color, #ffffff);
+  --ti_c-base-input-border-color: var(--pl-input-border-color, #949494);
+  --ti_c-base-input-color: var(--pl-input-text-color, #333333);
+  background-color: var(--ti_c-base-input-backgroundColor);
+  border: 1px solid var(--ti_c-base-input-border-color);
+  color: var(--ti_c-base-input-color);
+  height: var(--ti_c-base-input--height);
+  border-radius: 0 !important;
+  box-sizing: border-box;
+  font-family: "Roboto", "Helvetica Neue", "Arial Nova", "Nimbus Sans", "Arial",
+    sans-serif;
+  font-size: 14px;
+  margin-bottom: 0;
+  padding: 0 8px;
+  width: auto;
+}
+.code-embed .calc input::-moz-placeholder,
+.code-embed .calc select::-moz-placeholder {
+  color: var(--pl-input-placeholder-color, #767676);
+  opacity: 1;
+}
+.code-embed .calc input::placeholder,
+.code-embed .calc select::placeholder {
+  color: var(--pl-input-placeholder-color, #767676);
+  opacity: 1;
+}
+.code-embed .calc input ::-ms-input-placeholder,
+.code-embed .calc select ::-ms-input-placeholder {
+  color: var(--pl-input-placeholder-color, #767676);
+}
+.code-embed .calc input[disabled],
+.code-embed .calc select[disabled] {
+  --ti_c-base-input-backgroundColor: var(
+    --pl-input-background-color-disabled,
+    #e8e8e8
+  );
+  --ti_c-base-input-border-color: var(
+    --pl-input-border-color-disabled,
+    #949494
+  );
+  --ti_c-base-input-color: var(--pl-input-text-color-disabled, #949494);
+  cursor: not-allowed;
+}
+.code-embed .calc input[readonly],
+.code-embed .calc select[readonly] {
+  border: none;
+  cursor: not-allowed;
+  padding-left: 0;
+}
+.code-embed .calc input,
+.code-embed .calc select {
+  width: 360px;
+  height: 36px;
+}
+.code-embed .calc label {
+  color: var(--pl-input-text-color, #333333);
+  font-weight: 600;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding-top: 1em;
+  margin-bottom: 5px;
+  display: block;
+}
+.code-embed .calc button {
+  --ti_c-button-backgroundColor: var(--pl-button-primary-color, #cc0000);
+  --ti_c-button-borderColor: var(--pl-button-primary-color, #cc0000);
+  --ti_c-button-textColor: var(--pl-button-primary-text-color, #ffffff);
+  font-family: "Roboto", "Helvetica Neue", "Arial Nova", "Nimbus Sans", "Arial",
+    sans-serif;
+  margin-top: -24px;
+}
+.code-embed .calc .row > .c12 {
+  gap: 16px;
+}
+.code-embed .calc .row > .c12 > .row {
+  flex-direction: column;
+  margin-top: 16px;
+}
+.code-embed .calc .row > .c12 > .row > .c3,
+.code-embed .calc .row > .c12 > .row .c4 {
+  color: var(--pl-input-text-color, #333333);
+  font-weight: 600;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding-top: 1em;
+  margin-bottom: 5px;
+  display: block;
+  padding-top: 8px;
+}
+@media (max-width: 766px) {
+  .code-embed #tempChangeCalculator > table > tbody > tr {
+    display: flex;
+    flex-direction: column;
+  }
+  .code-embed #tempChangeCalculator > table > tbody > tr > td {
+    display: block;
+    width: 100% !important;
+    margin-bottom: 1.5em;
+  }
+  .code-embed #tempChangeCalculator #resultsTable {
+    margin-left: 0;
+  }
+}
+
+/* PCB tool */
+
+.ptc_container {
+    display: flex;
+    gap: 28px;
+    padding: 24px;
+    border-top: 2px solid #555;
+    background-color: #fff;
+    box-shadow: 0 0 1px 1px rgba(0,0,0,.05),0 2px 4px -1px rgba(0,0,0,.16),0 4px 5px 0 rgba(0,0,0,.1),0 1px 10px 0 rgba(0,0,0,.08);
+}
+
+.ptc_left-section {
+    flex-basis: 340px;
+ }
+
+.ptc_right-section {
+    flex: 1;
+}
+
+.ptc_container {
+    .form-label {
+        color: var(--pl-input-text-color, #333333);
+        font-weight: 600;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        padding-top: 1em;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    input[type="text"] {
+        --ti_c-base-input--height: 32px;
+        --ti_c-base-input-backgroundColor: var(--pl-input-background-color, #ffffff);
+        --ti_c-base-input-border-color: var(--pl-input-border-color, #949494);
+        --ti_c-base-input-color: var(--pl-input-text-color, #333333);
+        background-color: var(--ti_c-base-input-backgroundColor);
+        border: 1px solid var(--ti_c-base-input-border-color);
+        color: var(--ti_c-base-input-color);
+        height: var(--pl-input-height, var(--ti_c-base-input--height));
+        border-radius: 0 !important;
+        box-sizing: border-box;
+        font-family: "Roboto","Helvetica Neue","Arial Nova","Nimbus Sans","Arial",sans-serif;
+        font-size: 14px;
+        margin-bottom: 0;
+        padding: 0 8px;
+    }
+
+    .button {
+        --ti_c-button-minHeight: 40px;
+        --ti_c-button-minWidth: 96px;
+        --ti_c-button-paddingBlock: 9px;
+        --ti_c-button-paddingInline: 16px;
+        --ti_c-button-backgroundColor: transparent;
+        --ti_c-button-borderColor: var(--pl-button-secondary-color, #cc0000);
+        --ti_c-button-textColor: var(--pl-button-secondary-text-color, #cc0000);
+        box-sizing: border-box !important;
+        position: relative;
+        display: inline-flex;
+        gap: 8px;
+        justify-content: center;
+        align-items: flex-start;
+        vertical-align: middle;
+        overflow: visible;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        white-space: nowrap;
+        min-height: var(--ti_c-button-minHeight);
+        min-width: var(--ti_c-button-minWidth);
+        padding-block: var(--ti_c-button-paddingBlock);
+        padding-inline: var(--ti_c-button-paddingInline);
+        margin: 0;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 2px;
+        outline-offset: 2px;
+        font-family: "Roboto","Helvetica Neue","Arial Nova","Nimbus Sans","Arial",sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        text-align: center;
+        text-decoration: none !important;
+        text-transform: none;
+        background-color: var(--ti_c-button-backgroundColor);
+        border-color: var(--ti_c-button-borderColor);
+        color: var(--ti_c-button-textColor);
+        transition: background-color .1s linear;
+    }
+
+    .button:hover {
+        --ti_c-button-backgroundColor: var(--pl-button-secondary-color-hover, #ee0000);
+        --ti_c-button-borderColor: var(--pl-button-secondary-color-hover, #ee0000);
+        --ti_c-button-textColor: var(--pl-button-secondary-text-color-hover, #ffffff);
+    }
+
+    select {
+        --ti_c-base-input--height: 32px;
+        --ti_c-base-input-backgroundColor: var(--pl-input-background-color, #ffffff);
+        --ti_c-base-input-border-color: var(--pl-input-border-color, #949494);
+        --ti_c-base-input-color: var(--pl-input-text-color, #333333);
+        background-color: var(--ti_c-base-input-backgroundColor);
+        border: 1px solid var(--ti_c-base-input-border-color);
+        color: var(--ti_c-base-input-color);
+        height: var(--ti_c-base-input--height);
+        border-radius: 0 !important;
+        box-sizing: border-box;
+        font-family: "Roboto","Helvetica Neue","Arial Nova","Nimbus Sans","Arial",sans-serif;
+        font-size: 14px;
+        margin-bottom: 0;
+        padding: 0 8px;
+        width: auto;
+    }
+
+    h2 {
+        font-size: 28px;
+        line-height: 36px;
+        margin-bottom: 32px;
+        font-weight: 300;
+        color: var(--pl-text-color-secondary, #333333);
+    }
+
+    .ti-tooltip-trigger svg {
+        background-image:
+            url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" fill="%23333333"%3e%3cpath d="M96 8C47.42 8 8 47.42 8 96s39.42 88 88 88 88-39.42 88-88S144.58 8 96 8m8 132H88V84h16zm0-72H88V52h16z"/%3e%3c/svg%3e');
+    }
+
+    .ti-tooltip-trigger svg use {
+        display: none;
+    }
+
+    .u-margin-vertical-m {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .ti-custom-checkbox {
+        margin-right: 8px;
+    }
+}
+
+.ptc_charts-wrapper {
+    min-width: 450px;
+    min-height: 330px;
+}
+
+/* legacy tooltip */
+
+.ti-tooltip-content {
+  position: absolute;
+  display: none;
+  white-space: pre-wrap;
+  max-width: 350px;
+  min-width: 250px;
+  padding: 1rem;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 18px;
+  color: #333333;
+  background-color: #ffffff;
+  border-radius: 0;
+  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.09), 0 3px 4px 0 rgba(0, 0, 0, 0.11), 0 3px 3px -2px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.09), 0 3px 4px 0 rgba(0, 0, 0, 0.11), 0 3px 3px -2px rgba(0, 0, 0, 0.09);
+  -webkit-transform: translate(-12px, -10px);
+  transform: translate(-12px, -10px);
+  /* carrot */
+  /* carrot shadow */
+}
+
+.ti-tooltip-content:after {
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #ffffff;
+  border-top: 0;
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  top: 16px;
+  left: -11px;
+  content: '\00a0';
+  display: inline-block;
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.ti-tooltip-content:before {
+  position: absolute;
+  display: inline-block;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #dddddd;
+  border-top: 0;
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  top: 16px;
+  left: -13px;
+  content: '\00a0';
+  height: 0;
+  width: 0;
+}
+
+.ti-tooltip-trigger {
+  position: relative;
+  z-index: 2;
+}
+
+.ti-tooltip-trigger.mod-hover, .ti-tooltip-trigger.mod-click {
+  cursor: pointer;
+}
+
+.ti-tooltip-trigger.mod-hover:hover+.ti-tooltip-content, .ti-tooltip-trigger.mod-focus:focus+.ti-tooltip-content, .ti-tooltip-checkbox:checked+.ti-tooltip-content {
+  display: inline-block;
+  z-index: 3;
+  opacity: 1;
+  -webkit-transform: translate(12px, -10px);
+  transform: translate(12px, -10px);
+  -webkit-animation: tooltip-show cubic-bezier(0, 0, 0.2, 1) 250ms;
+  animation: tooltip-show cubic-bezier(0, 0, 0.2, 1) 250ms;
+}
+
+@-webkit-keyframes tooltip-show {
+  0% {
+    pointer-events: none;
+    -webkit-transform: translate(-12px, -10px);
+    transform: translate(-12px, -10px);
+    opacity: 0;
+  }
+  99% {
+    pointer-events: initial;
+  }
+  100% {
+    -webkit-transform: translate(12px, -10px);
+    transform: translate(12px, -10px);
+    opacity: 1;
+  }
+}
+
+@keyframes tooltip-show {
+  0% {
+    pointer-events: none;
+    -webkit-transform: translate(-12px, -10px);
+    transform: translate(-12px, -10px);
+    opacity: 0;
+  }
+  99% {
+    pointer-events: initial;
+  }
+  100% {
+    -webkit-transform: translate(12px, -10px);
+    transform: translate(12px, -10px);
+    opacity: 1;
+  }
+}
+
+/* legacy tooltip icon */
+
+.ti_icon {
+  display: inline-block;
+  vertical-align: middle;
+  fill: var(--pl-text-color-primary, #333333);
+}
+
+.ti_icon .ti_icon-readerText {
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  width: 1px !important;
+}
+
+.ti_icon .ti_icon-readerText.is-active, .ti_icon .ti_icon-readerText.is-focusable {
+  clip: auto;
+  clip-path: none;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+  white-space: inherit;
+}
+
+.ti_icon svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  stroke-width: 0;
+}
+
+.ti_icon.mod-size-s svg {
+  width: 18px;
+  height: 18px;
+}
+
+.ti_icon.mod-size-m svg {
+  width: 24px;
+  height: 24px;
+}
+
+.ti_icon.mod-size-l svg {
+  width: 36px;
+  height: 36px;
+}
+
+.ti_icon.mod-size-xl svg {
+  width: 48px;
+  height: 48px;
+}
+
+/* SVG icon color modifiers */
+.ti_icon.mod-color1 {
+  fill: var(--pl-text-color-primary, #333333);
+}
+
+.ti_icon.mod-color2 {
+  fill: var(--pl-link-color-primary, #007c8c);
+}
+
+.ti_icon.mod-color3 {
+  fill: var(--pl-element-color-primary, #cc0000);
+}
+
+.ti_icon.mod-disabled {
+  fill: var(--pl-element-color-disabled, #cccccc);
+}
+
+.ti_icon.mod-reversed {
+  fill: var(--pl-text-color-primary-contrast, #ffffff);
+}

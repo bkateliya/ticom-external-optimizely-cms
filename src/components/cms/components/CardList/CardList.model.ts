@@ -1,16 +1,14 @@
-import { PreambleContracts } from "../../contracts/component-contracts/preamble.model";
 import { contentType } from "@optimizely/cms-sdk";
 import { DISPLAY_NAME_PREFIX } from "../../constants.mjs";
 import { AllComponentTypeKeyMap } from "../keys";
 import { PropertyTypes } from "@/lib/property-types";
-import { AllowIn } from "../../contracts/component-contracts/allow-in.model";
 import { AllowInCardContentContract } from "./CardContentContract.model";
 
 export const CardListComponentType = contentType({
   key: AllComponentTypeKeyMap.CardListComponent,
-  displayName: `${DISPLAY_NAME_PREFIX}Card List`,
+  displayName: `${DISPLAY_NAME_PREFIX}Card List (Obsolete)`,
   baseType: "_component",
-  extends: [...PreambleContracts, ...AllowIn.Groupings.NonColumn],
+  // extends: [...PreambleContracts, ...AllowIn.Groupings.NonColumn],
   properties: {
     columns: {
       type: "integer",

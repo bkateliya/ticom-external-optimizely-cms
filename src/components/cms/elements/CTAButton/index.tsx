@@ -7,9 +7,14 @@ import { TiButton } from "@/components/ui/ti/TiButton/TiButton";
 
 type Props = OptiComponentProps<typeof CtaButtonElementType> & {
   appearance?: ButtonAppearance;
+  className?: string;
 };
 
-export function CTAButtonElement({ content, appearance: appearanceOverride }: Props) {
+export function CTAButtonElement({
+  content,
+  appearance: appearanceOverride,
+  className,
+}: Props) {
   if (!content) {
     return null;
   }
@@ -44,6 +49,7 @@ export function CTAButtonElement({ content, appearance: appearanceOverride }: Pr
       iconName={content.Icon ?? undefined}
       target={target}
       rel={target === "_blank" ? "noopener noreferrer" : undefined}
+      className={className}
     >
       {content.link?.text}
     </TiButton>

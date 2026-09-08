@@ -57,7 +57,7 @@ export function CTALinkElement({ content, dataLid, dataNavtitle }: Props) {
       href={content.IsDownload ? `/api/download?url=${encodeURI(url)}` : url}
       target={target}
       download={content.IsDownload ? getUrlFileName(url) : undefined}
-      className="inline-flex items-center gap-1 text-body-md text-pl-link-color-primary no-underline"
+      className="inline-flex items-center gap-1 text-body-md text-pl-link-color-primary no-underline hover:underline"
       data-cta-link
       data-lid={dataLid}
       data-navtitle={dataNavtitle}

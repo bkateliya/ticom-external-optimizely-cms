@@ -102,19 +102,22 @@ export const EventComponentType = contentType({
       ],
     },
     language: {
-      type: "string",
-      format: "selectOne",
+      type: "array",
+      format: "selectMany",
       displayName: "Language",
       group: PropertyTypes.Content,
-      enum: [
-        { value: "english", displayName: "English" },
-        { value: "german", displayName: "German" },
-        { value: "japanese", displayName: "Japanese" },
-        { value: "korean", displayName: "Korean" },
-        { value: "simplified-chinese", displayName: "Simplified Chinese" },
-        { value: "spanish", displayName: "Spanish" },
-        { value: "traditional-chinese", displayName: "Traditional Chinese" },
-      ],
+      items: {
+        type: "string",
+        enum: [
+          { value: "english", displayName: "English" },
+          { value: "german", displayName: "German" },
+          { value: "japanese", displayName: "Japanese" },
+          { value: "korean", displayName: "Korean" },
+          { value: "simplified-chinese", displayName: "Simplified Chinese" },
+          { value: "spanish", displayName: "Spanish" },
+          { value: "traditional-chinese", displayName: "Traditional Chinese" },
+        ],
+      },
     },
     ctaTitle: {
       type: "string",

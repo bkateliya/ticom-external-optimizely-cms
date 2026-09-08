@@ -6,7 +6,7 @@ import { useTheme } from "@/components/ui/context/BrandAndTheme/BrandAndThemeCon
 import { ComponentTheme } from "@/components/ui/ti/enums";
 
 
-const darkModeVars: React.CSSProperties & Record<`--ti-${string}`, string> = {
+const darkModeVars: React.CSSProperties & Record<`--${string}`, string> = {
   "--ti-pin-background-color": "transparent",
   "--ti-pin-background-color-hover": "var(--pl-button-reversed-color)",
   "--ti-pin-background-color-selected": "var(--pl-button-reversed-color)",
@@ -16,6 +16,9 @@ const darkModeVars: React.CSSProperties & Record<`--ti-${string}`, string> = {
   "--ti-pin-label-color": "var(--pl-button-reversed-color)",
   "--ti-pin-label-color-hover": "var(--pl-button-reversed-color-hover)",
   "--ti-pin-label-color-selected": "var(--pl-button-reversed-color-hover)",
+  // Live remaps the accent var on headings inside the dark variant, which is
+  // what turns the rule under the section title from red to grey.
+  "--pl-border-color-accent": "var(--pl-divider-color-primary-contrast)",
   "--ti-pin-circle-color-selected": "#f45555",
   "--ti-pin-circle-border-color-selected": "var(--pl-element-color-contrast)",
   "--ti-slide-panel-icon-fill-color": "var(--pl-text-color-primary-contrast)",

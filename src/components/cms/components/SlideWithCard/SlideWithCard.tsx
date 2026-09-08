@@ -47,6 +47,7 @@ export function SlideWithCardComponent({
         {href && (
           <a
             href={href}
+            target={cta?.link?.target || undefined}
             aria-hidden="true"
             tabIndex={-1}
             className={linkWrapper()}
@@ -54,7 +55,11 @@ export function SlideWithCardComponent({
         )}
         <div className={cardContent()}>
           <div className={inner()}>
-            <WrappedHeadingTextField field="headline" headingSize={5} />
+            <WrappedHeadingTextField
+              field="headline"
+              headingSize={5}
+              className="mb-3"
+            />
             <WrappedRichTextField
               field="description"
               className="mb-6 text-body-md [&_ul]:ms-5 [&_ol]:ms-5"

@@ -7,6 +7,7 @@ import { ExtendedOptimizelyComponent } from "@/components/ui/cms/ExtendedOptimiz
 import { ReusableColumnGrid } from "../../components/ColumnGrid/ReusableColumnGrid";
 import { cached } from "@/lib/data/opti";
 import { normalizeGenericContentToTyped } from "@/lib/utils/content-type-utils";
+import { SectionWrapper } from "@/components/ui/molecules/SectionWrapper/SectionWrapper";
 
 type Props = {
   content: ContentProps<typeof HierarchyNavigationExperiencePageType>;
@@ -19,21 +20,25 @@ export async function HierarchyNavigationExperiencePage({ content }: Props) {
 
   return (
     <SiteFrame content={content}>
-      <CommonPageHero content={content} />
+      <SectionWrapper noPaddingTop noPaddingBottom>
+        <CommonPageHero content={content} />
 
-      <ReusableColumnGrid
-        columnOptions="25-75"
-        columns={[
-          {
-            content: <ExtendedOptimizelyComponent content={nav} />,
-          },
-          {
-            content: (
-              <OptimizelyComposition nodes={content.composition.nodes ?? []} />
-            ),
-          },
-        ]}
-      />
+        <ReusableColumnGrid
+          columnOptions="25-75"
+          columns={[
+            {
+              content: <ExtendedOptimizelyComponent content={nav} />,
+            },
+            {
+              content: (
+                <OptimizelyComposition
+                  nodes={content.composition.nodes ?? []}
+                />
+              ),
+            },
+          ]}
+        />
+      </SectionWrapper>
     </SiteFrame>
   );
 }

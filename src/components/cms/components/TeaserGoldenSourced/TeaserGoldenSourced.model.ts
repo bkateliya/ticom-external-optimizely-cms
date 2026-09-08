@@ -7,7 +7,7 @@ export const ApplicationSelectionToolComponentType = contentType({
   key: AllComponentTypeKeyMap.ApplicationSelectionToolComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Teaser Golden Sourced - Application Selection Tool`,
   baseType: "_component",
-  extends: [...AllowIn.Groupings.Common],
+  extends: [AllowIn.Section],
   properties: {},
 });
 
@@ -15,6 +15,6 @@ export const ReferenceDesignSearchComponentType = contentType({
   key: AllComponentTypeKeyMap.ReferenceDesignSearchComponent,
   displayName: `${DISPLAY_NAME_PREFIX}Teaser Golden Sourced - Reference Design Search`,
   baseType: "_component",
-  extends: [...AllowIn.Groupings.Common],
+  extends: [AllowIn.Section],
   properties: {},
 });

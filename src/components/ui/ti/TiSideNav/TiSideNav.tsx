@@ -19,6 +19,7 @@ export function TiSideNav({
       ti-aria-label={ariaLabel}
       data-lid={dataLid}
       className="ti_p-layout-space-small"
+      style={{fontSize:14}}
     >
       {menuTitle ? <div slot="menu-title">{menuTitle}</div> : null}
 
