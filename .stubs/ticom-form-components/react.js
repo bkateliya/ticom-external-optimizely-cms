@@ -6,7 +6,7 @@ import React from "react";
 
 // Custom (web-component-specific) props that must NOT be forwarded to the DOM,
 // otherwise React emits unknown-attribute warnings. They are surfaced as data-*.
-const CUSTOM_PROPS = ["appearance", "color", "type", "size", "theme", "iconName", "iconPosition", "orientation"];
+const CUSTOM_PROPS = ["appearance", "color", "type", "size", "theme", "iconName", "iconPosition", "orientation", "labelPosition", "density"];
 
 function splitProps(props) {
   const dataAttrs = {};
@@ -94,6 +94,51 @@ export const TifSelect = React.forwardRef(function TifSelect(props, ref) {
     "select",
     { ref, "data-tif-select": "", ...dataAttrs, ...rest },
     placeholder ? React.createElement("option", { value: "" }, placeholder) : null,
+    children
+  );
+});
+
+// The real tif-checkbox-group owns the fieldset semantics and passes
+// orientation / density / size down to its tif-checkbox children. The stub
+// keeps the grouping element; callers supply the spacing via className.
+export const TifCheckboxGroup = React.forwardRef(function TifCheckboxGroup(props, ref) {
+  const { children, label, name, required, disabled, errorMessageRequired, ...other } = props;
+  const { dataAttrs, rest } = splitProps(other);
+  return React.createElement(
+    "fieldset",
+    { ref, name, disabled, "data-tif-checkbox-group": "", ...dataAttrs, ...rest },
+    label ? React.createElement("legend", null, label) : null,
+    children
+  );
+});
+
+// The real tif-checkbox renders its own box and tick in a shadow root and
+// reports user toggles through the `tiCheckboxChange` CustomEvent. The stub
+// keeps that contract on a native checkbox so callers need no branching.
+export const TifCheckbox = React.forwardRef(function TifCheckbox(props, ref) {
+  const { children, checked, indeterminate, disabled, name, value, onTiCheckboxChange, ...other } = props;
+  const { dataAttrs, rest } = splitProps(other);
+
+  function onChange(e) {
+    onTiCheckboxChange?.(
+      new CustomEvent("tiCheckboxChange", {
+        detail: { checked: e.target.checked, value },
+      })
+    );
+  }
+
+  return React.createElement(
+    "label",
+    { ref, "data-tif-checkbox": "", ...dataAttrs, ...rest },
+    React.createElement("input", {
+      type: "checkbox",
+      name,
+      value,
+      checked: !!checked,
+      disabled,
+      onChange,
+      ref: (el) => { if (el) el.indeterminate = !!indeterminate; },
+    }),
     children
   );
 });

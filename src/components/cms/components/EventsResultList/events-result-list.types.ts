@@ -1,3 +1,8 @@
+import type {
+  FacetGroup,
+  SelectedFacets,
+} from "./FacetFilters/facet-filters.types";
+
 // ── Normalized event shape returned by the API ─────────────────────────
 
 export interface NormalizedEvent {
@@ -71,21 +76,15 @@ export const CTA_LABELS: Record<string, string> = {
   "watch-video": "Watch video",
 };
 
-// ── Facet types ────────────────────────────────────────────────────────
+export const ON_DEMAND_LABEL = "On demand";
 
-export interface FacetOption {
-  value: string;
-  displayName: string;
-  count: number;
-}
+// ── Facet types (owned by FacetFilters, re-exported for convenience) ───
 
-export interface FacetGroup {
-  id: string;
-  label: string;
-  options: FacetOption[];
-}
-
-export type SelectedFacets = Record<string, Set<string>>;
+export type {
+  FacetOption,
+  FacetGroup,
+  SelectedFacets,
+} from "./FacetFilters/facet-filters.types";
 
 // ── Date classification ────────────────────────────────────────────────
 
@@ -101,6 +100,98 @@ export function isUpcoming(event: NormalizedEvent): boolean {
 
 export function isOnDemand(event: NormalizedEvent): boolean {
   return !isUpcoming(event) && event.eventType === "webinar";
+}
+
+// ── Date / time formatting ─────────────────────────────────────────────
+
+// AEM authored the calendar date, the clock time and the zone label as three
+// separate fields ("08:30 a.m." + "CST (UTC-05:00)"). The CMS has one dateTime
+// instead, so everything is read back in UTC: shifting to a display zone would
+// move date-only events onto the wrong calendar day.
+const EVENT_TIME_ZONE = "UTC";
+const EVENT_TIME_ZONE_LABEL = "UTC";
+
+function parseDate(value: string | null): Date | null {
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function partsOf(
+  date: Date,
+  locale: string,
+  options: Intl.DateTimeFormatOptions,
+) {
+  const parts = new Intl.DateTimeFormat(locale, {
+    timeZone: EVENT_TIME_ZONE,
+    ...options,
+  }).formatToParts(date);
+
+  return (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((part) => part.type === type)?.value ?? "";
+}
+
+// "14 Sep 2026" — assembled by part because the live site is day-first in every
+// locale, while Intl would reorder for en-US.
+function formatDate(date: Date, locale: string): string {
+  const part = partsOf(date, locale, {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+  return `${part("day")} ${part("month")} ${part("year")}`;
+}
+
+/** "14 Sep 2026 – 18 Sep 2026", collapsed to a single date when they match. */
+export function formatEventDateRange(
+  event: NormalizedEvent,
+  locale: string,
+): string | null {
+  const start = parseDate(event.eventStartDate);
+  const end = parseDate(event.eventEndDate);
+
+  if (!start) return end ? formatDate(end, locale) : null;
+
+  const startLabel = formatDate(start, locale);
+  if (!end) return startLabel;
+
+  const endLabel = formatDate(end, locale);
+  return endLabel === startLabel ? startLabel : `${startLabel} – ${endLabel}`;
+}
+
+/**
+ * "08:30 a.m. UTC". Null at midnight — that is how a date-only event arrives,
+ * and AEM printed no clock row unless a time was authored.
+ */
+export function formatEventTime(
+  event: NormalizedEvent,
+  locale: string,
+): string | null {
+  const start = parseDate(event.eventStartDate);
+  if (!start) return null;
+
+  const part = partsOf(start, locale, {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+  const hour = part("hour");
+  const minute = part("minute");
+
+  const midnight = partsOf(start, "en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  });
+  if (midnight("hour") === "00" && midnight("minute") === "00") return null;
+
+  // TI writes the meridiem with periods; Intl gives "AM"/"PM".
+  const dayPeriod = part("dayPeriod");
+  const meridiem = /^[AP]\.?M\.?$/i.test(dayPeriod)
+    ? `${dayPeriod[0].toLowerCase()}.m.`
+    : dayPeriod;
+
+  return `${hour.padStart(2, "0")}:${minute} ${meridiem} ${EVENT_TIME_ZONE_LABEL}`;
 }
 
 // ── Sorting ────────────────────────────────────────────────────────────

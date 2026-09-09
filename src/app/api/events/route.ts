@@ -44,6 +44,7 @@ const BYNDER_IMAGE_QUERY = `query GetBynderImages($imageIds: [String]) {
       original
       transformBaseUrl
       property_alt_text
+      _imageMetadata { width height }
     }
   }
 }`;
@@ -68,9 +69,10 @@ interface EventGraphResult extends ResultWithKey {
 
 interface BynderImageItem {
   id: string;
-  original: string;
+  original: string | null;
   transformBaseUrl: string;
-  property_alt_text: string;
+  property_alt_text: string | null;
+  _imageMetadata: { width: number; height: number } | null;
 }
 
 // ── Constants ──────────────────────────────────────────────────────────
@@ -78,7 +80,8 @@ interface BynderImageItem {
 const CACHE_CONTROL =
   "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400";
 
-const BYNDER_IMAGE_PREFIX = "/BynderImage/";
+/** 16:9 card crop, named "{width}x{height}". Not 640x360 — it bakes in a black wash. */
+const EVENT_IMAGE_PRESET = "1280x720";
 
 // ── Helpers ────────────────────────────────────────────────────────────
 
@@ -87,8 +90,28 @@ const normalizeLocale = (value: string) =>
 
 function parseBynderId(graphUrl: string | undefined): string | null {
   if (!graphUrl) return null;
-  const idx = graphUrl.indexOf(BYNDER_IMAGE_PREFIX);
-  return idx >= 0 ? graphUrl.slice(idx + BYNDER_IMAGE_PREFIX.length) : null;
+  const marker = "/BynderImage/";
+  const idx = graphUrl.indexOf(marker);
+  return idx >= 0 ? graphUrl.slice(idx + marker.length) : null;
+}
+
+/** Builds the DAT url for an event card image. */
+function getEventImageUrl(bynder: BynderImageItem | undefined): string {
+  if (!bynder?.transformBaseUrl) return bynder?.original ?? "";
+
+  const base = bynder.transformBaseUrl;
+  const [width, height] = EVENT_IMAGE_PRESET.split("x").map(Number);
+  const { width: srcW = 0, height: srcH = 0 } = bynder._imageMetadata ?? {};
+
+  // DAT never upscales: a preset the source cannot cover returns it uncropped,
+  // so fill on the fly at the largest box of the same aspect that does fit.
+  if (srcW && srcH && (srcW < width || srcH < height)) {
+    const scale = Math.min(srcW / width, srcH / height);
+    const box = `width:${Math.round(width * scale)},height:${Math.round(height * scale)}`;
+    return `${base}?io=transform:fill,${box}`;
+  }
+
+  return base.replace("/transform/", `/transform/${EVENT_IMAGE_PRESET}/`);
 }
 
 function normalizeLanguageField(value: string | string[] | null): string[] {
@@ -96,11 +119,7 @@ function normalizeLanguageField(value: string | string[] | null): string[] {
   return Array.isArray(value) ? value : [value];
 }
 
-/**
- * Groups events by `_metadata.key` and picks the version matching the
- * preferred locale. Falls back to the master language (en-US), then to
- * the first available version.
- */
+/** Picks one version per event: preferred locale, then master (en-US), then any. */
 function deduplicateByLocale(
   events: EventGraphResult[],
   preferredLocale: string,
@@ -108,12 +127,9 @@ function deduplicateByLocale(
   const grouped = new Map<string, EventGraphResult[]>();
 
   for (const event of events) {
-    const existing = grouped.get(event._metadata.key);
-    if (existing) {
-      existing.push(event);
-    } else {
-      grouped.set(event._metadata.key, [event]);
-    }
+    const versions = grouped.get(event._metadata.key);
+    if (versions) versions.push(event);
+    else grouped.set(event._metadata.key, [event]);
   }
 
   const preferred = preferredLocale.toLowerCase();
@@ -127,9 +143,7 @@ function deduplicateByLocale(
   });
 }
 
-/**
- * Batch-resolves Bynder image metadata for events that have a Bynder image ref.
- */
+/** Batch-resolves Bynder metadata for every event that references an asset. */
 async function resolveBynderImages(
   events: EventGraphResult[],
 ): Promise<Map<string, BynderImageItem>> {
@@ -167,7 +181,7 @@ function toNormalizedEvent(
     description: event.description?.html ?? "",
     attendanceType: event.attendanceType as NormalizedEvent["attendanceType"],
     eventType: event.eventType as NormalizedEvent["eventType"],
-    imageUrl: bynder?.transformBaseUrl || bynder?.original || "",
+    imageUrl: getEventImageUrl(bynder),
     imageAlt: bynder?.property_alt_text || "",
     eventStartDate: event.eventStartDate ?? null,
     eventEndDate: event.eventEndDate ?? null,

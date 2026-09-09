@@ -1,22 +1,22 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
+import { tv } from "tailwind-variants";
 import { TiTabContainer } from "@/components/ui/ti/TiTabContainer/TiTabContainer";
 import { TiViewMore } from "@/components/ui/ti/TiViewMore/TiViewMore";
+import useDeviceCheck from "@/components/utilities/ScreenUtilities";
+import { EventCardList } from "./EventCard";
+import { FacetFilters } from "./FacetFilters/FacetFilters";
+import type { SelectedFacets } from "./FacetFilters/facet-filters.types";
 import {
   type NormalizedEvent,
-  type FacetGroup,
-  type SelectedFacets,
   isUpcoming,
-  isOnDemand,
   computeFacets,
   applyPreFilter,
   applyFacetFilters,
   sortUpcoming,
   sortPast,
-  ATTENDANCE_TYPE_LABELS,
-  EVENT_TYPE_LABELS,
-  CTA_LABELS,
 } from "./events-result-list.types";
 
 // ── Props ──────────────────────────────────────────────────────────────
@@ -41,7 +41,7 @@ interface EventsResultListClientProps {
 
 // ── Constants ──────────────────────────────────────────────────────────
 
-const VIEW_MORE_COLLAPSED_HEIGHT = 700;
+const FILTER_EVENTS_LABEL = "Filter events";
 
 // ── Main component ─────────────────────────────────────────────────────
 
@@ -52,10 +52,16 @@ export function EventsResultListClient({
   tabs,
   viewMore,
 }: EventsResultListClientProps) {
+  const t = useTranslations();
   const [allEvents, setAllEvents] = useState<NormalizedEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedFacets, setSelectedFacets] = useState<SelectedFacets>({});
+  // Resolves after mount, so the first paint uses the desktop height.
+  const { isMobile } = useDeviceCheck();
+  // Live `ti-view-more` on the events overview; cards stack on phones, where
+  // the desktop height would show far more rows before the fold.
+  const VIEW_MORE_COLLAPSED_HEIGHT = isMobile ? 700 : 900;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -138,17 +144,25 @@ export function EventsResultListClient({
     collapseActionLabel: viewMore.collapseLabel,
   };
 
+  const renderList = (events: NormalizedEvent[]) => (
+    <TiViewMore {...viewMoreProps}>
+      <EventCardList events={events} locale={locale} />
+    </TiViewMore>
+  );
+
   return (
-    <div className="flex flex-col gap-8 md:flex-row">
+    <div className={layout()}>
       {facets.length > 0 && (
-        <FacetSidebar
+        <FacetFilters
           facets={facets}
           selectedFacets={selectedFacets}
           onFacetChange={handleFacetChange}
+          refineByLabel={t("Refine by")}
+          filterActionLabel={FILTER_EVENTS_LABEL}
         />
       )}
 
-      <div className="flex-1">
+      <div className="min-w-0 flex-1 md:mt-7">
         <TiTabContainer
           selectedTabId="upcoming"
           hashSelection
@@ -156,132 +170,15 @@ export function EventsResultListClient({
             {
               tabId: "upcoming",
               title: upcomingTab?.title ?? "Upcoming",
-              content: (
-                <TiViewMore {...viewMoreProps}>
-                  <EventList events={upcomingEvents} />
-                </TiViewMore>
-              ),
+              content: renderList(upcomingEvents),
             },
             {
               tabId: "past",
               title: pastTab?.title ?? "Past",
-              content: (
-                <TiViewMore {...viewMoreProps}>
-                  <EventList events={pastEvents} />
-                </TiViewMore>
-              ),
+              content: renderList(pastEvents),
             },
           ]}
         />
-      </div>
-    </div>
-  );
-}
-
-// ── Facet sidebar ──────────────────────────────────────────────────────
-
-function FacetSidebar({
-  facets,
-  selectedFacets,
-  onFacetChange,
-}: {
-  facets: FacetGroup[];
-  selectedFacets: SelectedFacets;
-  onFacetChange: (facetId: string, value: string, checked: boolean) => void;
-}) {
-  return (
-    <aside className="w-full shrink-0 md:w-[260px]">
-      <p className="text-body-lg mb-4 font-medium">Refine by</p>
-      <div className="flex flex-col gap-4">
-        {facets.map((facet) => (
-          <FacetGroupPanel
-            key={facet.id}
-            facet={facet}
-            selected={selectedFacets[facet.id] ?? new Set()}
-            onChange={onFacetChange}
-          />
-        ))}
-      </div>
-    </aside>
-  );
-}
-
-function FacetGroupPanel({
-  facet,
-  selected,
-  onChange,
-}: {
-  facet: FacetGroup;
-  selected: Set<string>;
-  onChange: (facetId: string, value: string, checked: boolean) => void;
-}) {
-  return (
-    <fieldset className="rounded border border-pl-border-color-tertiary p-4">
-      <legend className="text-body-md mb-3 font-semibold">{facet.label}</legend>
-      <ul className="flex flex-col gap-2" role="list">
-        {facet.options.map((option) => (
-          <li key={option.value}>
-            <label className="flex cursor-pointer items-center gap-2 text-body-md">
-              <input
-                type="checkbox"
-                checked={selected.has(option.value)}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  onChange(facet.id, option.value, e.target.checked)
-                }
-                className="h-4 w-4"
-              />
-              {option.displayName}
-            </label>
-          </li>
-        ))}
-      </ul>
-    </fieldset>
-  );
-}
-
-// ── Event list ─────────────────────────────────────────────────────────
-
-function EventList({ events }: { events: NormalizedEvent[] }) {
-  if (events.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="flex flex-col gap-6">
-      {events.map((event) => (
-        <EventCardPlaceholder key={event.key} event={event} />
-      ))}
-    </div>
-  );
-}
-
-/**
- * Placeholder card -- full UI (image, date formatting, badges) to be
- * implemented in a follow-up. Renders enough data to verify the logic.
- */
-function EventCardPlaceholder({ event }: { event: NormalizedEvent }) {
-  const showOnDemand = isOnDemand(event);
-  const typeLabel = EVENT_TYPE_LABELS[event.eventType] ?? event.eventType;
-  const attendanceLabel =
-    ATTENDANCE_TYPE_LABELS[event.attendanceType] ?? event.attendanceType;
-
-  return (
-    <div className="flex gap-4 border-b border-pl-border-color-tertiary pb-6">
-      {/* TODO: full event card UI */}
-      <div className="flex-1">
-        <p className="text-caption mb-1 uppercase tracking-wide">
-          {typeLabel}
-          {showOnDemand ? " | On demand" : ` | ${attendanceLabel}`}
-        </p>
-        <p className="text-body-lg font-medium">{event.eventTitle}</p>
-        {event.ctaURL && (
-          <a
-            href={event.ctaURL}
-            className="text-body-sm text-pl-link-color-primary"
-          >
-            {CTA_LABELS[event.ctaTitle] ?? event.ctaTitle}
-          </a>
-        )}
       </div>
     </div>
   );
@@ -291,13 +188,24 @@ function EventCardPlaceholder({ event }: { event: NormalizedEvent }) {
 
 function EventsLoadingSkeleton() {
   return (
-    <div className="flex animate-pulse flex-col gap-4" aria-busy="true">
+    <div className={skeleton()} aria-busy="true">
       {Array.from({ length: 3 }, (_, i) => (
-        <div
-          key={i}
-          className="h-32 rounded bg-pl-container-background-color-secondary"
-        />
+        <div key={i} className={skeletonCard()} />
       ))}
     </div>
   );
 }
+
+// ── Styles ─────────────────────────────────────────────────────────────
+
+const TAILWIND_VARIANTS = tv(
+  {
+    slots: {
+      layout: "flex flex-col gap-8 md:flex-row md:gap-14",
+      skeleton: "flex animate-pulse flex-col gap-4",
+      skeletonCard: "h-[212px] bg-pl-container-background-color-secondary",
+    },
+  },
+  { twMerge: false },
+);
+const { layout, skeleton, skeletonCard } = TAILWIND_VARIANTS();
